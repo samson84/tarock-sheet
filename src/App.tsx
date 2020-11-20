@@ -1,8 +1,13 @@
-import React from 'react';
+import React from "react";
+import { Container, Paper } from "@material-ui/core";
 
 function App() {
   return (
-    <>Hello World</>
+    <Container fixed>
+      <Paper>
+        <h1>Hello World</h1>
+      </Paper>
+    </Container>
   );
 }
 
