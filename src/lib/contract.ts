@@ -1,29 +1,40 @@
 import { PLAYER_TYPE } from "./player";
-import { Bid } from "./bid";
+import { Bid, BidVariant } from "./bid";
 
 const CONTRA_NAMES = ["None", "Contra", "Recontra", "Subcontra", "Mortcontra"];
 
 type ContraMultiplier = number;
 export interface Contract {
   bid: Bid;
+  bidVariant: BidVariant | null,
   contra: ContraMultiplier;
-  win: PLAYER_TYPE | null;
-  take: PLAYER_TYPE;
+  winner: PLAYER_TYPE | null;
+  taker: PLAYER_TYPE;
+  silent: boolean;
 }
 
-export const createContract = (bid: Bid, taker: PLAYER_TYPE): Contract => ({
+export const createContract = (
+  bid: Bid,
+  taker: PLAYER_TYPE,
+  silent?: boolean,
+  bidVariant?: BidVariant
+): Contract => ({
   bid,
+  bidVariant: bidVariant || null,
   contra: 1,
-  win: null,
-  take: taker,
+  silent: silent || false,
+  winner: null,
+  taker: taker,
 });
 
-export const winContract = (winner: PLAYER_TYPE) => (contract: Contract): Contract => ({
+export const winContract = (winner: PLAYER_TYPE) => (
+  contract: Contract
+): Contract => ({
   ...contract,
-  win: winner
-})
+  winner: winner,
+});
 
-export const contraContract = (contract: Contract) : Contract => ({
+export const contraContract = (contract: Contract): Contract => ({
   ...contract,
-  contra: contract.contra * 2
-})
+  contra: contract.contra * 2,
+});

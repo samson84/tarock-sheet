@@ -1,19 +1,24 @@
 import { Contract } from "./contract";
 import { Player, PLAYER_TYPE } from "./player";
 
-
 interface Game {
   contracts: Contract[];
   declarers: Player[];
   opponents: Player[];
-  party_score: null | number;
+  props: {
+    party_score: null | number;
+    called_card: number | null;
+  };
 }
 
 export const createGame = (): Game => ({
   contracts: [],
   declarers: [],
   opponents: [],
-  party_score: null,
+  props: {
+    party_score: null,
+    called_card: null,
+  },
 });
 
 export const addPlayer = (player: Player, type: PLAYER_TYPE) => (
@@ -42,6 +47,5 @@ export const removePlayer = (player: Player) => (game: Game): Game => ({
 
 export const addContract = (contract: Contract) => (game: Game) => ({
   ...game,
-  contracts: [...game.contracts, contract]
-})
-
+  contracts: [...game.contracts, contract],
+});

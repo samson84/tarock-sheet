@@ -1,16 +1,23 @@
-import { PLAYER_TYPE } from './player'
+import { PLAYER_TYPE } from "./player";
 
 import { createGame, addPlayer, removePlayer, addContract } from "./game";
+
+const gameFixture = (main = {}, props = {}) => ({
+  contracts: [],
+  declarers: [],
+  opponents: [],
+  ...main,
+  props: {
+    party_score: null,
+    called_card: null,
+    ...props,
+  },
+});
 
 export default describe("game", () => {
   describe("createGame", () => {
     it("should create a game", () => {
-      const expected = {
-        contracts: [],
-        declarers: [],
-        opponents: [],
-        party_score: null,
-      };
+      const expected = gameFixture();
 
       const current = createGame();
 
@@ -20,18 +27,14 @@ export default describe("game", () => {
   describe("addPlayer", () => {
     it("should add a declarer", () => {
       const player = "Tomi";
-      const game = {
-        contracts: [],
+      const game = gameFixture({
         declarers: ["Csaba"],
         opponents: ["Laci"],
-        party_score: null,
-      };
-      const expected = {
-        contracts: [],
+      });
+      const expected = gameFixture({
         declarers: ["Csaba", "Tomi"],
         opponents: ["Laci"],
-        party_score: null,
-      };
+      });
 
       const current = addPlayer(player, PLAYER_TYPE.DECLARER)(game);
 
@@ -39,18 +42,14 @@ export default describe("game", () => {
     });
     it("should not duplicate the declarer", () => {
       const player = "Tomi";
-      const game = {
-        contracts: [],
+      const game = gameFixture({
         declarers: ["Tomi", "Csaba"],
         opponents: ["Laci"],
-        party_score: null,
-      };
-      const expected = {
-        contracts: [],
+      });
+      const expected = gameFixture({
         declarers: ["Tomi", "Csaba"],
         opponents: ["Laci"],
-        party_score: null,
-      };
+      });
 
       const current = addPlayer(player, PLAYER_TYPE.DECLARER)(game);
 
@@ -58,18 +57,14 @@ export default describe("game", () => {
     });
     it("should add an opponent", () => {
       const player = "Tomi";
-      const game = {
-        contracts: [],
+      const game = gameFixture({
         declarers: ["Laci"],
         opponents: ["Csaba"],
-        party_score: null,
-      };
-      const expected = {
-        contracts: [],
+      });
+      const expected = gameFixture({
         declarers: ["Laci"],
         opponents: ["Csaba", "Tomi"],
-        party_score: null,
-      };
+      });
 
       const current = addPlayer(player, PLAYER_TYPE.OPPONENT)(game);
 
@@ -77,18 +72,14 @@ export default describe("game", () => {
     });
     it("should not duplicate the opponent", () => {
       const player = "Tomi";
-      const game = {
-        contracts: [],
+      const game = gameFixture({
         declarers: ["Laci"],
         opponents: ["Tomi", "Csaba"],
-        party_score: null,
-      };
-      const expected = {
-        contracts: [],
+      });
+      const expected = gameFixture({
         declarers: ["Laci"],
         opponents: ["Tomi", "Csaba"],
-        party_score: null,
-      };
+      });
 
       const current = addPlayer(player, PLAYER_TYPE.OPPONENT)(game);
 
@@ -96,18 +87,14 @@ export default describe("game", () => {
     });
     it("should remove existing declarer when adding an opponent", () => {
       const player = "Tomi";
-      const game = {
-        contracts: [],
+      const game = gameFixture({
         declarers: ["Laci", "Tomi"],
         opponents: ["Csaba"],
-        party_score: null,
-      };
-      const expected = {
-        contracts: [],
+      });
+      const expected = gameFixture({
         declarers: ["Laci"],
         opponents: ["Csaba", "Tomi"],
-        party_score: null,
-      };
+      });
 
       const current = addPlayer(player, PLAYER_TYPE.OPPONENT)(game);
 
@@ -115,18 +102,14 @@ export default describe("game", () => {
     });
     it("should remove existing opponent when adding a declarer", () => {
       const player = "Tomi";
-      const game = {
-        contracts: [],
+      const game = gameFixture({
         declarers: ["Laci"],
         opponents: ["Csaba", "Tomi"],
-        party_score: null,
-      };
-      const expected = {
-        contracts: [],
+      });
+      const expected = gameFixture({
         declarers: ["Laci", "Tomi"],
         opponents: ["Csaba"],
-        party_score: null,
-      };
+      });
 
       const current = addPlayer(player, PLAYER_TYPE.DECLARER)(game);
 
@@ -136,18 +119,14 @@ export default describe("game", () => {
   describe("removePlayer", () => {
     it("should remove the player from the declarers", () => {
       const player = "Tomi";
-      const game = {
-        contracts: [],
+      const game = gameFixture({
         declarers: ["Laci", "Tomi"],
         opponents: ["Csaba"],
-        party_score: null,
-      };
-      const expected = {
-        contracts: [],
+      });
+      const expected = gameFixture({
         declarers: ["Laci"],
         opponents: ["Csaba"],
-        party_score: null,
-      };
+      });
 
       const current = removePlayer(player)(game);
 
@@ -155,22 +134,18 @@ export default describe("game", () => {
     });
     it("should remove the player from the opponents", () => {
       const player = "Tomi";
-      const game = {
-        contracts: [],
+      const game = gameFixture({
         declarers: ["Laci"],
         opponents: ["Csaba", "Tomi"],
-        party_score: null,
-      };
-      const expected = {
-        contracts: [],
+      });
+      const expected = gameFixture({
         declarers: ["Laci"],
         opponents: ["Csaba"],
-        party_score: null,
-      };
+      });
 
       const current = removePlayer(player)(game);
 
       expect(current).toEqual(expected);
     });
   });
-})
+});
