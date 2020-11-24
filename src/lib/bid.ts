@@ -1,7 +1,7 @@
 import _ from "lodash/fp";
 
 export interface Bid extends BidData {
-  type: BID_TYPE
+  type: BID_TYPE;
 }
 
 interface BidData {
@@ -11,56 +11,61 @@ interface BidData {
 }
 
 export enum BID_TYPE {
-  PARTY,
-  TRULL,
-  FOUR_KING,
-  CATCH_THE_MAYOR,
-  CATCH_THE_PAGAT,
-  ULTI,
-  UHU,
-  DOUBLE_PARTY,
-  VOLAT,
-  PHEASANT,
-  EIGHT_TAROCK,
-  NINE_TAROCK,
-  FURRY,
-  CENTRUM,
-  SMALL_BIRD,
-  LARGE_BIRD,
-  CSUZIMA,
-  KING_ULTI,
-  KING_UHU,
+  PARTY="PARTY",
+  TRULL="TRULL",
+  FOUR_KING="FOUR_KING",
+  CATCH_THE_MAYOR="CATCH_THE_MAYOR",
+  CATCH_THE_PAGAT="CATCH_THE_PAGAT",
+  ULTI="ULTI",
+  UHU="UHU",
+  DOUBLE_PARTY="DOUBLE_PARTY",
+  VOLAT="VOLAT",
+  PHEASANT="PHEASANT",
+  EIGHT_TAROCK="EIGHT_TAROCK",
+  NINE_TAROCK="NINE_TAROCK",
+  FURRY="FURRY",
+  CENTRUM="CENTRUM",
+  SMALL_BIRD="SMALL_BIRD",
+  LARGE_BIRD="LARGE_BIRD",
+  CSUZIMA="CSUZIMA",
+  KING_ULTI="KING_ULTI",
+  KING_UHU="KING_UHU",
 }
 
 export enum SMALLEST_VARIANT {
-  PAGAT,
-  EAGLE
+  PAGAT="PAGAT",
+  EAGLE="EAGLE",
 }
 
 export enum CARD_SHAPE_VARIANT {
-  HEART,
-  SPADE,
-  CLUB,
-  DIAMOND
+  HEART="HEART",
+  SPADE="SPADE",
+  CLUB="CLUB",
+  DIAMOND="DIAMOND",
 }
 
-const SMALLEST_VARIANTS = [SMALLEST_VARIANT.PAGAT, SMALLEST_VARIANT.EAGLE]
-const CARD_SHAPE_VARIANTS = [CARD_SHAPE_VARIANT.CLUB, CARD_SHAPE_VARIANT.DIAMOND, CARD_SHAPE_VARIANT.HEART, CARD_SHAPE_VARIANT.SPADE]
+const SMALLEST_VARIANTS = [SMALLEST_VARIANT.PAGAT, SMALLEST_VARIANT.EAGLE];
+const CARD_SHAPE_VARIANTS = [
+  CARD_SHAPE_VARIANT.CLUB,
+  CARD_SHAPE_VARIANT.DIAMOND,
+  CARD_SHAPE_VARIANT.HEART,
+  CARD_SHAPE_VARIANT.SPADE,
+];
 
-export type BidVariant = SMALLEST_VARIANT | CARD_SHAPE_VARIANT
+export type BidVariant = SMALLEST_VARIANT | CARD_SHAPE_VARIANT;
 
-const BIDS: {[key in BID_TYPE]: BidData} = {
+const BIDS: { [key in BID_TYPE]: BidData } = {
   [BID_TYPE.PARTY]: { score: (party: number) => party },
   [BID_TYPE.TRULL]: { score: 2 },
   [BID_TYPE.FOUR_KING]: { score: 2, silent: true },
   [BID_TYPE.CATCH_THE_MAYOR]: { score: 42, silent: true },
-  [BID_TYPE.CATCH_THE_PAGAT]: {score: 4},
+  [BID_TYPE.CATCH_THE_PAGAT]: { score: 4 },
   [BID_TYPE.ULTI]: {
     score: 10,
     variants: [...SMALLEST_VARIANTS],
     silent: true,
   },
-  [BID_TYPE.UHU]: {score: 15, variants: [...SMALLEST_VARIANTS] },
+  [BID_TYPE.UHU]: { score: 15, variants: [...SMALLEST_VARIANTS] },
   [BID_TYPE.DOUBLE_PARTY]: {
     score: (party: number) => party * 2,
     silent: true,
@@ -84,8 +89,12 @@ const BIDS: {[key in BID_TYPE]: BidData} = {
     score: 20,
     variants: [...CARD_SHAPE_VARIANTS],
   },
-  [BID_TYPE.CSUZIMA]: {score: 4 }
+  [BID_TYPE.CSUZIMA]: { score: 4 },
 };
 
-export const getBid = (type: BID_TYPE): Bid => ({type, ...BIDS[type]})
-
+export const getBid = (type: BID_TYPE): Bid => ({ type, ...BIDS[type] });
+export const canSilent = (bid: Bid): boolean => bid?.silent === true;
+export const hasVariant = (variant: BidVariant) => (bid: Bid): boolean => {
+  const variants = bid?.variants || []
+  return variants.includes(variant)
+}
