@@ -30,6 +30,7 @@ export enum BID_TYPE {
   CSUZIMA="CSUZIMA",
   KING_ULTI="KING_ULTI",
   KING_UHU="KING_UHU",
+  KLOPICZKY="KLOPICZKY"
 }
 
 export enum SMALLEST_VARIANT {
@@ -90,6 +91,7 @@ const BIDS: { [key in BID_TYPE]: BidData } = {
     variants: [...CARD_SHAPE_VARIANTS],
   },
   [BID_TYPE.CSUZIMA]: { score: 4 },
+  [BID_TYPE.KLOPICZKY]: {score: 3}
 };
 
 export const getBid = (type: BID_TYPE): Bid => ({ type, ...BIDS[type] });

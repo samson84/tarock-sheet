@@ -1,24 +1,55 @@
 import { Contract } from "./contract";
 import { Player, PLAYER_TYPE } from "./player";
+import filter from "lodash/fp/filter";
 
 interface Game {
   contracts: Contract[];
   declarers: Player[];
   opponents: Player[];
-  props: {
-    party_score: null | number;
-    called_card: number | null;
-  };
+  party_score: PARTY_SCORE | null;
+  called_tarock: CALLED_TAROCK | null;
 }
 
-export const createGame = (): Game => ({
+export enum CALLED_TAROCK {
+  XX = "XX",
+  XIX = "XIX",
+  XVIII = "XVIII",
+  XVII = "XVII",
+  XVI = "XVI",
+  XV = "XV",
+  XIV = "XIV",
+  XIII = "XIII",
+  XII = "XII",
+}
+
+export enum PARTY_SCORE {
+  KLOPICZKY = 0,
+  TOOK_THREE = 1,
+  TOOK_TWO = 2,
+  TOOK_ONE = 3,
+  SOLO = 4,
+}
+
+interface CreateGameProps {
+  party_score?: PARTY_SCORE | null;
+  called_tarock?: CALLED_TAROCK | null;
+}
+export const createGame = (props: CreateGameProps = {}): Game => ({
   contracts: [],
   declarers: [],
   opponents: [],
-  props: {
-    party_score: null,
-    called_card: null,
-  },
+  party_score: null,
+  called_tarock: null,
+  ...props,
+});
+
+interface UpdateGameProps {
+  party_score?: PARTY_SCORE | null;
+  called_tarock?: CALLED_TAROCK | null;
+}
+export const updateGame = (updates: UpdateGameProps) => (game: Game): Game => ({
+  ...game,
+  ...updates,
 });
 
 export const addPlayer = (player: Player, type: PLAYER_TYPE) => (
@@ -45,7 +76,12 @@ export const removePlayer = (player: Player) => (game: Game): Game => ({
   declarers: game.declarers.filter((p) => p !== player),
 });
 
-export const addContract = (contract: Contract) => (game: Game) => ({
+export const addContract = (contract: Contract) => (game: Game): Game => ({
   ...game,
   contracts: [...game.contracts, contract],
+});
+
+export const removeContract = (index: number) => (game: Game): Game => ({
+  ...game,
+  contracts: game.contracts.filter((_, i) => i !== index)
 });

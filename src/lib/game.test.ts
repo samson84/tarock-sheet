@@ -1,17 +1,25 @@
+import { contractFixture } from "./contract.test";
 import { PLAYER_TYPE } from "./player";
+import {
+  createGame,
+  addPlayer,
+  removePlayer,
+  addContract,
+  PARTY_SCORE,
+  CALLED_TAROCK,
+  updateGame,
+  removeContract,
+} from "./game";
+import { createContract } from "./contract";
+import { BID_TYPE, getBid } from "./bid";
 
-import { createGame, addPlayer, removePlayer, addContract } from "./game";
-
-const gameFixture = (main = {}, props = {}) => ({
+const gameFixture = (props = {}) => ({
   contracts: [],
   declarers: [],
   opponents: [],
-  ...main,
-  props: {
-    party_score: null,
-    called_card: null,
-    ...props,
-  },
+  party_score: null,
+  called_tarock: null,
+  ...props,
 });
 
 export default describe("game", () => {
@@ -24,6 +32,7 @@ export default describe("game", () => {
       expect(current).toEqual(expected);
     });
   });
+
   describe("addPlayer", () => {
     it("should add a declarer", () => {
       const player = "Tomi";
@@ -116,6 +125,7 @@ export default describe("game", () => {
       expect(current).toEqual(expected);
     });
   });
+
   describe("removePlayer", () => {
     it("should remove the player from the declarers", () => {
       const player = "Tomi";
@@ -144,6 +154,156 @@ export default describe("game", () => {
       });
 
       const current = removePlayer(player)(game);
+
+      expect(current).toEqual(expected);
+    });
+  });
+
+  describe("updateGame", () => {
+    it("should update the game", () => {
+      const game = gameFixture({
+        party_score: null,
+        called_tarock: null,
+      });
+      const updates = {
+        party_score: PARTY_SCORE.TOOK_TWO,
+        called_tarock: CALLED_TAROCK.XX,
+      };
+      const expected = gameFixture({
+        party_score: PARTY_SCORE.TOOK_TWO,
+        called_tarock: CALLED_TAROCK.XX,
+      });
+      const current = updateGame(updates)(game);
+      expect(current).toEqual(expected);
+    });
+  });
+
+  describe("addContract", () => {
+    it("should add a contract", () => {
+      const contract = createContract({
+        bid: getBid(BID_TYPE.PARTY),
+        taker: PLAYER_TYPE.DECLARER,
+      });
+      const game = gameFixture({
+        contracts: [],
+      });
+      const expected = gameFixture({
+        contracts: [
+          contractFixture({
+            bid: getBid(BID_TYPE.PARTY),
+            taker: PLAYER_TYPE.DECLARER,
+          }),
+        ],
+      });
+
+      const current = addContract(contract)(game);
+
+      expect(current).toEqual(expected);
+    });
+    it("should add a second contract", () => {
+      const contract = createContract({
+        bid: getBid(BID_TYPE.FOUR_KING),
+        taker: PLAYER_TYPE.OPPONENT,
+      });
+      const game = gameFixture({
+        contracts: [
+          contractFixture({
+            bid: getBid(BID_TYPE.PARTY),
+            taker: PLAYER_TYPE.DECLARER,
+          }),
+        ],
+      });
+      const expected = gameFixture({
+        contracts: [
+          contractFixture({
+            bid: getBid(BID_TYPE.PARTY),
+            taker: PLAYER_TYPE.DECLARER,
+          }),
+          contractFixture({
+            bid: getBid(BID_TYPE.FOUR_KING),
+            taker: PLAYER_TYPE.OPPONENT,
+          }),
+        ],
+      });
+
+      const current = addContract(contract)(game);
+
+      expect(current).toEqual(expected);
+    });
+  });
+
+  describe("removeContract", () => {
+    it("should remove a contract by index", () => {
+      const index = 1;
+      const game = gameFixture({
+        contracts: [
+          contractFixture({
+            bid: getBid(BID_TYPE.PARTY),
+            taker: PLAYER_TYPE.DECLARER,
+          }),
+          contractFixture({
+            bid: getBid(BID_TYPE.FOUR_KING),
+            taker: PLAYER_TYPE.OPPONENT,
+          }),
+          contractFixture({
+            bid: getBid(BID_TYPE.ULTI),
+            taker: PLAYER_TYPE.DECLARER,
+          }),
+        ],
+      });
+      const expected = gameFixture({
+        contracts: [
+          contractFixture({
+            bid: getBid(BID_TYPE.PARTY),
+            taker: PLAYER_TYPE.DECLARER,
+          }),
+          contractFixture({
+            bid: getBid(BID_TYPE.ULTI),
+            taker: PLAYER_TYPE.DECLARER,
+          }),
+        ],
+      });
+
+      const current = removeContract(index)(game);
+
+      expect(current).toEqual(expected);
+    });
+    it("should not remove anything if the index does not exists", () => {
+      const index = 4;
+      const game = gameFixture({
+        contracts: [
+          contractFixture({
+            bid: getBid(BID_TYPE.PARTY),
+            taker: PLAYER_TYPE.DECLARER,
+          }),
+          contractFixture({
+            bid: getBid(BID_TYPE.FOUR_KING),
+            taker: PLAYER_TYPE.OPPONENT,
+          }),
+          contractFixture({
+            bid: getBid(BID_TYPE.ULTI),
+            taker: PLAYER_TYPE.DECLARER,
+          }),
+        ],
+      });
+      const expected = gameFixture({
+        contracts: [
+          contractFixture({
+            bid: getBid(BID_TYPE.PARTY),
+            taker: PLAYER_TYPE.DECLARER,
+          }),
+          contractFixture({
+            bid: getBid(BID_TYPE.FOUR_KING),
+            taker: PLAYER_TYPE.OPPONENT,
+          }),
+          contractFixture({
+            bid: getBid(BID_TYPE.ULTI),
+            taker: PLAYER_TYPE.DECLARER,
+          }),
+        ],
+      });
+
+      const current = removeContract(index)(game);
 
       expect(current).toEqual(expected);
     });
