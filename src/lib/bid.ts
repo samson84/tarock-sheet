@@ -11,38 +11,38 @@ interface BidData {
 }
 
 export enum BID_TYPE {
-  PARTY="PARTY",
-  TRULL="TRULL",
-  FOUR_KING="FOUR_KING",
-  CATCH_THE_MAYOR="CATCH_THE_MAYOR",
-  CATCH_THE_PAGAT="CATCH_THE_PAGAT",
-  ULTI="ULTI",
-  UHU="UHU",
-  DOUBLE_PARTY="DOUBLE_PARTY",
-  VOLAT="VOLAT",
-  PHEASANT="PHEASANT",
-  EIGHT_TAROCK="EIGHT_TAROCK",
-  NINE_TAROCK="NINE_TAROCK",
-  FURRY="FURRY",
-  CENTRUM="CENTRUM",
-  SMALL_BIRD="SMALL_BIRD",
-  LARGE_BIRD="LARGE_BIRD",
-  CSUZIMA="CSUZIMA",
-  KING_ULTI="KING_ULTI",
-  KING_UHU="KING_UHU",
-  KLOPICZKY="KLOPICZKY"
+  PARTY = "PARTY",
+  TRULL = "TRULL",
+  FOUR_KING = "FOUR_KING",
+  CATCH_THE_MAYOR = "CATCH_THE_MAYOR",
+  CATCH_THE_PAGAT = "CATCH_THE_PAGAT",
+  ULTI = "ULTI",
+  UHU = "UHU",
+  DOUBLE_PARTY = "DOUBLE_PARTY",
+  VOLAT = "VOLAT",
+  PHEASANT = "PHEASANT",
+  EIGHT_TAROCK = "EIGHT_TAROCK",
+  NINE_TAROCK = "NINE_TAROCK",
+  FURRY = "FURRY",
+  CENTRUM = "CENTRUM",
+  SMALL_BIRD = "SMALL_BIRD",
+  LARGE_BIRD = "LARGE_BIRD",
+  CSUZIMA = "CSUZIMA",
+  KING_ULTI = "KING_ULTI",
+  KING_UHU = "KING_UHU",
+  KLOPICZKY = "KLOPICZKY",
 }
 
 export enum SMALLEST_VARIANT {
-  PAGAT="PAGAT",
-  EAGLE="EAGLE",
+  PAGAT = "PAGAT",
+  EAGLE = "EAGLE",
 }
 
 export enum CARD_SHAPE_VARIANT {
-  HEART="HEART",
-  SPADE="SPADE",
-  CLUB="CLUB",
-  DIAMOND="DIAMOND",
+  HEART = "HEART",
+  SPADE = "SPADE",
+  CLUB = "CLUB",
+  DIAMOND = "DIAMOND",
 }
 
 const SMALLEST_VARIANTS = [SMALLEST_VARIANT.PAGAT, SMALLEST_VARIANT.EAGLE];
@@ -91,12 +91,14 @@ const BIDS: { [key in BID_TYPE]: BidData } = {
     variants: [...CARD_SHAPE_VARIANTS],
   },
   [BID_TYPE.CSUZIMA]: { score: 4 },
-  [BID_TYPE.KLOPICZKY]: {score: 3}
+  [BID_TYPE.KLOPICZKY]: { score: 3 },
 };
 
 export const getBid = (type: BID_TYPE): Bid => ({ type, ...BIDS[type] });
+export const getAllBids = (): Bid[] =>
+  Object.keys(BID_TYPE).map((b: BID_TYPE) => getBid(b));
 export const canSilent = (bid: Bid): boolean => bid?.silent === true;
 export const hasVariant = (variant: BidVariant) => (bid: Bid): boolean => {
-  const variants = bid?.variants || []
-  return variants.includes(variant)
-}
+  const variants = bid?.variants || [];
+  return variants.includes(variant);
+};
