@@ -3,7 +3,7 @@ import { PLAYER_TYPE } from "./player";
 
 import { createContract, contraContract, updateContract } from "./contract";
 
-const contractFixture = (props = {}) => {
+export const contractFixture = (props = {}) => {
   return {
     bid: getBid(BID_TYPE.FOUR_KING),
     contra: 1,
@@ -24,7 +24,7 @@ export default describe("contract", () => {
         bid: bid,
         taker: PLAYER_TYPE.DECLARER,
       });
-      const current = createContract({bid, taker});
+      const current = createContract({ bid, taker });
       expect(current).toEqual(expected);
     });
     it("should create an opponent contract", () => {
@@ -34,154 +34,154 @@ export default describe("contract", () => {
         bid: bid,
         taker: PLAYER_TYPE.OPPONENT,
       });
-      const current = createContract({bid, taker});
+      const current = createContract({ bid, taker });
       expect(current).toEqual(expected);
     });
     it("should set contract to silent", () => {
       const bid = getBid(BID_TYPE.FOUR_KING);
       const taker = PLAYER_TYPE.OPPONENT;
-      const silent = true
+      const silent = true;
       const expected = contractFixture({
         bid: bid,
         taker: PLAYER_TYPE.OPPONENT,
-        silent: true
+        silent: true,
       });
-      const current = createContract({bid, taker, silent});
+      const current = createContract({ bid, taker, silent });
       expect(current).toEqual(expected);
-    })
+    });
     it("should throw if the bid can not be silent", () => {
       const bid = getBid(BID_TYPE.PARTY);
       const taker = PLAYER_TYPE.OPPONENT;
-      const silent = true
-      const expected = "PARTY can not be silent."
-      const current = () => createContract({bid, taker, silent});
+      const silent = true;
+      const expected = "PARTY can not be silent.";
+      const current = () => createContract({ bid, taker, silent });
       expect(current).toThrow(expected);
-    })
+    });
     it("should set contract's Bid variant", () => {
       const bid = getBid(BID_TYPE.KING_ULTI);
       const taker = PLAYER_TYPE.OPPONENT;
-      const bidVariant = CARD_SHAPE_VARIANT.CLUB
+      const bidVariant = CARD_SHAPE_VARIANT.CLUB;
       const expected = contractFixture({
         bid: bid,
         taker: PLAYER_TYPE.OPPONENT,
-        bidVariant: CARD_SHAPE_VARIANT.CLUB
+        bidVariant: CARD_SHAPE_VARIANT.CLUB,
       });
-      const current = createContract({bid, taker, bidVariant});
+      const current = createContract({ bid, taker, bidVariant });
       expect(current).toEqual(expected);
-    })
+    });
     it("should throw contract's Bid variant is invalid", () => {
       const bid = getBid(BID_TYPE.KING_ULTI);
       const taker = PLAYER_TYPE.OPPONENT;
-      const bidVariant = SMALLEST_VARIANT.EAGLE
-      const expected = "KING_ULTI does not have EAGLE variant."
-  
-      const current = () => createContract({bid, taker, bidVariant});
+      const bidVariant = SMALLEST_VARIANT.EAGLE;
+      const expected = "KING_ULTI does not have EAGLE variant.";
+
+      const current = () => createContract({ bid, taker, bidVariant });
       expect(current).toThrow(expected);
-    })
+    });
     it("should create a non variant non silent bid's contract", () => {
       const bid = getBid(BID_TYPE.PARTY);
       const taker = PLAYER_TYPE.OPPONENT;
       const expected = contractFixture({
         bid: bid,
-        taker: PLAYER_TYPE.OPPONENT
+        taker: PLAYER_TYPE.OPPONENT,
       });
-      const current = createContract({bid, taker});
+      const current = createContract({ bid, taker });
       expect(current).toEqual(expected);
-    })
+    });
   });
   describe("updateContract", () => {
-    it("should update the taker", ()=>{
+    it("should update the taker", () => {
       const contract = contractFixture({
-        taker: PLAYER_TYPE.OPPONENT
-      })
+        taker: PLAYER_TYPE.OPPONENT,
+      });
       const updates = {
-        taker: PLAYER_TYPE.DECLARER
-      }
+        taker: PLAYER_TYPE.DECLARER,
+      };
       const expected = contractFixture({
-        taker: PLAYER_TYPE.DECLARER
-      })
-      const current = updateContract(updates)(contract)
-      expect(current).toEqual(expected)
-    })
-    it("should update the winner", ()=>{
+        taker: PLAYER_TYPE.DECLARER,
+      });
+      const current = updateContract(updates)(contract);
+      expect(current).toEqual(expected);
+    });
+    it("should update the winner", () => {
       const contract = contractFixture({
-        winner: null
-      })
+        winner: null,
+      });
       const updates = {
-        winner: PLAYER_TYPE.OPPONENT
-      }
+        winner: PLAYER_TYPE.OPPONENT,
+      };
       const expected = contractFixture({
-        winner: PLAYER_TYPE.OPPONENT
-      })
-      const current = updateContract(updates)(contract)
-      expect(current).toEqual(expected)
-    })
-    it("should update silent prop", ()=>{
+        winner: PLAYER_TYPE.OPPONENT,
+      });
+      const current = updateContract(updates)(contract);
+      expect(current).toEqual(expected);
+    });
+    it("should update silent prop", () => {
       const contract = contractFixture({
-        silent: false
-      })
+        silent: false,
+      });
       const updates = {
-        silent: true
-      }
+        silent: true,
+      };
       const expected = contractFixture({
-        silent: true
-      })
-      const current = updateContract(updates)(contract)
-      expect(current).toEqual(expected)
-    })
-    it("should throw if the bid can not be silent", ()=>{
+        silent: true,
+      });
+      const current = updateContract(updates)(contract);
+      expect(current).toEqual(expected);
+    });
+    it("should throw if the bid can not be silent", () => {
       const contract = contractFixture({
         bid: getBid(BID_TYPE.PARTY),
-        silent: false
-      })
+        silent: false,
+      });
       const updates = {
-        silent: true
-      }
-      const expected = "PARTY can not be silent"
-      const current = () => updateContract(updates)(contract)
-      expect(current).toThrow(expected)
-    })
-    it("should update the bidVariant prop", ()=>{
+        silent: true,
+      };
+      const expected = "PARTY can not be silent";
+      const current = () => updateContract(updates)(contract);
+      expect(current).toThrow(expected);
+    });
+    it("should update the bidVariant prop", () => {
       const contract = contractFixture({
         bid: getBid(BID_TYPE.KING_ULTI),
-        bidVariant: null
-      })
+        bidVariant: null,
+      });
       const updates = {
-        bidVariant: CARD_SHAPE_VARIANT.CLUB
-      }
+        bidVariant: CARD_SHAPE_VARIANT.CLUB,
+      };
       const expected = contractFixture({
         bid: getBid(BID_TYPE.KING_ULTI),
-        bidVariant: CARD_SHAPE_VARIANT.CLUB
-      })
-      const current = updateContract(updates)(contract)
-      expect(current).toEqual(expected)
-    })    
-    it("should throw if the bid has invalid bidVariant", ()=>{
+        bidVariant: CARD_SHAPE_VARIANT.CLUB,
+      });
+      const current = updateContract(updates)(contract);
+      expect(current).toEqual(expected);
+    });
+    it("should throw if the bid has invalid bidVariant", () => {
       const contract = contractFixture({
         bid: getBid(BID_TYPE.KING_ULTI),
-        bidVariant: CARD_SHAPE_VARIANT.DIAMOND
-      })
+        bidVariant: CARD_SHAPE_VARIANT.DIAMOND,
+      });
       const updates = {
-        bidVariant: SMALLEST_VARIANT.EAGLE
-      }
-      const expected = "KING_ULTI does not have EAGLE variant"
-      const current = () => updateContract(updates)(contract)
-      expect(current).toThrow(expected)
-    })
-    it("should throw if the bid does not have variant", ()=>{
+        bidVariant: SMALLEST_VARIANT.EAGLE,
+      };
+      const expected = "KING_ULTI does not have EAGLE variant";
+      const current = () => updateContract(updates)(contract);
+      expect(current).toThrow(expected);
+    });
+    it("should throw if the bid does not have variant", () => {
       const contract = contractFixture({
         bid: getBid(BID_TYPE.PARTY),
-        bidVariant: null
-      })
+        bidVariant: null,
+      });
       const updates = {
-        bidVariant: SMALLEST_VARIANT.PAGAT
-      }
-      const expected = "PARTY does not have PAGAT variant"
-      const current = () => updateContract(updates)(contract)
-      expect(current).toThrow(expected)
-    })
-  })
-  
+        bidVariant: SMALLEST_VARIANT.PAGAT,
+      };
+      const expected = "PARTY does not have PAGAT variant";
+      const current = () => updateContract(updates)(contract);
+      expect(current).toThrow(expected);
+    });
+  });
+
   describe("contraContract", () => {
     it("should contra a Contract", () => {
       const contract = contractFixture({

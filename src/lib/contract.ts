@@ -23,7 +23,7 @@ const validateContract = (contract: Contract): void | undefined => {
   }
 };
 
-type CreateContractProps = {
+interface CreateContractProps {
   bid: Bid;
   taker: PLAYER_TYPE;
   silent?: boolean;
@@ -47,7 +47,7 @@ export const createContract = ({
   return contract;
 };
 
-type UpdateContractProps = {
+interface UpdateContractProps {
   bid?: Bid;
   taker?: PLAYER_TYPE;
   winner?: PLAYER_TYPE;
