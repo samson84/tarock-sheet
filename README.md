@@ -1,7 +1,5 @@
 # TODO
 
-- [x] contracts: refactor variant handling
-- [x] contracts: add tests for update
-- [x] game: refactor game handling like contracts
-- [x] games: add addcontract tests
-- [x] games: add party score and called card set
+- [ ] remove bid from contract, only save the bid type for it
+- [ ] create a better icon
+- [ ] align the icon in the app bar
