@@ -1,5 +1,5 @@
 export enum PLAYER_TYPE {
-  DECLARER="DESCLARER",
+  DECLARER="DECLARER",
   OPPONENT="OPPONENT",
 }
 export type Player = string;
