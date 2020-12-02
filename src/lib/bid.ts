@@ -57,7 +57,7 @@ export type BidVariant = SMALLEST_VARIANT | CARD_SHAPE_VARIANT;
 
 const BIDS: { [key in BID_TYPE]: BidData } = {
   [BID_TYPE.PARTY]: { score: (party: number) => party },
-  [BID_TYPE.TRULL]: { score: 2 },
+  [BID_TYPE.TRULL]: { score: 2, silent: true },
   [BID_TYPE.FOUR_KING]: { score: 2, silent: true },
   [BID_TYPE.CATCH_THE_MAYOR]: { score: 42, silent: true },
   [BID_TYPE.CATCH_THE_PAGAT]: { score: 4 },
