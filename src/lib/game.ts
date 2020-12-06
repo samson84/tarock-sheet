@@ -1,7 +1,7 @@
 import { Contract } from "./contract";
 import { Player, PLAYER_TYPE } from "./player";
 
-interface Game {
+export interface Game {
   contracts: Contract[];
   declarers: Player[];
   opponents: Player[];
@@ -82,5 +82,5 @@ export const addContract = (contract: Contract) => (game: Game): Game => ({
 
 export const removeContract = (index: number) => (game: Game): Game => ({
   ...game,
-  contracts: game.contracts.filter((_, i) => i !== index)
+  contracts: game.contracts.filter((_, i) => i !== index),
 });
