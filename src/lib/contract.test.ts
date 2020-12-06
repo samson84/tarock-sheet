@@ -1,11 +1,11 @@
-import { getBid, BID_TYPE, CARD_SHAPE_VARIANT, SMALLEST_VARIANT } from "./bid";
+import { BID_TYPE, CARD_SHAPE_VARIANT, SMALLEST_VARIANT } from "./bid";
 import { PLAYER_TYPE } from "./player";
 
 import { createContract, contraContract, updateContract } from "./contract";
 
 export const contractFixture = (props = {}) => {
   return {
-    bid: getBid(BID_TYPE.FOUR_KING),
+    bidType: BID_TYPE.FOUR_KING,
     contra: 1,
     silent: false,
     winner: null,
@@ -18,74 +18,74 @@ export const contractFixture = (props = {}) => {
 export default describe("contract", () => {
   describe("createContract", () => {
     it("should create a declarer contract", () => {
-      const bid = getBid(BID_TYPE.FOUR_KING);
+      const bidType = BID_TYPE.FOUR_KING;
       const taker = PLAYER_TYPE.DECLARER;
       const expected = contractFixture({
-        bid: bid,
+        bidType: BID_TYPE.FOUR_KING,
         taker: PLAYER_TYPE.DECLARER,
       });
-      const current = createContract({ bid, taker });
+      const current = createContract({ bidType, taker });
       expect(current).toEqual(expected);
     });
     it("should create an opponent contract", () => {
-      const bid = getBid(BID_TYPE.FOUR_KING);
+      const bidType = BID_TYPE.FOUR_KING;
       const taker = PLAYER_TYPE.OPPONENT;
       const expected = contractFixture({
-        bid: bid,
+        bidType: BID_TYPE.FOUR_KING,
         taker: PLAYER_TYPE.OPPONENT,
       });
-      const current = createContract({ bid, taker });
+      const current = createContract({ bidType, taker });
       expect(current).toEqual(expected);
     });
     it("should set contract to silent", () => {
-      const bid = getBid(BID_TYPE.FOUR_KING);
+      const bidType = BID_TYPE.FOUR_KING;
       const taker = PLAYER_TYPE.OPPONENT;
       const silent = true;
       const expected = contractFixture({
-        bid: bid,
+        bidType: BID_TYPE.FOUR_KING,
         taker: PLAYER_TYPE.OPPONENT,
         silent: true,
       });
-      const current = createContract({ bid, taker, silent });
+      const current = createContract({ bidType, taker, silent });
       expect(current).toEqual(expected);
     });
     it("should throw if the bid can not be silent", () => {
-      const bid = getBid(BID_TYPE.PARTY);
+      const bidType = BID_TYPE.PARTY;
       const taker = PLAYER_TYPE.OPPONENT;
       const silent = true;
       const expected = "PARTY can not be silent.";
-      const current = () => createContract({ bid, taker, silent });
+      const current = () => createContract({ bidType, taker, silent });
       expect(current).toThrow(expected);
     });
     it("should set contract's Bid variant", () => {
-      const bid = getBid(BID_TYPE.KING_ULTI);
+      const bidType = BID_TYPE.KING_ULTI;
       const taker = PLAYER_TYPE.OPPONENT;
       const bidVariant = CARD_SHAPE_VARIANT.CLUB;
       const expected = contractFixture({
-        bid: bid,
+        bidType: BID_TYPE.KING_ULTI,
         taker: PLAYER_TYPE.OPPONENT,
         bidVariant: CARD_SHAPE_VARIANT.CLUB,
       });
-      const current = createContract({ bid, taker, bidVariant });
+      const current = createContract({ bidType, taker, bidVariant });
       expect(current).toEqual(expected);
     });
     it("should throw contract's Bid variant is invalid", () => {
-      const bid = getBid(BID_TYPE.KING_ULTI);
+      const bidType = BID_TYPE.KING_ULTI;
       const taker = PLAYER_TYPE.OPPONENT;
       const bidVariant = SMALLEST_VARIANT.EAGLE;
       const expected = "KING_ULTI does not have EAGLE variant.";
 
-      const current = () => createContract({ bid, taker, bidVariant });
+      const current = () => createContract({ bidType, taker, bidVariant });
       expect(current).toThrow(expected);
     });
     it("should create a non variant non silent bid's contract", () => {
-      const bid = getBid(BID_TYPE.PARTY);
+      const bidType = BID_TYPE.PARTY;
       const taker = PLAYER_TYPE.OPPONENT;
       const expected = contractFixture({
-        bid: bid,
+        bidType: BID_TYPE.PARTY,
         taker: PLAYER_TYPE.OPPONENT,
       });
-      const current = createContract({ bid, taker });
+      const current = createContract({ bidType, taker });
       expect(current).toEqual(expected);
     });
   });
@@ -131,7 +131,7 @@ export default describe("contract", () => {
     });
     it("should throw if the bid can not be silent", () => {
       const contract = contractFixture({
-        bid: getBid(BID_TYPE.PARTY),
+        bidType: BID_TYPE.PARTY,
         silent: false,
       });
       const updates = {
@@ -143,14 +143,14 @@ export default describe("contract", () => {
     });
     it("should update the bidVariant prop", () => {
       const contract = contractFixture({
-        bid: getBid(BID_TYPE.KING_ULTI),
+        bidType: BID_TYPE.KING_ULTI,
         bidVariant: null,
       });
       const updates = {
         bidVariant: CARD_SHAPE_VARIANT.CLUB,
       };
       const expected = contractFixture({
-        bid: getBid(BID_TYPE.KING_ULTI),
+        bidType: BID_TYPE.KING_ULTI,
         bidVariant: CARD_SHAPE_VARIANT.CLUB,
       });
       const current = updateContract(updates)(contract);
@@ -158,7 +158,7 @@ export default describe("contract", () => {
     });
     it("should throw if the bid has invalid bidVariant", () => {
       const contract = contractFixture({
-        bid: getBid(BID_TYPE.KING_ULTI),
+        bidType: BID_TYPE.KING_ULTI,
         bidVariant: CARD_SHAPE_VARIANT.DIAMOND,
       });
       const updates = {
@@ -170,7 +170,7 @@ export default describe("contract", () => {
     });
     it("should throw if the bid does not have variant", () => {
       const contract = contractFixture({
-        bid: getBid(BID_TYPE.PARTY),
+        bidType: BID_TYPE.PARTY,
         bidVariant: null,
       });
       const updates = {
@@ -194,7 +194,6 @@ export default describe("contract", () => {
       expect(current).toEqual(expected);
     });
     it("should double contra a Contract", () => {
-      const bid = getBid(BID_TYPE.FOUR_KING);
       const contract = contractFixture({
         contra: 1,
       });

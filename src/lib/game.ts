@@ -1,6 +1,5 @@
 import { Contract } from "./contract";
 import { Player, PLAYER_TYPE } from "./player";
-import filter from "lodash/fp/filter";
 
 interface Game {
   contracts: Contract[];

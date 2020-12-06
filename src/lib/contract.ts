@@ -1,11 +1,11 @@
 import { PLAYER_TYPE } from "./player";
-import { Bid, BidVariant, canSilent, hasVariant } from "./bid";
+import { BidVariant, BID_TYPE, canSilent, hasVariant, getBid } from "./bid";
 
 const CONTRA_NAMES = ["None", "Contra", "Recontra", "Subcontra", "Mortcontra"];
 
 type ContraMultiplier = number;
 export interface Contract {
-  bid: Bid;
+  bidType: BID_TYPE;
   bidVariant: BidVariant | null;
   contra: ContraMultiplier;
   winner: PLAYER_TYPE | null;
@@ -14,7 +14,8 @@ export interface Contract {
 }
 
 const validateContract = (contract: Contract): void | undefined => {
-  const { silent, bid, bidVariant } = contract;
+  const { silent, bidType, bidVariant } = contract;
+  const bid = getBid(bidType);
   if (silent && !canSilent(bid)) {
     throw new Error(`${bid.type} can not be silent.`);
   }
@@ -24,19 +25,19 @@ const validateContract = (contract: Contract): void | undefined => {
 };
 
 interface CreateContractProps {
-  bid: Bid;
+  bidType: BID_TYPE;
   taker: PLAYER_TYPE;
   silent?: boolean;
   bidVariant?: BidVariant | null;
 };
 export const createContract = ({
-  bid,
+  bidType,
   taker,
   silent = false,
   bidVariant = null,
 }: CreateContractProps): Contract => {
   const contract = {
-    bid,
+    bidType,
     bidVariant,
     contra: 1,
     silent,
@@ -48,7 +49,7 @@ export const createContract = ({
 };
 
 interface UpdateContractProps {
-  bid?: Bid;
+  bidType?: BID_TYPE;
   taker?: PLAYER_TYPE;
   winner?: PLAYER_TYPE;
   silent?: boolean;

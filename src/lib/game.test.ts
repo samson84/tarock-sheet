@@ -181,7 +181,7 @@ export default describe("game", () => {
   describe("addContract", () => {
     it("should add a contract", () => {
       const contract = createContract({
-        bid: getBid(BID_TYPE.PARTY),
+        bidType: BID_TYPE.PARTY,
         taker: PLAYER_TYPE.DECLARER,
       });
       const game = gameFixture({
@@ -190,7 +190,7 @@ export default describe("game", () => {
       const expected = gameFixture({
         contracts: [
           contractFixture({
-            bid: getBid(BID_TYPE.PARTY),
+            bidType: BID_TYPE.PARTY,
             taker: PLAYER_TYPE.DECLARER,
           }),
         ],
@@ -202,13 +202,13 @@ export default describe("game", () => {
     });
     it("should add a second contract", () => {
       const contract = createContract({
-        bid: getBid(BID_TYPE.FOUR_KING),
+        bidType: BID_TYPE.FOUR_KING,
         taker: PLAYER_TYPE.OPPONENT,
       });
       const game = gameFixture({
         contracts: [
           contractFixture({
-            bid: getBid(BID_TYPE.PARTY),
+            bidType: BID_TYPE.PARTY,
             taker: PLAYER_TYPE.DECLARER,
           }),
         ],
@@ -216,11 +216,11 @@ export default describe("game", () => {
       const expected = gameFixture({
         contracts: [
           contractFixture({
-            bid: getBid(BID_TYPE.PARTY),
+            bidType: BID_TYPE.PARTY,
             taker: PLAYER_TYPE.DECLARER,
           }),
           contractFixture({
-            bid: getBid(BID_TYPE.FOUR_KING),
+            bidType: BID_TYPE.FOUR_KING,
             taker: PLAYER_TYPE.OPPONENT,
           }),
         ],

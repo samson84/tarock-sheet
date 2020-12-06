@@ -86,7 +86,7 @@ const BidDetails = (props: BidDetailsProps) => {
 
   const handleSubmit = (taker: PLAYER_TYPE) => {
     setOpen(false);
-    onSubmit(createContract({ bid, taker, silent, bidVariant }));
+    onSubmit(createContract({ bidType: bid, taker, silent, bidVariant }));
   };
 
   const valid = bid.variants
