@@ -75,7 +75,7 @@ const useBidDetailsStyle = makeStyles((theme) => ({
 }));
 interface BidDetailsProps {
   bid: Bid;
-  onSubmit: (contract: Contract) => void;
+  onSubmit: (contract: Contract | null) => void;
 }
 const BidDetails = (props: BidDetailsProps) => {
   const [open, setOpen] = useState(false);
@@ -100,7 +100,7 @@ const BidDetails = (props: BidDetailsProps) => {
       <Button variant="outlined" color="primary" onClick={() => setOpen(true)}>
         {upperCaseToWords(bid.type)}
       </Button>
-      <Modal open={open} onClose={onSubmit} className={classes.modal}>
+      <Modal open={open} className={classes.modal}>
         <Card className={classes.card}>
           <CardHeader title={upperCaseToWords(bid.type)} />
           <CardContent>

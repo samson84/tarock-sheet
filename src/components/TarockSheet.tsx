@@ -6,13 +6,14 @@ import { Contract } from "../lib/contract";
 
 const allBids = sortBy((b: Bid) => b.type )(getAllBids())
 
-export default () => {
+const TarockSheet = () => {
   const [contract, setContract] = useState<Contract|null>(null)
   return (
     <>
       <BidSelector bids={allBids} onAddContract={setContract}/>
-      <pre>{JSON.stringify(contract, null, 2)}</pre>
+      {<pre>{JSON.stringify(contract, null, 2)}</pre>}
     </>
-  
     )
 }
+
+export default TarockSheet
