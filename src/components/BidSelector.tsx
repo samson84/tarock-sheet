@@ -86,7 +86,7 @@ const BidDetails = (props: BidDetailsProps) => {
 
   const handleSubmit = (taker: PLAYER_TYPE) => {
     setOpen(false);
-    onSubmit(createContract({ bidType: bid, taker, silent, bidVariant }));
+    onSubmit(createContract({ bidType: bid.type, taker, silent, bidVariant }));
   };
 
   const valid = bid.variants
@@ -144,7 +144,7 @@ interface BidSelectorProps {
   bids: Bid[];
   onAddContract: (contract: Contract) => void;
 }
-export default ({ bids, onAddContract }: BidSelectorProps) => {
+const BidSelector = ({ bids, onAddContract }: BidSelectorProps) => {
   return (
     <Grid container spacing={1}>
       {bids.map((bid) => (
@@ -155,3 +155,5 @@ export default ({ bids, onAddContract }: BidSelectorProps) => {
     </Grid>
   );
 };
+
+export default BidSelector
