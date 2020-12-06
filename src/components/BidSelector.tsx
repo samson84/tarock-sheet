@@ -148,7 +148,7 @@ const BidSelector = ({ bids, onAddContract }: BidSelectorProps) => {
   return (
     <Grid container spacing={1}>
       {bids.map((bid) => (
-        <Grid item>
+        <Grid item key={bid.type}>
           <BidDetails bid={bid} onSubmit={onAddContract} />
         </Grid>
       ))}
