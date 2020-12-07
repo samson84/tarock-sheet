@@ -46,11 +46,7 @@ const columns: ColumnDefinition[] = [
   {
     field: "bidType",
     headerName: "Bid",
-    valueGetter: (contract: Contract) => {
-      const bidName = upperCaseToWords(contract?.bidType);
-      const bidVariant = contract.bidVariant ? ` (${contract.bidVariant})` : "";
-      return `${bidName}${bidVariant}`;
-    },
+    valueGetter: (contract: Contract) => upperCaseToWords(contract?.bidType)
   },
   {
     field: "bidVariant",

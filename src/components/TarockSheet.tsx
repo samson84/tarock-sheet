@@ -2,10 +2,11 @@ import React, { useState } from "react";
 import { getAllBids, Bid } from "../lib/bid";
 import BidSelector from "./BidSelector";
 import sortBy from "lodash/fp/sortBy";
-import { Game, createGame, addContract } from "../lib/game";
-import {Contract} from '../lib/contract'
+import { Game, createGame, addContract, updateGame } from "../lib/game";
+import { Contract } from "../lib/contract";
 import { Button, Grid } from "@material-ui/core";
 import ContractsTable from "./ContractsTable";
+import GameProperties from "./GameProperties";
 
 const allBids = sortBy((b: Bid) => b.type)(getAllBids());
 
@@ -23,13 +24,32 @@ const TarockSheet = () => {
       New Game
     </Button>
   ) : (
-    <Button variant="contained" onClick={() => setGame(null)}>
-      Reset Game
-    </Button>
+    <Grid container spacing={1} direction="row">
+      <Grid item>
+        <Button variant="contained" onClick={() => setGame(null)}>
+          Reset Game
+        </Button>
+      </Grid>
+      <Grid item>
+        <GameProperties
+          game={game as Game}
+          onChange={(prop, value) => {
+            setGame(updateGame({ [prop]: value })(game as Game));
+          }}
+        />
+      </Grid>
+    </Grid>
   );
 
   const actionContent = hasGame ? (
-    <BidSelector bids={allBids} onAddContract={(contract) => setGame(addContract(contract)(game as Game))} />
+    <>
+      <BidSelector
+        bids={allBids}
+        onAddContract={(contract) =>
+          setGame(addContract(contract)(game as Game))
+        }
+      />
+    </>
   ) : null;
 
   return (
@@ -41,9 +61,9 @@ const TarockSheet = () => {
         </Grid>
       </Grid>
       <Grid item>
-        {
-          hasGame ? <ContractsTable contracts={game?.contracts as Contract[]} /> : null
-        }
+        {hasGame ? (
+          <ContractsTable contracts={game?.contracts as Contract[]} />
+        ) : null}
       </Grid>
     </Grid>
   );

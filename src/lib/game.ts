@@ -5,46 +5,68 @@ export interface Game {
   contracts: Contract[];
   declarers: Player[];
   opponents: Player[];
-  party_score: PARTY_SCORE | null;
-  called_tarock: CALLED_TAROCK | null;
+  party_score: PartyScoreValue;
+  called_tarock: CalledTarockType | null;
 }
 
-export enum CALLED_TAROCK {
-  XX = "XX",
-  XIX = "XIX",
-  XVIII = "XVIII",
-  XVII = "XVII",
-  XVI = "XVI",
-  XV = "XV",
-  XIV = "XIV",
-  XIII = "XIII",
-  XII = "XII",
-}
+type CalledTarockType =
+  | "XX"
+  | "XIX"
+  | "XVIII"
+  | "XVII"
+  | "XVI"
+  | "XV"
+  | "XIV"
+  | "XIII"
+  | "XII";
 
-export enum PARTY_SCORE {
-  KLOPICZKY = 0,
-  TOOK_THREE = 1,
-  TOOK_TWO = 2,
-  TOOK_ONE = 3,
-  SOLO = 4,
-}
+export const CALLED_TAROCK: { [K in CalledTarockType]: CalledTarockType } = {
+  XX: "XX",
+  XIX: "XIX",
+  XVIII: "XVIII",
+  XVII: "XVII",
+  XVI: "XVI",
+  XV: "XV",
+  XIV: "XIV",
+  XIII: "XIII",
+  XII: "XII",
+};
+
+export type PartyScoreType =
+  | "KLOPICZKY"
+  | "TOOK_THREE"
+  | "TOOK_TWO"
+  | "TOOK_ONE"
+  | "SOLO";
+export type PartyScoreValue = 0 | 1 | 2 | 3 | 4;
+
+export const PARTY_SCORE: { [K in PartyScoreType]: PartyScoreValue } = {
+  TOOK_THREE: 1,
+  TOOK_TWO: 2,
+  TOOK_ONE: 3,
+  SOLO: 4,
+  KLOPICZKY: 0
+};
 
 interface CreateGameProps {
-  party_score?: PARTY_SCORE | null;
-  called_tarock?: CALLED_TAROCK | null;
+  party_score?: PartyScoreValue;
+  called_tarock?: CalledTarockType;
 }
 export const createGame = (props: CreateGameProps = {}): Game => ({
   contracts: [],
   declarers: [],
   opponents: [],
-  party_score: null,
-  called_tarock: null,
+  party_score:
+    props.party_score === undefined
+      ? PARTY_SCORE.TOOK_THREE
+      : props.party_score,
+  called_tarock: props.called_tarock || null,
   ...props,
 });
 
-interface UpdateGameProps {
-  party_score?: PARTY_SCORE | null;
-  called_tarock?: CALLED_TAROCK | null;
+export interface UpdateGameProps {
+  party_score?: PartyScoreValue;
+  called_tarock?: CalledTarockType | null;
 }
 export const updateGame = (updates: UpdateGameProps) => (game: Game): Game => ({
   ...game,

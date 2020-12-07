@@ -17,17 +17,31 @@ const gameFixture = (props = {}) => ({
   contracts: [],
   declarers: [],
   opponents: [],
-  party_score: null,
+  party_score: PARTY_SCORE.TOOK_THREE,
   called_tarock: null,
   ...props,
 });
 
 export default describe("game", () => {
   describe("createGame", () => {
-    it("should create a game", () => {
+    it("should create a game with default values", () => {
       const expected = gameFixture();
 
       const current = createGame();
+
+      expect(current).toEqual(expected);
+    });
+    it("should create a game with props", () => {
+      const props = {
+        party_score: PARTY_SCORE.SOLO,
+        called_tarock: CALLED_TAROCK.XVIII
+      }
+      const expected = gameFixture({
+        party_score: PARTY_SCORE.SOLO,
+        called_tarock: CALLED_TAROCK.XVIII
+      });
+
+      const current = createGame(props);
 
       expect(current).toEqual(expected);
     });
