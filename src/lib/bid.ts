@@ -98,6 +98,8 @@ export const getBid = (type: BID_TYPE): Bid => ({ type, ...BIDS[type] });
 export const getAllBids = (): Bid[] =>
   Object.keys(BID_TYPE).map((b: BID_TYPE) => getBid(b));
 export const canSilent = (bid: Bid): boolean => bid?.silent === true;
+export const getBidScore = (partyScore: number) => (bid: Bid): number =>
+  typeof bid.score === "function" ? bid.score(partyScore) : bid.score;
 export const hasVariant = (variant: BidVariant) => (bid: Bid): boolean => {
   const variants = bid?.variants || [];
   return variants.includes(variant);

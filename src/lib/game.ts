@@ -1,4 +1,4 @@
-import { Contract } from "./contract";
+import { Contract, createContract } from "./contract";
 import { Player, PLAYER_TYPE } from "./player";
 
 export interface Game {
@@ -45,7 +45,7 @@ export const PARTY_SCORE: { [K in PartyScoreType]: PartyScoreValue } = {
   TOOK_TWO: 2,
   TOOK_ONE: 3,
   SOLO: 4,
-  KLOPICZKY: 0
+  KLOPICZKY: 0,
 };
 
 interface CreateGameProps {
@@ -68,10 +68,27 @@ export interface UpdateGameProps {
   party_score?: PartyScoreValue;
   called_tarock?: CalledTarockType | null;
 }
-export const updateGame = (updates: UpdateGameProps) => (game: Game): Game => ({
-  ...game,
-  ...updates,
-});
+export const updateGame = (updates: UpdateGameProps) => (game: Game): Game => {
+  const contracts =
+    updates.party_score === undefined
+      ? game.contracts
+      : game.contracts.map((contract) => {
+          const { bidType, taker, silent, bidVariant } = contract;
+          return createContract({
+            bidType,
+            taker,
+            silent,
+            bidVariant,
+            partyScore: updates.party_score as PartyScoreValue,
+          });
+        });
+
+  return {    
+    ...game,
+    contracts: [...contracts],
+    ...updates,
+  };
+};
 
 export const addPlayer = (player: Player, type: PLAYER_TYPE) => (
   game: Game
@@ -97,12 +114,12 @@ export const removePlayer = (player: Player) => (game: Game): Game => ({
   declarers: game.declarers.filter((p) => p !== player),
 });
 
-export const addContract = (contract: Contract) => (game: Game): Game => ({
+export const addContract = (game: Game) => (contract: Contract): Game => ({
   ...game,
   contracts: [...game.contracts, contract],
 });
 
-export const removeContract = (index: number) => (game: Game): Game => ({
+export const removeContract = (game: Game) => (index: number): Game => ({
   ...game,
   contracts: game.contracts.filter((_, i) => i !== index),
 });

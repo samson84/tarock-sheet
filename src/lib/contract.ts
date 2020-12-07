@@ -1,11 +1,13 @@
 import { PLAYER_TYPE } from "./player";
-import { BidVariant, BID_TYPE, canSilent, hasVariant, getBid } from "./bid";
+import { BidVariant, BID_TYPE, canSilent, hasVariant, getBid, getBidScore } from "./bid";
+import flow from "lodash/fp/flow";
 
 const CONTRA_NAMES = ["None", "Contra", "Recontra", "Subcontra", "Mortcontra"];
 
 type ContraMultiplier = number;
 export interface Contract {
   bidType: BID_TYPE;
+  bidBaseScore: number;
   bidVariant: BidVariant | null;
   contra: ContraMultiplier;
   winner: PLAYER_TYPE | null;
@@ -24,8 +26,9 @@ const validateContract = (contract: Contract): void | undefined => {
   }
 };
 
-interface CreateContractProps {
+export interface CreateContractProps {
   bidType: BID_TYPE;
+  partyScore: number;
   taker: PLAYER_TYPE;
   silent?: boolean;
   bidVariant?: BidVariant | null;
@@ -33,6 +36,7 @@ interface CreateContractProps {
 export const createContract = ({
   bidType,
   taker,
+  partyScore,
   silent = false,
   bidVariant = null,
 }: CreateContractProps): Contract => {
@@ -43,13 +47,13 @@ export const createContract = ({
     silent,
     winner: null,
     taker,
-  };
+    bidBaseScore: flow(getBid, getBidScore(partyScore))(bidType)
+  }
   validateContract(contract);
   return contract;
 };
 
 interface UpdateContractProps {
-  bidType?: BID_TYPE;
   taker?: PLAYER_TYPE;
   winner?: PLAYER_TYPE;
   silent?: boolean;

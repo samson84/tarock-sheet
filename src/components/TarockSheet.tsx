@@ -3,10 +3,11 @@ import { getAllBids, Bid } from "../lib/bid";
 import BidSelector from "./BidSelector";
 import sortBy from "lodash/fp/sortBy";
 import { Game, createGame, addContract, updateGame } from "../lib/game";
-import { Contract } from "../lib/contract";
+import { Contract, createContract } from "../lib/contract";
 import { Button, Grid } from "@material-ui/core";
 import ContractsTable from "./ContractsTable";
 import GameProperties from "./GameProperties";
+import { flow } from "lodash";
 
 const allBids = sortBy((b: Bid) => b.type)(getAllBids());
 
@@ -49,8 +50,13 @@ const TarockSheet = () => {
           <>
             <BidSelector
               bids={allBids}
-              onAddContract={(contract) =>
-                setGame(addContract(contract)(game as Game))
+              onAddContract={(contractProps) =>                 
+                setGame(
+                  flow(
+                    createContract, 
+                    addContract(game as Game)
+                  )({...contractProps, partyScore: (game as Game).party_score})
+                )
               }
             />
             <ContractsTable contracts={game?.contracts as Contract[]} />

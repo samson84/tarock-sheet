@@ -17,7 +17,7 @@ import {
 
 import { Bid, BidVariant, canSilent, hasVariant } from "../lib/bid";
 import { upperCaseToWords } from "../lib/util";
-import { Contract, createContract } from "../lib/contract";
+import { Contract, CreateContractProps } from "../lib/contract";
 import { PLAYER_TYPE } from "../lib/player";
 
 interface SilentSwitchProps {
@@ -75,7 +75,7 @@ const useBidDetailsStyle = makeStyles((theme) => ({
 }));
 interface BidDetailsProps {
   bid: Bid;
-  onSubmit: (contract: Contract | null) => void;
+  onSubmit: (contract: Omit<CreateContractProps, "partyScore">) => void;
 }
 const BidDetails = (props: BidDetailsProps) => {
   const [open, setOpen] = useState(false);
@@ -86,7 +86,7 @@ const BidDetails = (props: BidDetailsProps) => {
 
   const handleSubmit = (taker: PLAYER_TYPE) => {
     setOpen(false);
-    onSubmit(createContract({ bidType: bid.type, taker, silent, bidVariant }));
+    onSubmit({ bidType: bid.type, taker, silent, bidVariant});
   };
 
   const valid = bid.variants

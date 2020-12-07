@@ -190,6 +190,33 @@ export default describe("game", () => {
       const current = updateGame(updates)(game);
       expect(current).toEqual(expected);
     });
+    it("should recalculate the party score based contracts, if the party score changes", () => {
+      const updates = {
+        party_score: PARTY_SCORE.TOOK_ONE
+      }
+      const game = gameFixture({
+        party_score: PARTY_SCORE.TOOK_TWO,
+        contracts: [
+          contractFixture({
+            bidType: BID_TYPE.DOUBLE_PARTY,
+            taker: PLAYER_TYPE.OPPONENT,
+            bidBaseScore: 4
+          })
+        ]
+      })
+      const expected = gameFixture({
+        party_score: PARTY_SCORE.TOOK_ONE, // party score is 3
+        contracts: [
+          contractFixture({
+            bidType: BID_TYPE.DOUBLE_PARTY,
+            taker: PLAYER_TYPE.OPPONENT,
+            bidBaseScore: 6 // double party doubles the party score
+          })
+        ]
+      })
+      const current = updateGame(updates)(game)
+      expect(current).toEqual(expected)
+    })
   });
 
   describe("addContract", () => {
@@ -197,6 +224,7 @@ export default describe("game", () => {
       const contract = createContract({
         bidType: BID_TYPE.PARTY,
         taker: PLAYER_TYPE.DECLARER,
+        partyScore: 2
       });
       const game = gameFixture({
         contracts: [],
@@ -210,7 +238,7 @@ export default describe("game", () => {
         ],
       });
 
-      const current = addContract(contract)(game);
+      const current = addContract(game)(contract);
 
       expect(current).toEqual(expected);
     });
@@ -218,6 +246,7 @@ export default describe("game", () => {
       const contract = createContract({
         bidType: BID_TYPE.FOUR_KING,
         taker: PLAYER_TYPE.OPPONENT,
+        partyScore: 2
       });
       const game = gameFixture({
         contracts: [
@@ -240,7 +269,7 @@ export default describe("game", () => {
         ],
       });
 
-      const current = addContract(contract)(game);
+      const current = addContract(game)(contract);
 
       expect(current).toEqual(expected);
     });
@@ -255,6 +284,7 @@ export default describe("game", () => {
             bid: getBid(BID_TYPE.PARTY),
             taker: PLAYER_TYPE.DECLARER,
           }),
+          // This contract will be removed below
           contractFixture({
             bid: getBid(BID_TYPE.FOUR_KING),
             taker: PLAYER_TYPE.OPPONENT,
@@ -278,7 +308,7 @@ export default describe("game", () => {
         ],
       });
 
-      const current = removeContract(index)(game);
+      const current = removeContract(game)(index);
 
       expect(current).toEqual(expected);
     });
@@ -317,7 +347,7 @@ export default describe("game", () => {
         ],
       });
 
-      const current = removeContract(index)(game);
+      const current = removeContract(game)(index);
 
       expect(current).toEqual(expected);
     });

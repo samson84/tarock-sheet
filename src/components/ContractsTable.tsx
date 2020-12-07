@@ -75,14 +75,8 @@ const columns: ColumnDefinition[] = [
     }
   },
   {
-    headerName: "Score",
-    valueGetter: (contract) => {
-      const bid = getBid(contract.bidType)
-      return typeof bid.score === "number"
-        ? bid.score
-        : "-"
-      
-    },
+    headerName: "Base Score",
+    valueGetter: (contract) => contract.bidBaseScore,
   },
   {
     headerName: "Contra",

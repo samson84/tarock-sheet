@@ -2,6 +2,7 @@ import { BID_TYPE, CARD_SHAPE_VARIANT, SMALLEST_VARIANT } from "./bid";
 import { PLAYER_TYPE } from "./player";
 
 import { createContract, contraContract, updateContract } from "./contract";
+import { PARTY_SCORE } from "./game";
 
 export const contractFixture = (props = {}) => {
   return {
@@ -11,6 +12,7 @@ export const contractFixture = (props = {}) => {
     winner: null,
     taker: PLAYER_TYPE.DECLARER,
     bidVariant: null,
+    bidBaseScore: 2,
     ...props,
   };
 };
@@ -18,74 +20,112 @@ export const contractFixture = (props = {}) => {
 export default describe("contract", () => {
   describe("createContract", () => {
     it("should create a declarer contract", () => {
-      const bidType = BID_TYPE.FOUR_KING;
-      const taker = PLAYER_TYPE.DECLARER;
-      const expected = contractFixture({
-        bidType: BID_TYPE.FOUR_KING,
+      const props = {
+        bidType: BID_TYPE.CENTRUM,
+        partyScore: PARTY_SCORE.TOOK_TWO,
         taker: PLAYER_TYPE.DECLARER,
+      };
+      const expected = contractFixture({
+        bidType: BID_TYPE.CENTRUM,
+        taker: PLAYER_TYPE.DECLARER,
+        bidBaseScore: 10,
       });
-      const current = createContract({ bidType, taker });
+      const current = createContract(props);
       expect(current).toEqual(expected);
     });
     it("should create an opponent contract", () => {
-      const bidType = BID_TYPE.FOUR_KING;
-      const taker = PLAYER_TYPE.OPPONENT;
+      const props = {
+        bidType: BID_TYPE.FOUR_KING,
+        taker: PLAYER_TYPE.OPPONENT,
+        partyScore: PARTY_SCORE.TOOK_TWO,
+      };
       const expected = contractFixture({
         bidType: BID_TYPE.FOUR_KING,
         taker: PLAYER_TYPE.OPPONENT,
+        bidBaseScore: 2,
       });
-      const current = createContract({ bidType, taker });
+      const current = createContract(props);
+      expect(current).toEqual(expected);
+    });
+    it("should create a contract with party score dependent bid", () => {
+      const props = {
+        bidType: BID_TYPE.VOLAT,
+        taker: PLAYER_TYPE.DECLARER,
+        partyScore: PARTY_SCORE.TOOK_TWO,
+      };
+      const expected = contractFixture({
+        bidType: BID_TYPE.VOLAT,
+        taker: PLAYER_TYPE.DECLARER,
+        bidBaseScore: 12,
+      });
+      const current = createContract(props);
       expect(current).toEqual(expected);
     });
     it("should set contract to silent", () => {
-      const bidType = BID_TYPE.FOUR_KING;
-      const taker = PLAYER_TYPE.OPPONENT;
-      const silent = true;
+      const props = {
+        bidType: BID_TYPE.FOUR_KING,
+        taker: PLAYER_TYPE.OPPONENT,
+        silent: true,
+        partyScore: PARTY_SCORE.TOOK_TWO,
+      };
       const expected = contractFixture({
         bidType: BID_TYPE.FOUR_KING,
         taker: PLAYER_TYPE.OPPONENT,
         silent: true,
       });
-      const current = createContract({ bidType, taker, silent });
+      const current = createContract(props);
       expect(current).toEqual(expected);
     });
     it("should throw if the bid can not be silent", () => {
-      const bidType = BID_TYPE.PARTY;
-      const taker = PLAYER_TYPE.OPPONENT;
-      const silent = true;
+      const props = {
+        bidType: BID_TYPE.PARTY,
+        taker: PLAYER_TYPE.OPPONENT,
+        silent: true,
+        partyScore: PARTY_SCORE.TOOK_TWO,
+      };
       const expected = "PARTY can not be silent.";
-      const current = () => createContract({ bidType, taker, silent });
+      const current = () => createContract(props);
       expect(current).toThrow(expected);
     });
     it("should set contract's Bid variant", () => {
-      const bidType = BID_TYPE.KING_ULTI;
-      const taker = PLAYER_TYPE.OPPONENT;
-      const bidVariant = CARD_SHAPE_VARIANT.CLUB;
+      const props = {
+        bidType: BID_TYPE.KING_ULTI,
+        taker: PLAYER_TYPE.OPPONENT,
+        bidVariant: CARD_SHAPE_VARIANT.CLUB,
+        partyScore: PARTY_SCORE.TOOK_TWO,
+      };
       const expected = contractFixture({
         bidType: BID_TYPE.KING_ULTI,
         taker: PLAYER_TYPE.OPPONENT,
         bidVariant: CARD_SHAPE_VARIANT.CLUB,
+        bidBaseScore: 15,
       });
-      const current = createContract({ bidType, taker, bidVariant });
+      const current = createContract(props);
       expect(current).toEqual(expected);
     });
     it("should throw contract's Bid variant is invalid", () => {
-      const bidType = BID_TYPE.KING_ULTI;
-      const taker = PLAYER_TYPE.OPPONENT;
-      const bidVariant = SMALLEST_VARIANT.EAGLE;
+      const props = {
+        bidType: BID_TYPE.KING_ULTI,
+        taker: PLAYER_TYPE.OPPONENT,
+        bidVariant: SMALLEST_VARIANT.EAGLE,
+        partyScore: PARTY_SCORE.TOOK_TWO,
+      };
       const expected = "KING_ULTI does not have EAGLE variant.";
 
-      const current = () => createContract({ bidType, taker, bidVariant });
+      const current = () => createContract(props);
       expect(current).toThrow(expected);
     });
     it("should create a non variant non silent bid's contract", () => {
-      const bidType = BID_TYPE.PARTY;
-      const taker = PLAYER_TYPE.OPPONENT;
+      const props = {
+        bidType: BID_TYPE.PARTY,
+        taker: PLAYER_TYPE.OPPONENT,
+        partyScore: PARTY_SCORE.TOOK_TWO,
+      };
       const expected = contractFixture({
         bidType: BID_TYPE.PARTY,
         taker: PLAYER_TYPE.OPPONENT,
       });
-      const current = createContract({ bidType, taker });
+      const current = createContract(props);
       expect(current).toEqual(expected);
     });
   });

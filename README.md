@@ -1,12 +1,5 @@
 # TODO
 
-- [x] remove bid from contract, only save the bid type for it
-- [x] TarockSheet: Add game properties
-- [ ] Refactor scroe handling
-  - [x] game: add a default party score (TOOK_THREE) when creating
-  - [ ] contract: add an obligatory bid base score
-  - [ ] game: recalulate the contracts base bid score if the party score changes
-  - [ ] ContractsTable, use the base bid score in table
 - [ ] refactor can silent, do not leak bids details to contract layer
   - [ ] Add canSilent method to contract too.
   - [ ] refactor ContractsTable to use the new can silent on contracts.
@@ -31,3 +24,10 @@
 - [ ] align the icon in the app bar
 - [ ] split bidselector to smaller components
 - [ ] split ContractsTable to smaller components
+- [x] remove bid from contract, only save the bid type for it
+- [x] TarockSheet: Add game properties
+- [x] Refactor score handling
+  - [x] game: add a default party score (TOOK_THREE) when creating
+  - [x] contract: add an obligatory bid base score
+  - [x] game: recalulate the contracts base bid score if the party score changes
+  - [x] ContractsTable, use the base bid score in table
