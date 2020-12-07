@@ -1,8 +1,5 @@
 # TODO
 
-- [ ] refactor can silent, do not leak bids details to contract layer
-  - [ ] Add canSilent method to contract too.
-  - [ ] refactor ContractsTable to use the new can silent on contracts.
 - [ ] ContractsTable
   - [ ] Refactor the design extract Row instead of factory object to make or add onChange method to the valueGetter easier the change the specific element.
 - [ ] ContractsTable, actions
@@ -18,6 +15,10 @@
   - [ ] game: add caclulate
   - [ ] ContractsTable: Add final score column
   - [ ] Tarock Sheet: show final score
+- [ ] refactor can silent, do not leak bids details to contract layer
+  - [ ] Add canSilent method to contract too.
+  - [ ] refactor ContractsTable to use the new can silent on contracts.
+  - [ ] if a contract is silent, it should not able to apply a contra on it, and contra value should be 1
 - [ ] Add player handling
 - [ ] Add contra decrease, maybe in the same field as the contra score
 - [ ] create a better app icon

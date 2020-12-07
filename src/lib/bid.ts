@@ -77,7 +77,7 @@ const BIDS: { [key in BID_TYPE]: BidData } = {
   [BID_TYPE.NINE_TAROCK]: { score: 2 },
   [BID_TYPE.FURRY]: {
     score: 25,
-    variants: [],
+    variants: [...CARD_SHAPE_VARIANTS],
   },
   [BID_TYPE.CENTRUM]: { score: 10 },
   [BID_TYPE.SMALL_BIRD]: { score: 15 },
