@@ -35,7 +35,7 @@ const GameProperties = (props: GamePropertiesProps) => {
   const [partyScore, setPartyScore] = useState(game.party_score);
 
   return (
-    <Grid container spacing={1}>
+    <Grid container spacing={3} alignContent="space-around">
       <Grid item>
         <FormControl>
           <InputLabel id="called-tarock-selector">Called</InputLabel>
@@ -51,9 +51,9 @@ const GameProperties = (props: GamePropertiesProps) => {
           >
             {calledTarockOptions.map((option) =>
               option === "_None_" ? (
-                <MenuItem value={option}>None</MenuItem>
+                <MenuItem key={option} value={option}>None</MenuItem>
               ) : (
-                <MenuItem value={option}>{option}</MenuItem>
+                <MenuItem key={option} value={option}>{option}</MenuItem>
               )
             )}
           </Select>
@@ -72,6 +72,7 @@ const GameProperties = (props: GamePropertiesProps) => {
           >
             {partyScoreOptions.map((option: PartyScoreType) => (
               <FormControlLabel
+                key={option}
                 value={PARTY_SCORE[option]}
                 control={<Radio />}
                 label={upperCaseToWords(option)}

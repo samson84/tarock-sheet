@@ -15,54 +15,46 @@ const TarockSheet = () => {
 
   const hasGame = game !== null;
 
-  const actionButton = !hasGame ? (
-    <Button
-      variant="contained"
-      color="primary"
-      onClick={() => setGame(createGame())}
-    >
-      New Game
-    </Button>
-  ) : (
-    <Grid container spacing={1} direction="row">
-      <Grid item>
-        <Button variant="contained" onClick={() => setGame(null)}>
-          Reset Game
-        </Button>
-      </Grid>
-      <Grid item>
-        <GameProperties
-          game={game as Game}
-          onChange={(prop, value) => {
-            setGame(updateGame({ [prop]: value })(game as Game));
-          }}
-        />
-      </Grid>
-    </Grid>
-  );
-
-  const actionContent = hasGame ? (
-    <>
-      <BidSelector
-        bids={allBids}
-        onAddContract={(contract) =>
-          setGame(addContract(contract)(game as Game))
-        }
-      />
-    </>
-  ) : null;
-
   return (
     <Grid container spacing={3}>
       <Grid item>
-        <Grid container spacing={1}>
-          <Grid item>{actionButton}</Grid>
-          <Grid item>{actionContent}</Grid>
-        </Grid>
+        {!hasGame ? (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => setGame(createGame())}
+          >
+            New Game
+          </Button>
+        ) : (
+          <Grid item container spacing={1} direction="row">
+            <Grid item>
+              <Button variant="contained" onClick={() => setGame(null)}>
+                Reset Game
+              </Button>
+            </Grid>
+            <Grid item>
+              <GameProperties
+                game={game as Game}
+                onChange={(prop, value) => {
+                  setGame(updateGame({ [prop]: value })(game as Game));
+                }}
+              />
+            </Grid>
+          </Grid>
+        )}
       </Grid>
       <Grid item>
         {hasGame ? (
-          <ContractsTable contracts={game?.contracts as Contract[]} />
+          <>
+            <BidSelector
+              bids={allBids}
+              onAddContract={(contract) =>
+                setGame(addContract(contract)(game as Game))
+              }
+            />
+            <ContractsTable contracts={game?.contracts as Contract[]} />
+          </>
         ) : null}
       </Grid>
     </Grid>
