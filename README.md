@@ -3,7 +3,7 @@
 - [.] MVP
   - [.] ContractsTable, actions
     - [x] can change the silent property
-    - [ ] can change the variant
+    - [x] can change the variant
     - [ ] can change the taker
     - [ ] can change contra
       - [ ] Add contra decrease, in the same field as the contra score

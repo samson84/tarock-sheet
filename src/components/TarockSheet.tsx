@@ -65,8 +65,6 @@ const TarockSheet = () => {
             <ContractsTable
               contracts={game?.contracts as Contract[]}
               onChange={(index, field, value) => {
-                const updated = updateContract({[field]: value})((game as Game).contracts[index])
-                const updatedGame = updateGameContract(game as Game)(index)(updated)
                 setGame(
                   flow(
                     updateContract({[field]: value}),

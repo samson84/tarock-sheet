@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { Contract, UpdateContractProps } from "../lib/contract";
 import { upperCaseToWords } from "../lib/util";
 import {
@@ -11,14 +11,55 @@ import {
   IconButton,
   Switch,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
 } from "@material-ui/core";
 import { canSilent, getBid } from "../lib/bid";
 import {
   MdDelete as RemoveIcon,
   MdFilter2 as ContraIcon,
 } from "react-icons/md";
+import { BidVariant } from "../lib/bid";
+import VariantSelector from "./VariantSelector";
 import { PLAYER_TYPE } from "../lib/player";
 import curry from "lodash/fp/curry";
+
+interface VariantSelectorModalProps {
+  contract: Contract;
+  onChange: (variant: BidVariant) => void;
+}
+const VariantSelectorModal = (props: VariantSelectorModalProps) => {
+  const { contract, onChange } = props;
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+  const handleChange = (variant: BidVariant) => {
+    onChange(variant);
+    handleClose();
+  };
+
+  return (
+    <>
+      <Button onClick={handleOpen}>
+        {upperCaseToWords(contract.bidVariant || "")}
+      </Button>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogContent>
+          <VariantSelector
+            onChange={handleChange}
+            selected={contract.bidVariant}
+            bidType={contract.bidType}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  );
+};
 
 interface ActionProps {
   contract: Contract;
@@ -39,32 +80,37 @@ const Actions = (props: ActionProps) => {
 };
 
 enum ACTION_TYPE {
-  DELETE="DELETE",
-  CHANGE="CHANGE",
+  DELETE = "DELETE",
+  CHANGE = "CHANGE",
 }
 
-type ContractField = keyof UpdateContractProps
-type Field = ContractField | string
+type ContractField = keyof UpdateContractProps;
+type Field = ContractField | string;
 interface ColumnDefinition {
   field: Field;
   headerName: string;
   valueGetter?: (
     contract: Contract,
-    onAction?: (
-      actionType: ACTION_TYPE,
-      value?: any
-    ) => void
+    onAction?: (actionType: ACTION_TYPE, value?: any) => void
   ) => React.ReactNode;
 }
 const columns: ColumnDefinition[] = [
   {
     field: "bidType",
     headerName: "Bid",
-    valueGetter: (contract: Contract) => upperCaseToWords(contract?.bidType),
+    valueGetter: (contract: Contract) => upperCaseToWords(contract.bidType),
   },
   {
     field: "bidVariant",
     headerName: "Variant",
+    valueGetter: (contract, onAction) => {
+      const handleChange = (variant: BidVariant) =>
+        onAction && onAction(ACTION_TYPE.CHANGE, variant);
+
+      return (
+        <VariantSelectorModal contract={contract} onChange={handleChange} />
+      );
+    },
   },
   {
     field: "taker",
@@ -82,15 +128,11 @@ const columns: ColumnDefinition[] = [
       const silentChangeable = canSilent(getBid(contract.bidType));
       const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         const checked = event.target.checked;
-        if (typeof onAction === "function") {
-          onAction(ACTION_TYPE.CHANGE, checked)
-        }
-      }
-      return (
-        silentChangeable 
-          ? <Switch checked={contract.silent} onChange={handleChange} />
-          : null
-      );
+        onAction && onAction(ACTION_TYPE.CHANGE, checked);
+      };
+      return silentChangeable ? (
+        <Switch checked={contract.silent} onChange={handleChange} />
+      ) : null;
     },
   },
   {
@@ -108,9 +150,12 @@ const columns: ColumnDefinition[] = [
   },
 ];
 
-const isContractField = (field: Field , contract: Contract): field is ContractField => {
-  return field in contract
-}
+const isContractField = (
+  field: Field,
+  contract: Contract
+): field is ContractField => {
+  return field in contract;
+};
 
 interface ContractsTableProps {
   contracts: Contract[];
@@ -118,26 +163,24 @@ interface ContractsTableProps {
   onDelete: (index: number) => void;
 }
 const ContractsTable = (props: ContractsTableProps) => {
-  const {
-    contracts,
-    onChange,
-    onDelete
-  } = props;
+  const { contracts, onChange, onDelete } = props;
 
   function handleAction(
     index: number,
     field: ContractField | null,
     actionType: ACTION_TYPE,
     value?: any
-  ){
+  ) {
     if (actionType === ACTION_TYPE.DELETE) {
-      return onDelete(index)
+      return onDelete(index);
     }
     if (actionType === ACTION_TYPE.CHANGE && field !== null) {
-      return onChange(index, field, value)    
+      return onChange(index, field, value);
     }
-    throw new Error(`Invalid if ACTION_TYPE (${actionType}) is CHANGE the field can not be null.`)
-  };
+    throw new Error(
+      `Invalid if ACTION_TYPE (${actionType}) is CHANGE the field can not be null.`
+    );
+  }
 
   return (
     <TableContainer>
@@ -154,15 +197,19 @@ const ContractsTable = (props: ContractsTableProps) => {
             <TableRow key={rowIndex}>
               {columns.map((column, cellIndex) => (
                 <TableCell key={cellIndex}>
-                  {
-                    isContractField(column.field, contract)
-                      ? column.valueGetter
-                        ? column.valueGetter(contract, curry(handleAction)(rowIndex)(column.field))
-                        : contract[column.field]
-                      : column.valueGetter
-                        ? column.valueGetter(contract, curry(handleAction)(rowIndex)(null))
-                        : " "
-                  }
+                  {isContractField(column.field, contract)
+                    ? column.valueGetter
+                      ? column.valueGetter(
+                          contract,
+                          curry(handleAction)(rowIndex)(column.field)
+                        )
+                      : contract[column.field]
+                    : column.valueGetter
+                    ? column.valueGetter(
+                        contract,
+                        curry(handleAction)(rowIndex)(null)
+                      )
+                    : " "}
                 </TableCell>
               ))}
             </TableRow>

@@ -9,8 +9,6 @@ import {
   Switch,
   FormControlLabel,
   FormGroup,
-  RadioGroup,
-  Radio,
   makeStyles,
   Grid,
 } from "@material-ui/core";
@@ -19,6 +17,7 @@ import { Bid, BidVariant, canSilent, hasVariant } from "../lib/bid";
 import { upperCaseToWords } from "../lib/util";
 import { Contract, CreateContractProps } from "../lib/contract";
 import { PLAYER_TYPE } from "../lib/player";
+import VariantSelector from "./VariantSelector";
 
 interface SilentSwitchProps {
   bid: Bid;
@@ -37,28 +36,6 @@ const SilentSwitch = ({ bid, onChange }: SilentSwitchProps) => {
         label="Silent"
       />
     </FormGroup>
-  );
-};
-
-interface VariantSelectorProps {
-  onChange: (value: BidVariant) => void;
-  variants?: BidVariant[];
-}
-const VariantSelector = ({ variants, onChange }: VariantSelectorProps) => {
-  if (!variants) {
-    return null;
-  }
-  return (
-    <RadioGroup name="variants" onChange={(event) => onChange(event.target.value as BidVariant)}>
-      {variants.map((variant) => (
-        <FormControlLabel
-          control={
-            <Radio value={variant}  />
-          }
-          label={variant}
-        />
-      ))}
-    </RadioGroup>
   );
 };
 
@@ -105,7 +82,7 @@ const BidDetails = (props: BidDetailsProps) => {
           <CardHeader title={upperCaseToWords(bid.type)} />
           <CardContent>
             <VariantSelector
-              variants={bid.variants}
+              bidType={bid.type}
               onChange={setBidVariant}
             />
             <SilentSwitch
