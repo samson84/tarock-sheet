@@ -66,6 +66,7 @@ const BidDetails = (props: BidDetailsProps) => {
             <SilentSwitch
               bidType={bid.type}
               onChange={setSilent}
+              label
             />
           </CardContent>
           <CardActions>
