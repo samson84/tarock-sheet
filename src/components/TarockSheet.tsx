@@ -59,7 +59,7 @@ const TarockSheet = () => {
                 )
               }
             />
-            <ContractsTable contracts={game?.contracts as Contract[]} />
+            <ContractsTable contracts={game?.contracts as Contract[]} onChange={() => {}} onDelete = {() => {}} />
           </>
         ) : null}
       </Grid>
