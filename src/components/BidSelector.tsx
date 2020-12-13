@@ -39,35 +39,44 @@ const BidDetails = (props: BidDetailsProps) => {
   const classes = useBidDetailsStyle();
   const { bid, onSubmit } = props;
 
+  const reset = () => {
+    setBidVariant(null);
+    setSilent(undefined);
+  };
+
   const handleSubmit = (taker: PLAYER_TYPE) => {
     setOpen(false);
-    onSubmit({ bidType: bid.type, taker, silent, bidVariant});
+    reset();
+    onSubmit({ bidType: bid.type, taker, silent, bidVariant });
+  };
+
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => {
+    reset();
+    setOpen(false);
   };
 
   const valid = bid.variants
     ? bidVariant === null
       ? false
       : hasVariant(bidVariant)(bid)
-    : true
+    : true;
 
   return (
     <>
-      <Button variant="outlined" color="primary" onClick={() => setOpen(true)}>
+      <Button variant="outlined" color="primary" onClick={handleOpen}>
         {upperCaseToWords(bid.type)}
       </Button>
-      <Modal open={open} className={classes.modal}>
+      <Modal open={open} className={classes.modal} onClose={handleClose}>
         <Card className={classes.card}>
           <CardHeader title={upperCaseToWords(bid.type)} />
           <CardContent>
             <VariantSelector
               bidType={bid.type}
               onChange={setBidVariant}
+              selected={bidVariant}
             />
-            <SilentSwitch
-              bidType={bid.type}
-              onChange={setSilent}
-              label
-            />
+            <SilentSwitch bidType={bid.type} onChange={setSilent} label />
           </CardContent>
           <CardActions>
             <Button
@@ -112,4 +121,4 @@ const BidSelector = ({ bids, onAddContract }: BidSelectorProps) => {
   );
 };
 
-export default BidSelector
+export default BidSelector;
