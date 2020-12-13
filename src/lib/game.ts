@@ -123,3 +123,12 @@ export const removeContract = (game: Game) => (index: number): Game => ({
   ...game,
   contracts: game.contracts.filter((_, i) => i !== index),
 });
+
+export const updateGameContract = (game: Game) => (index: number) => (updated: Contract): Game => ({
+  ...game,
+  contracts: game.contracts.map((contract, i) => (
+    i === index
+      ? updated
+      : contract
+  ))
+})

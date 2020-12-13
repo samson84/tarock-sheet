@@ -9,9 +9,10 @@ import {
   CALLED_TAROCK,
   updateGame,
   removeContract,
+  updateGameContract
 } from "./game";
 import { createContract } from "./contract";
-import { BID_TYPE, getBid } from "./bid";
+import { BID_TYPE } from "./bid";
 
 const gameFixture = (props = {}) => ({
   contracts: [],
@@ -281,16 +282,16 @@ export default describe("game", () => {
       const game = gameFixture({
         contracts: [
           contractFixture({
-            bid: getBid(BID_TYPE.PARTY),
+            bidType: BID_TYPE.PARTY,
             taker: PLAYER_TYPE.DECLARER,
           }),
           // This contract will be removed below
           contractFixture({
-            bid: getBid(BID_TYPE.FOUR_KING),
+            bidType: BID_TYPE.FOUR_KING,
             taker: PLAYER_TYPE.OPPONENT,
           }),
           contractFixture({
-            bid: getBid(BID_TYPE.ULTI),
+            bidType: BID_TYPE.ULTI,
             taker: PLAYER_TYPE.DECLARER,
           }),
         ],
@@ -298,11 +299,11 @@ export default describe("game", () => {
       const expected = gameFixture({
         contracts: [
           contractFixture({
-            bid: getBid(BID_TYPE.PARTY),
+            bidType: BID_TYPE.PARTY,
             taker: PLAYER_TYPE.DECLARER,
           }),
           contractFixture({
-            bid: getBid(BID_TYPE.ULTI),
+            bidType: BID_TYPE.ULTI,
             taker: PLAYER_TYPE.DECLARER,
           }),
         ],
@@ -317,15 +318,15 @@ export default describe("game", () => {
       const game = gameFixture({
         contracts: [
           contractFixture({
-            bid: getBid(BID_TYPE.PARTY),
+            bidtype: BID_TYPE.PARTY,
             taker: PLAYER_TYPE.DECLARER,
           }),
           contractFixture({
-            bid: getBid(BID_TYPE.FOUR_KING),
+            bidtype: BID_TYPE.FOUR_KING,
             taker: PLAYER_TYPE.OPPONENT,
           }),
           contractFixture({
-            bid: getBid(BID_TYPE.ULTI),
+            bidtype: BID_TYPE.ULTI,
             taker: PLAYER_TYPE.DECLARER,
           }),
         ],
@@ -333,15 +334,15 @@ export default describe("game", () => {
       const expected = gameFixture({
         contracts: [
           contractFixture({
-            bid: getBid(BID_TYPE.PARTY),
+            bidtype: BID_TYPE.PARTY,
             taker: PLAYER_TYPE.DECLARER,
           }),
           contractFixture({
-            bid: getBid(BID_TYPE.FOUR_KING),
+            bidtype: BID_TYPE.FOUR_KING,
             taker: PLAYER_TYPE.OPPONENT,
           }),
           contractFixture({
-            bid: getBid(BID_TYPE.ULTI),
+            bidtype: BID_TYPE.ULTI,
             taker: PLAYER_TYPE.DECLARER,
           }),
         ],
@@ -352,4 +353,33 @@ export default describe("game", () => {
       expect(current).toEqual(expected);
     });
   });
+  describe("updateGameContract", () => {
+    it("should update the game contract", () => {
+      const updated = contractFixture({
+        bidType: BID_TYPE.FOUR_KING,
+        silent: true,
+      })
+      const index = 0
+      const game = gameFixture({
+        contracts: [
+          contractFixture({
+            bidType: BID_TYPE.FOUR_KING,
+            silent: false
+          })
+        ]
+      })
+      const expected = gameFixture({
+        contracts: [
+          contractFixture({
+            bidType: BID_TYPE.FOUR_KING,
+            silent: true
+          })
+        ]
+      })
+
+      const current = updateGameContract(game)(index)(updated)
+
+      expect(current).toEqual(expected)
+    })
+  })
 });

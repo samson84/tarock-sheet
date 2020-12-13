@@ -1,11 +1,8 @@
 # TODO
 
-- [ ] MVP
-  - [x] ContractsTable
-    - [x] Refactor the design extract Row instead of factory object to make or use an onAction callback
-    - [x] Correct the typing on ColumnDefinition, field should not relate to the Contract
-  - [ ] ContractsTable, actions
-    - [ ] can change the silent property
+- [.] MVP
+  - [.] ContractsTable, actions
+    - [x] can change the silent property
     - [ ] can change the variant
     - [ ] can change the taker
     - [ ] can change contra
@@ -47,6 +44,9 @@
 - [ ] split bidselector to smaller components
 - [ ] split ContractsTable to smaller components
 - [x] Done
+  - [x] ContractsTable
+    - [x] Refactor the design extract Row instead of factory object to make or use an onAction callback
+    - [x] Correct the typing on ColumnDefinition, field should not relate to the Contract
   - [x] remove bid from contract, only save the bid type for it
   - [x] TarockSheet: Add game properties
   - [x] Refactor score handling

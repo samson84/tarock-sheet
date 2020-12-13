@@ -53,7 +53,7 @@ export const createContract = ({
   return contract;
 };
 
-interface UpdateContractProps {
+export interface UpdateContractProps {
   taker?: PLAYER_TYPE;
   winner?: PLAYER_TYPE;
   silent?: boolean;

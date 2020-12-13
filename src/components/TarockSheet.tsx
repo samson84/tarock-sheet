@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { getAllBids, Bid } from "../lib/bid";
 import BidSelector from "./BidSelector";
 import sortBy from "lodash/fp/sortBy";
-import { Game, createGame, addContract, updateGame } from "../lib/game";
-import { Contract, createContract } from "../lib/contract";
+import { Game, createGame, addContract, updateGame, updateGameContract } from "../lib/game";
+import { Contract, createContract, updateContract} from "../lib/contract";
 import { Button, Grid } from "@material-ui/core";
 import ContractsTable from "./ContractsTable";
 import GameProperties from "./GameProperties";
@@ -50,16 +50,34 @@ const TarockSheet = () => {
           <>
             <BidSelector
               bids={allBids}
-              onAddContract={(contractProps) =>                 
+              onAddContract={(contractProps) =>
                 setGame(
                   flow(
-                    createContract, 
+                    createContract,
                     addContract(game as Game)
-                  )({...contractProps, partyScore: (game as Game).party_score})
+                  )({
+                    ...contractProps,
+                    partyScore: (game as Game).party_score,
+                  })
                 )
               }
             />
-            <ContractsTable contracts={game?.contracts as Contract[]} onChange={() => {}} onDelete = {() => {}} />
+            <ContractsTable
+              contracts={game?.contracts as Contract[]}
+              onChange={(index, field, value) => {
+                const updated = updateContract({[field]: value})((game as Game).contracts[index])
+                const updatedGame = updateGameContract(game as Game)(index)(updated)
+                setGame(
+                  flow(
+                    updateContract({[field]: value}),
+                    updateGameContract(game as Game)(index)
+                  )(
+                    (game as Game).contracts[index]
+                  )
+                )
+              }}
+              onDelete={() => {}}
+            />
           </>
         ) : null}
       </Grid>

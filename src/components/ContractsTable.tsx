@@ -1,5 +1,5 @@
-import React from "react";
-import { Contract } from "../lib/contract";
+import React, { ChangeEvent } from "react";
+import { Contract, UpdateContractProps } from "../lib/contract";
 import { upperCaseToWords } from "../lib/util";
 import {
   TableContainer,
@@ -43,7 +43,7 @@ enum ACTION_TYPE {
   CHANGE="CHANGE",
 }
 
-type ContractField = keyof Contract
+type ContractField = keyof UpdateContractProps
 type Field = ContractField | string
 interface ColumnDefinition {
   field: Field;
@@ -54,7 +54,7 @@ interface ColumnDefinition {
       actionType: ACTION_TYPE,
       value?: any
     ) => void
-  ) => string | number | React.ReactElement;
+  ) => React.ReactNode;
 }
 const columns: ColumnDefinition[] = [
   {
@@ -78,9 +78,19 @@ const columns: ColumnDefinition[] = [
   {
     field: "silent",
     headerName: "Silent",
-    valueGetter: (contract) => {
+    valueGetter: (contract, onAction) => {
       const silentChangeable = canSilent(getBid(contract.bidType));
-      return <Switch checked={contract.silent} disabled={!silentChangeable} />;
+      const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const checked = event.target.checked;
+        if (typeof onAction === "function") {
+          onAction(ACTION_TYPE.CHANGE, checked)
+        }
+      }
+      return (
+        silentChangeable 
+          ? <Switch checked={contract.silent} onChange={handleChange} />
+          : null
+      );
     },
   },
   {
