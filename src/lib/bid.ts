@@ -1,5 +1,3 @@
-import _ from "lodash/fp";
-
 export interface Bid extends BidData {
   type: BID_TYPE;
 }
