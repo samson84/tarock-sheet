@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { useState } from "react";
 import { Contract, UpdateContractProps } from "../lib/contract";
 import { upperCaseToWords } from "../lib/util";
 import {
@@ -9,19 +9,18 @@ import {
   TableCell,
   TableRow,
   IconButton,
-  Switch,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
 } from "@material-ui/core";
-import { canSilent, getBid } from "../lib/bid";
 import {
   MdDelete as RemoveIcon,
   MdFilter2 as ContraIcon,
 } from "react-icons/md";
 import { BidVariant } from "../lib/bid";
 import VariantSelector from "./VariantSelector";
+import SilentSwitch from "./SilentSwitch";
 import { PLAYER_TYPE } from "../lib/player";
 import curry from "lodash/fp/curry";
 
@@ -125,14 +124,10 @@ const columns: ColumnDefinition[] = [
     field: "silent",
     headerName: "Silent",
     valueGetter: (contract, onAction) => {
-      const silentChangeable = canSilent(getBid(contract.bidType));
-      const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const checked = event.target.checked;
-        onAction && onAction(ACTION_TYPE.CHANGE, checked);
-      };
-      return silentChangeable ? (
-        <Switch checked={contract.silent} onChange={handleChange} />
-      ) : null;
+      const handleChange = (silent: boolean) => onAction && onAction(ACTION_TYPE.CHANGE, silent)
+      return (
+        <SilentSwitch bidType={contract.bidType} onChange={handleChange} value={contract.silent} />
+      )
     },
   },
   {

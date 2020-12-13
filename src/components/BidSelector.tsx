@@ -6,38 +6,16 @@ import {
   CardContent,
   CardHeader,
   Modal,
-  Switch,
-  FormControlLabel,
-  FormGroup,
   makeStyles,
   Grid,
 } from "@material-ui/core";
 
-import { Bid, BidVariant, canSilent, hasVariant } from "../lib/bid";
+import { Bid, BidVariant, hasVariant } from "../lib/bid";
 import { upperCaseToWords } from "../lib/util";
 import { Contract, CreateContractProps } from "../lib/contract";
 import { PLAYER_TYPE } from "../lib/player";
 import VariantSelector from "./VariantSelector";
-
-interface SilentSwitchProps {
-  bid: Bid;
-  onChange: (value: boolean) => void;
-}
-const SilentSwitch = ({ bid, onChange }: SilentSwitchProps) => {
-  if (!canSilent(bid)) {
-    return null;
-  }
-  return (
-    <FormGroup>
-      <FormControlLabel
-        control={
-          <Switch onChange={(event) => onChange(event.target.checked)} />
-        }
-        label="Silent"
-      />
-    </FormGroup>
-  );
-};
+import SilentSwitch from "./SilentSwitch";
 
 const useBidDetailsStyle = makeStyles((theme) => ({
   modal: {
@@ -86,7 +64,7 @@ const BidDetails = (props: BidDetailsProps) => {
               onChange={setBidVariant}
             />
             <SilentSwitch
-              bid={bid}
+              bidType={bid.type}
               onChange={setSilent}
             />
           </CardContent>
