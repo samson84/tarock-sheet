@@ -114,10 +114,14 @@ const columns: ColumnDefinition[] = [
   {
     field: "taker",
     headerName: "Taker",
-    valueGetter: (contract) => {
+    valueGetter: (contract, onAction) => {
+      const newTaker = contract.taker === PLAYER_TYPE.DECLARER
+        ? PLAYER_TYPE.OPPONENT
+        : PLAYER_TYPE.DECLARER
+      const handleClick = () => onAction && onAction(ACTION_TYPE.CHANGE, newTaker)
       const color =
         contract.taker === PLAYER_TYPE.DECLARER ? "primary" : "secondary";
-      return <Button color={color}>{contract.taker}</Button>;
+      return <Button color={color} onClick={handleClick}>{contract.taker}</Button>;
     },
   },
   {
