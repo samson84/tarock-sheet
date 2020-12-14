@@ -1,7 +1,7 @@
 import { BID_TYPE, CARD_SHAPE_VARIANT, SMALLEST_VARIANT } from "./bid";
 import { PLAYER_TYPE } from "./player";
 
-import { createContract, updateContract } from "./contract";
+import { calculateContract, createContract, updateContract } from "./contract";
 import { PARTY_SCORE } from "./game";
 
 import { contractFixture } from "./test_data/fixtures";
@@ -244,5 +244,97 @@ export default describe("contract", () => {
       const current = () => updateContract(updates)(contract);
       expect(current).toThrow(expected);
     });
+  });
+  describe("calculateContract", () => {
+    it("should return null if no winner", () => {
+      const contract = contractFixture({
+        bidType: BID_TYPE.ULTI,
+        bidBaseScore: 10,
+        bidVariant: SMALLEST_VARIANT.PAGAT,
+        contra: 1,
+        winByTaker: null,
+        taker: PLAYER_TYPE.DECLARER,
+        silent: false,
+      });
+      const expected = null;
+
+      const current = calculateContract(contract);
+      expect(current).toEqual(expected);
+    });
+    it("shouls return the base score if it is won by the taker", () => {
+      const contract = contractFixture({
+        bidType: BID_TYPE.ULTI,
+        bidBaseScore: 10,
+        bidVariant: SMALLEST_VARIANT.PAGAT,
+        contra: 2,
+        winByTaker: true,
+        taker: PLAYER_TYPE.DECLARER,
+        silent: false,
+      });
+      const expected = 20;
+
+      const current = calculateContract(contract);
+      expect(current).toEqual(expected);
+    })
+    it("should return the minus score if it is lose by the taker", () => {
+      const contract = contractFixture({
+        bidType: BID_TYPE.ULTI,
+        bidBaseScore: 10,
+        bidVariant: SMALLEST_VARIANT.PAGAT,
+        contra: 2,
+        winByTaker: false,
+        taker: PLAYER_TYPE.DECLARER,
+        silent: false,
+      });
+      const expected = -20;
+
+      const current = calculateContract(contract);
+      expect(current).toEqual(expected);
+    })
+    it("should return the half base score if silent.", () => {
+      const contract = contractFixture({
+        bidType: BID_TYPE.ULTI,
+        bidBaseScore: 10,
+        bidVariant: SMALLEST_VARIANT.PAGAT,
+        contra: 1,
+        winByTaker: true,
+        taker: PLAYER_TYPE.DECLARER,
+        silent: true,
+      });
+      const expected = 5;
+
+      const current = calculateContract(contract);
+      expect(current).toEqual(expected);
+    })
+    it("should return the half base score if silent, contra > 1", () => {
+      const contract = contractFixture({
+        bidType: BID_TYPE.ULTI,
+        bidBaseScore: 10,
+        bidVariant: SMALLEST_VARIANT.PAGAT,
+        contra: 16,
+        winByTaker: true,
+        taker: PLAYER_TYPE.DECLARER,
+        silent: true,
+      });
+      const expected = 5;
+
+      const current = calculateContract(contract);
+      expect(current).toEqual(expected);
+    })
+    it("should return the half base score negative if silent, contra > 1, and loose", () => {
+      const contract = contractFixture({
+        bidType: BID_TYPE.ULTI,
+        bidBaseScore: 10,
+        bidVariant: SMALLEST_VARIANT.PAGAT,
+        contra: 16,
+        winByTaker: false,
+        taker: PLAYER_TYPE.DECLARER,
+        silent: true,
+      });
+      const expected = -5;
+
+      const current = calculateContract(contract);
+      expect(current).toEqual(expected);
+    })
   });
 });

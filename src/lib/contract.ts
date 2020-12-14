@@ -85,3 +85,17 @@ export const updateContract = (updates: UpdateContractProps) => (
   validateContract(updated);
   return updated;
 };
+
+export type ContractScore = number | null
+
+export const calculateContract = (contract: Contract): ContractScore => {
+  const {winByTaker, bidBaseScore, contra, silent} = contract
+  if(winByTaker === null) {
+    return null;
+  }
+  const multiplier = silent
+    ? 0.5
+    : contra
+  const sign = winByTaker ? 1 : -1
+  return sign * bidBaseScore  * multiplier
+}

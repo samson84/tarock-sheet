@@ -1,5 +1,9 @@
 import React, { useState } from "react";
-import { Contract, UpdateContractProps } from "../lib/contract";
+import {
+  calculateContract,
+  Contract,
+  UpdateContractProps,
+} from "../lib/contract";
 import { upperCaseToWords } from "../lib/util";
 import {
   TableContainer,
@@ -14,11 +18,12 @@ import {
   DialogActions,
   DialogContent,
   Checkbox,
+  Typography as T
 } from "@material-ui/core";
 import {
   MdDelete as RemoveIcon,
   MdArrowUpward as DoubleContraIcon,
-  MdArrowDownward as DivideContraIcon
+  MdArrowDownward as DivideContraIcon,
 } from "react-icons/md";
 import { BidVariant } from "../lib/bid";
 import VariantSelector from "./VariantSelector";
@@ -99,23 +104,34 @@ const columns: ColumnDefinition[] = [
     field: "taker",
     headerName: "Taker",
     valueGetter: (contract, onAction) => {
-      const newTaker = contract.taker === PLAYER_TYPE.DECLARER
-        ? PLAYER_TYPE.OPPONENT
-        : PLAYER_TYPE.DECLARER
-      const handleClick = () => onAction && onAction(ACTION_TYPE.CHANGE, newTaker)
+      const newTaker =
+        contract.taker === PLAYER_TYPE.DECLARER
+          ? PLAYER_TYPE.OPPONENT
+          : PLAYER_TYPE.DECLARER;
+      const handleClick = () =>
+        onAction && onAction(ACTION_TYPE.CHANGE, newTaker);
       const color =
         contract.taker === PLAYER_TYPE.DECLARER ? "primary" : "secondary";
-      return <Button color={color} onClick={handleClick}>{contract.taker}</Button>;
+      return (
+        <Button color={color} onClick={handleClick}>
+          {contract.taker}
+        </Button>
+      );
     },
   },
   {
     field: "silent",
     headerName: "Silent",
     valueGetter: (contract, onAction) => {
-      const handleChange = (silent: boolean) => onAction && onAction(ACTION_TYPE.CHANGE, silent)
+      const handleChange = (silent: boolean) =>
+        onAction && onAction(ACTION_TYPE.CHANGE, silent);
       return (
-        <SilentSwitch bidType={contract.bidType} onChange={handleChange} value={contract.silent} />
-      )
+        <SilentSwitch
+          bidType={contract.bidType}
+          onChange={handleChange}
+          value={contract.silent}
+        />
+      );
     },
   },
   {
@@ -126,64 +142,91 @@ const columns: ColumnDefinition[] = [
     headerName: "Contra",
     field: "contra",
     valueGetter: (contract, onAction) => {
-      const handleClick = (contra: number) => onAction && onAction(ACTION_TYPE.CHANGE, contra)
-      const handleDivide = () => contract.contra > 1 && handleClick(contract.contra / 2)
-      const handleDouble = () => handleClick(contract.contra * 2)
+      const handleClick = (contra: number) =>
+        onAction && onAction(ACTION_TYPE.CHANGE, contra);
+      const handleDivide = () =>
+        contract.contra > 1 && handleClick(contract.contra / 2);
+      const handleDouble = () => handleClick(contract.contra * 2);
       return (
         <>
-          {contract.contra}
-          <IconButton title="Double" onClick={handleDouble}>
+          <T
+            component={contract.silent === true ? "s" : "span"}
+            color={contract.silent === true ? "textPrimary" : "textSecondary"}
+          >
+            {contract.contra}
+          </T>
+          <IconButton
+            title="Double"
+            onClick={handleDouble}
+            disabled={contract.silent}
+          >
             <DoubleContraIcon />
           </IconButton>
-          <IconButton title="Divide by 2" onClick={handleDivide} disabled={contract.contra === 1}>
+          <IconButton
+            title="Divide by 2"
+            onClick={handleDivide}
+            disabled={contract.contra === 1 || contract.silent}
+          >
             <DivideContraIcon />
           </IconButton>
         </>
-      )
-    }
+      );
+    },
   },
   {
     field: "winByTaker",
     headerName: "Win by the Taker?",
     valueGetter: (contract, onAction) => {
-      const {winByTaker, taker} = contract;
+      const { winByTaker, taker } = contract;
       const handleClick = () => {
-        const nextValue = winByTaker === null
-          ? true
-          : winByTaker === true
-            ? false
-            : null
-        onAction && onAction(ACTION_TYPE.CHANGE, nextValue)
-      }
+        const nextValue =
+          winByTaker === null ? true : winByTaker === true ? false : null;
+        onAction && onAction(ACTION_TYPE.CHANGE, nextValue);
+      };
 
-      const title = winByTaker === true
-        ? 'Won by the Taker!'
-        : winByTaker === false
+      const title =
+        winByTaker === true
+          ? "Won by the Taker!"
+          : winByTaker === false
           ? "Lose by the Taker!"
-          : "Indeterminate..."
+          : "Indeterminate...";
 
       return (
         <Checkbox
-          title={title} 
+          title={title}
           checked={winByTaker === true}
           indeterminate={winByTaker === null}
           onClick={handleClick}
           color={taker === PLAYER_TYPE.DECLARER ? "primary" : "secondary"}
         />
-      )
-    }
+      );
+    },
+  },
+  {
+    field: "takerScore",
+    headerName: "Taker score",
+    valueGetter: (contract) => (
+      <T
+        variant="button"
+        color={
+          contract.taker === PLAYER_TYPE.DECLARER ? "primary" : "secondary"
+        }
+      >
+        {calculateContract(contract)}
+      </T>
+    ),
   },
   {
     field: "actions",
     headerName: " ",
     valueGetter: (_, onAction) => {
-      const handleClick = () => onAction && onAction(ACTION_TYPE.DELETE, null)
+      const handleClick = () => onAction && onAction(ACTION_TYPE.DELETE, null);
       return (
         <IconButton title="Remove" onClick={handleClick}>
           <RemoveIcon />
         </IconButton>
-      )
-    }
+      );
+    },
   },
 ];
 
@@ -242,11 +285,11 @@ const ContractsTable = (props: ContractsTableProps) => {
                         )
                       : contract[column.field]
                     : column.valueGetter
-                      ? column.valueGetter(
-                          contract,
-                          curry(handleAction)(rowIndex)(null)
-                        )
-                      : " "}
+                    ? column.valueGetter(
+                        contract,
+                        curry(handleAction)(rowIndex)(null)
+                      )
+                    : " "}
                 </TableCell>
               ))}
             </TableRow>

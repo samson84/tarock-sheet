@@ -4,28 +4,39 @@
     - [x] contract: change winner to win by taker: boolean | null
     - [x] ContractsTable: Add the winner column.
     - [x] ContractsTable: Can change the winner.
-    - [ ] contract: add calculate
+    - [x] contract: add calculate
     - [ ] game: add caclulate
-    - [ ] ContractsTable: Add final score column
+    - [x] ContractsTable: Add final score column
     - [ ] Tarock Sheet: show final score
-  - [ ] if a contract is silent, it should not able to apply a contra on it, 
   - [ ] Add player handling
 - [ ] Milesteone 1
   - [ ] handle multiple games, score sheet
   - [ ] responsive design check
   - [ ] add undo & redo (?)
-  - [ ] shortcuts
-    - [ ] when klopitzky ticked, remove all contracts and add klopiczky contract, and make it winner
-    - [ ] when party game ticked add party automatically, remove klopiczky
-    - [ ] remove reset game, use the new game button for the purpose
-  - [ ] add confirmation to new game
-  - [ ] refactor can silent, do not leak bids details to contract layer
-    - [ ] Add canSilent method to contract too.
-    - [ ] refactor ContractsTable to use the new can silent on contracts.
-    and contra value should be 1
-  - [ ] rename BidSelector to ContractSelector
-  - [ ] rename TarockSheet to Game component
-  - [ ] rename game props to camelCase, party_score, called_tarock
+  - [ ] usability
+    - [x] ContractTable: when a contract silent, show visually that the contra does not take into account.
+    - [ ] ContractTable: if a contract is silent, it should not able to apply a contra on it, 
+    - [ ] Game Properties: show score near the game score selector radio buttons
+    - [ ] BidSelector: show the score near the bids
+    - [ ] ContractsTable: show the the contra names instead of the values
+    - [ ] ContractsTable: integrate bid variant into the bid column
+    - [ ] add confirmation to new game
+    - [ ] disable contra for eight, nine tarock
+    - [ ] ContractsTable: automatically won by the eight and nine tarock
+    - [ ] when something is added with silent automatically win except ulti
+    - [ ] shortcuts
+      - [ ] when klopitzky ticked, remove all contracts and add klopiczky contract, and make it winner
+      - [ ] when party game ticked add party automatically, remove klopiczky
+      - [ ] remove reset game, use the new game button for the purpose
+  - [ ] refactor
+    - [ ] game, contract: simplify create and update methods with same parameter set
+    - [ ] BidSelector: Refactor Modal to Dialog
+    - [ ] refactor can silent, do not leak bids details to contract layer
+      - [ ] Add canSilent method to contract too.
+      - [ ] refactor ContractsTable to use the new can silent contracts.      
+    - [ ] rename BidSelector to ContractSelector
+    - [ ] rename TarockSheet to Game component
+    - [ ] rename game props to camelCase, party_score, called_tarock
   - [ ] deploy the app to github pages + set up pipline
 - [ ] Milestone 2
   - [ ] save the games locally
