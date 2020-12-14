@@ -19,6 +19,7 @@ export enum BID_TYPE {
   DOUBLE_PARTY = "DOUBLE_PARTY",
   VOLAT = "VOLAT",
   PHEASANT = "PHEASANT",
+  PHEASANT_IN_2ND = "PHEASANT_IN_2ND",
   EIGHT_TAROCK = "EIGHT_TAROCK",
   NINE_TAROCK = "NINE_TAROCK",
   FURRY = "FURRY",
@@ -66,11 +67,12 @@ const BIDS: { [key in BID_TYPE]: BidData } = {
   },
   [BID_TYPE.UHU]: { score: 15, variants: [...SMALLEST_VARIANTS] },
   [BID_TYPE.DOUBLE_PARTY]: {
-    score: (party: number) => party * 2,
+    score: (party: number) => party * 4,
     silent: true,
   },
   [BID_TYPE.VOLAT]: { score: (party: number) => party * 6, silent: true },
   [BID_TYPE.PHEASANT]: { score: 50, variants: [...SMALLEST_VARIANTS] },
+  [BID_TYPE.PHEASANT_IN_2ND]: { score: 50, variants: [...SMALLEST_VARIANTS] },
   [BID_TYPE.EIGHT_TAROCK]: { score: 1 },
   [BID_TYPE.NINE_TAROCK]: { score: 2 },
   [BID_TYPE.FURRY]: {

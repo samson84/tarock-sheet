@@ -211,7 +211,7 @@ export default describe("game", () => {
           contractFixture({
             bidType: BID_TYPE.DOUBLE_PARTY,
             taker: PLAYER_TYPE.OPPONENT,
-            bidBaseScore: 6 // double party doubles the party score
+            bidBaseScore: 12 // double party 4 times the party score
           })
         ]
       })
