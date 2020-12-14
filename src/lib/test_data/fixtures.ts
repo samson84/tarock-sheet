@@ -6,7 +6,7 @@ export const contractFixture = (props = {}) => {
     bidType: BID_TYPE.FOUR_KING,
     contra: 1,
     silent: false,
-    winner: null,
+    winByTaker: null,
     taker: PLAYER_TYPE.DECLARER,
     bidVariant: null,
     bidBaseScore: 2,

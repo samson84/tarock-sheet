@@ -1,17 +1,9 @@
 # TODO
-
 - [.] MVP
-  - [x] ContractsTable, actions
-    - [x] can change the silent property
-    - [x] can change the variant
-    - [x] can change the taker
-    - [x] can change contra
-      - [x] Add contra decrease, in the same field as the contra score
-    - [x] can remove
   - [ ] Calculate score
-    - [ ] contract: change winner to win by taker: boolean | null
-    - [ ] ContractsTable: Add the winner column.
-    - [ ] ContractsTable: Can change the winner.
+    - [x] contract: change winner to win by taker: boolean | null
+    - [x] ContractsTable: Add the winner column.
+    - [x] ContractsTable: Can change the winner.
     - [ ] contract: add calculate
     - [ ] game: add caclulate
     - [ ] ContractsTable: Add final score column
@@ -19,6 +11,8 @@
   - [ ] if a contract is silent, it should not able to apply a contra on it, 
   - [ ] Add player handling
 - [ ] Milesteone 1
+  - [ ] handle multiple games, score sheet
+  - [ ] responsive design check
   - [ ] add undo & redo (?)
   - [ ] shortcuts
     - [ ] when klopitzky ticked, remove all contracts and add klopiczky contract, and make it winner
@@ -44,6 +38,13 @@
 - [ ] split bidselector to smaller components
 - [ ] split ContractsTable to smaller components
 - [x] Done
+  - [x] ContractsTable, actions
+    - [x] can change the silent property
+    - [x] can change the variant
+    - [x] can change the taker
+    - [x] can change contra
+      - [x] Add contra decrease, in the same field as the contra score
+    - [x] can remove
   - [x] ContractsTable
     - [x] Refactor the design extract Row instead of factory object to make or use an onAction callback
     - [x] Correct the typing on ColumnDefinition, field should not relate to the Contract

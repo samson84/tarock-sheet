@@ -13,6 +13,7 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
+  Checkbox,
 } from "@material-ui/core";
 import {
   MdDelete as RemoveIcon,
@@ -138,6 +139,37 @@ const columns: ColumnDefinition[] = [
             <DivideContraIcon />
           </IconButton>
         </>
+      )
+    }
+  },
+  {
+    field: "winByTaker",
+    headerName: "Win by the Taker?",
+    valueGetter: (contract, onAction) => {
+      const {winByTaker, taker} = contract;
+      const handleClick = () => {
+        const nextValue = winByTaker === null
+          ? true
+          : winByTaker === true
+            ? false
+            : null
+        onAction && onAction(ACTION_TYPE.CHANGE, nextValue)
+      }
+
+      const title = winByTaker === true
+        ? 'Won by the Taker!'
+        : winByTaker === false
+          ? "Lose by the Taker!"
+          : "Indeterminate..."
+
+      return (
+        <Checkbox
+          title={title} 
+          checked={winByTaker === true}
+          indeterminate={winByTaker === null}
+          onClick={handleClick}
+          color={taker === PLAYER_TYPE.DECLARER ? "primary" : "secondary"}
+        />
       )
     }
   },

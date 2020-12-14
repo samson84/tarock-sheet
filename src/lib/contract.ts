@@ -17,7 +17,7 @@ export interface Contract {
   bidBaseScore: number;
   bidVariant: BidVariant | null;
   contra: ContraMultiplier;
-  winner: PLAYER_TYPE | null;
+  winByTaker: boolean | null;
   taker: PLAYER_TYPE;
   silent: boolean;
 }
@@ -59,7 +59,7 @@ export const createContract = ({
     bidVariant,
     contra: 1,
     silent,
-    winner: null,
+    winByTaker: null,
     taker,
     bidBaseScore: flow(getBid, getBidScore(partyScore))(bidType),
   };
@@ -68,7 +68,7 @@ export const createContract = ({
 };
 
 export type UpdateContractProps = Partial<
-  Pick<Contract, "taker" | "winner" | "silent" | "bidVariant" | "contra">
+  Pick<Contract, "taker" | "winByTaker" | "silent" | "bidVariant" | "contra">
 >;
 export const updateContract = (updates: UpdateContractProps) => (
   contract: Contract

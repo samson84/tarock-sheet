@@ -134,13 +134,13 @@ export default describe("contract", () => {
     });
     it("should update the winner", () => {
       const contract = contractFixture({
-        winner: null,
+        winByTaker: null,
       });
       const updates = {
-        winner: PLAYER_TYPE.OPPONENT,
+        winByTaker: true,
       };
       const expected = contractFixture({
-        winner: PLAYER_TYPE.OPPONENT,
+        winByTaker: true,
       });
       const current = updateContract(updates)(contract);
       expect(current).toEqual(expected);
