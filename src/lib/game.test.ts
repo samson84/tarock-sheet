@@ -218,6 +218,37 @@ export default describe("game", () => {
       const current = updateGame(updates)(game)
       expect(current).toEqual(expected)
     })
+    it("should keep the contracts update only properties", () => {
+      const updates = {
+        party_score: PARTY_SCORE.TOOK_ONE
+      }
+      const game = gameFixture({
+        party_score: PARTY_SCORE.TOOK_TWO,
+        contracts: [
+          contractFixture({
+            bidType: BID_TYPE.DOUBLE_PARTY,
+            taker: PLAYER_TYPE.OPPONENT,
+            bidBaseScore: 4,
+            winByTaker: true,
+            contra: 4
+          })
+        ]
+      })
+      const expected = gameFixture({
+        party_score: PARTY_SCORE.TOOK_ONE, // party score is 3
+        contracts: [
+          contractFixture({
+            bidType: BID_TYPE.DOUBLE_PARTY,
+            taker: PLAYER_TYPE.OPPONENT,
+            bidBaseScore: 12, // double party 4 times the party score
+            winByTaker: true,
+            contra: 4
+          })
+        ]
+      })
+      const current = updateGame(updates)(game)
+      expect(current).toEqual(expected)
+    })
   });
 
   describe("addContract", () => {

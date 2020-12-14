@@ -1,4 +1,4 @@
-import { Contract, createContract } from "./contract";
+import { Contract, updatebidBaseScore } from "./contract";
 import { Player, PLAYER_TYPE } from "./player";
 
 export interface Game {
@@ -72,16 +72,7 @@ export const updateGame = (updates: UpdateGameProps) => (game: Game): Game => {
   const contracts =
     updates.party_score === undefined
       ? game.contracts
-      : game.contracts.map((contract) => {
-          const { bidType, taker, silent, bidVariant } = contract;
-          return createContract({
-            bidType,
-            taker,
-            silent,
-            bidVariant,
-            partyScore: updates.party_score as PartyScoreValue,
-          });
-        });
+      : game.contracts.map(updatebidBaseScore(updates.party_score as PartyScoreValue));
 
   return {    
     ...game,
