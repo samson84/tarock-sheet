@@ -4,7 +4,7 @@ import { PLAYER_TYPE } from "./player";
 import { createContract, updateContract } from "./contract";
 import { PARTY_SCORE } from "./game";
 
-import { contractFixture } from "./test_data/fixtures"
+import { contractFixture } from "./test_data/fixtures";
 
 export default describe("contract", () => {
   describe("createContract", () => {
@@ -220,8 +220,8 @@ export default describe("contract", () => {
         contra: 4,
       });
       const current = updateContract(updates)(contract);
-      expect(current).toEqual(expected);      
-    })
+      expect(current).toEqual(expected);
+    });
     it("sould throw if the contra is not the power of two", () => {
       const contract = contractFixture({
         contra: 2,
@@ -231,7 +231,18 @@ export default describe("contract", () => {
       };
       const expected = "Contra must be power of two, but 5 given.";
       const current = () => updateContract(updates)(contract);
-      expect(current).toThrow(expected);       
-    })
+      expect(current).toThrow(expected);
+    });
+    it("sould throw if the contra is less than one.", () => {
+      const contract = contractFixture({
+        contra: 2,
+      });
+      const updates = {
+        contra: 0.5,
+      };
+      const expected = "Contra must be greater than 1, but 0.5 given.";
+      const current = () => updateContract(updates)(contract);
+      expect(current).toThrow(expected);
+    });
   });
 });

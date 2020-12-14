@@ -16,7 +16,8 @@ import {
 } from "@material-ui/core";
 import {
   MdDelete as RemoveIcon,
-  MdFilter2 as ContraIcon,
+  MdArrowUpward as DoubleContraIcon,
+  MdArrowDownward as DivideContraIcon
 } from "react-icons/md";
 import { BidVariant } from "../lib/bid";
 import VariantSelector from "./VariantSelector";
@@ -56,24 +57,6 @@ const VariantSelectorModal = (props: VariantSelectorModalProps) => {
           <Button onClick={handleClose}>Cancel</Button>
         </DialogActions>
       </Dialog>
-    </>
-  );
-};
-
-interface ActionProps {
-  contract: Contract;
-}
-const Actions = (props: ActionProps) => {
-  const { contract } = props;
-
-  return (
-    <>
-      <IconButton title="Contra">
-        <ContraIcon />
-      </IconButton>
-      <IconButton title="Remove">
-        <RemoveIcon />
-      </IconButton>
     </>
   );
 };
@@ -141,11 +124,34 @@ const columns: ColumnDefinition[] = [
   {
     headerName: "Contra",
     field: "contra",
+    valueGetter: (contract, onAction) => {
+      const handleClick = (contra: number) => onAction && onAction(ACTION_TYPE.CHANGE, contra)
+      const handleDivide = () => contract.contra > 1 && handleClick(contract.contra / 2)
+      const handleDouble = () => handleClick(contract.contra * 2)
+      return (
+        <>
+          {contract.contra}
+          <IconButton title="Double" onClick={handleDouble}>
+            <DoubleContraIcon />
+          </IconButton>
+          <IconButton title="Divide by 2" onClick={handleDivide} disabled={contract.contra === 1}>
+            <DivideContraIcon />
+          </IconButton>
+        </>
+      )
+    }
   },
   {
     field: "actions",
-    headerName: "Actions",
-    valueGetter: (contract) => <Actions contract={contract} />,
+    headerName: " ",
+    valueGetter: (_, onAction) => {
+      const handleClick = () => onAction && onAction(ACTION_TYPE.DELETE, null)
+      return (
+        <IconButton title="Remove" onClick={handleClick}>
+          <RemoveIcon />
+        </IconButton>
+      )
+    }
   },
 ];
 
@@ -168,7 +174,7 @@ const ContractsTable = (props: ContractsTableProps) => {
     index: number,
     field: ContractField | null,
     actionType: ACTION_TYPE,
-    value?: any
+    value: any
   ) {
     if (actionType === ACTION_TYPE.DELETE) {
       return onDelete(index);
@@ -204,11 +210,11 @@ const ContractsTable = (props: ContractsTableProps) => {
                         )
                       : contract[column.field]
                     : column.valueGetter
-                    ? column.valueGetter(
-                        contract,
-                        curry(handleAction)(rowIndex)(null)
-                      )
-                    : " "}
+                      ? column.valueGetter(
+                          contract,
+                          curry(handleAction)(rowIndex)(null)
+                        )
+                      : " "}
                 </TableCell>
               ))}
             </TableRow>

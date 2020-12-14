@@ -35,6 +35,9 @@ const validateContract = (contract: Contract): void | undefined => {
   if (!isPowerOfTwo) {
     throw new Error(`Contra must be power of two, but ${contra} given.`)
   }
+  if (contra < 1) {
+    throw new Error(`Contra must be greater than 1, but ${contra} given.`)
+  }
 };
 
 export interface CreateContractProps {

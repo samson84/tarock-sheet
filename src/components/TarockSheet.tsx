@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { getAllBids, Bid } from "../lib/bid";
 import BidSelector from "./BidSelector";
 import sortBy from "lodash/fp/sortBy";
-import { Game, createGame, addContract, updateGame, updateGameContract } from "../lib/game";
+import { Game, createGame, addContract, updateGame, updateGameContract, removeContract } from "../lib/game";
 import { Contract, createContract, updateContract} from "../lib/contract";
 import { Button, Grid } from "@material-ui/core";
 import ContractsTable from "./ContractsTable";
@@ -13,6 +13,8 @@ const allBids = sortBy((b: Bid) => b.type)(getAllBids());
 
 const TarockSheet = () => {
   const [game, setGame] = useState<Game | null>(null);
+
+  const handleContractDelete = (index: number) => setGame(removeContract(game as Game)(index))
 
   const hasGame = game !== null;
 
@@ -74,7 +76,7 @@ const TarockSheet = () => {
                   )
                 )
               }}
-              onDelete={() => {}}
+              onDelete={handleContractDelete}
             />
           </>
         ) : null}

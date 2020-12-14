@@ -1,13 +1,13 @@
 # TODO
 
 - [.] MVP
-  - [.] ContractsTable, actions
+  - [x] ContractsTable, actions
     - [x] can change the silent property
     - [x] can change the variant
     - [x] can change the taker
-    - [ ] can change contra
-      - [ ] Add contra decrease, in the same field as the contra score
-    - [ ] can remove
+    - [x] can change contra
+      - [x] Add contra decrease, in the same field as the contra score
+    - [x] can remove
   - [ ] Calculate score
     - [ ] contract: change winner to win by taker: boolean | null
     - [ ] ContractsTable: Add the winner column.
