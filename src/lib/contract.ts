@@ -1,5 +1,12 @@
 import { PLAYER_TYPE } from "./player";
-import { BidVariant, BID_TYPE, canSilent, hasVariant, getBid, getBidScore } from "./bid";
+import {
+  BidVariant,
+  BID_TYPE,
+  canSilent,
+  hasVariant,
+  getBid,
+  getBidScore,
+} from "./bid";
 import flow from "lodash/fp/flow";
 
 const CONTRA_NAMES = ["None", "Contra", "Recontra", "Subcontra", "Mortcontra"];
@@ -16,13 +23,17 @@ export interface Contract {
 }
 
 const validateContract = (contract: Contract): void | undefined => {
-  const { silent, bidType, bidVariant } = contract;
+  const { silent, bidType, bidVariant, contra } = contract;
   const bid = getBid(bidType);
   if (silent && !canSilent(bid)) {
     throw new Error(`${bid.type} can not be silent.`);
   }
   if (bidVariant && !hasVariant(bidVariant)(bid)) {
     throw new Error(`${bid.type} does not have ${bidVariant} variant.`);
+  }
+  const isPowerOfTwo = Math.log2(contra) % 1 === 0
+  if (!isPowerOfTwo) {
+    throw new Error(`Contra must be power of two, but ${contra} given.`)
   }
 };
 
@@ -32,7 +43,7 @@ export interface CreateContractProps {
   taker: PLAYER_TYPE;
   silent?: boolean;
   bidVariant?: BidVariant | null;
-};
+}
 export const createContract = ({
   bidType,
   taker,
@@ -47,18 +58,15 @@ export const createContract = ({
     silent,
     winner: null,
     taker,
-    bidBaseScore: flow(getBid, getBidScore(partyScore))(bidType)
-  }
+    bidBaseScore: flow(getBid, getBidScore(partyScore))(bidType),
+  };
   validateContract(contract);
   return contract;
 };
 
-export interface UpdateContractProps {
-  taker?: PLAYER_TYPE;
-  winner?: PLAYER_TYPE;
-  silent?: boolean;
-  bidVariant?: BidVariant;
-};
+export type UpdateContractProps = Partial<
+  Pick<Contract, "taker" | "winner" | "silent" | "bidVariant" | "contra">
+>;
 export const updateContract = (updates: UpdateContractProps) => (
   contract: Contract
 ) => {
@@ -66,8 +74,3 @@ export const updateContract = (updates: UpdateContractProps) => (
   validateContract(updated);
   return updated;
 };
-
-export const contraContract = (contract: Contract): Contract => ({
-  ...contract,
-  contra: contract.contra * 2,
-});

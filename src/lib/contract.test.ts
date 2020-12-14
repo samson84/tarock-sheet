@@ -1,21 +1,10 @@
 import { BID_TYPE, CARD_SHAPE_VARIANT, SMALLEST_VARIANT } from "./bid";
 import { PLAYER_TYPE } from "./player";
 
-import { createContract, contraContract, updateContract } from "./contract";
+import { createContract, updateContract } from "./contract";
 import { PARTY_SCORE } from "./game";
 
-export const contractFixture = (props = {}) => {
-  return {
-    bidType: BID_TYPE.FOUR_KING,
-    contra: 1,
-    silent: false,
-    winner: null,
-    taker: PLAYER_TYPE.DECLARER,
-    bidVariant: null,
-    bidBaseScore: 2,
-    ...props,
-  };
-};
+import { contractFixture } from "./test_data/fixtures"
 
 export default describe("contract", () => {
   describe("createContract", () => {
@@ -220,29 +209,29 @@ export default describe("contract", () => {
       const current = () => updateContract(updates)(contract);
       expect(current).toThrow(expected);
     });
-  });
-
-  describe("contraContract", () => {
-    it("should contra a Contract", () => {
+    it("should update the contra", () => {
       const contract = contractFixture({
-        contra: 1,
-      });
-      const expected = contractFixture({
         contra: 2,
       });
-      const current = contraContract(contract);
-      expect(current).toEqual(expected);
-    });
-    it("should double contra a Contract", () => {
-      const contract = contractFixture({
-        contra: 1,
-      });
+      const updates = {
+        contra: 4,
+      };
       const expected = contractFixture({
         contra: 4,
       });
-      const doubled = contraContract(contract);
-      const current = contraContract(doubled);
-      expect(current).toEqual(expected);
-    });
+      const current = updateContract(updates)(contract);
+      expect(current).toEqual(expected);      
+    })
+    it("sould throw if the contra is not the power of two", () => {
+      const contract = contractFixture({
+        contra: 2,
+      });
+      const updates = {
+        contra: 5,
+      };
+      const expected = "Contra must be power of two, but 5 given.";
+      const current = () => updateContract(updates)(contract);
+      expect(current).toThrow(expected);       
+    })
   });
 });

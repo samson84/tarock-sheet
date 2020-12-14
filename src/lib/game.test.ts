@@ -1,4 +1,4 @@
-import { contractFixture } from "./contract.test";
+import { contractFixture } from "./test_data/fixtures";
 import { PLAYER_TYPE } from "./player";
 import {
   createGame,
