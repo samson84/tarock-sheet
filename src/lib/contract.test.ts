@@ -1,7 +1,18 @@
 import { BID_TYPE, CARD_SHAPE_VARIANT, SMALLEST_VARIANT } from "./bid";
 import { PLAYER_TYPE } from "./player";
 
-import { calculateContract, createContract, updateContract } from "./contract";
+import {
+  calculateContract,
+  createContract,
+  updateContract,
+  withIndices,
+  filterByPartyLike,
+  ContractWithIndex,
+  Contract,
+  MaxScoreWithIndex,
+  findMaxAbsScore,
+  groupByPlayerType,
+} from "./contract";
 import { PARTY_SCORE } from "./game";
 
 import { contractFixture } from "./test_data/fixtures";
@@ -117,6 +128,21 @@ export default describe("contract", () => {
       const current = createContract(props);
       expect(current).toEqual(expected);
     });
+    it("it should add valid in final score", () => {
+      const props = {
+        bidType: BID_TYPE.PARTY,
+        taker: PLAYER_TYPE.OPPONENT,
+        partyScore: PARTY_SCORE.TOOK_TWO,
+        validInFinalScore: true,
+      };
+      const expected = contractFixture({
+        bidType: BID_TYPE.PARTY,
+        taker: PLAYER_TYPE.OPPONENT,
+        validInFinalScore: true,
+      });
+      const current = createContract(props);
+      expect(current).toEqual(expected);
+    });
   });
   describe("updateContract", () => {
     it("should update the taker", () => {
@@ -204,6 +230,7 @@ export default describe("contract", () => {
       });
       const updates = {
         bidVariant: SMALLEST_VARIANT.PAGAT,
+        winByTaker: false,
       };
       const expected = "PARTY does not have PAGAT variant";
       const current = () => updateContract(updates)(contract);
@@ -244,6 +271,19 @@ export default describe("contract", () => {
       const current = () => updateContract(updates)(contract);
       expect(current).toThrow(expected);
     });
+    it("should update vaild in final score", () => {
+      const contract = contractFixture({
+        validInFinalScore: false,
+      });
+      const updates = {
+        validInFinalScore: true,
+      };
+      const expected = contractFixture({
+        validInFinalScore: true,
+      });
+      const current = updateContract(updates)(contract);
+      expect(current).toEqual(expected);
+    });
   });
   describe("calculateContract", () => {
     it("should return null if no winner", () => {
@@ -275,7 +315,7 @@ export default describe("contract", () => {
 
       const current = calculateContract(contract);
       expect(current).toEqual(expected);
-    })
+    });
     it("should return the minus score if it is lose by the taker", () => {
       const contract = contractFixture({
         bidType: BID_TYPE.ULTI,
@@ -290,7 +330,7 @@ export default describe("contract", () => {
 
       const current = calculateContract(contract);
       expect(current).toEqual(expected);
-    })
+    });
     it("should return the half base score if silent.", () => {
       const contract = contractFixture({
         bidType: BID_TYPE.ULTI,
@@ -305,7 +345,7 @@ export default describe("contract", () => {
 
       const current = calculateContract(contract);
       expect(current).toEqual(expected);
-    })
+    });
     it("should return the half base score if silent, contra > 1", () => {
       const contract = contractFixture({
         bidType: BID_TYPE.ULTI,
@@ -320,7 +360,7 @@ export default describe("contract", () => {
 
       const current = calculateContract(contract);
       expect(current).toEqual(expected);
-    })
+    });
     it("should return the half base score negative if silent, contra > 1, and loose", () => {
       const contract = contractFixture({
         bidType: BID_TYPE.ULTI,
@@ -335,6 +375,359 @@ export default describe("contract", () => {
 
       const current = calculateContract(contract);
       expect(current).toEqual(expected);
-    })
+    });
+  });
+  describe("withIndices", () => {
+    it("should map the indexes", () => {
+      const contract1 = contractFixture({ bidType: BID_TYPE.ULTI });
+      const contract2 = contractFixture({ bidType: BID_TYPE.KING_ULTI });
+      const contracts = [contract1, contract2];
+      const expected = [
+        [contract1, 0],
+        [contract2, 1],
+      ];
+
+      const current = withIndices(contracts);
+      expect(current).toEqual(expected);
+    });
+    it("should return an empty array, if empty array given", () => {
+      const contracts: Contract[] = [];
+      const expected: ContractWithIndex[] = [];
+
+      const current = withIndices(contracts);
+      expect(current).toEqual(expected);
+    });
+  });
+  describe("filterByPartyLike", () => {
+    it("should filter party like bids", () => {
+      const contracts: ContractWithIndex[] = [
+        [contractFixture({ bidType: BID_TYPE.ULTI }), 0],
+        [contractFixture({ bidType: BID_TYPE.PARTY }), 1],
+        [contractFixture({ bidType: BID_TYPE.DOUBLE_PARTY }), 2],
+        [contractFixture({ bidType: BID_TYPE.VOLAT }), 3],
+        [contractFixture({ bidType: BID_TYPE.FOUR_KING }), 4],
+        [contractFixture({ bidType: BID_TYPE.TRULL }), 5],
+      ];
+      const expected: ContractWithIndex[] = [
+        [contractFixture({ bidType: BID_TYPE.PARTY }), 1],
+        [contractFixture({ bidType: BID_TYPE.DOUBLE_PARTY }), 2],
+        [contractFixture({ bidType: BID_TYPE.VOLAT }), 3],
+      ];
+      const current = filterByPartyLike(contracts);
+      expect(current).toEqual(expected);
+    });
+  });
+  describe("findLargestScore", () => {
+    it("should return [null, -1] if empty array given", () => {
+      const contracts: ContractWithIndex[] = [];
+      const expected: MaxScoreWithIndex = [null, -1];
+
+      const current = findMaxAbsScore(contracts);
+      expect(current).toEqual(expected);
+    });
+    it("should return [null, -1] if the contract still not won by anybody.", () => {
+      const contracts: ContractWithIndex[] = [
+        [
+          contractFixture({
+            bidType: BID_TYPE.PARTY,
+            bidBaseScore: 1,
+            winByTaker: null,
+            taker: PLAYER_TYPE.DECLARER,
+            silent: false,
+            contra: 1,
+          }),
+          0,
+        ],
+      ];
+      const expected: MaxScoreWithIndex = [null, -1];
+
+      const current = findMaxAbsScore(contracts);
+      expect(current).toEqual(expected);
+    }),
+      it("should return [null, -1] if bidBaseScore of is null in the only contract in the list", () => {
+        const contracts: ContractWithIndex[] = [
+          [
+            contractFixture({
+              bidType: BID_TYPE.PARTY,
+              bidBaseScore: null,
+              winByTaker: true,
+              taker: PLAYER_TYPE.DECLARER,
+              silent: false,
+              contra: 1,
+            }),
+            0,
+          ],
+        ];
+        const expected: MaxScoreWithIndex = [null, -1];
+
+        const current = findMaxAbsScore(contracts);
+        expect(current).toEqual(expected);
+      });
+    it("should return [null, -1] if all contracts are not won / no bidBaseScore given", () => {
+      const contracts: ContractWithIndex[] = [
+        [
+          contractFixture({
+            bidType: BID_TYPE.PARTY,
+            bidBaseScore: null,
+            winByTaker: true,
+            taker: PLAYER_TYPE.DECLARER,
+            silent: false,
+            contra: 1,
+          }),
+          0,
+        ],
+        [
+          contractFixture({
+            bidType: BID_TYPE.PARTY,
+            bidBaseScore: 2,
+            winByTaker: null,
+            taker: PLAYER_TYPE.DECLARER,
+            silent: false,
+            contra: 1,
+          }),
+          1,
+        ],
+      ];
+      const expected: MaxScoreWithIndex = [null, -1];
+
+      const current = findMaxAbsScore(contracts);
+      expect(current).toEqual(expected);
+    });
+    it("should return the score, index of a won, bidBaseScore given contract", () => {
+      const contracts: ContractWithIndex[] = [
+        [
+          contractFixture({
+            bidType: BID_TYPE.PARTY,
+            bidBaseScore: 4,
+            winByTaker: true,
+            taker: PLAYER_TYPE.DECLARER,
+            silent: false,
+            contra: 1,
+          }),
+          0,
+        ],
+      ];
+      const expected: MaxScoreWithIndex = [4, 0];
+
+      const current = findMaxAbsScore(contracts);
+      expect(current).toEqual(expected);
+    });
+    it("should return the score, index of a largest bid (all won)", () => {
+      const contracts: ContractWithIndex[] = [
+        [
+          contractFixture({
+            bidType: BID_TYPE.PARTY,
+            bidBaseScore: 4,
+            winByTaker: true,
+            taker: PLAYER_TYPE.DECLARER,
+            silent: false,
+            contra: 1,
+          }),
+          0,
+        ],
+        [
+          contractFixture({
+            bidType: BID_TYPE.DOUBLE_PARTY,
+            bidBaseScore: 16,
+            winByTaker: true,
+            taker: PLAYER_TYPE.DECLARER,
+            silent: false,
+            contra: 1,
+          }),
+          1,
+        ],
+        [
+          contractFixture({
+            bidType: BID_TYPE.VOLAT,
+            bidBaseScore: 24,
+            winByTaker: true,
+            taker: PLAYER_TYPE.DECLARER,
+            silent: false,
+            contra: 1,
+          }),
+          2,
+        ],
+      ];
+      const expected: MaxScoreWithIndex = [24, 2];
+
+      const current = findMaxAbsScore(contracts);
+      expect(current).toEqual(expected);
+    });
+    it("should return the score, index of a largest lost bid (all lost)", () => {
+      const contracts: ContractWithIndex[] = [
+        [
+          contractFixture({
+            bidType: BID_TYPE.PARTY,
+            bidBaseScore: 4,
+            winByTaker: false,
+            taker: PLAYER_TYPE.DECLARER,
+            silent: false,
+            contra: 1,
+          }),
+          0,
+        ],
+        [
+          contractFixture({
+            bidType: BID_TYPE.DOUBLE_PARTY,
+            bidBaseScore: 16,
+            winByTaker: false,
+            taker: PLAYER_TYPE.DECLARER,
+            silent: false,
+            contra: 1,
+          }),
+          1,
+        ],
+        [
+          contractFixture({
+            bidType: BID_TYPE.VOLAT,
+            bidBaseScore: 24,
+            winByTaker: false,
+            taker: PLAYER_TYPE.DECLARER,
+            silent: false,
+            contra: 1,
+          }),
+          2,
+        ],
+      ];
+      const expected: MaxScoreWithIndex = [-24, 2];
+
+      const current = findMaxAbsScore(contracts);
+      expect(current).toEqual(expected);
+    });
+    it("should return the largest abs score, even it it is lost", () => {
+      const contracts: ContractWithIndex[] = [
+        [
+          contractFixture({
+            bidType: BID_TYPE.PARTY,
+            bidBaseScore: 4,
+            winByTaker: true,
+            taker: PLAYER_TYPE.DECLARER,
+            silent: false,
+            contra: 1,
+          }),
+          0,
+        ],
+        [
+          contractFixture({
+            bidType: BID_TYPE.DOUBLE_PARTY,
+            bidBaseScore: 16,
+            winByTaker: true,
+            taker: PLAYER_TYPE.DECLARER,
+            silent: false,
+            contra: 1,
+          }),
+          1,
+        ],
+        [
+          contractFixture({
+            bidType: BID_TYPE.VOLAT,
+            bidBaseScore: 24,
+            winByTaker: false,
+            taker: PLAYER_TYPE.DECLARER,
+            silent: false,
+            contra: 1,
+          }),
+          2,
+        ],
+      ];
+      const expected: MaxScoreWithIndex = [-24, 2];
+
+      const current = findMaxAbsScore(contracts);
+      expect(current).toEqual(expected);
+    });
+    it("should return double party as a largest, if volat is silent.", () => {
+      const contracts: ContractWithIndex[] = [
+        [
+          contractFixture({
+            bidType: BID_TYPE.PARTY,
+            bidBaseScore: 4,
+            winByTaker: true,
+            taker: PLAYER_TYPE.DECLARER,
+            silent: false,
+            contra: 1,
+          }),
+          0,
+        ],
+        [
+          contractFixture({
+            bidType: BID_TYPE.DOUBLE_PARTY,
+            bidBaseScore: 16,
+            winByTaker: true,
+            taker: PLAYER_TYPE.DECLARER,
+            silent: false,
+            contra: 1,
+          }),
+          1,
+        ],
+        [
+          contractFixture({
+            bidType: BID_TYPE.VOLAT,
+            bidBaseScore: 24,
+            winByTaker: true,
+            taker: PLAYER_TYPE.DECLARER,
+            silent: true,
+            contra: 1,
+          }),
+          2,
+        ],
+      ];
+      const expected: MaxScoreWithIndex = [16, 1];
+
+      const current = findMaxAbsScore(contracts);
+      expect(current).toEqual(expected);
+    });
+  });
+  describe("groupByPlayerType", () => {
+    it("shuld return empty arrays when the contract array is empty", () => {
+      const contracts: ContractWithIndex[] = [];
+      const expected = {
+        [PLAYER_TYPE.DECLARER]: [],
+        [PLAYER_TYPE.OPPONENT]: [],
+      };
+
+      const current = groupByPlayerType(contracts);
+      expect(current).toEqual(expected);
+    });
+    it("should group by players", () => {
+      const contracts: ContractWithIndex[] = [
+        [
+          contractFixture({
+            bidType: BID_TYPE.TRULL,
+            taker: PLAYER_TYPE.OPPONENT,
+          }),
+          0,
+        ],
+        [
+          contractFixture({
+            bidType: BID_TYPE.DOUBLE_PARTY,
+            taker: PLAYER_TYPE.DECLARER,
+          }),
+          1,
+        ],
+      ];
+      const expected = {
+        [PLAYER_TYPE.DECLARER]: [
+          [
+            contractFixture({
+              bidType: BID_TYPE.DOUBLE_PARTY,
+              taker: PLAYER_TYPE.DECLARER,
+            }),
+            1,
+          ],  
+        ],
+        [PLAYER_TYPE.OPPONENT]: [
+          [
+            contractFixture({
+              bidType: BID_TYPE.TRULL,
+              taker: PLAYER_TYPE.OPPONENT,
+            }),
+            0,
+          ],  
+        ],
+      };
+
+      const current = groupByPlayerType(contracts);
+      expect(current).toEqual(expected);
+    });
   });
 });

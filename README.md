@@ -1,21 +1,37 @@
 # TODO
 - [.] MVP
-  - [ ] Calculate score
+  - [x] Calculate score
     - [x] contract: change winner to win by taker: boolean | null
     - [x] ContractsTable: Add the winner column.
     - [x] ContractsTable: Can change the winner.
     - [x] contract: add calculate
     - [ ] game: add caclulate
+      - [x] contract: add validInFinalScore
+      - [x] TarockSheet: modify only the game type
+      - [x] game: add party type, if modified update the score
+        - [x] game: add partyType
+      - [x] game: add contract validation rules
+      - [x] game: add opponent and declater scores
     - [x] ContractsTable: Add final score column
-    - [ ] Tarock Sheet: show final score
+    - [x] ContractsTable: Make visible the invalid contracts
+    - [x] Tarock Sheet: show final score
+  - [ ] correct party like calculation, if it is negative counts, if it is positive only the largrest counts
   - [ ] Add player handling
+    - [ ] TarockSheet: new component, add available players
+    - [ ] Add players in game
+    - [ ] Add players to the given player type
 - [ ] Milesteone 1
+  - [ ] compact Contract Table
+    - [ ] collapse fields
+    - [ ] comapct view
+    - [ ] row styling based on validInFinalScore
   - [ ] handle multiple games, score sheet
   - [ ] responsive design check
   - [ ] add undo & redo (?)
   - [ ] usability
+    - [ ] group the bids
     - [x] ContractTable: when a contract silent, show visually that the contra does not take into account.
-    - [ ] ContractTable: if a contract is silent, it should not able to apply a contra on it, 
+    - [x] ContractTable: if a contract is silent, it should not able to apply a contra on it, 
     - [ ] Game Properties: show score near the game score selector radio buttons
     - [ ] BidSelector: show the score near the bids
     - [ ] ContractsTable: show the the contra names instead of the values
@@ -24,9 +40,11 @@
     - [ ] disable contra for eight, nine tarock
     - [ ] ContractsTable: automatically won by the eight and nine tarock
     - [ ] when something is added with silent automatically win except ulti
+    - [ ] make a global silent switch, it adds bids silently, and automatically win
+    - [ ] create defaults for the vatiants
     - [ ] shortcuts
-      - [ ] when klopitzky ticked, remove all contracts and add klopiczky contract, and make it winner
-      - [ ] when party game ticked add party automatically, remove klopiczky
+      - [ ] when klopitzky ticked, add klopiczky contract, and make it winner
+      - [ ] when party game ticked add party automatically
       - [ ] remove reset game, use the new game button for the purpose
   - [ ] refactor
     - [ ] game, contract: simplify create and update methods with same parameter set

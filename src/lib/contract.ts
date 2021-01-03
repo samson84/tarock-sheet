@@ -8,6 +8,7 @@ import {
   getBidScore,
 } from "./bid";
 import flow from "lodash/fp/flow";
+import groupBy from "lodash/fp/groupBy";
 import { PartyScoreValue } from "./game";
 
 const CONTRA_NAMES = ["None", "Contra", "Recontra", "Subcontra", "Mortcontra"];
@@ -15,12 +16,13 @@ const CONTRA_NAMES = ["None", "Contra", "Recontra", "Subcontra", "Mortcontra"];
 type ContraMultiplier = number;
 export interface Contract {
   bidType: BID_TYPE;
-  bidBaseScore: number;
+  bidBaseScore: number | null;
   bidVariant: BidVariant | null;
   contra: ContraMultiplier;
   winByTaker: boolean | null;
   taker: PLAYER_TYPE;
   silent: boolean;
+  validInFinalScore: boolean;
 }
 
 const validateContract = (contract: Contract): void | undefined => {
@@ -43,17 +45,19 @@ const validateContract = (contract: Contract): void | undefined => {
 
 export interface CreateContractProps {
   bidType: BID_TYPE;
-  partyScore: PartyScoreValue;
+  partyScore?: PartyScoreValue | null;
   taker: PLAYER_TYPE;
   silent?: boolean;
   bidVariant?: BidVariant | null;
+  validInFinalScore?: boolean;
 }
 export const createContract = ({
   bidType,
   taker,
-  partyScore,
+  partyScore = null,
   silent = false,
   bidVariant = null,
+  validInFinalScore = false,
 }: CreateContractProps): Contract => {
   const contract = {
     bidType,
@@ -62,21 +66,33 @@ export const createContract = ({
     silent,
     winByTaker: null,
     taker,
-    bidBaseScore: flow(getBid, getBidScore(partyScore))(bidType),
+    bidBaseScore:
+      partyScore !== null
+        ? flow(getBid, getBidScore(partyScore))(bidType)
+        : null,
+    validInFinalScore,
   };
   validateContract(contract);
   return contract;
 };
 
-export const updatebidBaseScore = (partyScore: PartyScoreValue) => (
+export const updateBidBaseScore = (partyScore: PartyScoreValue) => (
   contract: Contract
 ): Contract => ({
   ...contract,
-  bidBaseScore: flow(getBid, getBidScore(partyScore))(contract.bidType)
+  bidBaseScore: flow(getBid, getBidScore(partyScore))(contract.bidType),
 });
 
 export type UpdateContractProps = Partial<
-  Pick<Contract, "taker" | "winByTaker" | "silent" | "bidVariant" | "contra">
+  Pick<
+    Contract,
+    | "taker"
+    | "winByTaker"
+    | "silent"
+    | "bidVariant"
+    | "contra"
+    | "validInFinalScore"
+  >
 >;
 export const updateContract = (updates: UpdateContractProps) => (
   contract: Contract
@@ -86,16 +102,53 @@ export const updateContract = (updates: UpdateContractProps) => (
   return updated;
 };
 
-export type ContractScore = number | null
-
+export type ContractScore = number | null;
 export const calculateContract = (contract: Contract): ContractScore => {
-  const {winByTaker, bidBaseScore, contra, silent} = contract
-  if(winByTaker === null) {
+  const { winByTaker, bidBaseScore, contra, silent } = contract;
+  if (winByTaker === null || bidBaseScore === null) {
     return null;
   }
-  const multiplier = silent
-    ? 0.5
-    : contra
-  const sign = winByTaker ? 1 : -1
-  return sign * bidBaseScore  * multiplier
+  const multiplier = silent ? 0.5 : contra;
+  const sign = winByTaker ? 1 : -1;
+  return sign * bidBaseScore * multiplier;
+};
+
+export type ContractWithIndex = [Contract, number];
+export const withIndices = (contracts: Contract[]): ContractWithIndex[] =>
+  contracts.map((contract, index) => [contract, index]);
+
+const PARTY_LIKE_BIDS = [BID_TYPE.PARTY, BID_TYPE.DOUBLE_PARTY, BID_TYPE.VOLAT];
+export const filterByPartyLike = (
+  contracts: ContractWithIndex[]
+): ContractWithIndex[] =>
+  contracts.filter(([contract, _]) =>
+    PARTY_LIKE_BIDS.includes(contract.bidType)
+  );
+
+export const groupByPlayerType = (contracts: ContractWithIndex[]) => {
+  const groupped = groupBy(([contract]) => contract.taker)(contracts);
+  return {
+    [PLAYER_TYPE.DECLARER]: groupped[PLAYER_TYPE.DECLARER] || [],
+    [PLAYER_TYPE.OPPONENT]: groupped[PLAYER_TYPE.OPPONENT] || []
+  }
 }
+
+
+export type MaxScoreWithIndex = [ContractScore, number];
+export const findMaxAbsScore = (contracts: ContractWithIndex[]) => {
+  return contracts.reduce(
+    (
+      prev: MaxScoreWithIndex,
+      current: ContractWithIndex
+    ): MaxScoreWithIndex => {
+      const [maxScore] = prev;
+      const [contract, index] = current;
+      const score = calculateContract(contract);
+      return score !== null &&
+        (maxScore === null || Math.abs(score) >= Math.abs(maxScore))
+        ? [score, index]
+        : prev;
+    },
+    [null, -1]
+  );
+};

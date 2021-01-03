@@ -4,8 +4,7 @@ import {
   Game,
   UpdateGameProps,
   PARTY_SCORE,
-  PartyScoreType,
-  PartyScoreValue,
+  PARTY_SCORE_TYPE,
 } from "../lib/game";
 import {
   Grid,
@@ -32,7 +31,7 @@ const GameProperties = (props: GamePropertiesProps) => {
   const [calledTarock, setCalledTarock] = useState(
     game.called_tarock || "_None_"
   );
-  const [partyScore, setPartyScore] = useState(game.party_score);
+  const [partyScoreType, setPartyScoreType] = useState(game.partyScoreType);
 
   return (
     <Grid container spacing={3} alignContent="space-around">
@@ -64,16 +63,16 @@ const GameProperties = (props: GamePropertiesProps) => {
           <FormLabel component="legend">Party Score</FormLabel>
           <RadioGroup
             row
-            value={partyScore}
+            value={partyScoreType}
             onChange={(event: ChangeEvent<HTMLInputElement>) => {
-              setPartyScore(Number(event.target.value) as PartyScoreValue);
-              onChange("party_score", Number(event.target.value) as PartyScoreValue)
+              setPartyScoreType(event.target.value as PARTY_SCORE_TYPE);
+              onChange("partyScoreType", event.target.value as PARTY_SCORE_TYPE)
             }}
           >
-            {partyScoreOptions.map((option: PartyScoreType) => (
+            {partyScoreOptions.map((option: PARTY_SCORE_TYPE) => (
               <FormControlLabel
                 key={option}
-                value={PARTY_SCORE[option]}
+                value={option}
                 control={<Radio />}
                 label={upperCaseToWords(option)}
               />

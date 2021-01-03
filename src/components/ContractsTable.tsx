@@ -18,12 +18,14 @@ import {
   DialogActions,
   DialogContent,
   Checkbox,
-  Typography as T
+  Typography as T,
 } from "@material-ui/core";
 import {
   MdDelete as RemoveIcon,
   MdArrowUpward as DoubleContraIcon,
   MdArrowDownward as DivideContraIcon,
+  MdCheck as ValidIcon,
+  MdClose as InvalidIcon
 } from "react-icons/md";
 import { BidVariant } from "../lib/bid";
 import VariantSelector from "./VariantSelector";
@@ -83,6 +85,11 @@ interface ColumnDefinition {
   ) => React.ReactNode;
 }
 const columns: ColumnDefinition[] = [
+  {
+    field: "validInFinalScore",
+    headerName: "Valid?",
+    valueGetter: (contract: Contract) => contract.validInFinalScore ? <ValidIcon/> : <InvalidIcon/>
+  },
   {
     field: "bidType",
     headerName: "Bid",
