@@ -16,10 +16,12 @@
     - [x] ContractsTable: Make visible the invalid contracts
     - [x] Tarock Sheet: show final score
   - [ ] correct party like calculation, if it is negative counts, if it is positive only the largrest counts
-  - [ ] Add player handling
-    - [ ] TarockSheet: new component, add available players
-    - [ ] Add players in game
-    - [ ] Add players to the given player type
+  - [.] Add player handling
+    - [x] TarockSheet: new component, add available players
+    - [x] Add players to the table
+    - [x] Remove players from the table
+    - [x] Change the player's player type
+    - [x] show the scores near the players
 - [ ] Milesteone 1
   - [ ] compact Contract Table
     - [ ] collapse fields
@@ -45,8 +47,10 @@
     - [ ] shortcuts
       - [ ] when klopitzky ticked, add klopiczky contract, and make it winner
       - [ ] when party game ticked add party automatically
-      - [ ] remove reset game, use the new game button for the purpose
+      - [x] remove reset game, use the new game button for the purpose
   - [ ] refactor
+    - [ ] add current final score to game object
+    - [ ] use one function to update the game score but in the game model, when something is changed
     - [ ] game, contract: simplify create and update methods with same parameter set
     - [ ] BidSelector: Refactor Modal to Dialog
     - [ ] refactor can silent, do not leak bids details to contract layer

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent } from "react";
 import {
   CALLED_TAROCK,
   Game,
@@ -28,33 +28,23 @@ interface GamePropertiesProps {
 }
 const GameProperties = (props: GamePropertiesProps) => {
   const { game, onChange } = props;
-  const [calledTarock, setCalledTarock] = useState(
-    game.called_tarock || "_None_"
-  );
-  const [partyScoreType, setPartyScoreType] = useState(game.partyScoreType);
-
   return (
     <Grid container spacing={3} alignContent="space-around">
       <Grid item>
         <FormControl>
           <InputLabel id="called-tarock-selector">Called</InputLabel>
           <Select
-            value={calledTarock}
+            value={game.called_tarock || "_None_"}
             onChange={(event: ChangeEvent<{ value: string }>) => {
-              setCalledTarock(event.target.value);
-              event.target.value === "_None_"
-                ? onChange("called_tarock", null)
-                : onChange("called_tarock", event.target.value);
+              onChange("called_tarock", event.target.value);
             }}
             labelId="called-tarock-selector"
           >
-            {calledTarockOptions.map((option) =>
-              option === "_None_" ? (
-                <MenuItem key={option} value={option}>None</MenuItem>
-              ) : (
-                <MenuItem key={option} value={option}>{option}</MenuItem>
-              )
-            )}
+            {calledTarockOptions.map((option) => (
+              <MenuItem key={option} value={option}>
+                {option === "_None_" ? "None" : option}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
       </Grid>
@@ -63,10 +53,12 @@ const GameProperties = (props: GamePropertiesProps) => {
           <FormLabel component="legend">Party Score</FormLabel>
           <RadioGroup
             row
-            value={partyScoreType}
+            value={game.partyScoreType}
             onChange={(event: ChangeEvent<HTMLInputElement>) => {
-              setPartyScoreType(event.target.value as PARTY_SCORE_TYPE);
-              onChange("partyScoreType", event.target.value as PARTY_SCORE_TYPE)
+              onChange(
+                "partyScoreType",
+                event.target.value as PARTY_SCORE_TYPE
+              );
             }}
           >
             {partyScoreOptions.map((option: PARTY_SCORE_TYPE) => (

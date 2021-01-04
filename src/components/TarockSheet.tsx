@@ -11,55 +11,80 @@ import {
   removeContract,
   PARTY_SCORE,
   updateValidations,
+  removePlayer,
+  addPlayer,
 } from "../lib/game";
 import { Contract, createContract, updateContract } from "../lib/contract";
 import { Button, Grid } from "@material-ui/core";
 import ContractsTable from "./ContractsTable";
 import GameProperties from "./GameProperties";
-import { flow } from "lodash";
+import flow from "lodash/fp/flow";
+import uniq from "lodash/fp/uniq";
 import GameScore from "./GameScore";
+import Players from "./Players";
+import { Player, PLAYER_TYPE } from "../lib/player";
 
 const allBids = sortBy((b: Bid) => b.type)(getAllBids());
 
 const TarockSheet = () => {
-  const [game, setGame] = useState<Game | null>(null);
+  const [game, setGame] = useState<Game>(createGame());
+  const [players, setPlayers] = useState<Player[]>([]);
 
   const handleContractDelete = (index: number) =>
-    setGame(removeContract(game as Game)(index));
+    setGame(flow(removeContract(game as Game), updateValidations)(index));
+  const handleResetGame = () => setGame(createGame());
+  const handleAddPlayer = (player: Player) =>
+    setPlayers((prev) => uniq([...prev, player]));
+  const handleRemovePlayer = (player: Player) =>
+    setPlayers((prev) => prev.filter((p) => p !== player));
+  const handleChangePlayer = (
+    player: Player,
+    playerType: PLAYER_TYPE | null
+  ) => {
+    if (playerType === null) {
+      setGame(removePlayer(player)(game));
+    } else {
+      setGame(addPlayer(player, playerType)(game));
+    }
+  };
 
   const hasGame = game !== null;
 
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={3} direction="column">
       <Grid item>
-        {!hasGame ? (
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => setGame(createGame())}
-          >
-            New Game
-          </Button>
-        ) : (
-          <Grid item container spacing={1} direction="row">
-            <Grid item>
-              <Button variant="contained" onClick={() => setGame(null)}>
-                Reset Game
-              </Button>
-            </Grid>
-            <Grid item>
-              <GameProperties
-                game={game as Game}
-                onChange={(prop, value) => {
-                  setGame(flow(updateGame({ [prop]: value }), updateValidations)(game as Game));
-                }}
-              />
-            </Grid>
+        <Grid item container spacing={1} direction="row">
+          <Grid item>
+            <Button variant="contained" onClick={handleResetGame}>
+              Reset Game
+            </Button>
           </Grid>
-        )}
+          <Grid item>
+            <GameProperties
+              game={game as Game}
+              onChange={(prop, value) => {
+                setGame(
+                  flow(
+                    updateGame({ [prop]: value }),
+                    updateValidations
+                  )(game as Game)
+                );
+              }}
+            />
+          </Grid>
+        </Grid>
       </Grid>
       <Grid item>
-        {hasGame ? <GameScore game={game as Game} /> : null}
+        <Players
+          players={players}
+          game={game}
+          onPlayerAdd={handleAddPlayer}
+          onPlayerRemove={handleRemovePlayer}
+          onPlayerChange={handleChangePlayer}
+        />
+      </Grid>
+      <Grid item>
+        <GameScore game={game} />
       </Grid>
       <Grid item>
         {hasGame ? (
@@ -69,7 +94,7 @@ const TarockSheet = () => {
               onAddContract={(contractProps) => {
                 const partyScore = game?.partyScoreType
                   ? PARTY_SCORE[game?.partyScoreType]
-                  : null
+                  : null;
                 return setGame(
                   flow(
                     createContract,
@@ -77,11 +102,10 @@ const TarockSheet = () => {
                     updateValidations
                   )({
                     ...contractProps,
-                    partyScore
+                    partyScore,
                   })
-                )
-              }
-              }
+                );
+              }}
             />
             <ContractsTable
               contracts={game?.contracts as Contract[]}
@@ -90,7 +114,7 @@ const TarockSheet = () => {
                   flow(
                     updateContract({ [field]: value }),
                     updateGameContract(game as Game)(index),
-                    updateValidations                    
+                    updateValidations
                   )((game as Game).contracts[index])
                 );
               }}

@@ -30,7 +30,7 @@ import {
 import { BidVariant } from "../lib/bid";
 import VariantSelector from "./VariantSelector";
 import SilentSwitch from "./SilentSwitch";
-import { PLAYER_TYPE } from "../lib/player";
+import { getAnotherPlayerType, getPlayerTypeColor, PLAYER_TYPE } from "../lib/player";
 import curry from "lodash/fp/curry";
 
 interface VariantSelectorModalProps {
@@ -111,14 +111,10 @@ const columns: ColumnDefinition[] = [
     field: "taker",
     headerName: "Taker",
     valueGetter: (contract, onAction) => {
-      const newTaker =
-        contract.taker === PLAYER_TYPE.DECLARER
-          ? PLAYER_TYPE.OPPONENT
-          : PLAYER_TYPE.DECLARER;
+      const newTaker = getAnotherPlayerType(contract.taker)
       const handleClick = () =>
         onAction && onAction(ACTION_TYPE.CHANGE, newTaker);
-      const color =
-        contract.taker === PLAYER_TYPE.DECLARER ? "primary" : "secondary";
+      const color = getPlayerTypeColor(contract.taker);
       return (
         <Button color={color} onClick={handleClick}>
           {contract.taker}
