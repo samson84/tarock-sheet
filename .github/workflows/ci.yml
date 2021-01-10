@@ -20,14 +20,14 @@ jobs:
       run: npm ci
     - name: Run tests
       run: npm run test-ci
-    - name: Report coverage
-      uses: slavcodev/coverage-monitor-action@1.2.0
-      with:
-        github_token:  ${{ secrets.GITHUB_TOKEN }}
-        clover_file: ./coverage/clover.xml
-        check: false
     - name: Build static files
       run: npm run build
       env:
         CI: ""
-    
+    - name: GitHub Pages action
+      uses: peaceiris/actions-gh-pages@v3.7.3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build
+
+
