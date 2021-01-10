@@ -23,9 +23,11 @@ jobs:
     - name: Report coverage
       uses: slavcodev/coverage-monitor-action@1.2.0
       with:
-        # The GITHUB_TOKEN secret.
         github_token:  ${{ secrets.GITHUB_TOKEN }}
         clover_file: ./coverage/clover.xml
         check: false
     - name: Build static files
-      run: npm run build      
+      run: npm run build
+      env:
+        CI: ""
+    
