@@ -26,7 +26,7 @@
     "eject": "react-scripts eject",
     "coverage": "CI=true npm test -- --coverage",
     "show-coverage": "xdg-open coverage/lcov-report/index.html &",
-    "lint": "./node_modules/.bin/eslint . && ./node_modules/.bin/tsc",
+    "lint": "./node_modules/.bin/eslint ./src && ./node_modules/.bin/tsc",
     "test-ci": "CI=true npm run lint && npm run coverage"
   },
   "eslintConfig": {

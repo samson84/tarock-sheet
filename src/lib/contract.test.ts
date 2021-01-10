@@ -425,7 +425,7 @@ export default describe("contract", () => {
       const current = findMaxAbsScore(contracts);
       expect(current).toEqual(expected);
     });
-    it("should return [null, -1] if the contract still not won by anybody.", () => {
+    it("should return null, -1 if the contract still not won by anybody.", () => {
       const contracts: ContractWithIndex[] = [
         [
           contractFixture({
@@ -443,7 +443,7 @@ export default describe("contract", () => {
 
       const current = findMaxAbsScore(contracts);
       expect(current).toEqual(expected);
-    }),
+    });
       it("should return [null, -1] if bidBaseScore of is null in the only contract in the list", () => {
         const contracts: ContractWithIndex[] = [
           [
@@ -713,7 +713,7 @@ export default describe("contract", () => {
               taker: PLAYER_TYPE.DECLARER,
             }),
             1,
-          ],  
+          ],
         ],
         [PLAYER_TYPE.OPPONENT]: [
           [
@@ -722,7 +722,7 @@ export default describe("contract", () => {
               taker: PLAYER_TYPE.OPPONENT,
             }),
             0,
-          ],  
+          ],
         ],
       };
 
