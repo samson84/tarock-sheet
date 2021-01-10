@@ -8,6 +8,8 @@ import {
   getBidScore,
 } from "./bid";
 import flow from "lodash/fp/flow";
+import pick from "lodash/fp/pick";
+import isEqual from "lodash/fp/isEqual";
 import groupBy from "lodash/fp/groupBy";
 import { PartyScoreValue } from "./game";
 
@@ -124,6 +126,14 @@ export const filterByPartyLike = (
   contracts.filter(([contract, _]) =>
     PARTY_LIKE_BIDS.includes(contract.bidType)
   );
+
+export const filterByProps = (props: Partial<Contract>) => (contracts: ContractWithIndex[]): ContractWithIndex[] => {
+  return contracts.filter(([contract, _]) => flow(
+      pick(Object.keys(props)),
+      isEqual(props)
+    )(contract)
+  )
+}
 
 export const groupByPlayerType = (contracts: ContractWithIndex[]) => {
   const groupped = groupBy(([contract]) => contract.taker)(contracts);

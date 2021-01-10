@@ -9,6 +9,7 @@ import {
   updateBidBaseScore,
   updateContract,
   withIndices,
+  filterByProps
 } from "./contract";
 import { getAnotherPlayerType, Player, PLAYER_TYPE } from "./player";
 import flow from "lodash/fp/flow";
@@ -147,7 +148,11 @@ const handleKlopiczky: ValidationRule = (game) =>
   );
 
 const handlePartyLike: ValidationRule = (game) => {
-  const partyLike = flow(withIndices, filterByPartyLike)(game.contracts);
+  const nonContraWon = {
+    contra: 1,
+    winByTaker: true
+  }
+  const partyLike = flow(withIndices, filterByPartyLike, filterByProps(nonContraWon))(game.contracts);
 
   const byTakerType = groupByPlayerType(partyLike);
   const opponents = byTakerType[PLAYER_TYPE.OPPONENT] as ContractWithIndex[];

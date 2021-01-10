@@ -1,35 +1,13 @@
 # TODO
 - [.] MVP
-  - [x] Calculate score
-    - [x] contract: change winner to win by taker: boolean | null
-    - [x] ContractsTable: Add the winner column.
-    - [x] ContractsTable: Can change the winner.
-    - [x] contract: add calculate
-    - [ ] game: add caclulate
-      - [x] contract: add validInFinalScore
-      - [x] TarockSheet: modify only the game type
-      - [x] game: add party type, if modified update the score
-        - [x] game: add partyType
-      - [x] game: add contract validation rules
-      - [x] game: add opponent and declater scores
-    - [x] ContractsTable: Add final score column
-    - [x] ContractsTable: Make visible the invalid contracts
-    - [x] Tarock Sheet: show final score
-  - [ ] correct party like calculation, if it is negative counts, if it is positive only the largrest counts
-  - [.] Add player handling
-    - [x] TarockSheet: new component, add available players
-    - [x] Add players to the table
-    - [x] Remove players from the table
-    - [x] Change the player's player type
-    - [x] show the scores near the players
+  - [x] correct party like calculation, if it is negative counts, if it is positive only the largrest counts
+  - [ ] Deploy to github pages, manual pipeline
 - [ ] Milesteone 1
+  - [ ] handle multiple games, score sheet
   - [ ] compact Contract Table
     - [ ] collapse fields
     - [ ] comapct view
     - [ ] row styling based on validInFinalScore
-  - [ ] handle multiple games, score sheet
-  - [ ] responsive design check
-  - [ ] add undo & redo (?)
   - [ ] usability
     - [ ] group the bids
     - [x] ContractTable: when a contract silent, show visually that the contra does not take into account.
@@ -61,6 +39,8 @@
     - [ ] rename game props to camelCase, party_score, called_tarock
   - [ ] deploy the app to github pages + set up pipline
 - [ ] Milestone 2
+  - [ ] add undo & redo (?)
+  - [ ] responsive design check
   - [ ] save the games locally
 - [ ] Milestone 3
   - [ ] do some authentication / login
@@ -71,20 +51,8 @@
 - [ ] split bidselector to smaller components
 - [ ] split ContractsTable to smaller components
 - [x] Done
+  - [x] Add player handling
+  - [x] Calculate score
   - [x] ContractsTable, actions
-    - [x] can change the silent property
-    - [x] can change the variant
-    - [x] can change the taker
-    - [x] can change contra
-      - [x] Add contra decrease, in the same field as the contra score
-    - [x] can remove
-  - [x] ContractsTable
-    - [x] Refactor the design extract Row instead of factory object to make or use an onAction callback
-    - [x] Correct the typing on ColumnDefinition, field should not relate to the Contract
-  - [x] remove bid from contract, only save the bid type for it
   - [x] TarockSheet: Add game properties
-  - [x] Refactor score handling
-    - [x] game: add a default party score (TOOK_THREE) when creating
-    - [x] contract: add an obligatory bid base score
-    - [x] game: recalulate the contracts base bid score if the party score changes
-    - [x] ContractsTable, use the base bid score in table
+  - [x] Recalculate scores, when a party type changes
