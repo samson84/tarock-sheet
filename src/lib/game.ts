@@ -14,12 +14,18 @@ import {
 import { getAnotherPlayerType, Player, PLAYER_TYPE } from "./player";
 import flow from "lodash/fp/flow";
 
+type PlayerScore = number | null;
+type GameScore = {
+  [PLAYER_TYPE.DECLARER]: PlayerScore;
+  [PLAYER_TYPE.OPPONENT]: PlayerScore;  
+}
 export interface Game {
   contracts: Contract[];
   declarers: Player[];
   opponents: Player[];
   partyScoreType: PARTY_SCORE_TYPE | null;
   called_tarock: CalledTarockType | null;
+  scores: GameScore
 }
 
 type CalledTarockType =
@@ -72,7 +78,20 @@ export const createGame = (props: CreateGameProps = {}): Game => ({
   opponents: [],
   partyScoreType: props.partyScoreType || null,
   called_tarock: props.called_tarock || null,
+  scores: {
+    [PLAYER_TYPE.DECLARER]: null,
+    [PLAYER_TYPE.OPPONENT]: null
+  }
 });
+
+const updateGameWithScores = (game: Game): Game => {
+  const scores = calculateGame(game)
+
+  return {
+    ...game,
+    scores: {...scores}
+  }
+}
 
 export interface UpdateGameProps {
   partyScoreType?: PARTY_SCORE_TYPE;
@@ -86,11 +105,11 @@ export const updateGame = (updates: UpdateGameProps) => (game: Game): Game => {
           updateBidBaseScore(PARTY_SCORE[updates.partyScoreType])
         );
 
-  return {
+  return updateGameWithScores({
     ...game,
     contracts: [...contracts],
     ...updates,
-  };
+  })
 };
 
 export const addPlayer = (player: Player, type: PLAYER_TYPE) => (
@@ -117,24 +136,31 @@ export const removePlayer = (player: Player) => (game: Game): Game => ({
   declarers: game.declarers.filter((p) => p !== player),
 });
 
-export const addContract = (game: Game) => (contract: Contract): Game => ({
-  ...game,
-  contracts: [...game.contracts, contract],
-});
+export const addContract = (game: Game) => (contract: Contract): Game => {
+  return updateGameWithScores({
+    ...game,
+    contracts: [...game.contracts, contract],
+  });
+};
 
-export const removeContract = (game: Game) => (index: number): Game => ({
-  ...game,
-  contracts: game.contracts.filter((_, i) => i !== index),
-});
+export const removeContract = (game: Game) => (index: number): Game => {
+  return updateGameWithScores({
+    ...game,
+    contracts: game.contracts.filter((_, i) => i !== index),
+  })
+};
 
 export const updateGameContract = (game: Game) => (index: number) => (
   updated: Contract
-): Game => ({
-  ...game,
-  contracts: game.contracts.map((contract, i) =>
-    i === index ? { ...updated } : contract
-  ),
-});
+): Game => {
+
+  return updateGameWithScores({
+    ...game,
+    contracts: game.contracts.map((contract, i) =>
+      i === index ? { ...updated } : contract
+    ),
+  });
+};
 
 type ValidationRule = (game: Game) => Contract[];
 const handleKlopiczky: ValidationRule = (game) =>
@@ -198,11 +224,6 @@ export const updateValidations = (game: Game): Game => {
   return { ...game };
 };
 
-type PlayerScore = number | null;
-export interface GameScore {
-  [PLAYER_TYPE.DECLARER]: PlayerScore;
-  [PLAYER_TYPE.OPPONENT]: PlayerScore;
-}
 export const calculateGame = (game: Game): GameScore => {
   return game.contracts.reduce(
     (partyScore, contract) => {
@@ -235,4 +256,5 @@ export const calculateGame = (game: Game): GameScore => {
       [PLAYER_TYPE.OPPONENT]: null,
     }
   );
+
 };

@@ -52,6 +52,7 @@ export interface CreateContractProps {
   silent?: boolean;
   bidVariant?: BidVariant | null;
   validInFinalScore?: boolean;
+  winByTaker?: boolean | null;
 }
 export const createContract = ({
   bidType,
@@ -60,13 +61,14 @@ export const createContract = ({
   silent = false,
   bidVariant = null,
   validInFinalScore = false,
+  winByTaker = null,
 }: CreateContractProps): Contract => {
   const contract = {
     bidType,
     bidVariant,
     contra: 1,
     silent,
-    winByTaker: null,
+    winByTaker,
     taker,
     bidBaseScore:
       partyScore !== null

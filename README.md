@@ -1,14 +1,14 @@
 # TODO
-- [.] MVP
-  - [x] correct party like calculation, if it is negative counts, if it is positive only the largrest counts
-  - [ ] Deploy to github pages, manual pipeline
 - [ ] Milesteone 1
+  - [ ] refactor game handling
+    - [x] move scores to game object
+    - [ ] remove validation rules
+    - [ ] remove valid in final score, use the win / null instead, rename it on the gui to invalid
   - [ ] handle multiple games, score sheet
-  - [ ] compact Contract Table
-    - [ ] collapse fields
-    - [ ] comapct view
-    - [ ] row styling based on validInFinalScore
+    - [ ] create new components of the score sheet
+    - [ ] add save game functionality, it saves the current scores to the table
   - [ ] usability
+    - [ ] new contracts on the top of the ContractsTable
     - [ ] group the bids
     - [x] ContractTable: when a contract silent, show visually that the contra does not take into account.
     - [x] ContractTable: if a contract is silent, it should not able to apply a contra on it, 
@@ -18,12 +18,12 @@
     - [ ] ContractsTable: integrate bid variant into the bid column
     - [ ] add confirmation to new game
     - [ ] disable contra for eight, nine tarock
-    - [ ] ContractsTable: automatically won by the eight and nine tarock
+    - [ ] ContractsTable: automatically won by the eight and nine tarock, klopiczky
     - [ ] when something is added with silent automatically win except ulti
     - [ ] make a global silent switch, it adds bids silently, and automatically win
     - [ ] create defaults for the vatiants
     - [ ] shortcuts
-      - [ ] when klopitzky ticked, add klopiczky contract, and make it winner
+      - [ ] when klopitzky game ticked, add klopiczky contract, remove others
       - [ ] when party game ticked add party automatically
       - [x] remove reset game, use the new game button for the purpose
   - [ ] refactor
@@ -39,20 +39,31 @@
     - [ ] rename game props to camelCase, party_score, called_tarock
   - [ ] deploy the app to github pages + set up pipline
 - [ ] Milestone 2
+  - [ ] compact Contract Table
+    - [ ] collapse fields
+    - [ ] comapct view
+    - [ ] row styling based on validInFinalScore
   - [ ] add undo & redo (?)
   - [ ] responsive design check
   - [ ] save the games locally
+  - [ ] add license, contribution, proper readme
+  - [ ] add hotkeys
 - [ ] Milestone 3
   - [ ] do some authentication / login
   - [ ] save the game to a DB e.g. Firebase
   - [ ] deploy the app to heroku / netlify / vercel
-- [ ] create a better app icon
-- [ ] align the icon in the app bar
-- [ ] split bidselector to smaller components
-- [ ] split ContractsTable to smaller components
+  - [ ] refactor
+    - [ ] create a better app icon
+    - [ ] align the icon in the app bar
+    - [ ] split bidselector to smaller components
+    - [ ] split ContractsTable to smaller components
 - [x] Done
-  - [x] Add player handling
-  - [x] Calculate score
-  - [x] ContractsTable, actions
-  - [x] TarockSheet: Add game properties
-  - [x] Recalculate scores, when a party type changes
+  - [ ] Milestone 1
+    - [ ] 
+  - [x] MVP
+    - [x] Add player handling
+    - [x] Calculate score
+    - [x] ContractsTable, actions
+    - [x] TarockSheet: Add game properties
+    - [x] Recalculate scores, when a party type changes
+    - [x] Deploy to github pages, w github actions

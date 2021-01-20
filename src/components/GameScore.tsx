@@ -1,5 +1,5 @@
 import React from "react";
-import { calculateGame, Game } from "../lib/game";
+import { Game } from "../lib/game";
 import { Grid, Chip, Typography as T } from "@material-ui/core";
 import { PLAYER_TYPE } from "../lib/player";
 
@@ -7,7 +7,7 @@ interface GameScoreProps {
   game: Game;
 }
 const GameScore = ({ game }: GameScoreProps) => {
-  const scores = calculateGame(game);
+  const {scores} = game;
   return (
     <Grid container direction="column">
       <Grid item container alignItems="center" spacing={1}>
@@ -34,7 +34,7 @@ const GameScore = ({ game }: GameScoreProps) => {
           </T>
         </Grid>
         <Grid item>
-          {scores[PLAYER_TYPE.DECLARER] !== null ? (
+          {scores[PLAYER_TYPE.OPPONENT] !== null ? (
             <Chip
               color="secondary"
               size="small"
