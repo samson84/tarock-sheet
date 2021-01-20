@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.js": "/tarock-sheet/static/js/main.954df78a.chunk.js",
-    "main.js.map": "/tarock-sheet/static/js/main.954df78a.chunk.js.map",
+    "main.js": "/tarock-sheet/static/js/main.e5ac4635.chunk.js",
+    "main.js.map": "/tarock-sheet/static/js/main.e5ac4635.chunk.js.map",
     "runtime-main.js": "/tarock-sheet/static/js/runtime-main.bf1f5d7b.js",
     "runtime-main.js.map": "/tarock-sheet/static/js/runtime-main.bf1f5d7b.js.map",
-    "static/js/2.2367a960.chunk.js": "/tarock-sheet/static/js/2.2367a960.chunk.js",
-    "static/js/2.2367a960.chunk.js.map": "/tarock-sheet/static/js/2.2367a960.chunk.js.map",
+    "static/js/2.2b4f34b9.chunk.js": "/tarock-sheet/static/js/2.2b4f34b9.chunk.js",
+    "static/js/2.2b4f34b9.chunk.js.map": "/tarock-sheet/static/js/2.2b4f34b9.chunk.js.map",
     "static/js/3.70c2b32d.chunk.js": "/tarock-sheet/static/js/3.70c2b32d.chunk.js",
     "static/js/3.70c2b32d.chunk.js.map": "/tarock-sheet/static/js/3.70c2b32d.chunk.js.map",
     "index.html": "/tarock-sheet/index.html",
-    "static/js/2.2367a960.chunk.js.LICENSE.txt": "/tarock-sheet/static/js/2.2367a960.chunk.js.LICENSE.txt"
+    "static/js/2.2b4f34b9.chunk.js.LICENSE.txt": "/tarock-sheet/static/js/2.2b4f34b9.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.bf1f5d7b.js",
-    "static/js/2.2367a960.chunk.js",
-    "static/js/main.954df78a.chunk.js"
+    "static/js/2.2b4f34b9.chunk.js",
+    "static/js/main.e5ac4635.chunk.js"
   ]
 }
