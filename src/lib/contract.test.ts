@@ -9,8 +9,6 @@ import {
   filterByPartyLike,
   ContractWithIndex,
   Contract,
-  MaxScoreWithIndex,
-  findMaxAbsScore,
   groupByPlayerType,
 } from "./contract";
 import { PARTY_SCORE } from "./game";
@@ -124,21 +122,6 @@ export default describe("contract", () => {
       const expected = contractFixture({
         bidType: BID_TYPE.PARTY,
         taker: PLAYER_TYPE.OPPONENT,
-      });
-      const current = createContract(props);
-      expect(current).toEqual(expected);
-    });
-    it("it should add valid in final score", () => {
-      const props = {
-        bidType: BID_TYPE.PARTY,
-        taker: PLAYER_TYPE.OPPONENT,
-        partyScore: PARTY_SCORE.TOOK_TWO,
-        validInFinalScore: true,
-      };
-      const expected = contractFixture({
-        bidType: BID_TYPE.PARTY,
-        taker: PLAYER_TYPE.OPPONENT,
-        validInFinalScore: true,
       });
       const current = createContract(props);
       expect(current).toEqual(expected);
@@ -270,19 +253,6 @@ export default describe("contract", () => {
       const expected = "Contra must be greater than 1, but 0.5 given.";
       const current = () => updateContract(updates)(contract);
       expect(current).toThrow(expected);
-    });
-    it("should update vaild in final score", () => {
-      const contract = contractFixture({
-        validInFinalScore: false,
-      });
-      const updates = {
-        validInFinalScore: true,
-      };
-      const expected = contractFixture({
-        validInFinalScore: true,
-      });
-      const current = updateContract(updates)(contract);
-      expect(current).toEqual(expected);
     });
   });
   describe("calculateContract", () => {

@@ -11,7 +11,6 @@ import {
   removeContract,
   updateGameContract,
   Game,
-  updateValidations,
   calculateGame,
 } from "./game";
 import { createContract } from "./contract";
@@ -242,6 +241,10 @@ export default describe("game", () => {
             contra: 4,
           }),
         ],
+        scores: {
+          [PLAYER_TYPE.DECLARER]: -8,
+          [PLAYER_TYPE.OPPONENT]: 8
+        }
       });
       const expected = gameFixture({
         partyScoreType: PARTY_SCORE_TYPE.TOOK_ONE, // party score is 3
@@ -254,6 +257,10 @@ export default describe("game", () => {
             winByTaker: true,
           }),
         ],
+        scores: {
+          [PLAYER_TYPE.DECLARER]: -8,
+          [PLAYER_TYPE.OPPONENT]: 8
+        }        
       });
       const current = updateGame(updates)(game);
       expect(current).toEqual(expected);
@@ -271,7 +278,6 @@ export default describe("game", () => {
             bidBaseScore: 1,
             winByTaker: true,
             contra: 1,
-            validInFinalScore: true,
           }),
         ],
         scores: {
@@ -288,7 +294,6 @@ export default describe("game", () => {
             bidBaseScore: 3,
             contra: 1,
             winByTaker: true,
-            validInFinalScore: true,
           }),
         ],
         scores: {
@@ -355,12 +360,11 @@ export default describe("game", () => {
 
       expect(current).toEqual(expected);
     });
-    it("should calculate game score if, contact is won and valid", () => {
+    it("should calculate game score if, contact is won", () => {
       const contract = createContract({
         bidType: BID_TYPE.PARTY,
         taker: PLAYER_TYPE.DECLARER,
         partyScore: 1,
-        validInFinalScore: true,
         winByTaker: true
       });
       const game = gameFixture({
@@ -375,7 +379,6 @@ export default describe("game", () => {
           contractFixture({
             bidType: BID_TYPE.PARTY,
             taker: PLAYER_TYPE.DECLARER,
-            validInFinalScore: true,
             winByTaker: true,
             bidBaseScore: 1
           }),
@@ -467,7 +470,7 @@ export default describe("game", () => {
 
       expect(current).toEqual(expected);
     });
-    it("should calculate the game score, contract is won and valid", () => {
+    it("should calculate the game score, contract is won", () => {
       const index = 1;
       const game = gameFixture({
         partyScoreType: PARTY_SCORE_TYPE.TOOK_THREE,
@@ -477,7 +480,6 @@ export default describe("game", () => {
             taker: PLAYER_TYPE.DECLARER,
             bidBaseScore: 2,
             winByTaker: true,
-            validInFinalScore: true
           }),
           // This contract will be removed below
           contractFixture({
@@ -485,7 +487,6 @@ export default describe("game", () => {
             taker: PLAYER_TYPE.DECLARER,
             bidBaseScore: 1,
             winByTaker: true,
-            validInFinalScore: true
           }),
         ],
         scores: {
@@ -501,7 +502,6 @@ export default describe("game", () => {
             bidBaseScore: 2,
             taker: PLAYER_TYPE.DECLARER,
             winByTaker: true,
-            validInFinalScore: true
           }),
         ],
         scores: {
@@ -550,7 +550,6 @@ export default describe("game", () => {
         contra: 2,
         taker: PLAYER_TYPE.DECLARER,
         winByTaker: true,
-        validInFinalScore: true
       });
       const index = 0;
       const game = gameFixture({
@@ -561,7 +560,6 @@ export default describe("game", () => {
             contra: 1,
             taker: PLAYER_TYPE.DECLARER,
             winByTaker: true,
-            validInFinalScore: true
           })
         ],
         scores: {
@@ -577,7 +575,6 @@ export default describe("game", () => {
             contra: 2,
             taker: PLAYER_TYPE.DECLARER,
             winByTaker: true,
-            validInFinalScore: true
           }),
         ],
         scores: {
@@ -603,37 +600,7 @@ export default describe("game", () => {
       const current = calculateGame(game);
       expect(current).toEqual(expected);
     });
-    it("should return null, null if the contracts are not valid", () => {
-      const game = gameFixture({
-        contracts: [
-          contractFixture({
-            bidType: BID_TYPE.TRULL,
-            taker: PLAYER_TYPE.DECLARER,
-            bidBaseScore: 2,
-            contra: 1,
-            silent: false,
-            validInFinalScore: false,
-            winByTaker: true,
-          }),
-          contractFixture({
-            bidType: BID_TYPE.FOUR_KING,
-            taker: PLAYER_TYPE.OPPONENT,
-            bidBaseScore: 2,
-            contra: 1,
-            silent: false,
-            validInFinalScore: false,
-            winByTaker: true,
-          }),
-        ],
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO,
-      });
-      const expected = {
-        [PLAYER_TYPE.DECLARER]: null,
-        [PLAYER_TYPE.OPPONENT]: null,
-      };
-      const current = calculateGame(game);
-      expect(current).toEqual(expected);
-    });
+
     it("should return null, null if the contract is not won / loose", () => {
       const game = gameFixture({
         contracts: [
@@ -643,7 +610,6 @@ export default describe("game", () => {
             bidBaseScore: 2,
             contra: 1,
             silent: false,
-            validInFinalScore: true,
             winByTaker: null,
           }),
           contractFixture({
@@ -652,7 +618,6 @@ export default describe("game", () => {
             bidBaseScore: 2,
             contra: 1,
             silent: false,
-            validInFinalScore: true,
             winByTaker: null,
           }),
         ],
@@ -674,7 +639,6 @@ export default describe("game", () => {
             bidBaseScore: 10,
             contra: 1,
             silent: false,
-            validInFinalScore: true,
             winByTaker: true,
           }),
           contractFixture({
@@ -683,7 +647,6 @@ export default describe("game", () => {
             bidBaseScore: 2,
             contra: 1,
             silent: false,
-            validInFinalScore: true,
             winByTaker: true,
           }),
         ],
@@ -705,7 +668,6 @@ export default describe("game", () => {
             bidBaseScore: 10,
             contra: 1,
             silent: false,
-            validInFinalScore: true,
             winByTaker: true,
           }),
           contractFixture({
@@ -715,7 +677,6 @@ export default describe("game", () => {
             bidBaseScore: 10,
             contra: 1,
             silent: false,
-            validInFinalScore: true,
             winByTaker: true,
           }),
           contractFixture({
@@ -724,7 +685,6 @@ export default describe("game", () => {
             bidBaseScore: 2,
             contra: 1,
             silent: false,
-            validInFinalScore: true,
             winByTaker: true,
           }),
           contractFixture({
@@ -733,7 +693,6 @@ export default describe("game", () => {
             bidBaseScore: 2,
             contra: 2,
             silent: false,
-            validInFinalScore: true,
             winByTaker: true,
           }),
         ],
@@ -755,7 +714,6 @@ export default describe("game", () => {
             bidBaseScore: 10,
             contra: 1,
             silent: false,
-            validInFinalScore: true,
             winByTaker: false,
           }),
           contractFixture({
@@ -765,7 +723,6 @@ export default describe("game", () => {
             bidBaseScore: 10,
             contra: 1,
             silent: false,
-            validInFinalScore: true,
             winByTaker: false,
           }),
           contractFixture({
@@ -774,7 +731,6 @@ export default describe("game", () => {
             bidBaseScore: 2,
             contra: 1,
             silent: false,
-            validInFinalScore: true,
             winByTaker: true,
           }),
           contractFixture({
@@ -783,7 +739,6 @@ export default describe("game", () => {
             bidBaseScore: 2,
             contra: 2,
             silent: false,
-            validInFinalScore: true,
             winByTaker: true,
           }),
         ],
@@ -805,7 +760,6 @@ export default describe("game", () => {
             bidBaseScore: 10,
             contra: 1,
             silent: false,
-            validInFinalScore: true,
             winByTaker: null,
           }),
           contractFixture({
@@ -815,7 +769,6 @@ export default describe("game", () => {
             bidBaseScore: 10,
             contra: 1,
             silent: false,
-            validInFinalScore: true,
             winByTaker: false,
           }),
           contractFixture({
@@ -824,7 +777,6 @@ export default describe("game", () => {
             bidBaseScore: 25,
             contra: 1,
             silent: false,
-            validInFinalScore: true,
             winByTaker: true,
           }),
           contractFixture({
@@ -833,7 +785,6 @@ export default describe("game", () => {
             bidBaseScore: 2,
             contra: 1,
             silent: false,
-            validInFinalScore: true,
             winByTaker: null,
           }),
           contractFixture({
@@ -842,7 +793,6 @@ export default describe("game", () => {
             bidBaseScore: 2,
             contra: 2,
             silent: false,
-            validInFinalScore: true,
             winByTaker: true,
           }),
           contractFixture({
@@ -851,7 +801,6 @@ export default describe("game", () => {
             bidBaseScore: 4,
             contra: 1,
             silent: false,
-            validInFinalScore: true,
             winByTaker: true,
           }),
         ],
@@ -864,142 +813,7 @@ export default describe("game", () => {
       const current = calculateGame(game);
       expect(current).toEqual(expected);
     });
-    it("should calculate the correct score, event if the first contract / player type is not valid in final score", () => {
-      const game = gameFixture({
-        contracts: [
-          contractFixture({
-            bidType: BID_TYPE.CENTRUM,
-            taker: PLAYER_TYPE.DECLARER,
-            bidBaseScore: 10,
-            contra: 1,
-            silent: false,
-            validInFinalScore: false,
-            winByTaker: false,
-          }),
-          contractFixture({
-            bidType: BID_TYPE.ULTI,
-            bidVariant: SMALLEST_VARIANT.PAGAT,
-            taker: PLAYER_TYPE.DECLARER,
-            bidBaseScore: 10,
-            contra: 1,
-            silent: false,
-            validInFinalScore: true,
-            winByTaker: false,
-          }),
-          contractFixture({
-            bidType: BID_TYPE.FURRY,
-            taker: PLAYER_TYPE.DECLARER,
-            bidBaseScore: 25,
-            contra: 1,
-            silent: false,
-            validInFinalScore: true,
-            winByTaker: true,
-          }),
-          contractFixture({
-            bidType: BID_TYPE.FOUR_KING,
-            taker: PLAYER_TYPE.OPPONENT,
-            bidBaseScore: 2,
-            contra: 1,
-            silent: false,
-            validInFinalScore: false,
-            winByTaker: true,
-          }),
-          contractFixture({
-            bidType: BID_TYPE.TRULL,
-            taker: PLAYER_TYPE.OPPONENT,
-            bidBaseScore: 2,
-            contra: 2,
-            silent: false,
-            validInFinalScore: true,
-            winByTaker: true,
-          }),
-          contractFixture({
-            bidType: BID_TYPE.CATCH_THE_PAGAT,
-            taker: PLAYER_TYPE.OPPONENT,
-            bidBaseScore: 4,
-            contra: 1,
-            silent: false,
-            validInFinalScore: true,
-            winByTaker: true,
-          }),
-        ],
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO,
-      });
-      const expected = {
-        [PLAYER_TYPE.DECLARER]: -10 + 25 - 2 * 2 - 4, // (?) centrum, - ulti, + furry, four king (?), - contra trull, - catch the pagat
-        [PLAYER_TYPE.OPPONENT]: -7,
-      };
-      const current = calculateGame(game);
-      expect(current).toEqual(expected);
-    });
-    it("should calculate the correct score, event if the second contract / player type is not valid in final score", () => {
-      const game = gameFixture({
-        contracts: [
-          contractFixture({
-            bidType: BID_TYPE.CENTRUM,
-            taker: PLAYER_TYPE.DECLARER,
-            bidBaseScore: 10,
-            contra: 1,
-            silent: false,
-            validInFinalScore: true,
-            winByTaker: false,
-          }),
-          contractFixture({
-            bidType: BID_TYPE.ULTI,
-            bidVariant: SMALLEST_VARIANT.PAGAT,
-            taker: PLAYER_TYPE.DECLARER,
-            bidBaseScore: 10,
-            contra: 1,
-            silent: false,
-            validInFinalScore: false,
-            winByTaker: false,
-          }),
-          contractFixture({
-            bidType: BID_TYPE.FURRY,
-            taker: PLAYER_TYPE.DECLARER,
-            bidBaseScore: 25,
-            contra: 1,
-            silent: false,
-            validInFinalScore: true,
-            winByTaker: true,
-          }),
-          contractFixture({
-            bidType: BID_TYPE.FOUR_KING,
-            taker: PLAYER_TYPE.OPPONENT,
-            bidBaseScore: 2,
-            contra: 1,
-            silent: false,
-            validInFinalScore: true,
-            winByTaker: true,
-          }),
-          contractFixture({
-            bidType: BID_TYPE.TRULL,
-            taker: PLAYER_TYPE.OPPONENT,
-            bidBaseScore: 2,
-            contra: 2,
-            silent: false,
-            validInFinalScore: false,
-            winByTaker: true,
-          }),
-          contractFixture({
-            bidType: BID_TYPE.CATCH_THE_PAGAT,
-            taker: PLAYER_TYPE.OPPONENT,
-            bidBaseScore: 4,
-            contra: 1,
-            silent: false,
-            validInFinalScore: true,
-            winByTaker: true,
-          }),
-        ],
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO,
-      });
-      const expected = {
-        [PLAYER_TYPE.DECLARER]: -10 + 25 - 2 - 4, // centrum, (?) ulti, + furry, - four king, (?) contra trull, - catch the pagat
-        [PLAYER_TYPE.OPPONENT]: -9,
-      };
-      const current = calculateGame(game);
-      expect(current).toEqual(expected);
-    });
+
     it("should calculate the correct score, event if the second contract / player type is won / lost", () => {
       const game = gameFixture({
         contracts: [
@@ -1009,7 +823,6 @@ export default describe("game", () => {
             bidBaseScore: 10,
             contra: 1,
             silent: false,
-            validInFinalScore: true,
             winByTaker: false,
           }),
           contractFixture({
@@ -1019,7 +832,6 @@ export default describe("game", () => {
             bidBaseScore: 10,
             contra: 1,
             silent: false,
-            validInFinalScore: true,
             winByTaker: null,
           }),
           contractFixture({
@@ -1028,7 +840,6 @@ export default describe("game", () => {
             bidBaseScore: 25,
             contra: 1,
             silent: false,
-            validInFinalScore: true,
             winByTaker: true,
           }),
           contractFixture({
@@ -1037,7 +848,6 @@ export default describe("game", () => {
             bidBaseScore: 2,
             contra: 1,
             silent: false,
-            validInFinalScore: true,
             winByTaker: true,
           }),
           contractFixture({
@@ -1046,7 +856,6 @@ export default describe("game", () => {
             bidBaseScore: 2,
             contra: 2,
             silent: false,
-            validInFinalScore: true,
             winByTaker: null,
           }),
           contractFixture({
@@ -1055,7 +864,6 @@ export default describe("game", () => {
             bidBaseScore: 4,
             contra: 1,
             silent: false,
-            validInFinalScore: true,
             winByTaker: true,
           }),
         ],
@@ -1068,74 +876,7 @@ export default describe("game", () => {
       const current = calculateGame(game);
       expect(current).toEqual(expected);
     });
-    it("should calculate the correct score, event if the last contract / player type is not valid in the final score.", () => {
-      const game = gameFixture({
-        contracts: [
-          contractFixture({
-            bidType: BID_TYPE.CENTRUM,
-            taker: PLAYER_TYPE.DECLARER,
-            bidBaseScore: 10,
-            contra: 1,
-            silent: false,
-            validInFinalScore: true,
-            winByTaker: false,
-          }),
-          contractFixture({
-            bidType: BID_TYPE.ULTI,
-            bidVariant: SMALLEST_VARIANT.PAGAT,
-            taker: PLAYER_TYPE.DECLARER,
-            bidBaseScore: 10,
-            contra: 1,
-            silent: false,
-            validInFinalScore: true,
-            winByTaker: false,
-          }),
-          contractFixture({
-            bidType: BID_TYPE.FURRY,
-            taker: PLAYER_TYPE.DECLARER,
-            bidBaseScore: 25,
-            contra: 1,
-            silent: false,
-            validInFinalScore: false,
-            winByTaker: true,
-          }),
-          contractFixture({
-            bidType: BID_TYPE.FOUR_KING,
-            taker: PLAYER_TYPE.OPPONENT,
-            bidBaseScore: 2,
-            contra: 1,
-            silent: false,
-            validInFinalScore: true,
-            winByTaker: true,
-          }),
-          contractFixture({
-            bidType: BID_TYPE.TRULL,
-            taker: PLAYER_TYPE.OPPONENT,
-            bidBaseScore: 2,
-            contra: 2,
-            silent: false,
-            validInFinalScore: true,
-            winByTaker: true,
-          }),
-          contractFixture({
-            bidType: BID_TYPE.CATCH_THE_PAGAT,
-            taker: PLAYER_TYPE.OPPONENT,
-            bidBaseScore: 4,
-            contra: 1,
-            silent: false,
-            validInFinalScore: false,
-            winByTaker: true,
-          }),
-        ],
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO,
-      });
-      const expected = {
-        [PLAYER_TYPE.DECLARER]: -10 - 10 - 2 - 2 * 2, // - centrum, - ulti, (?) furry, - four king, - contra trull, (?) catch the pagat
-        [PLAYER_TYPE.OPPONENT]: 26,
-      };
-      const current = calculateGame(game);
-      expect(current).toEqual(expected);
-    });
+
     it("should calculate the correct score, event if the last contract / player type is not won / lost", () => {
       const game = gameFixture({
         contracts: [
@@ -1145,7 +886,6 @@ export default describe("game", () => {
             bidBaseScore: 10,
             contra: 1,
             silent: false,
-            validInFinalScore: true,
             winByTaker: false,
           }),
           contractFixture({
@@ -1155,7 +895,6 @@ export default describe("game", () => {
             bidBaseScore: 10,
             contra: 1,
             silent: false,
-            validInFinalScore: true,
             winByTaker: false,
           }),
           contractFixture({
@@ -1164,7 +903,6 @@ export default describe("game", () => {
             bidBaseScore: 25,
             contra: 1,
             silent: false,
-            validInFinalScore: true,
             winByTaker: null,
           }),
           contractFixture({
@@ -1173,7 +911,6 @@ export default describe("game", () => {
             bidBaseScore: 2,
             contra: 1,
             silent: false,
-            validInFinalScore: true,
             winByTaker: true,
           }),
           contractFixture({
@@ -1182,7 +919,6 @@ export default describe("game", () => {
             bidBaseScore: 2,
             contra: 2,
             silent: false,
-            validInFinalScore: true,
             winByTaker: true,
           }),
           contractFixture({
@@ -1191,7 +927,6 @@ export default describe("game", () => {
             bidBaseScore: 4,
             contra: 1,
             silent: false,
-            validInFinalScore: true,
             winByTaker: null,
           }),
         ],

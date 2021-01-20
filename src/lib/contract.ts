@@ -24,7 +24,6 @@ export interface Contract {
   winByTaker: boolean | null;
   taker: PLAYER_TYPE;
   silent: boolean;
-  validInFinalScore: boolean;
 }
 
 const validateContract = (contract: Contract): void | undefined => {
@@ -51,7 +50,6 @@ export interface CreateContractProps {
   taker: PLAYER_TYPE;
   silent?: boolean;
   bidVariant?: BidVariant | null;
-  validInFinalScore?: boolean;
   winByTaker?: boolean | null;
 }
 export const createContract = ({
@@ -60,7 +58,6 @@ export const createContract = ({
   partyScore = null,
   silent = false,
   bidVariant = null,
-  validInFinalScore = false,
   winByTaker = null,
 }: CreateContractProps): Contract => {
   const contract = {
@@ -74,7 +71,6 @@ export const createContract = ({
       partyScore !== null
         ? flow(getBid, getBidScore(partyScore))(bidType)
         : null,
-    validInFinalScore,
   };
   validateContract(contract);
   return contract;
@@ -95,7 +91,6 @@ export type UpdateContractProps = Partial<
     | "silent"
     | "bidVariant"
     | "contra"
-    | "validInFinalScore"
   >
 >;
 export const updateContract = (updates: UpdateContractProps) => (

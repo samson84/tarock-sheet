@@ -24,8 +24,6 @@ import {
   MdDelete as RemoveIcon,
   MdArrowUpward as DoubleContraIcon,
   MdArrowDownward as DivideContraIcon,
-  MdCheck as ValidIcon,
-  MdClose as InvalidIcon
 } from "react-icons/md";
 import { BidVariant } from "../lib/bid";
 import VariantSelector from "./VariantSelector";
@@ -85,11 +83,6 @@ interface ColumnDefinition {
   ) => React.ReactNode;
 }
 const columns: ColumnDefinition[] = [
-  {
-    field: "validInFinalScore",
-    headerName: "Valid?",
-    valueGetter: (contract: Contract) => contract.validInFinalScore ? <ValidIcon/> : <InvalidIcon/>
-  },
   {
     field: "bidType",
     headerName: "Bid",
@@ -192,7 +185,7 @@ const columns: ColumnDefinition[] = [
           ? "Won by the Taker!"
           : winByTaker === false
           ? "Lose by the Taker!"
-          : "Indeterminate...";
+          : "Still unknown / Not count in final score...";
 
       return (
         <Checkbox

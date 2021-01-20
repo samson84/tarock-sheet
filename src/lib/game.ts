@@ -156,9 +156,6 @@ export const updateGameContract = (game: Game) => (index: number) => (
 export const calculateGame = (game: Game): GameScore => {
   return game.contracts.reduce(
     (partyScore, contract) => {
-      if (!contract.validInFinalScore) {
-        return partyScore;
-      }
       const score = calculateContract(contract);
       if (score === null) {
         return partyScore;

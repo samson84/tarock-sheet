@@ -1,9 +1,9 @@
 # TODO
 - [ ] Milesteone 1
-  - [ ] refactor game handling
+  - [x] refactor game handling
     - [x] move scores to game object
     - [x] remove validation rules
-    - [ ] remove valid in final score, use the win / null instead, rename it on the gui to invalid
+    - [x] remove valid in final score, use the win / null instead, rename it on the gui to invalid
   - [ ] handle multiple games, score sheet
     - [ ] create new components of the score sheet
     - [ ] add save game functionality, it saves the current scores to the table
