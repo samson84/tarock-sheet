@@ -10,9 +10,9 @@ import {
   updateGameContract,
   removeContract,
   PARTY_SCORE,
-  updateValidations,
   removePlayer,
   addPlayer,
+  UpdateGameProps
 } from "../lib/game";
 import { Contract, createContract, updateContract } from "../lib/contract";
 import { Button, Grid } from "@material-ui/core";
@@ -31,7 +31,7 @@ const TarockSheet = () => {
   const [players, setPlayers] = useState<Player[]>([]);
 
   const handleContractDelete = (index: number) =>
-    setGame(flow(removeContract(game as Game), updateValidations)(index));
+    setGame(removeContract(game as Game)(index));
   const handleResetGame = () => setGame(createGame());
   const handleAddPlayer = (player: Player) =>
     setPlayers((prev) => uniq([...prev, player]));
@@ -47,6 +47,31 @@ const TarockSheet = () => {
       setGame(addPlayer(player, playerType)(game));
     }
   };
+  const handleChangeGameProperties = (prop: keyof UpdateGameProps, value: any) => {
+    setGame(updateGame({ [prop]: value })(game as Game));
+  }
+  const handleAddContract = (contract: Contract) => {
+    const partyScore = game?.partyScoreType
+      ? PARTY_SCORE[game?.partyScoreType]
+      : null;
+    return setGame(
+      flow(
+        createContract,
+        addContract(game as Game),
+      )({
+        ...contract,
+        partyScore,
+      })
+    );
+  }
+  const handleChangeContract = (index: number, field: keyof Contract, value: any) => {
+    setGame(
+      flow(
+        updateContract({ [field]: value }),
+        updateGameContract(game as Game)(index),
+      )((game as Game).contracts[index])
+    );
+  }
 
   const hasGame = game !== null;
 
@@ -62,14 +87,7 @@ const TarockSheet = () => {
           <Grid item>
             <GameProperties
               game={game as Game}
-              onChange={(prop, value) => {
-                setGame(
-                  flow(
-                    updateGame({ [prop]: value }),
-                    updateValidations
-                  )(game as Game)
-                );
-              }}
+              onChange={handleChangeGameProperties}
             />
           </Grid>
         </Grid>
@@ -91,33 +109,11 @@ const TarockSheet = () => {
           <>
             <BidSelector
               bids={allBids}
-              onAddContract={(contractProps) => {
-                const partyScore = game?.partyScoreType
-                  ? PARTY_SCORE[game?.partyScoreType]
-                  : null;
-                return setGame(
-                  flow(
-                    createContract,
-                    addContract(game as Game),
-                    updateValidations
-                  )({
-                    ...contractProps,
-                    partyScore,
-                  })
-                );
-              }}
+              onAddContract={handleAddContract}
             />
             <ContractsTable
               contracts={game?.contracts as Contract[]}
-              onChange={(index, field, value) => {
-                setGame(
-                  flow(
-                    updateContract({ [field]: value }),
-                    updateGameContract(game as Game)(index),
-                    updateValidations
-                  )((game as Game).contracts[index])
-                );
-              }}
+              onChange={handleChangeContract}
               onDelete={handleContractDelete}
             />
           </>

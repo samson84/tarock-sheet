@@ -144,23 +144,3 @@ export const groupByPlayerType = (contracts: ContractWithIndex[]) => {
     [PLAYER_TYPE.OPPONENT]: groupped[PLAYER_TYPE.OPPONENT] || []
   }
 }
-
-
-export type MaxScoreWithIndex = [ContractScore, number];
-export const findMaxAbsScore = (contracts: ContractWithIndex[]) => {
-  return contracts.reduce(
-    (
-      prev: MaxScoreWithIndex,
-      current: ContractWithIndex
-    ): MaxScoreWithIndex => {
-      const [maxScore] = prev;
-      const [contract, index] = current;
-      const score = calculateContract(contract);
-      return score !== null &&
-        (maxScore === null || Math.abs(score) >= Math.abs(maxScore))
-        ? [score, index]
-        : prev;
-    },
-    [null, -1]
-  );
-};

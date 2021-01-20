@@ -1,18 +1,9 @@
-import { BID_TYPE } from "./bid";
 import {
   calculateContract,
   Contract,
-  ContractWithIndex,
-  filterByPartyLike,
-  findMaxAbsScore,
-  groupByPlayerType,
   updateBidBaseScore,
-  updateContract,
-  withIndices,
-  filterByProps
 } from "./contract";
 import { getAnotherPlayerType, Player, PLAYER_TYPE } from "./player";
-import flow from "lodash/fp/flow";
 
 type PlayerScore = number | null;
 type GameScore = {
@@ -160,68 +151,6 @@ export const updateGameContract = (game: Game) => (index: number) => (
       i === index ? { ...updated } : contract
     ),
   });
-};
-
-type ValidationRule = (game: Game) => Contract[];
-const handleKlopiczky: ValidationRule = (game) =>
-  game.contracts.map((contract) =>
-    updateContract({
-      validInFinalScore:
-        game.partyScoreType === PARTY_SCORE_TYPE.KLOPICZKY
-          ? contract.bidType === BID_TYPE.KLOPICZKY
-          : contract.bidType !== BID_TYPE.KLOPICZKY,
-    })(contract)
-  );
-
-const handlePartyLike: ValidationRule = (game) => {
-  const nonContraWon = {
-    contra: 1,
-    winByTaker: true
-  }
-  const partyLike = flow(withIndices, filterByPartyLike, filterByProps(nonContraWon))(game.contracts);
-
-  const byTakerType = groupByPlayerType(partyLike);
-  const opponents = byTakerType[PLAYER_TYPE.OPPONENT] as ContractWithIndex[];
-  const declarers = byTakerType[PLAYER_TYPE.DECLARER] as ContractWithIndex[];
-  if (opponents.length < 2 && declarers.length < 2) {
-    return game.contracts;
-  }
-  const updateValidInFinalScore = (
-    contracts: ContractWithIndex[]
-  ): ContractWithIndex[] => {
-    const [maxScore, maxIndex] = findMaxAbsScore(contracts);
-    if (maxScore === null) {
-      return [];
-    }
-    return contracts.map(([contract, index]) => [
-      updateContract({ validInFinalScore: index === maxIndex })(contract),
-      index,
-    ]);
-  };
-  const updates = [
-    ...updateValidInFinalScore(opponents),
-    ...updateValidInFinalScore(declarers),
-  ];
-  const flip = (contracts: [unknown, unknown][]) =>
-    contracts.map(([a, b]) => [b, a]);
-  const updateMapper = flow(flip, Object.fromEntries)(updates);
-  return game.contracts.map((contract, index) => {
-    return updateMapper[index] === undefined ? contract : updateMapper[index];
-  });
-};
-
-const VALIDATION_RULES: ValidationRule[] = [handleKlopiczky, handlePartyLike];
-export const updateValidations = (game: Game): Game => {
-  // if the game is klopiczky it has higher prioriy than a party game,
-  // otherwise it is reversed
-  if (game.partyScoreType === PARTY_SCORE_TYPE.KLOPICZKY) {
-    game.contracts = handlePartyLike(game);
-    game.contracts = handleKlopiczky(game);
-  } else {
-    game.contracts = handleKlopiczky(game);
-    game.contracts = handlePartyLike(game);
-  }
-  return { ...game };
 };
 
 export const calculateGame = (game: Game): GameScore => {
