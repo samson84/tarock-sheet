@@ -28,7 +28,7 @@ const ScoreSheet = ({ gameScoreList }: ScoreSheetProps) => {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>No.</TableCell>
+            <TableCell>Game</TableCell>
             {players.map((player) => (
               <TableCell key={player}>{`${player} (${
                 sum[player] === undefined ? "" : sum[player]
@@ -39,7 +39,7 @@ const ScoreSheet = ({ gameScoreList }: ScoreSheetProps) => {
         <TableBody>
           {gameScoreList.map((scores, index) => (
             <TableRow key={index}>
-              <TableCell>{index}</TableCell>
+              <TableCell>{index + 1}</TableCell>
               {players.map((player) => (
                 <TableCell key={player}>
                   {scores[player] === undefined ? " " : scores[player]}
