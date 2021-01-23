@@ -10,26 +10,11 @@ import {
   updateGame,
   removeContract,
   updateGameContract,
-  Game,
   calculateGame,
 } from "./game";
 import { createContract } from "./contract";
 import { BID_TYPE, SMALLEST_VARIANT } from "./bid";
-
-const gameFixture = (props: Partial<Game> = {}): Game => ({
-  contracts: [],
-  declarers: [],
-  opponents: [],
-  partyScoreType: null,
-  called_tarock: null,
-  ...props,
-  scores: props.scores
-    ? { ...props.scores }
-    : {
-        [PLAYER_TYPE.DECLARER]: null,
-        [PLAYER_TYPE.OPPONENT]: null,
-      },
-});
+import { gameFixture } from "./test_data/fixtures";
 
 export default describe("game", () => {
   describe("createGame", () => {
@@ -243,8 +228,8 @@ export default describe("game", () => {
         ],
         scores: {
           [PLAYER_TYPE.DECLARER]: -8,
-          [PLAYER_TYPE.OPPONENT]: 8
-        }
+          [PLAYER_TYPE.OPPONENT]: 8,
+        },
       });
       const expected = gameFixture({
         partyScoreType: PARTY_SCORE_TYPE.TOOK_ONE, // party score is 3
@@ -259,8 +244,8 @@ export default describe("game", () => {
         ],
         scores: {
           [PLAYER_TYPE.DECLARER]: -8,
-          [PLAYER_TYPE.OPPONENT]: 8
-        }        
+          [PLAYER_TYPE.OPPONENT]: 8,
+        },
       });
       const current = updateGame(updates)(game);
       expect(current).toEqual(expected);
@@ -365,14 +350,14 @@ export default describe("game", () => {
         bidType: BID_TYPE.PARTY,
         taker: PLAYER_TYPE.DECLARER,
         partyScore: 1,
-        winByTaker: true
+        winByTaker: true,
       });
       const game = gameFixture({
         contracts: [],
         scores: {
           [PLAYER_TYPE.DECLARER]: null,
-          [PLAYER_TYPE.OPPONENT]: null
-        }
+          [PLAYER_TYPE.OPPONENT]: null,
+        },
       });
       const expected = gameFixture({
         contracts: [
@@ -380,13 +365,13 @@ export default describe("game", () => {
             bidType: BID_TYPE.PARTY,
             taker: PLAYER_TYPE.DECLARER,
             winByTaker: true,
-            bidBaseScore: 1
+            bidBaseScore: 1,
           }),
         ],
         scores: {
           [PLAYER_TYPE.DECLARER]: 1,
-          [PLAYER_TYPE.OPPONENT]: -1
-        }
+          [PLAYER_TYPE.OPPONENT]: -1,
+        },
       });
       const current = addContract(game)(contract);
 
@@ -491,8 +476,8 @@ export default describe("game", () => {
         ],
         scores: {
           [PLAYER_TYPE.DECLARER]: 3,
-          [PLAYER_TYPE.OPPONENT]: -3
-        }
+          [PLAYER_TYPE.OPPONENT]: -3,
+        },
       });
       const expected = gameFixture({
         partyScoreType: PARTY_SCORE_TYPE.TOOK_THREE,
@@ -506,14 +491,14 @@ export default describe("game", () => {
         ],
         scores: {
           [PLAYER_TYPE.DECLARER]: 2,
-          [PLAYER_TYPE.OPPONENT]: -2
-        }
+          [PLAYER_TYPE.OPPONENT]: -2,
+        },
       });
 
       const current = removeContract(game)(index);
 
       expect(current).toEqual(expected);
-    })
+    });
   });
   describe("updateGameContract", () => {
     it("should update the game contract", () => {
@@ -560,12 +545,12 @@ export default describe("game", () => {
             contra: 1,
             taker: PLAYER_TYPE.DECLARER,
             winByTaker: true,
-          })
+          }),
         ],
         scores: {
           [PLAYER_TYPE.DECLARER]: 2,
-          [PLAYER_TYPE.OPPONENT]: -2
-        }
+          [PLAYER_TYPE.OPPONENT]: -2,
+        },
       });
       const expected = gameFixture({
         contracts: [
@@ -579,12 +564,12 @@ export default describe("game", () => {
         ],
         scores: {
           [PLAYER_TYPE.DECLARER]: 4,
-          [PLAYER_TYPE.OPPONENT]: -4
-        }
+          [PLAYER_TYPE.OPPONENT]: -4,
+        },
       });
       const current = updateGameContract(game)(index)(updated);
       expect(current).toEqual(expected);
-    })
+    });
   });
   describe("calculateGame", () => {
     it("should return null, null if no contracts given", () => {
