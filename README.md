@@ -1,9 +1,10 @@
 # TODO
 - [.] Milesteone 1
-  - [ ] handle multiple games, score sheet
+  - [x] handle multiple games, score sheet
     - [x] create new components of the score sheet
     - [x] add save game functionality, it saves the current scores to the table
-    - [ ] add tests
+    - [x] add tests
+    - [x] add base score
   - [ ] usability
     - [ ] new contracts on the top of the ContractsTable
     - [ ] group the bids

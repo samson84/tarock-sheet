@@ -1,4 +1,5 @@
 import {
+  addBaseScore,
   GameScorePerPlayer,
   getAllPlayers,
   getPlayersScores,
@@ -298,6 +299,27 @@ export default describe("gameList", () => {
       };
 
       const current = sumPlayerScores(gameScoreList);
+
+      expect(current).toEqual(expected);
+    });
+  });
+  describe("addBaseScore", () => {
+    it("should add base score", () => {
+      const sumPlayersScore = {
+        Csaba: 10,
+        Akos: 10,
+        Dani: -10,
+        Tamas: -10,
+      };
+      const baseScore = 100;
+      const expected = {
+        Csaba: 110,
+        Akos: 110,
+        Dani: 90,
+        Tamas: 90,
+      };
+
+      const current = addBaseScore(baseScore)(sumPlayersScore);
 
       expect(current).toEqual(expected);
     });

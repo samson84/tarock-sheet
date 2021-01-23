@@ -2,6 +2,7 @@ import { Game } from "./game";
 import { Player, PlayerScore, PLAYER_TYPE } from "./player";
 import fromPairs from "lodash/fp/fromPairs";
 import assignWith from "lodash/assignWith";
+import mapValues from "lodash/fp/mapValues";
 
 export type GameScorePerPlayer = { [keyof: string]: PlayerScore };
 export const getPlayersScores = (game: Game): GameScorePerPlayer => {
@@ -21,13 +22,24 @@ export const getPlayersScores = (game: Game): GameScorePerPlayer => {
 
 const defined = (value: any): boolean => value !== undefined && value !== null;
 
-const scoreAssigner = (value1: number | undefined | null, value2: number | undefined | null): number => {
+const scoreAssigner = (
+  value1: number | undefined | null,
+  value2: number | undefined | null
+): number => {
   value1 = defined(value1) ? value1 : 0;
   value2 = defined(value2) ? value2 : 0;
 
   return (value1 as number) + (value2 as number);
-}
+};
 
+const baseScoreAdder = (baseScore: number) => (score: number | null) => {
+  score = defined(score) ? score : 0;
+  return (score as number) + baseScore;
+};
+
+export const addBaseScore = (baseScore: number) => (
+  sumPlayersScore: GameScorePerPlayer
+): GameScorePerPlayer => mapValues(baseScoreAdder(baseScore))(sumPlayersScore);
 
 export const sumPlayerScores = (
   gameScoreList: GameScorePerPlayer[]
