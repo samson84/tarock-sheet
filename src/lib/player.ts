@@ -3,6 +3,7 @@ export enum PLAYER_TYPE {
   OPPONENT = "OPPONENT",
 }
 export type Player = string;
+export type PlayerScore = number | null;
 
 export const getAnotherPlayerType = (playerType: PLAYER_TYPE): PLAYER_TYPE =>
   playerType === PLAYER_TYPE.DECLARER

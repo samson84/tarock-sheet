@@ -3,9 +3,8 @@ import {
   Contract,
   updateBidBaseScore,
 } from "./contract";
-import { getAnotherPlayerType, Player, PLAYER_TYPE } from "./player";
+import { getAnotherPlayerType, Player, PLAYER_TYPE, PlayerScore } from "./player";
 
-type PlayerScore = number | null;
 type GameScore = {
   [PLAYER_TYPE.DECLARER]: PlayerScore;
   [PLAYER_TYPE.OPPONENT]: PlayerScore;  

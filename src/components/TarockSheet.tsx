@@ -12,7 +12,7 @@ import {
   PARTY_SCORE,
   removePlayer,
   addPlayer,
-  UpdateGameProps
+  UpdateGameProps,
 } from "../lib/game";
 import { Contract, createContract, updateContract } from "../lib/contract";
 import { Button, Grid } from "@material-ui/core";
@@ -23,15 +23,18 @@ import uniq from "lodash/fp/uniq";
 import GameScore from "./GameScore";
 import Players from "./Players";
 import { Player, PLAYER_TYPE } from "../lib/player";
+import { GameScorePerPlayer, getPlayersScores } from "../lib/gameList";
+import ScoreSheet from "./ScoreSheet";
 
 const allBids = sortBy((b: Bid) => b.type)(getAllBids());
 
 const TarockSheet = () => {
   const [game, setGame] = useState<Game>(createGame());
   const [players, setPlayers] = useState<Player[]>([]);
+  const [gameScoreList, setGameScoreList] = useState<GameScorePerPlayer[] >([]);
 
   const handleContractDelete = (index: number) =>
-    setGame(removeContract(game as Game)(index));
+    setGame(removeContract(game)(index));
   const handleResetGame = () => setGame(createGame());
   const handleAddPlayer = (player: Player) =>
     setPlayers((prev) => uniq([...prev, player]));
@@ -47,9 +50,12 @@ const TarockSheet = () => {
       setGame(addPlayer(player, playerType)(game));
     }
   };
-  const handleChangeGameProperties = (prop: keyof UpdateGameProps, value: any) => {
-    setGame(updateGame({ [prop]: value })(game as Game));
-  }
+  const handleChangeGameProperties = (
+    prop: keyof UpdateGameProps,
+    value: any
+  ) => {
+    setGame(updateGame({ [prop]: value })(game));
+  };
   const handleAddContract = (contract: Contract) => {
     const partyScore = game?.partyScoreType
       ? PARTY_SCORE[game?.partyScoreType]
@@ -57,23 +63,29 @@ const TarockSheet = () => {
     return setGame(
       flow(
         createContract,
-        addContract(game as Game),
+        addContract(game)
       )({
         ...contract,
         partyScore,
       })
     );
-  }
-  const handleChangeContract = (index: number, field: keyof Contract, value: any) => {
+  };
+  const handleChangeContract = (
+    index: number,
+    field: keyof Contract,
+    value: any
+  ) => {
     setGame(
       flow(
         updateContract({ [field]: value }),
-        updateGameContract(game as Game)(index),
-      )((game as Game).contracts[index])
+        updateGameContract(game)(index)
+      )(game.contracts[index])
     );
-  }
-
-  const hasGame = game !== null;
+  };
+  const handleSaveGame = () => {
+    setGameScoreList([...gameScoreList, getPlayersScores(game)]);
+    setGame(createGame());
+  };
 
   return (
     <Grid container spacing={3} direction="column">
@@ -85,10 +97,7 @@ const TarockSheet = () => {
             </Button>
           </Grid>
           <Grid item>
-            <GameProperties
-              game={game as Game}
-              onChange={handleChangeGameProperties}
-            />
+            <GameProperties game={game} onChange={handleChangeGameProperties} />
           </Grid>
         </Grid>
       </Grid>
@@ -101,23 +110,28 @@ const TarockSheet = () => {
           onPlayerChange={handleChangePlayer}
         />
       </Grid>
-      <Grid item>
-        <GameScore game={game} />
+      <Grid item container>
+        <Grid item>
+          <GameScore game={game} />
+        </Grid>
+        <Grid item>
+          <Button variant="contained" onClick={handleSaveGame}>
+            Save Scores
+          </Button>
+        </Grid>
       </Grid>
       <Grid item>
-        {hasGame ? (
-          <>
-            <BidSelector
-              bids={allBids}
-              onAddContract={handleAddContract}
-            />
-            <ContractsTable
-              contracts={game?.contracts as Contract[]}
-              onChange={handleChangeContract}
-              onDelete={handleContractDelete}
-            />
-          </>
-        ) : null}
+        <BidSelector bids={allBids} onAddContract={handleAddContract} />
+      </Grid>
+      <Grid item>
+        <ContractsTable
+          contracts={game?.contracts as Contract[]}
+          onChange={handleChangeContract}
+          onDelete={handleContractDelete}
+        />
+      </Grid>
+      <Grid item>
+        <ScoreSheet gameScoreList={gameScoreList} />
       </Grid>
     </Grid>
   );

@@ -1,12 +1,9 @@
 # TODO
-- [ ] Milesteone 1
-  - [x] refactor game handling
-    - [x] move scores to game object
-    - [x] remove validation rules
-    - [x] remove valid in final score, use the win / null instead, rename it on the gui to invalid
+- [.] Milesteone 1
   - [ ] handle multiple games, score sheet
-    - [ ] create new components of the score sheet
-    - [ ] add save game functionality, it saves the current scores to the table
+    - [x] create new components of the score sheet
+    - [x] add save game functionality, it saves the current scores to the table
+    - [ ] add tests
   - [ ] usability
     - [ ] new contracts on the top of the ContractsTable
     - [ ] group the bids
@@ -58,8 +55,8 @@
     - [ ] split bidselector to smaller components
     - [ ] split ContractsTable to smaller components
 - [x] Done
-  - [ ] Milestone 1
-    - [ ] 
+  - [.] Milestone 1
+    - [x] refactor game handling: remove validation rules, and validInFinalScore props, use winByTaker null instead and make it manually
   - [x] MVP
     - [x] Add player handling
     - [x] Calculate score
