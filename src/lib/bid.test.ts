@@ -5,6 +5,7 @@ import {
   getBid,
   getBidScore,
   hasVariant,
+  getAllBidsByGorup,
   SMALLEST_VARIANT,
 } from "./bid";
 
@@ -60,18 +61,18 @@ export default describe("bid", () => {
   });
   describe("getBidScore", () => {
     it("should get a party independent bid score", () => {
-      const bid = getBid(BID_TYPE.CENTRUM)
-      const partyScore = 2
-      const expected = 10 // Centrum's score is 10 always
-      const current = getBidScore(partyScore)(bid)
-      expect(current).toEqual(expected)
-    })
+      const bid = getBid(BID_TYPE.CENTRUM);
+      const partyScore = 2;
+      const expected = 10; // Centrum's score is 10 always
+      const current = getBidScore(partyScore)(bid);
+      expect(current).toEqual(expected);
+    });
     it("should get a party dependent bid score", () => {
-      const bid = getBid(BID_TYPE.VOLAT)
-      const partyScore = 2
-      const expected = 12 // Volat's score is party score * 6
-      const current = getBidScore(partyScore)(bid)
-      expect(current).toEqual(expected)
-    })
-  })
+      const bid = getBid(BID_TYPE.VOLAT);
+      const partyScore = 2;
+      const expected = 12; // Volat's score is party score * 6
+      const current = getBidScore(partyScore)(bid);
+      expect(current).toEqual(expected);
+    });
+  });
 });

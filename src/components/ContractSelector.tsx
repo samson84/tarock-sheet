@@ -8,9 +8,17 @@ import {
   Modal,
   makeStyles,
   Grid,
+  Box,
+  Typography as T,
 } from "@material-ui/core";
-
-import { Bid, BidVariant, hasVariant } from "../lib/bid";
+import {
+  Bid,
+  BidsByGroup,
+  BidVariant,
+  hasVariant,
+  BidGroupType,
+  bidGroupNamesByWeight,
+} from "../lib/bid";
 import { upperCaseToWords } from "../lib/util";
 import { Contract, CreateContractProps } from "../lib/contract";
 import { PLAYER_TYPE } from "../lib/player";
@@ -64,7 +72,12 @@ const BidDetails = (props: BidDetailsProps) => {
 
   return (
     <>
-      <Button variant="outlined" color="primary" onClick={handleOpen}>
+      <Button
+        variant="outlined"
+        color="primary"
+        onClick={handleOpen}
+        size="small"
+      >
         {upperCaseToWords(bid.type)}
       </Button>
       <Modal open={open} className={classes.modal} onClose={handleClose}>
@@ -106,19 +119,26 @@ const BidDetails = (props: BidDetailsProps) => {
 };
 
 interface BidSelectorProps {
-  bids: Bid[];
+  bidsByGroup: BidsByGroup;
   onAddContract: (contract: Contract) => void;
 }
-const BidSelector = ({ bids, onAddContract }: BidSelectorProps) => {
+const ContractSelector = ({ bidsByGroup, onAddContract }: BidSelectorProps) => {
   return (
     <Grid container spacing={1}>
-      {bids.map((bid) => (
-        <Grid item key={bid.type}>
-          <BidDetails bid={bid} onSubmit={onAddContract} />
+      {bidGroupNamesByWeight().map((group) => (
+        <Grid item key={group} spacing={1}>
+          <T variant="caption" display="block" color="textSecondary">
+            {upperCaseToWords(group)}
+          </T>
+          {bidsByGroup[group as BidGroupType].map((bid) => (
+            <Box key={bid.type} component="span" mr={0.5}>
+              <BidDetails bid={bid} onSubmit={onAddContract} />
+            </Box>
+          ))}
         </Grid>
       ))}
     </Grid>
   );
 };
 
-export default BidSelector;
+export default ContractSelector;

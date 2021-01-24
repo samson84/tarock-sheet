@@ -1,11 +1,18 @@
 # TODO
 - [.] Milesteone 1
-    - [x] shortcuts
-      - [x] when klopitzky game ticked, add klopiczky contract, remove others
-      - [x] when party game ticked add party automatically
+  - [ ] Faster bid adding
+    - [x] group the bids
+    - [ ] disable the dialog when adding
+      - [ ] make a global silent switch, it adds bids silently, and automatically win
+      - [ ] when something is added with silent automatically win except ulti
+      - [ ] create defaults for the vatiants, add them automatically
+      - [ ] add contracts default by taker, it can be changed in the contracts table
+      - [ ] ContractsTable: automatically won by the eight and nine tarock, klopiczky
+  - [ ] add clear scores
+  - [ ] save the games locally
   - [ ] usability
+    - [ ] disable contra for eight, nine tarock
     - [ ] new contracts on the top of the ContractsTable
-    - [ ] group the bids
     - [x] ContractTable: when a contract silent, show visually that the contra does not take into account.
     - [x] ContractTable: if a contract is silent, it should not able to apply a contra on it, 
     - [ ] Game Properties: show score near the game score selector radio buttons
@@ -13,19 +20,15 @@
     - [ ] ContractsTable: show the the contra names instead of the values
     - [ ] ContractsTable: integrate bid variant into the bid column
     - [ ] add confirmation to new game
-    - [ ] disable contra for eight, nine tarock
-    - [ ] ContractsTable: automatically won by the eight and nine tarock, klopiczky
-    - [ ] when something is added with silent automatically win except ulti
-    - [ ] make a global silent switch, it adds bids silently, and automatically win
-    - [ ] create defaults for the vatiants
   - [ ] Better player and scores handling, create one component
   - [ ] refactor
+    - [ ] contract better calculation of the bid base score
     - [ ] game, contract: simplify create and update methods with same parameter set
     - [ ] BidSelector: Refactor Modal to Dialog
     - [ ] refactor can silent, do not leak bids details to contract layer
       - [ ] Add canSilent method to contract too.
       - [ ] refactor ContractsTable to use the new can silent contracts.      
-    - [ ] rename BidSelector to ContractSelector
+    - [x] rename BidSelector to ContractSelector
     - [ ] rename TarockSheet to Game component
     - [ ] rename game props to camelCase, party_score, called_tarock
   - [ ] deploy the app to github pages + set up pipline
@@ -36,11 +39,9 @@
     - [ ] row styling based on validInFinalScore
   - [ ] add undo & redo (?)
   - [ ] responsive design check
-  - [ ] save the games locally
   - [ ] add license, contribution, proper readme
   - [ ] add hotkeys
 - [ ] Milestone 3
-  - [ ] 
   - [ ] do some authentication / login / firebase
   - [ ] save the game to a DB e.g. Firebase
   - [ ] deploy the app to heroku / netlify / vercel / Firebase
@@ -52,6 +53,8 @@
     - [ ] split ContractsTable to smaller components
 - [x] Done
   - [.] Milestone 1
+    - [x] when klopitzky game ticked, add klopiczky contract, remove others
+    - [x] when party game ticked add party automatically 
     - [x] refactor game handling: remove validation rules, and validInFinalScore props, use winByTaker null instead and make it manually
     - [x] handle multiple games, score sheet
   - [x] MVP

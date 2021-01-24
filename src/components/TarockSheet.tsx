@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { getAllBids, Bid, BID_TYPE } from "../lib/bid";
-import BidSelector from "./BidSelector";
+import { getAllBids, Bid, BID_TYPE, getAllBidsByGorup } from "../lib/bid";
+import ContractSelector from "./ContractSelector";
 import sortBy from "lodash/fp/sortBy";
 import {
   Game,
@@ -9,7 +9,6 @@ import {
   updateGame,
   updateGameContract,
   removeContract,
-  PARTY_SCORE,
   removePlayer,
   addPlayer,
   UpdateGameProps,
@@ -29,7 +28,7 @@ import { Player, PLAYER_TYPE } from "../lib/player";
 import { GameScorePerPlayer, getPlayersScores } from "../lib/gameList";
 import ScoreSheet from "./ScoreSheet";
 
-const allBids = sortBy((b: Bid) => b.type)(getAllBids());
+const allBidsByGroup = getAllBidsByGorup();
 
 const TarockSheet = () => {
   const [game, setGame] = useState<Game>(createGame());
@@ -131,7 +130,10 @@ const TarockSheet = () => {
         </Grid>
       </Grid>
       <Grid item>
-        <BidSelector bids={allBids} onAddContract={handleAddContract} />
+        <ContractSelector
+          bidsByGroup={allBidsByGroup}
+          onAddContract={handleAddContract}
+        />
       </Grid>
       <Grid item>
         <ContractsTable
