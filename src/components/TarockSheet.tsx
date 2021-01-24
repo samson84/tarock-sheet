@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { getAllBids, Bid } from "../lib/bid";
+import { getAllBids, Bid, BID_TYPE } from "../lib/bid";
 import BidSelector from "./BidSelector";
 import sortBy from "lodash/fp/sortBy";
 import {
@@ -13,6 +13,9 @@ import {
   removePlayer,
   addPlayer,
   UpdateGameProps,
+  removeAllContract,
+  isPartyLike,
+  addContractFlipped,
 } from "../lib/game";
 import { Contract, createContract, updateContract } from "../lib/contract";
 import { Button, Grid } from "@material-ui/core";
@@ -31,7 +34,7 @@ const allBids = sortBy((b: Bid) => b.type)(getAllBids());
 const TarockSheet = () => {
   const [game, setGame] = useState<Game>(createGame());
   const [players, setPlayers] = useState<Player[]>([]);
-  const [gameScoreList, setGameScoreList] = useState<GameScorePerPlayer[] >([]);
+  const [gameScoreList, setGameScoreList] = useState<GameScorePerPlayer[]>([]);
 
   const handleContractDelete = (index: number) =>
     setGame(removeContract(game)(index));
@@ -54,21 +57,28 @@ const TarockSheet = () => {
     prop: keyof UpdateGameProps,
     value: any
   ) => {
-    setGame(updateGame({ [prop]: value })(game));
+    if (prop === "partyScoreType") {
+      const contract = isPartyLike(value)
+        ? createContract({
+            bidType: BID_TYPE.PARTY,
+            taker: PLAYER_TYPE.DECLARER,
+          })
+        : createContract({
+            bidType: BID_TYPE.KLOPICZKY,
+            taker: PLAYER_TYPE.DECLARER,
+          });
+      const updated = flow(
+        removeAllContract,
+        addContractFlipped(contract),
+        updateGame({ [prop]: value })
+      )(game);
+      setGame(updated);
+    } else {
+      setGame(updateGame({ [prop]: value })(game));
+    }
   };
   const handleAddContract = (contract: Contract) => {
-    const partyScore = game?.partyScoreType
-      ? PARTY_SCORE[game?.partyScoreType]
-      : null;
-    return setGame(
-      flow(
-        createContract,
-        addContract(game)
-      )({
-        ...contract,
-        partyScore,
-      })
-    );
+    return setGame(flow(createContract, addContract(game))(contract));
   };
   const handleChangeContract = (
     index: number,

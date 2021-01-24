@@ -302,14 +302,12 @@ export default describe("contract", () => {
       expect(current).toEqual(expected);
     });
     it("should return the half base score if silent.", () => {
-      const contract = contractFixture({
-        bidType: BID_TYPE.ULTI,
-        bidBaseScore: 10,
-        bidVariant: SMALLEST_VARIANT.PAGAT,
-        contra: 1,
-        winByTaker: true,
+      const contract = createContract({
+        bidType: BID_TYPE.ULTI, // bse score is 10
         taker: PLAYER_TYPE.DECLARER,
         silent: true,
+        winByTaker: true,
+        partyScore: 1,
       });
       const expected = 5;
 

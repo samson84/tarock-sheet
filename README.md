@@ -1,10 +1,8 @@
 # TODO
 - [.] Milesteone 1
-  - [x] handle multiple games, score sheet
-    - [x] create new components of the score sheet
-    - [x] add save game functionality, it saves the current scores to the table
-    - [x] add tests
-    - [x] add base score
+    - [x] shortcuts
+      - [x] when klopitzky game ticked, add klopiczky contract, remove others
+      - [x] when party game ticked add party automatically
   - [ ] usability
     - [ ] new contracts on the top of the ContractsTable
     - [ ] group the bids
@@ -20,13 +18,8 @@
     - [ ] when something is added with silent automatically win except ulti
     - [ ] make a global silent switch, it adds bids silently, and automatically win
     - [ ] create defaults for the vatiants
-    - [ ] shortcuts
-      - [ ] when klopitzky game ticked, add klopiczky contract, remove others
-      - [ ] when party game ticked add party automatically
-      - [x] remove reset game, use the new game button for the purpose
+  - [ ] Better player and scores handling, create one component
   - [ ] refactor
-    - [ ] add current final score to game object
-    - [ ] use one function to update the game score but in the game model, when something is changed
     - [ ] game, contract: simplify create and update methods with same parameter set
     - [ ] BidSelector: Refactor Modal to Dialog
     - [ ] refactor can silent, do not leak bids details to contract layer
@@ -47,9 +40,11 @@
   - [ ] add license, contribution, proper readme
   - [ ] add hotkeys
 - [ ] Milestone 3
-  - [ ] do some authentication / login
+  - [ ] 
+  - [ ] do some authentication / login / firebase
   - [ ] save the game to a DB e.g. Firebase
-  - [ ] deploy the app to heroku / netlify / vercel
+  - [ ] deploy the app to heroku / netlify / vercel / Firebase
+  - [ ] share the game with others
   - [ ] refactor
     - [ ] create a better app icon
     - [ ] align the icon in the app bar
@@ -58,6 +53,7 @@
 - [x] Done
   - [.] Milestone 1
     - [x] refactor game handling: remove validation rules, and validInFinalScore props, use winByTaker null instead and make it manually
+    - [x] handle multiple games, score sheet
   - [x] MVP
     - [x] Add player handling
     - [x] Calculate score

@@ -2,20 +2,26 @@ import {
   calculateContract,
   Contract,
   updateBidBaseScore,
+  createContract,
 } from "./contract";
-import { getAnotherPlayerType, Player, PLAYER_TYPE, PlayerScore } from "./player";
+import {
+  getAnotherPlayerType,
+  Player,
+  PLAYER_TYPE,
+  PlayerScore,
+} from "./player";
 
 type GameScore = {
   [PLAYER_TYPE.DECLARER]: PlayerScore;
-  [PLAYER_TYPE.OPPONENT]: PlayerScore;  
-}
+  [PLAYER_TYPE.OPPONENT]: PlayerScore;
+};
 export interface Game {
   contracts: Contract[];
   declarers: Player[];
   opponents: Player[];
   partyScoreType: PARTY_SCORE_TYPE | null;
   called_tarock: CalledTarockType | null;
-  scores: GameScore
+  scores: GameScore;
 }
 
 type CalledTarockType =
@@ -50,6 +56,14 @@ export enum PARTY_SCORE_TYPE {
 }
 export type PartyScoreValue = 0 | 1 | 2 | 3 | 4;
 
+export const isPartyLike = (partyScoreType: PARTY_SCORE_TYPE): boolean =>
+  [
+    PARTY_SCORE_TYPE.TOOK_THREE,
+    PARTY_SCORE_TYPE.TOOK_TWO,
+    PARTY_SCORE_TYPE.TOOK_ONE,
+    PARTY_SCORE_TYPE.SOLO,
+  ].includes(partyScoreType);
+
 export const PARTY_SCORE: { [K in PARTY_SCORE_TYPE]: PartyScoreValue } = {
   [PARTY_SCORE_TYPE.TOOK_THREE]: 1,
   [PARTY_SCORE_TYPE.TOOK_TWO]: 2,
@@ -70,18 +84,18 @@ export const createGame = (props: CreateGameProps = {}): Game => ({
   called_tarock: props.called_tarock || null,
   scores: {
     [PLAYER_TYPE.DECLARER]: null,
-    [PLAYER_TYPE.OPPONENT]: null
-  }
+    [PLAYER_TYPE.OPPONENT]: null,
+  },
 });
 
 const updateGameWithScores = (game: Game): Game => {
-  const scores = calculateGame(game)
+  const scores = calculateGame(game);
 
   return {
     ...game,
-    scores: {...scores}
-  }
-}
+    scores: { ...scores },
+  };
+};
 
 export interface UpdateGameProps {
   partyScoreType?: PARTY_SCORE_TYPE;
@@ -99,7 +113,7 @@ export const updateGame = (updates: UpdateGameProps) => (game: Game): Game => {
     ...game,
     contracts: [...contracts],
     ...updates,
-  })
+  });
 };
 
 export const addPlayer = (player: Player, type: PLAYER_TYPE) => (
@@ -126,10 +140,17 @@ export const removePlayer = (player: Player) => (game: Game): Game => ({
   declarers: game.declarers.filter((p) => p !== player),
 });
 
+export const addContractFlipped = (contract: Contract) => (game: Game): Game =>
+  addContract(game)(contract);
+
 export const addContract = (game: Game) => (contract: Contract): Game => {
+  const partyScore = game?.partyScoreType
+    ? PARTY_SCORE[game?.partyScoreType]
+    : null;
+  const updatedContract = createContract({ ...contract, partyScore });
   return updateGameWithScores({
     ...game,
-    contracts: [...game.contracts, contract],
+    contracts: [...game.contracts, updatedContract],
   });
 };
 
@@ -137,13 +158,17 @@ export const removeContract = (game: Game) => (index: number): Game => {
   return updateGameWithScores({
     ...game,
     contracts: game.contracts.filter((_, i) => i !== index),
-  })
+  });
 };
+
+export const removeAllContract = (game: Game): Game => ({
+  ...game,
+  contracts: [],
+});
 
 export const updateGameContract = (game: Game) => (index: number) => (
   updated: Contract
 ): Game => {
-
   return updateGameWithScores({
     ...game,
     contracts: game.contracts.map((contract, i) =>
@@ -160,12 +185,16 @@ export const calculateGame = (game: Game): GameScore => {
         return partyScore;
       }
 
-      const addScore = (prevScore: PlayerScore, score: PlayerScore): PlayerScore => {
-        if (prevScore === null) {return score}
-        else {
-          return score === null ? prevScore : score + prevScore
+      const addScore = (
+        prevScore: PlayerScore,
+        score: PlayerScore
+      ): PlayerScore => {
+        if (prevScore === null) {
+          return score;
+        } else {
+          return score === null ? prevScore : score + prevScore;
         }
-      }
+      };
 
       const taker = contract.taker;
       const another = getAnotherPlayerType(taker);
@@ -173,7 +202,10 @@ export const calculateGame = (game: Game): GameScore => {
       return {
         ...partyScore,
         [taker]: addScore(partyScore[taker], score),
-        [another]: addScore(partyScore[another], score === null ? null: score * -1) 
+        [another]: addScore(
+          partyScore[another],
+          score === null ? null : score * -1
+        ),
       };
     },
     {
@@ -181,5 +213,4 @@ export const calculateGame = (game: Game): GameScore => {
       [PLAYER_TYPE.OPPONENT]: null,
     }
   );
-
 };

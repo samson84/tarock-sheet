@@ -296,16 +296,18 @@ export default describe("game", () => {
       const contract = createContract({
         bidType: BID_TYPE.PARTY,
         taker: PLAYER_TYPE.DECLARER,
-        partyScore: 2,
       });
       const game = gameFixture({
         contracts: [],
+        partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO, // score = 2
       });
       const expected = gameFixture({
+        partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO, // score = 2
         contracts: [
           contractFixture({
             bidType: BID_TYPE.PARTY,
             taker: PLAYER_TYPE.DECLARER,
+            bidBaseScore: 2, // party's bid base score is the partyscore
           }),
         ],
       });
@@ -321,6 +323,7 @@ export default describe("game", () => {
         partyScore: 2,
       });
       const game = gameFixture({
+        partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO, // score = 2
         contracts: [
           contractFixture({
             bidType: BID_TYPE.PARTY,
@@ -329,6 +332,7 @@ export default describe("game", () => {
         ],
       });
       const expected = gameFixture({
+        partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO, // score = 2
         contracts: [
           contractFixture({
             bidType: BID_TYPE.PARTY,
@@ -337,6 +341,28 @@ export default describe("game", () => {
           contractFixture({
             bidType: BID_TYPE.FOUR_KING,
             taker: PLAYER_TYPE.OPPONENT,
+          }),
+        ],
+      });
+
+      const current = addContract(game)(contract);
+
+      expect(current).toEqual(expected);
+    });
+    it("should caluclate contracts party score to null, if partyScoreType is not given to the game", () => {
+      const contract = createContract({
+        bidType: BID_TYPE.PARTY,
+        taker: PLAYER_TYPE.DECLARER,
+      });
+      const game = gameFixture({
+        contracts: [],
+      });
+      const expected = gameFixture({
+        contracts: [
+          contractFixture({
+            bidType: BID_TYPE.PARTY,
+            taker: PLAYER_TYPE.DECLARER,
+            bidBaseScore: null,
           }),
         ],
       });
@@ -354,23 +380,25 @@ export default describe("game", () => {
       });
       const game = gameFixture({
         contracts: [],
+        partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO, // score = 2
         scores: {
           [PLAYER_TYPE.DECLARER]: null,
           [PLAYER_TYPE.OPPONENT]: null,
         },
       });
       const expected = gameFixture({
+        partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO, // score = 2
         contracts: [
           contractFixture({
             bidType: BID_TYPE.PARTY,
             taker: PLAYER_TYPE.DECLARER,
             winByTaker: true,
-            bidBaseScore: 1,
+            bidBaseScore: 2,
           }),
         ],
         scores: {
-          [PLAYER_TYPE.DECLARER]: 1,
-          [PLAYER_TYPE.OPPONENT]: -1,
+          [PLAYER_TYPE.DECLARER]: 2,
+          [PLAYER_TYPE.OPPONENT]: -2,
         },
       });
       const current = addContract(game)(contract);
