@@ -13,6 +13,7 @@ import {
   getAllPlayers,
   sumPlayerScores,
 } from "../lib/gameList";
+import sortBy from "lodash/sortBy";
 
 const BASE_SCORE = 100;
 
@@ -20,7 +21,7 @@ interface ScoreSheetProps {
   gameScoreList: GameScorePerPlayer[];
 }
 const ScoreSheet = ({ gameScoreList }: ScoreSheetProps) => {
-  const players = getAllPlayers(gameScoreList);
+  const players = sortBy(getAllPlayers(gameScoreList));
   const sum = addBaseScore(BASE_SCORE)(sumPlayerScores(gameScoreList));
 
   return (

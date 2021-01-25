@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   calculateContract,
   Contract,
@@ -14,9 +14,6 @@ import {
   TableRow,
   IconButton,
   Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
   Checkbox,
   Typography as T,
 } from "@material-ui/core";
@@ -25,10 +22,14 @@ import {
   MdArrowUpward as DoubleContraIcon,
   MdArrowDownward as DivideContraIcon,
 } from "react-icons/md";
-import { BidVariant } from "../lib/bid";
+import { BidVariant, getBid } from "../lib/bid";
 import VariantSelector from "./VariantSelector";
 import SilentSwitch from "./SilentSwitch";
-import { getAnotherPlayerType, getPlayerTypeColor, PLAYER_TYPE } from "../lib/player";
+import {
+  getAnotherPlayerType,
+  getPlayerTypeColor,
+  PLAYER_TYPE,
+} from "../lib/player";
 import curry from "lodash/fp/curry";
 
 interface VariantSelectorModalProps {
@@ -37,32 +38,32 @@ interface VariantSelectorModalProps {
 }
 const VariantSelectorModal = (props: VariantSelectorModalProps) => {
   const { contract, onChange } = props;
-  const [open, setOpen] = useState(false);
-
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
   const handleChange = (variant: BidVariant) => {
     onChange(variant);
-    handleClose();
   };
+  const bid = getBid(contract.bidType);
+
+  if (!bid.variants) {
+    return null;
+  }
 
   return (
     <>
-      <Button onClick={handleOpen}>
-        {upperCaseToWords(contract.bidVariant || "")}
-      </Button>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogContent>
-          <VariantSelector
-            onChange={handleChange}
-            selected={contract.bidVariant}
-            bidType={contract.bidType}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-        </DialogActions>
-      </Dialog>
+      <VariantSelector
+        variants={bid.variants || []}
+        selected={contract.bidVariant}
+        onChange={handleChange}
+        render={(handleOpen) => (
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={handleOpen}
+            size="small"
+          >
+            {upperCaseToWords(contract.bidVariant ?? "Select variant")}
+          </Button>
+        )}
+      />
     </>
   );
 };
@@ -104,7 +105,7 @@ const columns: ColumnDefinition[] = [
     field: "taker",
     headerName: "Taker",
     valueGetter: (contract, onAction) => {
-      const newTaker = getAnotherPlayerType(contract.taker)
+      const newTaker = getAnotherPlayerType(contract.taker);
       const handleClick = () =>
         onAction && onAction(ACTION_TYPE.CHANGE, newTaker);
       const color = getPlayerTypeColor(contract.taker);

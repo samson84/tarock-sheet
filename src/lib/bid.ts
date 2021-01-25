@@ -38,14 +38,14 @@ export enum BID_TYPE {
 
 export type BidGroupType =
   | "PARTY_LIKE"
-  | "POSITION_BASED"
-  | "FIRST_ALLS"
+  | "ULTI_LIKE"
+  | "CENTRUM_LIKE"
   | "CATCHES"
   | "OTHERS";
 const BID_GROUPS: { [K in BidGroupType]: { weight: number } } = {
   PARTY_LIKE: { weight: 10 },
-  POSITION_BASED: { weight: 20 },
-  FIRST_ALLS: { weight: 30 },
+  ULTI_LIKE: { weight: 20 },
+  CENTRUM_LIKE: { weight: 30 },
   CATCHES: { weight: 40 },
   OTHERS: { weight: 50 },
 };
@@ -84,12 +84,12 @@ const BIDS: { [key in BID_TYPE]: BidData } = {
     score: 10,
     variants: [...SMALLEST_VARIANTS],
     silent: true,
-    group: "POSITION_BASED",
+    group: "ULTI_LIKE",
   },
   [BID_TYPE.UHU]: {
     score: 15,
     variants: [...SMALLEST_VARIANTS],
-    group: "POSITION_BASED",
+    group: "ULTI_LIKE",
   },
   [BID_TYPE.DOUBLE_PARTY]: {
     score: (party: number) => party * 4,
@@ -104,32 +104,32 @@ const BIDS: { [key in BID_TYPE]: BidData } = {
   [BID_TYPE.PHEASANT]: {
     score: 50,
     variants: [...SMALLEST_VARIANTS],
-    group: "POSITION_BASED",
+    group: "ULTI_LIKE",
   },
   [BID_TYPE.PHEASANT_IN_2ND]: {
     score: 50,
     variants: [...SMALLEST_VARIANTS],
-    group: "POSITION_BASED",
+    group: "ULTI_LIKE",
   },
   [BID_TYPE.EIGHT_TAROCK]: { score: 1 },
   [BID_TYPE.NINE_TAROCK]: { score: 2 },
   [BID_TYPE.FURRY]: {
     score: 25,
     variants: [...CARD_SHAPE_VARIANTS],
-    group: "POSITION_BASED",
+    group: "ULTI_LIKE",
   },
-  [BID_TYPE.CENTRUM]: { score: 10, group: "FIRST_ALLS" },
-  [BID_TYPE.SMALL_BIRD]: { score: 15, group: "FIRST_ALLS" },
-  [BID_TYPE.LARGE_BIRD]: { score: 20, group: "FIRST_ALLS" },
+  [BID_TYPE.CENTRUM]: { score: 10, group: "CENTRUM_LIKE" },
+  [BID_TYPE.SMALL_BIRD]: { score: 15, group: "CENTRUM_LIKE" },
+  [BID_TYPE.LARGE_BIRD]: { score: 20, group: "CENTRUM_LIKE" },
   [BID_TYPE.KING_ULTI]: {
     score: 15,
     variants: [...CARD_SHAPE_VARIANTS],
-    group: "POSITION_BASED",
+    group: "ULTI_LIKE",
   },
   [BID_TYPE.KING_UHU]: {
     score: 20,
     variants: [...CARD_SHAPE_VARIANTS],
-    group: "POSITION_BASED",
+    group: "ULTI_LIKE",
   },
   [BID_TYPE.CSUZIMA]: { score: 4 },
   [BID_TYPE.KLOPICZKY]: { score: 3 },

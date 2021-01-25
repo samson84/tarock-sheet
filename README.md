@@ -2,12 +2,9 @@
 - [.] Milesteone 1
   - [ ] Faster bid adding
     - [x] group the bids
-    - [ ] disable the dialog when adding
-      - [ ] make a global silent switch, it adds bids silently, and automatically win
-      - [ ] when something is added with silent automatically win except ulti
-      - [ ] create defaults for the vatiants, add them automatically
-      - [ ] add contracts default by taker, it can be changed in the contracts table
-      - [ ] ContractsTable: automatically won by the eight and nine tarock, klopiczky
+    - [x] disable the dialog when adding: add contracts default by taker, null variant, it can be changed in the contracts table
+    - [ ] make a global silent switch, it adds bids silently, and automatically win, except ulti
+    - [ ] ContractsTable: automatically won by the eight and nine tarock, klopiczky
   - [ ] add clear scores
   - [ ] save the games locally
   - [ ] usability
@@ -20,6 +17,7 @@
     - [ ] ContractsTable: show the the contra names instead of the values
     - [ ] ContractsTable: integrate bid variant into the bid column
     - [ ] add confirmation to new game
+  - [ ] Save the DateTime to the Game
   - [ ] Better player and scores handling, create one component
   - [ ] refactor
     - [ ] contract better calculation of the bid base score

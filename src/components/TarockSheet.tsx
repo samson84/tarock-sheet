@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { getAllBids, Bid, BID_TYPE, getAllBidsByGorup } from "../lib/bid";
+import { BID_TYPE, getAllBidsByGorup } from "../lib/bid";
 import ContractSelector from "./ContractSelector";
-import sortBy from "lodash/fp/sortBy";
 import {
   Game,
   createGame,
