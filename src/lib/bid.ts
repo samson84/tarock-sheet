@@ -10,6 +10,9 @@ interface BidData {
   group?: BidGroupType;
   variants?: BidVariant[];
   silent?: boolean;
+  winByDefault?: boolean;
+  notWinIfSilent?: boolean;
+  denyContra?: boolean;
 }
 
 export enum BID_TYPE {
@@ -85,6 +88,7 @@ const BIDS: { [key in BID_TYPE]: BidData } = {
     variants: [...SMALLEST_VARIANTS],
     silent: true,
     group: "ULTI_LIKE",
+    notWinIfSilent: true,
   },
   [BID_TYPE.UHU]: {
     score: 15,
@@ -111,8 +115,8 @@ const BIDS: { [key in BID_TYPE]: BidData } = {
     variants: [...SMALLEST_VARIANTS],
     group: "ULTI_LIKE",
   },
-  [BID_TYPE.EIGHT_TAROCK]: { score: 1 },
-  [BID_TYPE.NINE_TAROCK]: { score: 2 },
+  [BID_TYPE.EIGHT_TAROCK]: { score: 1, winByDefault: true, denyContra: true },
+  [BID_TYPE.NINE_TAROCK]: { score: 2, winByDefault: true, denyContra: true },
   [BID_TYPE.FURRY]: {
     score: 25,
     variants: [...CARD_SHAPE_VARIANTS],
@@ -132,7 +136,7 @@ const BIDS: { [key in BID_TYPE]: BidData } = {
     group: "ULTI_LIKE",
   },
   [BID_TYPE.CSUZIMA]: { score: 4 },
-  [BID_TYPE.KLOPICZKY]: { score: 3 },
+  [BID_TYPE.KLOPICZKY]: { score: 3, winByDefault: true, denyContra: true },
 };
 
 export const getBid = (type: BID_TYPE): Bid => ({ type, ...BIDS[type] });

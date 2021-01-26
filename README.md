@@ -1,14 +1,15 @@
 # TODO
 - [.] Milesteone 1
-  - [ ] Faster bid adding
+  - [ ] correct klopiczky calulation
+  - [x] Faster bid adding
     - [x] group the bids
     - [x] disable the dialog when adding: add contracts default by taker, null variant, it can be changed in the contracts table
-    - [ ] make a global silent switch, it adds bids silently, and automatically win, except ulti
-    - [ ] ContractsTable: automatically won by the eight and nine tarock, klopiczky
+    - [x] make a global silent switch, it adds bids silently, and automatically win, except ulti
+    - [x] ContractsTable: automatically won by the eight and nine tarock, klopiczky
+  - [x] disable contra for eight, nine tarock
   - [ ] add clear scores
   - [ ] save the games locally
   - [ ] usability
-    - [ ] disable contra for eight, nine tarock
     - [ ] new contracts on the top of the ContractsTable
     - [x] ContractTable: when a contract silent, show visually that the contra does not take into account.
     - [x] ContractTable: if a contract is silent, it should not able to apply a contra on it, 

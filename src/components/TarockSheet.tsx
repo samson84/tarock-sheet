@@ -64,6 +64,7 @@ const TarockSheet = () => {
         : createContract({
             bidType: BID_TYPE.KLOPICZKY,
             taker: PLAYER_TYPE.DECLARER,
+            winByTaker: true,
           });
       const updated = flow(
         removeAllContract,

@@ -1,11 +1,19 @@
-import React from "react";
-import { Button, Grid, Box, Typography as T } from "@material-ui/core";
+import React, { useState } from "react";
 import {
-  Bid,
+  Button,
+  Grid,
+  Box,
+  Typography as T,
+  Switch,
+  FormControlLabel,
+} from "@material-ui/core";
+import {
   BidsByGroup,
   BidGroupType,
   bidGroupNamesByWeight,
   BID_TYPE,
+  getBid,
+  canSilent,
 } from "../lib/bid";
 import { upperCaseToWords } from "../lib/util";
 import { Contract, CreateContractProps } from "../lib/contract";
@@ -16,16 +24,24 @@ interface BidSelectorProps {
   onAddContract: (contract: Partial<Contract>) => void;
 }
 const ContractSelector = ({ bidsByGroup, onAddContract }: BidSelectorProps) => {
+  const [silentAndWin, setSilentAndWin] = useState<boolean>(false);
+
+  const handleSwitch = () => {
+    setSilentAndWin((prev: boolean) => !prev);
+  };
   const handleClick = (bidType: BID_TYPE) => {
+    const bid = getBid(bidType);
+    const shouldWinWithSilent = silentAndWin && !bid.notWinIfSilent;
     onAddContract({
       bidType: bidType,
       taker: PLAYER_TYPE.DECLARER,
-      silent: false,
+      silent: silentAndWin && canSilent(bid),
       bidVariant: null,
+      winByTaker: bid.winByDefault || shouldWinWithSilent,
     });
   };
   return (
-    <Grid container spacing={1}>
+    <Grid container spacing={1} alignItems="flex-end">
       {bidGroupNamesByWeight().map((group) => (
         <Grid item key={group} spacing={1}>
           <T variant="caption" display="block" color="textSecondary">
@@ -38,6 +54,7 @@ const ContractSelector = ({ bidsByGroup, onAddContract }: BidSelectorProps) => {
                 color="primary"
                 onClick={() => handleClick(bid.type)}
                 size="small"
+                disabled={silentAndWin && !canSilent(bid)}
               >
                 {upperCaseToWords(bid.type)}
               </Button>
@@ -45,6 +62,18 @@ const ContractSelector = ({ bidsByGroup, onAddContract }: BidSelectorProps) => {
           ))}
         </Grid>
       ))}
+      <Grid item>
+        <FormControlLabel
+          control={
+            <Switch
+              checked={silentAndWin}
+              onChange={handleSwitch}
+              name="silentAndWinSwitch"
+            />
+          }
+          label="Silent & Win"
+        />
+      </Grid>
     </Grid>
   );
 };

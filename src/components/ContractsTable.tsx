@@ -144,6 +144,10 @@ const columns: ColumnDefinition[] = [
       const handleDivide = () =>
         contract.contra > 1 && handleClick(contract.contra / 2);
       const handleDouble = () => handleClick(contract.contra * 2);
+
+      if (getBid(contract.bidType).denyContra) {
+        return null;
+      }
       return (
         <>
           <T
