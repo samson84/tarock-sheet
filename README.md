@@ -1,7 +1,7 @@
 # TODO
 - [.] Milesteone 1
   - [x] correct klopiczky and self calling calulation
-  - [ ] correct new contracts added as loose by taker instead of unknown
+  - [x] correct new contracts added as loose by taker instead of unknown
   - [ ] add a party base score
   - [ ] do not delete the contracts, if the previous party score type was party / show the contracts only if, the party is selected
   - [ ] add starter scores to the players
