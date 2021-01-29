@@ -4,16 +4,31 @@ import fromPairs from "lodash/fp/fromPairs";
 import assignWith from "lodash/assignWith";
 import mapValues from "lodash/fp/mapValues";
 
+const scorer = (game: Game): [PlayerScore, PlayerScore] => {
+  const numberOfOpponents = game.opponents.length;
+  const numberOfDeclarers = game.declarers.length;
+  const opponentsGameScore = game.scores[PLAYER_TYPE.OPPONENT];
+  const declarersGameScore = game.scores[PLAYER_TYPE.DECLARER];
+  if (opponentsGameScore === null || declarersGameScore === null) {
+    return [null, null];
+  }
+  if (numberOfOpponents === 2 && numberOfDeclarers === 2) {
+    return [declarersGameScore, opponentsGameScore];
+  }
+  if (numberOfOpponents === 3 && numberOfDeclarers === 1) {
+    return [declarersGameScore * 3, opponentsGameScore];
+  }
+  if (numberOfOpponents === 1 && numberOfDeclarers === 3) {
+    return [declarersGameScore, opponentsGameScore * 3];
+  }
+  return [null, null];
+};
+
 export type GameScorePerPlayer = { [keyof: string]: PlayerScore };
 export const getPlayersScores = (game: Game): GameScorePerPlayer => {
-  const opponents = game.opponents.map((p) => [
-    p,
-    game.scores[PLAYER_TYPE.OPPONENT] || null,
-  ]);
-  const declarers = game.declarers.map((p) => [
-    p,
-    game.scores[PLAYER_TYPE.DECLARER] || null,
-  ]);
+  const [declarerPlayersScore, opponentPlayersScore] = scorer(game);
+  const opponents = game.opponents.map((p) => [p, opponentPlayersScore]);
+  const declarers = game.declarers.map((p) => [p, declarerPlayersScore]);
   return {
     ...fromPairs(opponents),
     ...fromPairs(declarers),

@@ -28,7 +28,7 @@ export default describe("gameList", () => {
 
       expect(current).toEqual(expected);
     });
-    it("should return the players scores", () => {
+    it("should return the players scores, 2-2", () => {
       const game = gameFixture({
         declarers: ["Tamas", "Csaba"],
         opponents: ["Akos", "Attila"],
@@ -42,6 +42,86 @@ export default describe("gameList", () => {
         Csaba: 16,
         Akos: -16,
         Attila: -16,
+      };
+
+      const current = getPlayersScores(game);
+
+      expect(current).toEqual(expected);
+    });
+    it("should return the players scores, 3 declarers win, 1 opponent loose.", () => {
+      const game = gameFixture({
+        declarers: ["Tamas", "Csaba", "Akos"],
+        opponents: ["Attila"],
+        scores: {
+          [PLAYER_TYPE.DECLARER]: 6,
+          [PLAYER_TYPE.OPPONENT]: -6,
+        },
+      });
+      const expected = {
+        Tamas: 6,
+        Csaba: 6,
+        Akos: 6,
+        Attila: -18,
+      };
+
+      const current = getPlayersScores(game);
+
+      expect(current).toEqual(expected);
+    });
+    it("should return the players scores, 3 opponents win, 1 declarer loose", () => {
+      const game = gameFixture({
+        declarers: ["Attila"],
+        opponents: ["Tamas", "Csaba", "Akos"],
+        scores: {
+          [PLAYER_TYPE.DECLARER]: -6,
+          [PLAYER_TYPE.OPPONENT]: 6,
+        },
+      });
+      const expected = {
+        Tamas: 6,
+        Csaba: 6,
+        Akos: 6,
+        Attila: -18,
+      };
+
+      const current = getPlayersScores(game);
+
+      expect(current).toEqual(expected);
+    });
+    it("should return the players scores, 1 opponents win, 3 declarer loose", () => {
+      const game = gameFixture({
+        declarers: ["Tamas", "Csaba", "Akos"],
+        opponents: ["Attila"],
+        scores: {
+          [PLAYER_TYPE.DECLARER]: -6,
+          [PLAYER_TYPE.OPPONENT]: 6,
+        },
+      });
+      const expected = {
+        Tamas: -6,
+        Csaba: -6,
+        Akos: -6,
+        Attila: 18,
+      };
+
+      const current = getPlayersScores(game);
+
+      expect(current).toEqual(expected);
+    });
+    it("should return the players scores, 1 declarers win, 3 opponents loose", () => {
+      const game = gameFixture({
+        declarers: ["Attila"],
+        opponents: ["Tamas", "Csaba", "Akos"],
+        scores: {
+          [PLAYER_TYPE.DECLARER]: 6,
+          [PLAYER_TYPE.OPPONENT]: -6,
+        },
+      });
+      const expected = {
+        Tamas: -6,
+        Csaba: -6,
+        Akos: -6,
+        Attila: 18,
       };
 
       const current = getPlayersScores(game);
