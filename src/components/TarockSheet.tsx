@@ -97,8 +97,6 @@ const TarockSheet = () => {
     setGame(createGame());
   };
 
-  const numberOfPlayers = game.opponents.length + game.declarers.length;
-
   return (
     <Grid container spacing={3} direction="column">
       <Grid item>

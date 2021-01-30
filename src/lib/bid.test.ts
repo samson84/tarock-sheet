@@ -5,7 +5,6 @@ import {
   getBid,
   getBidScore,
   hasVariant,
-  getAllBidsByGorup,
   SMALLEST_VARIANT,
 } from "./bid";
 

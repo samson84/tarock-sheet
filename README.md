@@ -1,15 +1,10 @@
 # TODO
 - [.] Milesteone 1
-  - [x] correct klopiczky and self calling calulation
-  - [x] correct new contracts added as loose by taker instead of unknown
-  - [x] add a party base score
-  - [ ] do not delete the contracts, if the previous party score type was party / show the contracts only if, the party is selected
-  - [ ] add starter scores to the players
-  - [x] add title for the app, fill metadata in manifest.json + index.html
-  - [x] switch off the silent and win, if the party is reset-ed
-  - [ ] add clear scores, do not clear the players
+  - [ ] Better player and scores handling, create one component
+    - [ ] add starter scores to the players
   - [ ] save the games locally
-  - [x] save the scores only if the proper number of players selected
+  - [ ] add clear scores, do not clear the players
+  - [ ] do not delete the contracts, if the previous party score type was party / show the contracts only if, the party is selected
   - [ ] usability
     - [ ] new contracts on the top of the ContractsTable
     - [x] ContractTable: when a contract silent, show visually that the contra does not take into account.
@@ -20,7 +15,6 @@
     - [ ] ContractsTable: integrate bid variant into the bid column
     - [ ] add confirmation to new game
   - [ ] Save the DateTime to the Game
-  - [ ] Better player and scores handling, create one component
   - [ ] refactor
     - [ ] contract better calculation of the bid base score
     - [ ] game, contract: simplify create and update methods with same parameter set
@@ -52,6 +46,12 @@
   - [ ] add hotkeys
 - [x] Done
   - [.] Milestone 1
+    - [x] correct klopiczky and self calling calulation
+    - [x] correct new contracts added as loose by taker instead of unknown
+    - [x] add a party base score
+    - [x] add title for the app, fill metadata in manifest.json + index.html
+    - [x] switch off the silent and win, if the party is reset-ed
+    - [x] save the scores only if the proper number of players selected
     - [x] when klopitzky game ticked, add klopiczky contract, remove others
     - [x] when party game ticked add party automatically 
     - [x] refactor game handling: remove validation rules, and validInFinalScore props, use winByTaker null instead and make it manually
