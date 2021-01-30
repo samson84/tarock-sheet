@@ -2,13 +2,14 @@
 - [.] Milesteone 1
   - [x] correct klopiczky and self calling calulation
   - [x] correct new contracts added as loose by taker instead of unknown
-  - [ ] add a party base score
+  - [x] add a party base score
   - [ ] do not delete the contracts, if the previous party score type was party / show the contracts only if, the party is selected
   - [ ] add starter scores to the players
   - [ ] add title for the app
   - [ ] switch off the silent and win, if the party is reset-ed
   - [ ] add clear scores, do not clear the players
   - [ ] save the games locally
+  - [ ] save the scores only if the proper number of players selected
   - [ ] usability
     - [ ] new contracts on the top of the ContractsTable
     - [x] ContractTable: when a contract silent, show visually that the contra does not take into account.

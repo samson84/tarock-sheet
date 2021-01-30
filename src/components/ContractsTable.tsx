@@ -17,14 +17,11 @@ import {
   Checkbox,
   Typography as T,
 } from "@material-ui/core";
-import {
-  MdDelete as RemoveIcon,
-  MdArrowUpward as DoubleContraIcon,
-  MdArrowDownward as DivideContraIcon,
-} from "react-icons/md";
+import { MdDelete as RemoveIcon } from "react-icons/md";
 import { BidVariant, getBid } from "../lib/bid";
 import VariantSelector from "./VariantSelector";
 import SilentSwitch from "./SilentSwitch";
+import MultiplierSelector from "./MultiplierSelector";
 import {
   getAnotherPlayerType,
   getPlayerTypeColor,
@@ -139,38 +136,18 @@ const columns: ColumnDefinition[] = [
     headerName: "Contra",
     field: "contra",
     valueGetter: (contract, onAction) => {
-      const handleClick = (contra: number) =>
+      const handleChange = (contra: number) =>
         onAction && onAction(ACTION_TYPE.CHANGE, contra);
-      const handleDivide = () =>
-        contract.contra > 1 && handleClick(contract.contra / 2);
-      const handleDouble = () => handleClick(contract.contra * 2);
 
       if (getBid(contract.bidType).denyContra) {
         return null;
       }
       return (
-        <>
-          <T
-            component={contract.silent === true ? "s" : "span"}
-            color={contract.silent === true ? "textPrimary" : "textSecondary"}
-          >
-            {contract.contra}
-          </T>
-          <IconButton
-            title="Double"
-            onClick={handleDouble}
-            disabled={contract.silent}
-          >
-            <DoubleContraIcon />
-          </IconButton>
-          <IconButton
-            title="Divide by 2"
-            onClick={handleDivide}
-            disabled={contract.contra === 1 || contract.silent}
-          >
-            <DivideContraIcon />
-          </IconButton>
-        </>
+        <MultiplierSelector
+          onChange={handleChange}
+          value={contract.contra}
+          disabled={contract.silent}
+        />
       );
     },
   },

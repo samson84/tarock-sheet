@@ -76,7 +76,7 @@ export const createContract = ({
   return contract;
 };
 
-export const updateBidBaseScore = (partyScore: PartyScoreValue) => (
+export const updateBidBaseScore = (partyScore: number) => (
   contract: Contract
 ): Contract => ({
   ...contract,
@@ -84,14 +84,7 @@ export const updateBidBaseScore = (partyScore: PartyScoreValue) => (
 });
 
 export type UpdateContractProps = Partial<
-  Pick<
-    Contract,
-    | "taker"
-    | "winByTaker"
-    | "silent"
-    | "bidVariant"
-    | "contra"
-  >
+  Pick<Contract, "taker" | "winByTaker" | "silent" | "bidVariant" | "contra">
 >;
 export const updateContract = (updates: UpdateContractProps) => (
   contract: Contract
@@ -124,18 +117,18 @@ export const filterByPartyLike = (
     PARTY_LIKE_BIDS.includes(contract.bidType)
   );
 
-export const filterByProps = (props: Partial<Contract>) => (contracts: ContractWithIndex[]): ContractWithIndex[] => {
-  return contracts.filter(([contract, _]) => flow(
-      pick(Object.keys(props)),
-      isEqual(props)
-    )(contract)
-  )
-}
+export const filterByProps = (props: Partial<Contract>) => (
+  contracts: ContractWithIndex[]
+): ContractWithIndex[] => {
+  return contracts.filter(([contract, _]) =>
+    flow(pick(Object.keys(props)), isEqual(props))(contract)
+  );
+};
 
 export const groupByPlayerType = (contracts: ContractWithIndex[]) => {
   const groupped = groupBy(([contract]) => contract.taker)(contracts);
   return {
     [PLAYER_TYPE.DECLARER]: groupped[PLAYER_TYPE.DECLARER] || [],
-    [PLAYER_TYPE.OPPONENT]: groupped[PLAYER_TYPE.OPPONENT] || []
-  }
-}
+    [PLAYER_TYPE.OPPONENT]: groupped[PLAYER_TYPE.OPPONENT] || [],
+  };
+};

@@ -21,6 +21,7 @@ export const gameFixture = (props: Partial<Game> = {}): Game => ({
   declarers: [],
   opponents: [],
   partyScoreType: null,
+  partyBaseScore: 1,
   called_tarock: null,
   ...props,
   scores: props.scores

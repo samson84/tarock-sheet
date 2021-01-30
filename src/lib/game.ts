@@ -20,6 +20,7 @@ export interface Game {
   declarers: Player[];
   opponents: Player[];
   partyScoreType: PARTY_SCORE_TYPE | null;
+  partyBaseScore: number;
   called_tarock: CalledTarockType | null;
   scores: GameScore;
 }
@@ -81,6 +82,7 @@ export const createGame = (props: CreateGameProps = {}): Game => ({
   declarers: [],
   opponents: [],
   partyScoreType: props.partyScoreType || null,
+  partyBaseScore: 1,
   called_tarock: props.called_tarock || null,
   scores: {
     [PLAYER_TYPE.DECLARER]: null,
@@ -100,14 +102,25 @@ const updateGameWithScores = (game: Game): Game => {
 export interface UpdateGameProps {
   partyScoreType?: PARTY_SCORE_TYPE;
   called_tarock?: CalledTarockType | null;
+  partyBaseScore?: number;
 }
 export const updateGame = (updates: UpdateGameProps) => (game: Game): Game => {
-  const contracts =
+  const partyScoreType =
     updates.partyScoreType === undefined
+      ? game.partyScoreType
+      : updates.partyScoreType;
+  const partyBaseScore =
+    updates.partyBaseScore === undefined
+      ? game.partyBaseScore
+      : updates.partyBaseScore;
+  const partyScore =
+    partyScoreType === null
+      ? null
+      : PARTY_SCORE[partyScoreType] * partyBaseScore;
+  const contracts =
+    partyScore === null
       ? game.contracts
-      : game.contracts.map(
-          updateBidBaseScore(PARTY_SCORE[updates.partyScoreType])
-        );
+      : game.contracts.map(updateBidBaseScore(partyScore));
 
   return updateGameWithScores({
     ...game,

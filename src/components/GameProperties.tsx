@@ -16,8 +16,10 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
+  Typography as T,
 } from "@material-ui/core";
 import { upperCaseToWords } from "../lib/util";
+import MultiplierSelector from "./MultiplierSelector";
 
 const calledTarockOptions = ["_None_", ...Object.keys(CALLED_TAROCK)];
 const partyScoreOptions = Object.keys(PARTY_SCORE);
@@ -31,7 +33,7 @@ const GameProperties = (props: GamePropertiesProps) => {
   return (
     <Grid container spacing={3} alignContent="space-around">
       <Grid item>
-        <FormControl>
+        <FormControl component="fieldset">
           <InputLabel id="called-tarock-selector">Called</InputLabel>
           <Select
             value={game.called_tarock || "_None_"}
@@ -50,7 +52,7 @@ const GameProperties = (props: GamePropertiesProps) => {
       </Grid>
       <Grid item>
         <FormControl component="fieldset">
-          <FormLabel component="legend">Party Score</FormLabel>
+          <FormLabel>Party Score</FormLabel>
           <RadioGroup
             row
             value={game.partyScoreType}
@@ -71,6 +73,17 @@ const GameProperties = (props: GamePropertiesProps) => {
             ))}
           </RadioGroup>
         </FormControl>
+      </Grid>
+      <Grid item>
+        <T variant="caption" display="block" color="textSecondary">
+          Party Base Score
+        </T>
+        <MultiplierSelector
+          value={game.partyBaseScore}
+          onChange={(score) => {
+            onChange("partyBaseScore", score);
+          }}
+        />
       </Grid>
     </Grid>
   );
