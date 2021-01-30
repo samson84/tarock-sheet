@@ -6,7 +6,7 @@
   - [ ] do not delete the contracts, if the previous party score type was party / show the contracts only if, the party is selected
   - [ ] add starter scores to the players
   - [x] add title for the app, fill metadata in manifest.json + index.html
-  - [ ] switch off the silent and win, if the party is reset-ed
+  - [x] switch off the silent and win, if the party is reset-ed
   - [ ] add clear scores, do not clear the players
   - [ ] save the games locally
   - [x] save the scores only if the proper number of players selected

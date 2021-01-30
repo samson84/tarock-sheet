@@ -138,6 +138,9 @@ const TarockSheet = () => {
       </Grid>
       <Grid item>
         <ContractSelector
+          key={
+            game.partyScoreType === null ? 1 : 0
+          } /* Resets the internal state if the game is reseted */
           bidsByGroup={allBidsByGroup}
           onAddContract={handleAddContract}
         />
