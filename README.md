@@ -9,7 +9,7 @@
   - [ ] switch off the silent and win, if the party is reset-ed
   - [ ] add clear scores, do not clear the players
   - [ ] save the games locally
-  - [ ] save the scores only if the proper number of players selected
+  - [x] save the scores only if the proper number of players selected
   - [ ] usability
     - [ ] new contracts on the top of the ContractsTable
     - [x] ContractTable: when a contract silent, show visually that the contra does not take into account.

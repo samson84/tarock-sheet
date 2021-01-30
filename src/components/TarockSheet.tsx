@@ -14,6 +14,7 @@ import {
   removeAllContract,
   isPartyLike,
   addContractFlipped,
+  validatePlayersInGame,
 } from "../lib/game";
 import { Contract, createContract, updateContract } from "../lib/contract";
 import { Button, Grid } from "@material-ui/core";
@@ -96,6 +97,8 @@ const TarockSheet = () => {
     setGame(createGame());
   };
 
+  const numberOfPlayers = game.opponents.length + game.declarers.length;
+
   return (
     <Grid container spacing={3} direction="column">
       <Grid item>
@@ -124,7 +127,11 @@ const TarockSheet = () => {
           <GameScore game={game} />
         </Grid>
         <Grid item>
-          <Button variant="contained" onClick={handleSaveGame}>
+          <Button
+            variant="contained"
+            onClick={handleSaveGame}
+            disabled={!validatePlayersInGame(game)}
+          >
             Save Scores
           </Button>
         </Grid>

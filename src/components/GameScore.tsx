@@ -7,7 +7,7 @@ interface GameScoreProps {
   game: Game;
 }
 const GameScore = ({ game }: GameScoreProps) => {
-  const {scores} = game;
+  const { scores } = game;
   return (
     <Grid container direction="column">
       <Grid item container alignItems="center" spacing={1}>

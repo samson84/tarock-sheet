@@ -10,6 +10,7 @@ import {
   PLAYER_TYPE,
   PlayerScore,
 } from "./player";
+import isEqual from "lodash/fp/isEqual";
 
 type GameScore = {
   [PLAYER_TYPE.DECLARER]: PlayerScore;
@@ -127,6 +128,12 @@ export const updateGame = (updates: UpdateGameProps) => (game: Game): Game => {
     contracts: [...contracts],
     ...updates,
   });
+};
+
+export const validatePlayersInGame = (game: Game): boolean => {
+  const numberOfPlayers = [game.declarers.length, game.opponents.length];
+  const comparer = isEqual(numberOfPlayers);
+  return comparer([1, 3]) || comparer([2, 2]) || comparer([3, 1]);
 };
 
 export const addPlayer = (player: Player, type: PLAYER_TYPE) => (
