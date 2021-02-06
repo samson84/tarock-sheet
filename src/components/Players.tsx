@@ -6,122 +6,194 @@ import {
   DialogTitle,
   TextField,
   Grid,
+  Card,
+  CardHeader,
+  Avatar,
+  CardContent,
+  makeStyles,
+  Typography as T,
+  CardActions,
+  IconButton,
 } from "@material-ui/core";
 import React, { useState } from "react";
 import { Game } from "../lib/game";
 import {
-  createPlayerList,
+  createPlayer,
   getPlayerTypeColor,
   Player,
+  PlayerList,
   PLAYER_TYPE,
   rotatePlayerTypeWithNull,
+  updatePlayer,
+  updatePlayerAt,
+  removePlayer,
+  UpdatePlayerProps,
 } from "../lib/player";
+import { Id } from "../lib/util";
+import { MdDelete as RemoveIcon } from "react-icons/md";
+import { MdEdit as EditIcon } from "react-icons/md";
+import { MdPerson as UserIcon } from "react-icons/md";
+import { MdPersonAdd as AddUserIcon } from "react-icons/md";
+import { MdDone as FinishEditingIcon } from "react-icons/md";
 
-interface PlayerItemProps {
+interface PlayerAvatarProps {
   player: Player;
-  playerType: PLAYER_TYPE | null;
-  onRemove: (player: Player) => void;
-  onChange: (player: Player, playerType: PLAYER_TYPE | null) => void;
 }
-const PlayerItem = (props: PlayerItemProps) => {
-  const { player, playerType, onRemove, onChange } = props;
+const PlayerAvatar = ({ player }: PlayerAvatarProps) => (
+  <Avatar>
+    {player.name.length > 0 ? <>{player.name.slice(0, 1)}</> : <UserIcon />}
+  </Avatar>
+);
+
+interface EditablePlayerItemProps {
+  player: Player;
+  onRemove: (player: Player) => void;
+  onChange: (updated: Player) => void;
+}
+const EditablePlayerItem = (props: EditablePlayerItemProps) => {
+  const { player, onRemove, onChange } = props;
   const handleRemove = () => onRemove(player);
-  const handleChange = () =>
-    onChange(player, rotatePlayerTypeWithNull(playerType));
-  const color = getPlayerTypeColor(playerType);
+  const handleChange = (prop: string) => (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => onChange(updatePlayer({ [prop]: event.target.value })(player));
+  const handleNameChange = handleChange("name");
+  const handleBaseScoreChange = handleChange("baseScore");
+  const color = getPlayerTypeColor(player.type);
   return (
-    <>
-      <Chip
-        color={color}
-        label={player}
-        variant="default"
-        onDelete={handleRemove}
-        onClick={handleChange}
-      />
-    </>
+    <Card>
+      <CardContent>
+        <Grid container direction="row" spacing={2}>
+          <Grid item>
+            <PlayerAvatar player={player} />
+          </Grid>
+          <Grid container item direction="column" xs spacing={2}>
+            <Grid item>
+              <TextField
+                id={`${player.id}_name`}
+                label="Name"
+                value={player.name}
+                onChange={handleNameChange}
+              />
+            </Grid>
+            <Grid item>
+              <TextField
+                id={`${player.id}_baseScore`}
+                label="Base Score"
+                type="number"
+                value={player.baseScore}
+                onChange={handleBaseScoreChange}
+              />
+            </Grid>
+          </Grid>
+          <Grid item>
+            <IconButton onClick={handleRemove}>
+              <RemoveIcon />
+            </IconButton>
+          </Grid>
+        </Grid>
+      </CardContent>
+    </Card>
   );
 };
 
-interface AddPlayerDialogProps {
-  open: boolean;
-  onAdd: (player: Player) => void;
-  onClose: () => void;
+interface PlayerItemProps {
+  player: Player;
+  onChange: (updated: Player) => void;
 }
-const AddPlayerDialog = ({ open, onAdd, onClose }: AddPlayerDialogProps) => {
-  const [player, setPlayer] = useState("");
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPlayer(event.target.value);
+const PlayerItem = ({ player, onChange }: PlayerItemProps) => {
+  const handleChange = () => {
+    onChange(
+      updatePlayer({ type: rotatePlayerTypeWithNull(player.type) })(player)
+    );
   };
-  const handleClose = () => {
-    setPlayer("");
-    onClose();
-  };
-  const handleAdd = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    onAdd(player);
-    setPlayer("");
-  };
-
+  const color = getPlayerTypeColor(player.type);
+  const playing = player.type !== null;
+  const hasCurrentScore = player.currentScore !== null;
+  const currentScoreText =
+    playing && hasCurrentScore ? ` (${player.currentScore})` : "";
+  const score =
+    player.score !== null ? player.score + player.baseScore : player.baseScore;
   return (
-    <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Add Player</DialogTitle>
-      <DialogContent>
-        <form onSubmit={handleAdd} >
-        <TextField
-          autoFocus
-          margin="dense"
-          label="Player Name"
-          value={player}
-          onChange={handleChange}
-        />
-        </form>
-      </DialogContent>
-    </Dialog>
+    <Card>
+      <CardHeader
+        avatar={<PlayerAvatar player={player} />}
+        title={player.name}
+        subheader={`${score}${currentScoreText}`}
+      />
+      <CardActions>
+        <Button variant="outlined" color={color} onClick={handleChange}>
+          {player.type || "Not playing"}
+        </Button>
+      </CardActions>
+    </Card>
   );
 };
 
 interface PlayersProps {
   players: Player[];
-  game: Game;
-  onPlayerAdd: (player: Player) => void;
-  onPlayerRemove: (player: Player) => void;
-  onPlayerChange: (player: Player, playerType: PLAYER_TYPE | null) => void;
+  onPlayerListChange: (playerList: PlayerList) => void;
+  onSaveScores: () => void;
+  saveDisabled: boolean;
 }
 const Players = (props: PlayersProps) => {
-  const { players, onPlayerAdd, onPlayerChange, onPlayerRemove, game } = props;
-  const [open, setOpen] = useState<boolean>(false);
-  const handleClose = () => {
-    setOpen(false);
+  const { players, onPlayerListChange, onSaveScores, saveDisabled } = props;
+  const [edit, setEdit] = useState(false);
+
+  const handleToogleEdit = () => setEdit((prev) => !prev);
+  const handleAdd = () => {
+    onPlayerListChange([...players, createPlayer()]);
   };
-  const handleOpen = () => setOpen(true);
-  const handlePlayerAdd = (player: Player) => {
-    setOpen(false);
-    onPlayerAdd(player);
+  const handleRemove = (player: Player) => {
+    onPlayerListChange(removePlayer(player)(players));
   };
-  const playerList = createPlayerList(players, game.declarers, game.opponents);
+  const handleChange = (updated: Player) => {
+    onPlayerListChange(updatePlayerAt(updated)(players));
+  };
+
   return (
-    <Grid container spacing={3}>
-      <AddPlayerDialog
-        open={open}
-        onAdd={handlePlayerAdd}
-        onClose={handleClose}
-      />
-      <Grid item>
-        <Button variant="contained" onClick={handleOpen}>
-          Add Player
-        </Button>
+    <Grid container spacing={1}>
+      <Grid item container direction="row" alignItems="center">
+        <Grid item>
+          <IconButton onClick={handleAdd} title="Add new player">
+            <AddUserIcon />
+          </IconButton>
+        </Grid>
+        <Grid item>
+          <IconButton
+            onClick={handleToogleEdit}
+            title={edit ? "Finish editing" : "Edit user properties"}
+          >
+            {edit ? <FinishEditingIcon /> : <EditIcon />}
+          </IconButton>
+        </Grid>
+        <Grid item>
+          <Button
+            variant="outlined"
+            disabled={saveDisabled}
+            onClick={onSaveScores}
+          >
+            Save scores
+          </Button>
+        </Grid>
       </Grid>
-      <Grid item>
-        {playerList.map(({ player, playerType }) => (
-          <PlayerItem
-            key={player}
-            onChange={onPlayerChange}
-            onRemove={onPlayerRemove}
-            player={player}
-            playerType={playerType}
-          />
-        ))}
-      </Grid>
+      {players.map((player) => (
+        <Grid item xs={edit ? 3 : false}>
+          {edit ? (
+            <EditablePlayerItem
+              key={player.id}
+              onChange={handleChange}
+              onRemove={handleRemove}
+              player={player}
+            />
+          ) : (
+            <PlayerItem
+              key={player.id}
+              player={player}
+              onChange={handleChange}
+            />
+          )}
+        </Grid>
+      ))}
     </Grid>
   );
 };

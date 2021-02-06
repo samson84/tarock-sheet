@@ -4,13 +4,7 @@ import {
   updateBidBaseScore,
   createContract,
 } from "./contract";
-import {
-  getAnotherPlayerType,
-  Player,
-  PLAYER_TYPE,
-  PlayerScore,
-} from "./player";
-import isEqual from "lodash/fp/isEqual";
+import { getAnotherPlayerType, PLAYER_TYPE, PlayerScore } from "./player";
 
 type GameScore = {
   [PLAYER_TYPE.DECLARER]: PlayerScore;
@@ -18,8 +12,6 @@ type GameScore = {
 };
 export interface Game {
   contracts: Contract[];
-  declarers: Player[];
-  opponents: Player[];
   partyScoreType: PARTY_SCORE_TYPE | null;
   partyBaseScore: number;
   called_tarock: CalledTarockType | null;
@@ -80,8 +72,6 @@ interface CreateGameProps {
 }
 export const createGame = (props: CreateGameProps = {}): Game => ({
   contracts: [],
-  declarers: [],
-  opponents: [],
   partyScoreType: props.partyScoreType || null,
   partyBaseScore: 1,
   called_tarock: props.called_tarock || null,
@@ -129,36 +119,6 @@ export const updateGame = (updates: UpdateGameProps) => (game: Game): Game => {
     ...updates,
   });
 };
-
-export const validatePlayersInGame = (game: Game): boolean => {
-  const numberOfPlayers = [game.declarers.length, game.opponents.length];
-  const comparer = isEqual(numberOfPlayers);
-  return comparer([1, 3]) || comparer([2, 2]) || comparer([3, 1]);
-};
-
-export const addPlayer = (player: Player, type: PLAYER_TYPE) => (
-  game: Game
-): Game => {
-  const key = type === PLAYER_TYPE.DECLARER ? "declarers" : "opponents";
-
-  const otherKey = type === PLAYER_TYPE.OPPONENT ? "declarers" : "opponents";
-
-  if (game[key].includes(player)) {
-    return { ...game };
-  }
-
-  return {
-    ...game,
-    [key]: [...game[key], player],
-    [otherKey]: game[otherKey].filter((p) => p !== player),
-  };
-};
-
-export const removePlayer = (player: Player) => (game: Game): Game => ({
-  ...game,
-  opponents: game.opponents.filter((p) => p !== player),
-  declarers: game.declarers.filter((p) => p !== player),
-});
 
 export const addContractFlipped = (contract: Contract) => (game: Game): Game =>
   addContract(game)(contract);

@@ -1,10 +1,19 @@
 # TODO
 - [.] Milesteone 1
-  - [ ] Better player and scores handling, create one component
-    - [ ] add starter scores to the players
+  - [x] Better player and scores handling, create one component
+    - [x] add starter scores to the players
+    - [x] re design the player list, create edit player mode
+    - [x] move score property and base score property to the Player object
+    - [x] move game score and saving to the Player component
+    - [x] redesign game list player score handling to the new player list structure
   - [ ] save the games locally
+  - [ ] correct scores: king uhu 20, centrum 10, small bird 10, large bird 10
+  - [ ] save only the scores if they are available
   - [ ] add clear scores, do not clear the players
   - [ ] do not delete the contracts, if the previous party score type was party / show the contracts only if, the party is selected
+  - [ ] generalize button colors and variants
+  - [ ] add random colors to player avatars
+  - [ ] Tarock sheet: better Win by taker UI component, e.g: a button
   - [ ] usability
     - [ ] new contracts on the top of the ContractsTable
     - [x] ContractTable: when a contract silent, show visually that the contra does not take into account.

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BID_TYPE, getAllBidsByGorup } from "../lib/bid";
 import ContractSelector from "./ContractSelector";
 import {
@@ -8,49 +8,51 @@ import {
   updateGame,
   updateGameContract,
   removeContract,
-  removePlayer,
-  addPlayer,
   UpdateGameProps,
   removeAllContract,
   isPartyLike,
   addContractFlipped,
-  validatePlayersInGame,
 } from "../lib/game";
 import { Contract, createContract, updateContract } from "../lib/contract";
 import { Button, Grid } from "@material-ui/core";
 import ContractsTable from "./ContractsTable";
 import GameProperties from "./GameProperties";
 import flow from "lodash/fp/flow";
-import uniq from "lodash/fp/uniq";
-import GameScore from "./GameScore";
+import concat from "lodash/fp/concat";
 import Players from "./Players";
-import { Player, PLAYER_TYPE } from "../lib/player";
-import { GameScorePerPlayer, getPlayersScores } from "../lib/gameList";
-import ScoreSheet from "./ScoreSheet";
+import {
+  clearPlayersType,
+  createPlayerListObject,
+  filterPlayersInGame,
+  Player,
+  PlayerList,
+  PlayerListObject,
+  PLAYER_TYPE,
+} from "../lib/player";
+import {
+  assignScoresToPlayers,
+  getCurrentScoreForPlayers,
+  isReadyForSave,
+  sumPlayerScores,
+} from "../lib/gameScoreList";
+// import ScoreSheet from "./ScoreSheet";
 
 const allBidsByGroup = getAllBidsByGorup();
 
 const TarockSheet = () => {
   const [game, setGame] = useState<Game>(createGame());
   const [players, setPlayers] = useState<Player[]>([]);
-  const [gameScoreList, setGameScoreList] = useState<GameScorePerPlayer[]>([]);
+  const [gameScoreList, setGameScoreList] = useState<PlayerListObject[]>([]);
+
+  useEffect(() => {
+    setPlayers(getCurrentScoreForPlayers(game));
+  }, [game]);
 
   const handleContractDelete = (index: number) =>
     setGame(removeContract(game)(index));
   const handleResetGame = () => setGame(createGame());
-  const handleAddPlayer = (player: Player) =>
-    setPlayers((prev) => uniq([...prev, player]));
-  const handleRemovePlayer = (player: Player) =>
-    setPlayers((prev) => prev.filter((p) => p !== player));
-  const handleChangePlayer = (
-    player: Player,
-    playerType: PLAYER_TYPE | null
-  ) => {
-    if (playerType === null) {
-      setGame(removePlayer(player)(game));
-    } else {
-      setGame(addPlayer(player, playerType)(game));
-    }
+  const handlePlayerListChange = (playerList: PlayerList) => {
+    updatePlayersState(playerList);
   };
   const handleChangeGameProperties = (
     prop: keyof UpdateGameProps,
@@ -92,46 +94,48 @@ const TarockSheet = () => {
       )(game.contracts[index])
     );
   };
-  const handleSaveGame = () => {
-    setGameScoreList([...gameScoreList, getPlayersScores(game)]);
+  const handleSaveScores = () => {
+    const updatedGameScoreList = flow(
+      filterPlayersInGame,
+      createPlayerListObject,
+      concat(gameScoreList)
+    )(players);
+    updateGameScoreListState(updatedGameScoreList);
+  };
+  const updatePlayersState = (updated: PlayerList) => {
+    flow(getCurrentScoreForPlayers(game), setPlayers)(updated);
+  };
+  const updateGameScoreListState = (updated: PlayerListObject[]) => {
+    flow(
+      sumPlayerScores,
+      assignScoresToPlayers(players),
+      clearPlayersType,
+      updatePlayersState
+    )(updated);
+    setGameScoreList(updated);
     setGame(createGame());
   };
 
   return (
     <Grid container spacing={3} direction="column">
       <Grid item>
+        <Players
+          players={players}
+          onPlayerListChange={handlePlayerListChange}
+          onSaveScores={handleSaveScores}
+          saveDisabled={!isReadyForSave(players)(game)}
+        />
+      </Grid>
+      <Grid item>
         <Grid item container spacing={1} direction="row">
+          <Grid item>
+            <GameProperties game={game} onChange={handleChangeGameProperties} />
+          </Grid>
           <Grid item>
             <Button variant="contained" onClick={handleResetGame}>
               Reset Game
             </Button>
           </Grid>
-          <Grid item>
-            <GameProperties game={game} onChange={handleChangeGameProperties} />
-          </Grid>
-        </Grid>
-      </Grid>
-      <Grid item>
-        <Players
-          players={players}
-          game={game}
-          onPlayerAdd={handleAddPlayer}
-          onPlayerRemove={handleRemovePlayer}
-          onPlayerChange={handleChangePlayer}
-        />
-      </Grid>
-      <Grid item container>
-        <Grid item>
-          <GameScore game={game} />
-        </Grid>
-        <Grid item>
-          <Button
-            variant="contained"
-            onClick={handleSaveGame}
-            disabled={!validatePlayersInGame(game)}
-          >
-            Save Scores
-          </Button>
         </Grid>
       </Grid>
       <Grid item>
@@ -149,9 +153,6 @@ const TarockSheet = () => {
           onChange={handleChangeContract}
           onDelete={handleContractDelete}
         />
-      </Grid>
-      <Grid item>
-        <ScoreSheet gameScoreList={gameScoreList} />
       </Grid>
     </Grid>
   );
