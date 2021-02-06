@@ -132,7 +132,7 @@ const TarockSheet = () => {
             <GameProperties game={game} onChange={handleChangeGameProperties} />
           </Grid>
           <Grid item>
-            <Button variant="contained" onClick={handleResetGame}>
+            <Button variant="outlined" onClick={handleResetGame}>
               Reset Game
             </Button>
           </Grid>

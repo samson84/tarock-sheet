@@ -47,7 +47,9 @@ const VariantSelector = (props: VariantSelectorProps) => {
           </RadioGroup>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose} variant="outlined">
+            Cancel
+          </Button>
         </DialogActions>
       </Dialog>
     </>

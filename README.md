@@ -2,44 +2,51 @@
 - [.] Milesteone 1
  structure
   - [ ] save the games locally
-  - [x] correct scores: king uhu 20, centrum 10, small bird 10, large bird 10
+    - [ ] TarockSheet: create common update handlers for game, players, and gameScoreList
+    - [ ] TarockSheet: move getCurrentScoreForPlayer to the game update handler
+    - [ ] Create a local storage service + add it to the update handlers
+    - [ ] Load state at app startup
+    - [ ] clear logic
+      - [ ] add clear scores
+      - [ ] add clear players
+      - [ ] rename reset game, to clear game
+      - [ ] add clear full state
+  - [ ] do not delete the contracts, if the previous party score type was party
+  - [ ] show the contracts and the selector only if, the party is selected
   - [ ] show the declarers and opponents scores around the contract table
+  - [ ] Indicate Radli on players
   - [ ] show each game scroes as a table (collapsable)
-  - [x] save only the scores if they are available
-  - [ ] add clear scores, do not clear the players
-  - [ ] do not delete the contracts, if the previous party score type was party / show the contracts only if, the party is selected
-  - [ ] generalize button colors and variants
-  - [ ] add random colors to player avatars
+  - [ ] edit the preivous games scores
+  - [ ] create a better app icon and align the icon in the app bar
   - [ ] Tarock sheet: better Win by taker UI component, e.g: a button
   - [ ] usability
-    - [ ] new contracts on the top of the ContractsTable
     - [x] ContractTable: when a contract silent, show visually that the contra does not take into account.
     - [x] ContractTable: if a contract is silent, it should not able to apply a contra on it, 
     - [ ] Game Properties: show score near the game score selector radio buttons
     - [ ] BidSelector: show the score near the bids
     - [ ] ContractsTable: show the the contra names instead of the values
     - [ ] ContractsTable: integrate bid variant into the bid column
-    - [ ] add confirmation to new game
-  - [ ] Save the DateTime to the Game
+    - [ ] add confirmations to destroy type of actions
   - [ ] refactor
+    - [ ] Tarock sheet: move handler's logic to data layer, if possible
     - [ ] contract better calculation of the bid base score
     - [ ] game, contract: simplify create and update methods with same parameter set
-    - [ ] BidSelector: Refactor Modal to Dialog
     - [ ] refactor can silent, do not leak bids details to contract layer
       - [ ] Add canSilent method to contract too.
       - [ ] refactor ContractsTable to use the new can silent contracts.      
-    - [x] rename BidSelector to ContractSelector
-    - [ ] rename TarockSheet to Game component
     - [ ] rename game props to camelCase, party_score, called_tarock
 - [ ] Milestone 2
+  - [ ] Set and save the mayor state
+  - [ ] Save the DateTime to the Game
+  - [ ] save the details of the previous games
+    [ ] add random colors to player avatars
   - [ ] do some authentication / login / firebase
   - [ ] save the game to a DB e.g. Firebase
   - [ ] deploy the app to heroku / netlify / vercel / Firebase
   - [ ] share the game with others
   - [ ] refactor
-    - [ ] create a better app icon
-    - [ ] align the icon in the app bar
-    - [ ] split bidselector to smaller components
+    - [ ] TarockSheet extract a Game component from the tarock sheet
+    - [ ] split contractSelector to smaller components
     - [ ] split ContractsTable to smaller components
 - [ ] Milestone 3
   - [ ] compact Contract Table
@@ -52,6 +59,10 @@
   - [ ] add hotkeys
 - [x] Done
   - [.] Milestone 1
+    - [x] generalize button colors and variants
+    - [x] rename BidSelector to ContractSelector
+    - [x] correct scores: king uhu 20, centrum 10, small bird 10, large bird 10
+    - [x] save only the scores if they are available
     - [x] Better player and scores handling, create one component
     - [x] correct klopiczky and self calling calulation
     - [x] correct new contracts added as loose by taker instead of unknown

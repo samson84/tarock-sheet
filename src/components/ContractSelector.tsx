@@ -51,7 +51,7 @@ const ContractSelector = ({ bidsByGroup, onAddContract }: BidSelectorProps) => {
             <Box key={bid.type} component="span" mr={0.5}>
               <Button
                 variant="outlined"
-                color="primary"
+                color="default"
                 onClick={() => handleClick(bid.type)}
                 size="small"
                 disabled={silentAndWin && !canSilent(bid)}

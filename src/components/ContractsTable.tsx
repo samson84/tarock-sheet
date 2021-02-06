@@ -53,7 +53,7 @@ const VariantSelectorModal = (props: VariantSelectorModalProps) => {
         render={(handleOpen) => (
           <Button
             variant="outlined"
-            color="primary"
+            color="default"
             onClick={handleOpen}
             size="small"
           >
@@ -107,7 +107,7 @@ const columns: ColumnDefinition[] = [
         onAction && onAction(ACTION_TYPE.CHANGE, newTaker);
       const color = getPlayerTypeColor(contract.taker);
       return (
-        <Button color={color} onClick={handleClick}>
+        <Button color={color} onClick={handleClick} variant="outlined">
           {contract.taker}
         </Button>
       );
