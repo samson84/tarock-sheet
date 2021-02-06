@@ -25,6 +25,7 @@ const SilentSwitch = ({
           <Switch
             onChange={(event) => onChange(event.target.checked)}
             checked={value}
+            color="default"
           />
         }
         label={label ? "Silent" : ""}

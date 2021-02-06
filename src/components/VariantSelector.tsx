@@ -40,7 +40,7 @@ const VariantSelector = (props: VariantSelectorProps) => {
           <RadioGroup name="variants" onChange={handleChange} value={selected}>
             {variants.map((variant: BidVariant) => (
               <FormControlLabel
-                control={<Radio value={variant} />}
+                control={<Radio color="default" value={variant} />}
                 label={upperCaseToWords(variant)}
               />
             ))}

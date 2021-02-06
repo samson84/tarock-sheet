@@ -69,6 +69,7 @@ const ContractSelector = ({ bidsByGroup, onAddContract }: BidSelectorProps) => {
               checked={silentAndWin}
               onChange={handleSwitch}
               name="silentAndWinSwitch"
+              color="default"
             />
           }
           label="Silent & Win"

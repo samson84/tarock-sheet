@@ -67,7 +67,7 @@ const GameProperties = (props: GamePropertiesProps) => {
               <FormControlLabel
                 key={option}
                 value={option}
-                control={<Radio />}
+                control={<Radio color="default" />}
                 label={upperCaseToWords(option)}
               />
             ))}

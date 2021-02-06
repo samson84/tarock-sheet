@@ -107,7 +107,12 @@ const columns: ColumnDefinition[] = [
         onAction && onAction(ACTION_TYPE.CHANGE, newTaker);
       const color = getPlayerTypeColor(contract.taker);
       return (
-        <Button color={color} onClick={handleClick} variant="outlined">
+        <Button
+          color={color}
+          onClick={handleClick}
+          variant="outlined"
+          size="small"
+        >
           {contract.taker}
         </Button>
       );
