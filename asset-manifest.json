@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.js": "/tarock-sheet/static/js/main.e6082234.chunk.js",
-    "main.js.map": "/tarock-sheet/static/js/main.e6082234.chunk.js.map",
+    "main.js": "/tarock-sheet/static/js/main.139959ba.chunk.js",
+    "main.js.map": "/tarock-sheet/static/js/main.139959ba.chunk.js.map",
     "runtime-main.js": "/tarock-sheet/static/js/runtime-main.f5dba7ba.js",
     "runtime-main.js.map": "/tarock-sheet/static/js/runtime-main.f5dba7ba.js.map",
     "static/js/2.15aaa4c9.chunk.js": "/tarock-sheet/static/js/2.15aaa4c9.chunk.js",
@@ -14,6 +14,6 @@
   "entrypoints": [
     "static/js/runtime-main.f5dba7ba.js",
     "static/js/2.15aaa4c9.chunk.js",
-    "static/js/main.e6082234.chunk.js"
+    "static/js/main.139959ba.chunk.js"
   ]
 }
