@@ -123,8 +123,8 @@ const BIDS: { [key in BID_TYPE]: BidData } = {
     group: "ULTI_LIKE",
   },
   [BID_TYPE.CENTRUM]: { score: 10, group: "CENTRUM_LIKE" },
-  [BID_TYPE.SMALL_BIRD]: { score: 15, group: "CENTRUM_LIKE" },
-  [BID_TYPE.LARGE_BIRD]: { score: 20, group: "CENTRUM_LIKE" },
+  [BID_TYPE.SMALL_BIRD]: { score: 10, group: "CENTRUM_LIKE" },
+  [BID_TYPE.LARGE_BIRD]: { score: 10, group: "CENTRUM_LIKE" },
   [BID_TYPE.KING_ULTI]: {
     score: 15,
     variants: [...CARD_SHAPE_VARIANTS],
