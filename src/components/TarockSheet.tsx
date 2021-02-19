@@ -28,6 +28,7 @@ import {
   PlayerList,
   PlayerListObject,
   PLAYER_TYPE,
+  resetPlayerScore,
 } from "../lib/player";
 import {
   assignScoresToPlayers,
@@ -35,18 +36,39 @@ import {
   isReadyForSave,
   sumPlayerScores,
 } from "../lib/gameScoreList";
+import { storage as storageInitializer } from "../services/localStorage";
 // import ScoreSheet from "./ScoreSheet";
 
 const allBidsByGroup = getAllBidsByGorup();
+const storage = storageInitializer();
 
 const TarockSheet = () => {
-  const [game, setGame] = useState<Game>(createGame());
-  const [players, setPlayers] = useState<Player[]>([]);
-  const [gameScoreList, setGameScoreList] = useState<PlayerListObject[]>([]);
+  const [game, setGame] = useState<Game>(
+    (storage.read("game") as Game | null) ?? createGame()
+  );
+  const [players, setPlayers] = useState<Player[]>(
+    (storage.read("players") as Player[] | null) ?? []
+  );
+  const [gameScoreList, setGameScoreList] = useState<PlayerListObject[]>(
+    (storage.read("gameScoreList") as PlayerListObject[] | null) ?? []
+  );
 
   useEffect(() => {
     setPlayers(getCurrentScoreForPlayers(game));
   }, [game]);
+
+  useEffect(() => {
+    if (!storage.isSupported()) {
+      return;
+    }
+    try {
+      storage.update("game", game as object);
+      storage.update("players", players);
+      storage.update("gameScoreList", gameScoreList);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [game, players, gameScoreList]);
 
   const handleContractDelete = (index: number) =>
     setGame(removeContract(game)(index));
@@ -115,6 +137,15 @@ const TarockSheet = () => {
     setGameScoreList(updated);
     setGame(createGame());
   };
+  const handleResetPlayers = () => {
+    setGame(createGame());
+    updateGameScoreListState([]);
+    updatePlayersState([]);
+  };
+  const handleResetScores = () => {
+    updateGameScoreListState([]);
+    flow(resetPlayerScore, clearPlayersType, updatePlayersState)(players);
+  };
 
   return (
     <Grid container spacing={3} direction="column">
@@ -124,6 +155,8 @@ const TarockSheet = () => {
           onPlayerListChange={handlePlayerListChange}
           onSaveScores={handleSaveScores}
           saveDisabled={!isReadyForSave(players)(game)}
+          onResetPlayers={handleResetPlayers}
+          onResetScores={handleResetScores}
         />
       </Grid>
       <Grid item>

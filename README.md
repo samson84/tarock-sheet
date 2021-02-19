@@ -1,16 +1,14 @@
 # TODO
 - [.] Milesteone 1
- structure
+  - [x] correct pheasants to 20
   - [ ] save the games locally
-    - [ ] TarockSheet: create common update handlers for game, players, and gameScoreList
-    - [ ] TarockSheet: move getCurrentScoreForPlayer to the game update handler
-    - [ ] Create a local storage service + add it to the update handlers
-    - [ ] Load state at app startup
-    - [ ] clear logic
-      - [ ] add clear scores
-      - [ ] add clear players
-      - [ ] rename reset game, to clear game
-      - [ ] add clear full state
+    - [x] Create a local storage service
+    - [x] add it to the update handlers
+    - [x] Load state at app startup
+    - [x] clear logic
+      - [x] add clear scores
+      - [x] add clear players
+  - [ ] implement error handling and showing to the user
   - [ ] do not delete the contracts, if the previous party score type was party
   - [ ] show the contracts and the selector only if, the party is selected
   - [ ] show the declarers and opponents scores around the contract table

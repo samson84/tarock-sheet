@@ -96,6 +96,9 @@ export const getPlayerNumberByType = (
 export const clearPlayersType = (players: PlayerList): PlayerList =>
   players.map((player) => updatePlayer({ type: null })(player));
 
+export const resetPlayerScore = (players: PlayerList): PlayerList =>
+  players.map((player) => updatePlayer({ score: null })(player));
+
 export const filterPlayersInGame = (players: PlayerList): PlayerList =>
   players.filter((player) => player.type !== null);
 
