@@ -1,35 +1,25 @@
 import {
   Button,
-  Chip,
-  Dialog,
-  DialogContent,
-  DialogTitle,
   TextField,
   Grid,
   Card,
   CardHeader,
   Avatar,
   CardContent,
-  makeStyles,
-  Typography as T,
   CardActions,
   IconButton,
 } from "@material-ui/core";
 import React, { useState } from "react";
-import { Game } from "../lib/game";
 import {
   createPlayer,
   getPlayerTypeColor,
   Player,
   PlayerList,
-  PLAYER_TYPE,
   rotatePlayerTypeWithNull,
   updatePlayer,
   updatePlayerAt,
   removePlayer,
-  UpdatePlayerProps,
 } from "../lib/player";
-import { Id } from "../lib/util";
 import { MdDelete as RemoveIcon } from "react-icons/md";
 import { MdEdit as EditIcon } from "react-icons/md";
 import { MdPerson as UserIcon } from "react-icons/md";
@@ -53,12 +43,18 @@ interface EditablePlayerItemProps {
 const EditablePlayerItem = (props: EditablePlayerItemProps) => {
   const { player, onRemove, onChange } = props;
   const handleRemove = () => onRemove(player);
-  const handleChange = (prop: string) => (
+  const handleChange = (prop: string) => (value: any) => {
+    onChange(updatePlayer({ [prop]: value })(player));
+  };
+  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    handleChange("name")(event.target.value);
+  };
+  const handleBaseScoreChange = (
     event: React.ChangeEvent<HTMLInputElement>
-  ) => onChange(updatePlayer({ [prop]: event.target.value })(player));
-  const handleNameChange = handleChange("name");
-  const handleBaseScoreChange = handleChange("baseScore");
-  const color = getPlayerTypeColor(player.type);
+  ) => {
+    const value = event.target.value;
+    handleChange("baseScore")(value.length > 0 ? Number(value) : null);
+  };
   return (
     <Card>
       <CardContent>
@@ -134,9 +130,18 @@ interface PlayersProps {
   onPlayerListChange: (playerList: PlayerList) => void;
   onSaveScores: () => void;
   saveDisabled: boolean;
+  onResetPlayers: () => void;
+  onResetScores: () => void;
 }
 const Players = (props: PlayersProps) => {
-  const { players, onPlayerListChange, onSaveScores, saveDisabled } = props;
+  const {
+    players,
+    onPlayerListChange,
+    onSaveScores,
+    saveDisabled,
+    onResetPlayers,
+    onResetScores,
+  } = props;
   const [edit, setEdit] = useState(false);
 
   const handleToogleEdit = () => setEdit((prev) => !prev);
@@ -152,7 +157,7 @@ const Players = (props: PlayersProps) => {
 
   return (
     <Grid container spacing={1}>
-      <Grid item container direction="row" alignItems="center">
+      <Grid item container direction="row" alignItems="center" spacing={1}>
         <Grid item>
           <IconButton onClick={handleAdd} title="Add new player">
             <AddUserIcon />
@@ -173,6 +178,16 @@ const Players = (props: PlayersProps) => {
             onClick={onSaveScores}
           >
             Save scores
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button variant="outlined" onClick={onResetPlayers}>
+            Reset Players
+          </Button>
+        </Grid>
+        <Grid item>
+          <Button variant="outlined" onClick={onResetScores}>
+            Reset Scores
           </Button>
         </Grid>
       </Grid>
