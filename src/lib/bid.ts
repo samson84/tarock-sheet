@@ -106,12 +106,12 @@ const BIDS: { [key in BID_TYPE]: BidData } = {
     group: "PARTY_LIKE",
   },
   [BID_TYPE.PHEASANT]: {
-    score: 50,
+    score: 20,
     variants: [...SMALLEST_VARIANTS],
     group: "ULTI_LIKE",
   },
   [BID_TYPE.PHEASANT_IN_2ND]: {
-    score: 50,
+    score: 20,
     variants: [...SMALLEST_VARIANTS],
     group: "ULTI_LIKE",
   },
