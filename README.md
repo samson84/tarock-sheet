@@ -1,10 +1,10 @@
 # TODO
 - [.] Milesteone 1 - Local storage, correct scores, Player handling,UI improvements
   - [ ] add confirmations to destroy / reset type of actions
-  - [ ] do not delete the contracts, if the previous party score type was party
-  - [ ] show the contracts and the selector only if, the party is selected
+  - [x] do not delete the contracts, if the previous party score type was party or contracts are already added
+  - [x] show the contracts and the selector only if, the party is selected
   - [ ] show the declarers and opponents scores around the contract table
-  - [x] Indicate Radli on players
+  - [x] Indicate Game winner (Radli) on players
   - [ ] show each game scroes as a table (collapsable)
   - [ ] create a better app icon and align the icon in the app bar
   - [ ] Tarock sheet: better Win by taker UI component, e.g: a button

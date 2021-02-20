@@ -50,13 +50,15 @@ export enum PARTY_SCORE_TYPE {
 }
 export type PartyScoreValue = 0 | 1 | 2 | 3 | 4;
 
-export const isPartyLike = (partyScoreType: PARTY_SCORE_TYPE): boolean =>
-  [
-    PARTY_SCORE_TYPE.TOOK_THREE,
-    PARTY_SCORE_TYPE.TOOK_TWO,
-    PARTY_SCORE_TYPE.TOOK_ONE,
-    PARTY_SCORE_TYPE.SOLO,
-  ].includes(partyScoreType);
+export const isPartyLike = (partyScoreType: PARTY_SCORE_TYPE | null): boolean =>
+  partyScoreType === null
+    ? false
+    : [
+        PARTY_SCORE_TYPE.TOOK_THREE,
+        PARTY_SCORE_TYPE.TOOK_TWO,
+        PARTY_SCORE_TYPE.TOOK_ONE,
+        PARTY_SCORE_TYPE.SOLO,
+      ].includes(partyScoreType);
 
 export const PARTY_SCORE: { [K in PARTY_SCORE_TYPE]: PartyScoreValue } = {
   [PARTY_SCORE_TYPE.TOOK_THREE]: 1,

@@ -12,6 +12,7 @@ import {
   removeAllContract,
   isPartyLike,
   addContractFlipped,
+  PARTY_SCORE_TYPE,
 } from "../lib/game";
 import { Contract, createContract, updateContract } from "../lib/contract";
 import { Button, Grid } from "@material-ui/core";
@@ -80,26 +81,46 @@ const TarockSheet = () => {
     prop: keyof UpdateGameProps,
     value: any
   ) => {
-    if (prop === "partyScoreType") {
-      const contract = isPartyLike(value)
-        ? createContract({
-            bidType: BID_TYPE.PARTY,
-            taker: PLAYER_TYPE.DECLARER,
-          })
-        : createContract({
-            bidType: BID_TYPE.KLOPICZKY,
-            taker: PLAYER_TYPE.DECLARER,
-            winByTaker: true,
-          });
-      const updated = flow(
-        removeAllContract,
-        addContractFlipped(contract),
-        updateGame({ [prop]: value })
-      )(game);
-      setGame(updated);
-    } else {
-      setGame(updateGame({ [prop]: value })(game));
-    }
+    setGame((prevGame) => {
+      const partyScoreTypeChanged = prop === "partyScoreType";
+      const fromKlopiczkyToPartyLikeChanged =
+        prevGame.partyScoreType === PARTY_SCORE_TYPE.KLOPICZKY &&
+        isPartyLike(value);
+      const fromPartyLikeToKlopiczkyChanged =
+        isPartyLike(prevGame.partyScoreType) &&
+        value === PARTY_SCORE_TYPE.KLOPICZKY;
+      const fromNullToKlopiczkyChanged =
+        prevGame.partyScoreType === null &&
+        value === PARTY_SCORE_TYPE.KLOPICZKY;
+      const partyLikeAndEmptyContracts =
+        isPartyLike(value) && prevGame.contracts.length === 0;
+      const shouldRemoveContracts =
+        partyScoreTypeChanged &&
+        (fromKlopiczkyToPartyLikeChanged ||
+          fromPartyLikeToKlopiczkyChanged ||
+          fromNullToKlopiczkyChanged ||
+          partyLikeAndEmptyContracts);
+      if (shouldRemoveContracts) {
+        const contract = isPartyLike(value)
+          ? createContract({
+              bidType: BID_TYPE.PARTY,
+              taker: PLAYER_TYPE.DECLARER,
+            })
+          : createContract({
+              bidType: BID_TYPE.KLOPICZKY,
+              taker: PLAYER_TYPE.DECLARER,
+              winByTaker: true,
+            });
+        const updated = flow(
+          removeAllContract,
+          addContractFlipped(contract),
+          updateGame({ [prop]: value })
+        )(game);
+        return updated;
+      } else {
+        return updateGame({ [prop]: value })(game);
+      }
+    });
   };
   const handleAddContract = (contract: Contract) => {
     return setGame(flow(createContract, addContract(game))(contract));
@@ -147,6 +168,8 @@ const TarockSheet = () => {
     flow(resetPlayerScore, clearPlayersType, updatePlayersState)(players);
   };
 
+  const partyScoreTypeSelected = game.partyScoreType !== null;
+
   return (
     <Grid container spacing={3} direction="column">
       <Grid item>
@@ -172,20 +195,24 @@ const TarockSheet = () => {
         </Grid>
       </Grid>
       <Grid item>
-        <ContractSelector
-          key={
-            game.partyScoreType === null ? 1 : 0
-          } /* Resets the internal state if the game is reseted */
-          bidsByGroup={allBidsByGroup}
-          onAddContract={handleAddContract}
-        />
+        {partyScoreTypeSelected && (
+          <ContractSelector
+            key={
+              game.partyScoreType === null ? 1 : 0
+            } /* Resets the internal state if the game is reseted */
+            bidsByGroup={allBidsByGroup}
+            onAddContract={handleAddContract}
+          />
+        )}
       </Grid>
       <Grid item>
-        <ContractsTable
-          contracts={game?.contracts as Contract[]}
-          onChange={handleChangeContract}
-          onDelete={handleContractDelete}
-        />
+        {partyScoreTypeSelected && (
+          <ContractsTable
+            contracts={game?.contracts as Contract[]}
+            onChange={handleChangeContract}
+            onDelete={handleContractDelete}
+          />
+        )}
       </Grid>
     </Grid>
   );
