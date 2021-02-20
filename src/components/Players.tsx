@@ -25,13 +25,14 @@ import { MdEdit as EditIcon } from "react-icons/md";
 import { MdPerson as UserIcon } from "react-icons/md";
 import { MdPersonAdd as AddUserIcon } from "react-icons/md";
 import { MdDone as FinishEditingIcon } from "react-icons/md";
+import WinnerIcon from "@material-ui/icons/EmojiEvents";
 
 interface PlayerAvatarProps {
   player: Player;
 }
 const PlayerAvatar = ({ player }: PlayerAvatarProps) => (
   <Avatar>
-    {player.name.length > 0 ? <>{player.name.slice(0, 1)}</> : <UserIcon />}
+    {player.name.length > 0 ? <>{player.name.slice(0, 2)}</> : <UserIcon />}
   </Avatar>
 );
 
@@ -102,6 +103,7 @@ const PlayerItem = ({ player, onChange }: PlayerItemProps) => {
       updatePlayer({ type: rotatePlayerTypeWithNull(player.type) })(player)
     );
   };
+  const GAME_WINNER_SCORE = 180;
   const color = getPlayerTypeColor(player.type);
   const playing = player.type !== null;
   const hasCurrentScore = player.currentScore !== null;
@@ -109,12 +111,18 @@ const PlayerItem = ({ player, onChange }: PlayerItemProps) => {
     playing && hasCurrentScore ? ` (${player.currentScore})` : "";
   const score =
     player.score !== null ? player.score + player.baseScore : player.baseScore;
+  const isWinner = score > GAME_WINNER_SCORE;
   return (
     <Card>
       <CardHeader
         avatar={<PlayerAvatar player={player} />}
         title={player.name}
-        subheader={`${score}${currentScoreText}`}
+        subheader={
+          <span>
+            {isWinner && <WinnerIcon fontSize="small" color="action" />}
+            {`${score}${currentScoreText}`}
+          </span>
+        }
       />
       <CardActions>
         <Button variant="outlined" color={color} onClick={handleChange}>

@@ -1,30 +1,18 @@
 # TODO
-- [.] Milesteone 1
-  - [x] correct pheasants to 20
-  - [ ] save the games locally
-    - [x] Create a local storage service
-    - [x] add it to the update handlers
-    - [x] Load state at app startup
-    - [x] clear logic
-      - [x] add clear scores
-      - [x] add clear players
-  - [ ] implement error handling and showing to the user
+- [.] Milesteone 1 - Local storage, correct scores, Player handling,UI improvements
+  - [ ] add confirmations to destroy / reset type of actions
   - [ ] do not delete the contracts, if the previous party score type was party
   - [ ] show the contracts and the selector only if, the party is selected
   - [ ] show the declarers and opponents scores around the contract table
-  - [ ] Indicate Radli on players
+  - [x] Indicate Radli on players
   - [ ] show each game scroes as a table (collapsable)
-  - [ ] edit the preivous games scores
   - [ ] create a better app icon and align the icon in the app bar
   - [ ] Tarock sheet: better Win by taker UI component, e.g: a button
   - [ ] usability
-    - [x] ContractTable: when a contract silent, show visually that the contra does not take into account.
-    - [x] ContractTable: if a contract is silent, it should not able to apply a contra on it, 
     - [ ] Game Properties: show score near the game score selector radio buttons
     - [ ] BidSelector: show the score near the bids
     - [ ] ContractsTable: show the the contra names instead of the values
     - [ ] ContractsTable: integrate bid variant into the bid column
-    - [ ] add confirmations to destroy type of actions
   - [ ] refactor
     - [ ] Tarock sheet: move handler's logic to data layer, if possible
     - [ ] contract better calculation of the bid base score
@@ -33,7 +21,8 @@
       - [ ] Add canSilent method to contract too.
       - [ ] refactor ContractsTable to use the new can silent contracts.      
     - [ ] rename game props to camelCase, party_score, called_tarock
-- [ ] Milestone 2
+- [ ] Milestone 2, better game saving and history, store in a permanent storage, share a game
+  - [ ] implement error handling and showing to the user
   - [ ] Set and save the mayor state
   - [ ] Save the DateTime to the Game
   - [ ] save the details of the previous games
@@ -47,6 +36,8 @@
     - [ ] split contractSelector to smaller components
     - [ ] split ContractsTable to smaller components
 - [ ] Milestone 3
+  - [ ] save multiple nights
+  - [ ] edit the previous games scores
   - [ ] compact Contract Table
     - [ ] collapse fields
     - [ ] comapct view
@@ -57,6 +48,10 @@
   - [ ] add hotkeys
 - [x] Done
   - [.] Milestone 1
+    - [x] ContractTable: when a contract silent, show visually that the contra does not take into account.
+    - [x] ContractTable: if a contract is silent, it should not able to apply a contra on it,
+    - [x] correct pheasants' score to 20
+    - [x] save the games locally and clear logic
     - [x] generalize button colors and variants
     - [x] rename BidSelector to ContractSelector
     - [x] correct scores: king uhu 20, centrum 10, small bird 10, large bird 10
