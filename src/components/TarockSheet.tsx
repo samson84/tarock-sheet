@@ -39,7 +39,6 @@ import {
 } from "../lib/gameScoreList";
 import { storage as storageInitializer } from "../services/localStorage";
 import Confirm from "./Confirm";
-// import ScoreSheet from "./ScoreSheet";
 
 const allBidsByGroup = getAllBidsByGorup();
 const storage = storageInitializer();
@@ -191,7 +190,7 @@ const TarockSheet = () => {
           <Grid item>
             <Confirm
               title="Do you really want to reset this Game?"
-              text="It will clear up the game's properties and remove all contracts without saving them."
+              text="It will clear up the game's properties and remove all contracts without saving them, but keep the players' scores."
               target={(handleClick) => (
                 <Button variant="outlined" onClick={handleClick}>
                   Reset Game

@@ -56,6 +56,7 @@ An awesome app to help track a Tarock game scores.
   - [ ] add hotkeys
 - [ ] Milestone 5
   - [ ] customizing the bids, create general rules
+  - [ ] multilanguage
 - [x] Done
   - [.] Milestone 1
     - [x] do not delete the contracts, if the previous party score type was party or contracts are already added
