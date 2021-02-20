@@ -26,6 +26,7 @@ import { MdPerson as UserIcon } from "react-icons/md";
 import { MdPersonAdd as AddUserIcon } from "react-icons/md";
 import { MdDone as FinishEditingIcon } from "react-icons/md";
 import WinnerIcon from "@material-ui/icons/EmojiEvents";
+import Confrim from "./Confirm";
 
 interface PlayerAvatarProps {
   player: Player;
@@ -83,9 +84,16 @@ const EditablePlayerItem = (props: EditablePlayerItemProps) => {
             </Grid>
           </Grid>
           <Grid item>
-            <IconButton onClick={handleRemove}>
-              <RemoveIcon />
-            </IconButton>
+            <Confrim
+              title={`Do you want to remove ${player.name || "this player"}?`}
+              text="It will remove the player, and deletes its score too."
+              target={(handleClick) => (
+                <IconButton onClick={handleClick}>
+                  <RemoveIcon />
+                </IconButton>
+              )}
+              onConfirm={handleRemove}
+            />
           </Grid>
         </Grid>
       </CardContent>
@@ -189,14 +197,28 @@ const Players = (props: PlayersProps) => {
           </Button>
         </Grid>
         <Grid item>
-          <Button variant="outlined" onClick={onResetPlayers}>
-            Reset Players
-          </Button>
+          <Confrim
+            title="Do you want to reset the Players?"
+            text="It will remove all players, and also delete their scores."
+            target={(handleClick) => (
+              <Button variant="outlined" onClick={handleClick}>
+                Reset Players
+              </Button>
+            )}
+            onConfirm={onResetPlayers}
+          />
         </Grid>
         <Grid item>
-          <Button variant="outlined" onClick={onResetScores}>
-            Reset Scores
-          </Button>
+          <Confrim
+            title="Do you want to reset the Scores?"
+            text="It will reset the scores to the players' base score, but keeps all the players."
+            target={(handleClick) => (
+              <Button variant="outlined" onClick={handleClick}>
+                Reset Scores
+              </Button>
+            )}
+            onConfirm={onResetScores}
+          />
         </Grid>
       </Grid>
       {players.map((player) => (

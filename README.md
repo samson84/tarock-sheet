@@ -1,18 +1,14 @@
-# TODO
+# Tarock Sheet
+
+An awesome app to help track a Tarock game scores.
+
+## Roadmap
+
 - [.] Milesteone 1 - Local storage, correct scores, Player handling,UI improvements
-  - [ ] add confirmations to destroy / reset type of actions
-  - [x] do not delete the contracts, if the previous party score type was party or contracts are already added
-  - [x] show the contracts and the selector only if, the party is selected
-  - [ ] show the declarers and opponents scores around the contract table
-  - [x] Indicate Game winner (Radli) on players
-  - [ ] show each game scroes as a table (collapsable)
+  - [x] add confirmations to destroy / reset type of actions
   - [ ] create a better app icon and align the icon in the app bar
-  - [ ] Tarock sheet: better Win by taker UI component, e.g: a button
-  - [ ] usability
-    - [ ] Game Properties: show score near the game score selector radio buttons
-    - [ ] BidSelector: show the score near the bids
-    - [ ] ContractsTable: show the the contra names instead of the values
-    - [ ] ContractsTable: integrate bid variant into the bid column
+    - [ ] add a better favicon
+    - [ ] add a better logo for manifest
   - [ ] refactor
     - [ ] Tarock sheet: move handler's logic to data layer, if possible
     - [ ] contract better calculation of the bid base score
@@ -21,7 +17,23 @@
       - [ ] Add canSilent method to contract too.
       - [ ] refactor ContractsTable to use the new can silent contracts.      
     - [ ] rename game props to camelCase, party_score, called_tarock
-- [ ] Milestone 2, better game saving and history, store in a permanent storage, share a game
+    - [ ] add license, contribution, proper readme
+    - [ ] increase test coverage
+- [ ] Milestone 2, mobile friendly, UX improvements 
+  - [ ] usability
+    - [ ] Game Properties: show score near the game score selector radio buttons
+    - [ ] BidSelector: show the score near the bids
+  - [ ] compact Contract Table
+    - [ ] collapse fields
+    - [ ] comapct view
+    - [ ] row styling based on validInFinalScore
+    - [ ] Tarock sheet: better Win by taker UI component, e.g: a button
+    - [ ] show the declarers and opponents scores around the contract table
+    - [ ] ContractsTable: show the the contra names instead of the values
+    - [ ] ContractsTable: integrate bid variant into the bid column
+  - [ ] responsive design check
+
+- [ ] Milestone 3, store in a permanent storage, share a game
   - [ ] implement error handling and showing to the user
   - [ ] Set and save the mayor state
   - [ ] Save the DateTime to the Game
@@ -31,23 +43,24 @@
   - [ ] save the game to a DB e.g. Firebase
   - [ ] deploy the app to heroku / netlify / vercel / Firebase
   - [ ] share the game with others
+  - [ ] add UI tests
   - [ ] refactor
     - [ ] TarockSheet extract a Game component from the tarock sheet
     - [ ] split contractSelector to smaller components
     - [ ] split ContractsTable to smaller components
-- [ ] Milestone 3
+- [ ] Milestone 4, better game saving and history
+  - [ ] show each game scroes as a table (collapsable)
   - [ ] save multiple nights
   - [ ] edit the previous games scores
-  - [ ] compact Contract Table
-    - [ ] collapse fields
-    - [ ] comapct view
-    - [ ] row styling based on validInFinalScore
   - [ ] add undo & redo (?)
-  - [ ] responsive design check
-  - [ ] add license, contribution, proper readme
   - [ ] add hotkeys
+- [ ] Milestone 5
+  - [ ] customizing the bids, create general rules
 - [x] Done
   - [.] Milestone 1
+    - [x] do not delete the contracts, if the previous party score type was party or contracts are already added
+    - [x] show the contracts and the selector only if, the party is selected
+    - [x] Indicate Game winner (Radli) on players
     - [x] ContractTable: when a contract silent, show visually that the contra does not take into account.
     - [x] ContractTable: if a contract is silent, it should not able to apply a contra on it,
     - [x] correct pheasants' score to 20
