@@ -12,7 +12,7 @@ import {
 import React, { useState } from "react";
 import {
   create,
-  getPlayerTypeColor,
+  getTypeColor,
   Player,
   PlayerList,
   rotatePlayerTypeWithNull,
@@ -110,7 +110,7 @@ const PlayerItem = ({ player, onChange }: PlayerItemProps) => {
     onChange(update({ type: rotatePlayerTypeWithNull(player.type) })(player));
   };
   const GAME_WINNER_SCORE = 180;
-  const color = getPlayerTypeColor(player.type);
+  const color = getTypeColor(player.type);
   const playing = player.type !== null;
   const hasGameScore = player.gameScore !== null;
   const gameScoreText = playing && hasGameScore ? ` (${player.gameScore})` : "";

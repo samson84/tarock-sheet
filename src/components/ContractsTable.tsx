@@ -20,7 +20,7 @@ import SilentSwitch from "./SilentSwitch";
 import MultiplierSelector from "./MultiplierSelector";
 import {
   getOppositeType,
-  getPlayerTypeColor,
+  getTypeColor,
   PLAYER_TYPE,
 } from "../models/playerModel";
 import curry from "lodash/fp/curry";
@@ -102,7 +102,7 @@ const columns: ColumnDefinition[] = [
       const newTaker = getOppositeType(contract.taker);
       const handleClick = () =>
         onAction && onAction(ACTION_TYPE.CHANGE, newTaker);
-      const color = getPlayerTypeColor(contract.taker);
+      const color = getTypeColor(contract.taker);
       return (
         <Button
           color={color}

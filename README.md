@@ -38,7 +38,7 @@ An awesome app to help track a Tarock game scores.
         - [x] createPlayer: create
         - [x] updatePlayer: update
         - [x] getAnotherPlaterType: getOppositeType
-        - [ ] getPlayerTypeColor: getTypeColor
+        - [x] getPlayerTypeColor: getTypeColor
         - [ ] rotataePlayerTypeWithNull: rotateTypeWithNull
         - [ ] refactor to namespace imports
       - [ ] playerListModel
@@ -80,6 +80,7 @@ An awesome app to help track a Tarock game scores.
       - [ ] move fixtures to models
         - [ ] rename fixtures
         - [ ] convert to name space imports
+      - [ ] rename types
     - [ ] Tarock sheet: move handler's logic to data layer, if possible
     - [ ] contract: check with indices needs
     - [ ] contract better calculation of the bid base score

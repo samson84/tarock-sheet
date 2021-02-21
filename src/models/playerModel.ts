@@ -51,11 +51,9 @@ export const updatePlayerAt = (updated: Player) => (
 ): PlayerList =>
   playerList.map((player) => (player.id === updated.id ? updated : player));
 
-type PlayerTypeColor = "primary" | "secondary" | "default";
-export const getPlayerTypeColor = (
-  playerType: PLAYER_TYPE | null
-): PlayerTypeColor => {
-  const mapper = new Map<PLAYER_TYPE | null, PlayerTypeColor>([
+type TypeColor = "primary" | "secondary" | "default";
+export const getTypeColor = (playerType: PLAYER_TYPE | null): TypeColor => {
+  const mapper = new Map<PLAYER_TYPE | null, TypeColor>([
     [PLAYER_TYPE.DECLARER, "primary"],
     [PLAYER_TYPE.OPPONENT, "secondary"],
     [null, "default"],
