@@ -1,7 +1,7 @@
 import {
   addPlayer,
   clearPlayersType,
-  createPlayer,
+  create,
   createPlayerListObject,
   filterPlayersInGame,
   getAnotherPlayerType,
@@ -27,7 +27,7 @@ export default describe("Player", () => {
         gameScore: null,
         type: null,
       });
-      const current = createPlayer();
+      const current = create();
       expectPlayer(current, expected);
     });
   });

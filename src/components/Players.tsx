@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 import React, { useState } from "react";
 import {
-  createPlayer,
+  create,
   getPlayerTypeColor,
   Player,
   PlayerList,
@@ -163,7 +163,7 @@ const Players = (props: PlayersProps) => {
 
   const handleToogleEdit = () => setEdit((prev) => !prev);
   const handleAdd = () => {
-    onPlayerListChange([...players, createPlayer()]);
+    onPlayerListChange([...players, create()]);
   };
   const handleRemove = (player: Player) => {
     onPlayerListChange(removePlayer(player)(players));

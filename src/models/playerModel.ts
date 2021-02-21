@@ -13,7 +13,7 @@ export interface Player {
   gameScore: Score;
   type: PLAYER_TYPE | null;
 }
-export const createPlayer = (): Player => ({
+export const create = (): Player => ({
   id: createId(),
   name: "",
   baseScore: 100,
