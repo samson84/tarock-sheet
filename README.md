@@ -21,7 +21,7 @@ An awesome app to help track a Tarock game scores.
         - [x] refactor game imports
       - [.] contract to contractModel
         - [x] rename and move contract to contractModel
-        - [ ] silent prop: isSilent
+        - [x] silent prop: isSilent
         - [ ] sinByTaker prop: isWonByTaker
         - [ ] validateContract: validate
         - [ ] createContract: create
@@ -97,6 +97,7 @@ An awesome app to help track a Tarock game scores.
       - [ ] Contracts Table: show variants icons'
   - [ ] responsive design check
 - [ ] Milestone 3, store in a permanent storage, share a game
+  - [ ] add validators and defaults to models
   - [ ] implement error handling and showing to the user
   - [ ] Set and save the mayor state
   - [ ] Save the DateTime to the Game

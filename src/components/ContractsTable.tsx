@@ -119,16 +119,16 @@ const columns: ColumnDefinition[] = [
     },
   },
   {
-    field: "silent",
+    field: "isSilent",
     headerName: "Silent",
     valueGetter: (contract, onAction) => {
-      const handleChange = (silent: boolean) =>
-        onAction && onAction(ACTION_TYPE.CHANGE, silent);
+      const handleChange = (isSilent: boolean) =>
+        onAction && onAction(ACTION_TYPE.CHANGE, isSilent);
       return (
         <SilentSwitch
           bidType={contract.bidType}
           onChange={handleChange}
-          value={contract.silent}
+          value={contract.isSilent}
         />
       );
     },
@@ -151,7 +151,7 @@ const columns: ColumnDefinition[] = [
         <MultiplierSelector
           onChange={handleChange}
           value={contract.contra}
-          disabled={contract.silent}
+          disabled={contract.isSilent}
         />
       );
     },

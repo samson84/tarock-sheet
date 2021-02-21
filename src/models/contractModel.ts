@@ -23,13 +23,13 @@ export interface Contract {
   contra: ContraMultiplier;
   winByTaker: boolean | null;
   taker: PLAYER_TYPE;
-  silent: boolean;
+  isSilent: boolean;
 }
 
 const validateContract = (contract: Contract): void | undefined => {
-  const { silent, bidType, bidVariant, contra } = contract;
+  const { isSilent, bidType, bidVariant, contra } = contract;
   const bid = getBid(bidType);
-  if (silent && !canSilent(bid)) {
+  if (isSilent && !canSilent(bid)) {
     throw new Error(`${bid.type} can not be silent.`);
   }
   if (bidVariant && !hasVariant(bidVariant)(bid)) {
@@ -48,7 +48,7 @@ export interface CreateContractProps {
   bidType: BID_TYPE;
   partyScore?: gameModel.PartyScoreValue | null;
   taker: PLAYER_TYPE;
-  silent?: boolean;
+  isSilent?: boolean;
   bidVariant?: BidVariant | null;
   winByTaker?: boolean | null;
 }
@@ -56,7 +56,7 @@ export const createContract = ({
   bidType,
   taker,
   partyScore = null,
-  silent = false,
+  isSilent = false,
   bidVariant = null,
   winByTaker = null,
 }: CreateContractProps): Contract => {
@@ -64,7 +64,7 @@ export const createContract = ({
     bidType,
     bidVariant,
     contra: 1,
-    silent,
+    isSilent,
     winByTaker,
     taker,
     bidBaseScore:
@@ -84,7 +84,7 @@ export const updateBidBaseScore = (partyScore: number) => (
 });
 
 export type UpdateContractProps = Partial<
-  Pick<Contract, "taker" | "winByTaker" | "silent" | "bidVariant" | "contra">
+  Pick<Contract, "taker" | "winByTaker" | "isSilent" | "bidVariant" | "contra">
 >;
 export const updateContract = (updates: UpdateContractProps) => (
   contract: Contract
@@ -96,7 +96,7 @@ export const updateContract = (updates: UpdateContractProps) => (
 
 export type ContractScore = number | null;
 export const calculateContract = (contract: Contract): ContractScore => {
-  const { winByTaker, bidBaseScore, contra, silent } = contract;
+  const { winByTaker, bidBaseScore, contra, isSilent: silent } = contract;
   if (winByTaker === null || bidBaseScore === null) {
     return null;
   }

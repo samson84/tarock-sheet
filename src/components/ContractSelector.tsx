@@ -35,7 +35,7 @@ const ContractSelector = ({ bidsByGroup, onAddContract }: BidSelectorProps) => {
     onAddContract({
       bidType: bidType,
       taker: PLAYER_TYPE.DECLARER,
-      silent: silentAndWin && canSilent(bid),
+      isSilent: silentAndWin && canSilent(bid),
       bidVariant: null,
       winByTaker: bid.winByDefault || shouldWinWithSilent || null,
     });
