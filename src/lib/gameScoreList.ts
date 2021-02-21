@@ -1,4 +1,4 @@
-import { Game } from "./game";
+import { Game } from "../models/gameModel";
 import {
   PlayerList,
   PlayerScore,

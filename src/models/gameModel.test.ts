@@ -1,5 +1,5 @@
-import { contractFixture } from "./test_data/fixtures";
-import { PLAYER_TYPE } from "./player";
+import { contractFixture } from "../lib/test_data/fixtures";
+import { PLAYER_TYPE } from "../lib/player";
 import {
   createGame,
   addContract,
@@ -9,10 +9,10 @@ import {
   removeContract,
   updateGameContract,
   calculateGame,
-} from "./game";
-import { createContract } from "./contract";
-import { BID_TYPE, SMALLEST_VARIANT } from "./bid";
-import { gameFixture } from "./test_data/fixtures";
+} from "./gameModel";
+import { createContract } from "../lib/contract";
+import { BID_TYPE, SMALLEST_VARIANT } from "../lib/bid";
+import { gameFixture } from "../lib/test_data/fixtures";
 
 export default describe("game", () => {
   describe("createGame", () => {

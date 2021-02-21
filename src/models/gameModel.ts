@@ -3,8 +3,8 @@ import {
   Contract,
   updateBidBaseScore,
   createContract,
-} from "./contract";
-import { getAnotherPlayerType, PLAYER_TYPE, PlayerScore } from "./player";
+} from "../lib/contract";
+import { getAnotherPlayerType, PLAYER_TYPE, PlayerScore } from "../lib/player";
 
 type GameScore = {
   [PLAYER_TYPE.DECLARER]: PlayerScore;

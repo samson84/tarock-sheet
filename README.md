@@ -5,11 +5,68 @@ An awesome app to help track a Tarock game scores.
 ## Roadmap
 
 - [.] Milesteone 1 - Local storage, correct scores, Player handling,UI improvements
-  - [x] create a better app icon and align the icon in the app bar
-    - [x] add a better favicon
-    - [x] add a better logo for manifest
   - [ ] refactor
+    - [ ] rename the components and methods
+      - [ ] create a models dir, place the models into this dir
+      - [ ] game to gameModel
+        - [x] rename game to gameModel, move it to models folder
+        - [ ] scores prop to playerTypeScores
+        - [ ] createGame: create
+        - [ ] updateGame: update
+        - [ ] updateGameWithScores: updateWithPlayerTypeScores
+        - [ ] removeContract: removeContractAt
+        - [ ] removeAllContract: removeAllContracts
+        - [ ] updateGameContract: updateContractAt
+        - [ ] calculateGame: calculatePlayerTypeScore
+      - [ ] contract to contractModel
+        - [ ] silent prop: isSilent
+        - [ ] sinByTaker prop: isWonByTaker
+        - [ ] validateContract: validate
+        - [ ] createContract: create
+        - [ ] updateContract: update
+        - [ ] calculateContract: calculateContractScore
+        - [ ] withIndices: mapWithIndices
+        - [ ] ContractScore --> PlayerScore
+      - [ ] player: playerModel
+        - [ ] score prop: sessionScore
+        - [ ] currentScore: gameScore
+        - [ ] PlayerScore: Score
+        - [ ] createPlayer: create
+        - [ ] getAnotherPlaterType: getOppositePlaterType
+        - [ ] getPlayerTypeColor: getTypeColor
+        - [ ] rotataePlayerTypeWithNull: rotateTypeWithNull
+      - [ ] playerListModel
+        - [ ] playerModel.addPlayer: add
+        - [ ] playerModel.removePlayer: remove
+        - [ ] playerModel.updatePlayerAt: updatePlayer
+        - [ ] getPlayerNumberByType: countByType
+        - [ ] clearPlayersType: clearType
+        - [ ] resetPlaerScore: clearSessionScore
+        - [ ] filterPlayersInGame: filterByInGame
+        - [ ] createPlayerListObject: mapToObject
+      - [ ] bid: bidModel
+        - [ ] silent prop: canSilent
+        - [ ] winByDefault prop: isWinByDefault
+        - [ ] notWinIfSilent prop: isNotWinIfSilent
+        - [ ] denyContra prop: isDenyContra
+        - [ ] score prop: bidBaseScore
+        - [ ] BID_TYPE: TYPE
+        - [ ] BidData: Data
+        - [ ] BidGroupType: Group
+        - [ ] bidGroupNamesByWeight: getGroupsOrderedByWeight
+        - [ ] BidVariant: Variant
+        - [ ] getBid: getByType
+        - [ ] getAllBids: getAll
+        - [ ] getAllBidsByGroup: getAllByGroup
+        - [ ] getBidScore: calculateScore
+      - [ ] gameScoreList: sessionModel
+        - [ ] getScore: calculateScoreByPlayerType
+        - [ ] getCurrentScoreForPlayer: mapGameScoreToPlayers
+        - [ ] sumPlayerScores: calculateSessionScores
+        - [ ] PlayerScores: SessionScore
+        - [ ] assignScoresToPlayers: mapSessionScoresToPlayers
     - [ ] Tarock sheet: move handler's logic to data layer, if possible
+    - [ ] contract: check with indices needs
     - [ ] contract better calculation of the bid base score
     - [ ] game, contract: simplify create and update methods with same parameter set
     - [ ] refactor can silent, do not leak bids details to contract layer
@@ -25,7 +82,7 @@ An awesome app to help track a Tarock game scores.
   - [ ] Sign which player is the mayor in player list, sign it in scores too.
   - [ ] compact Contract Table
     - [ ] collapse fields
-    - [ ] comapct view
+    - [ ] compact view
     - [ ] row styling based on validInFinalScore
     - [ ] Tarock sheet: better Win by taker UI component, e.g: a button
     - [ ] show the declarers and opponents scores around the contract table
@@ -60,6 +117,9 @@ An awesome app to help track a Tarock game scores.
   - [ ] multilanguage
 - [x] Done
   - [.] Milestone 1
+    - [x] create a better app icon and align the icon in the app bar
+      - [x] add a better favicon
+      - [x] add a better logo for manifest
     - [x] add confirmations to destroy / reset type of actions
     - [x] do not delete the contracts, if the previous party score type was party or contracts are already added
     - [x] show the contracts and the selector only if, the party is selected

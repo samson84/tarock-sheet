@@ -11,7 +11,7 @@ import {
   Contract,
   groupByPlayerType,
 } from "./contract";
-import { PARTY_SCORE } from "./game";
+import { PARTY_SCORE } from "../models/gameModel";
 
 import { contractFixture } from "./test_data/fixtures";
 

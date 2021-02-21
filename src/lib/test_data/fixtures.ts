@@ -1,7 +1,7 @@
 import { BID_TYPE } from "../bid";
 import { Player, PLAYER_TYPE } from "../player";
 import { Contract } from "../contract";
-import { Game } from "../game";
+import { Game } from "../../models/gameModel";
 import { createId } from "../util";
 
 export const contractFixture = (props: Partial<Contract> = {}): Contract => {

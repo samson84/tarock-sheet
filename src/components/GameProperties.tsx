@@ -5,7 +5,7 @@ import {
   UpdateGameProps,
   PARTY_SCORE,
   PARTY_SCORE_TYPE,
-} from "../lib/game";
+} from "../models/gameModel";
 import {
   Grid,
   FormControl,

@@ -1,5 +1,5 @@
 import React from "react";
-import { Game } from "../lib/game";
+import { Game } from "../models/gameModel";
 import { Grid, Chip, Typography as T } from "@material-ui/core";
 import { PLAYER_TYPE } from "../lib/player";
 

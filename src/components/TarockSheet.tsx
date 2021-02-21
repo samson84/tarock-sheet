@@ -13,7 +13,7 @@ import {
   isPartyLike,
   addContractFlipped,
   PARTY_SCORE_TYPE,
-} from "../lib/game";
+} from "../models/gameModel";
 import { Contract, createContract, updateContract } from "../lib/contract";
 import { Button, Grid } from "@material-ui/core";
 import ContractsTable from "./ContractsTable";
