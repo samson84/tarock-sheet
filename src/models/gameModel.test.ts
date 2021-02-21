@@ -6,7 +6,7 @@ import {
   PARTY_SCORE_TYPE,
   CALLED_TAROCK,
   update,
-  removeContract,
+  removeContractAt,
   updateGameContract,
   calculateGame,
 } from "./gameModel";
@@ -491,7 +491,7 @@ export default describe("game", () => {
         ],
       });
 
-      const current = removeContract(game)(index);
+      const current = removeContractAt(game)(index);
 
       expect(current).toEqual(expected);
     });
@@ -530,7 +530,7 @@ export default describe("game", () => {
         ],
       });
 
-      const current = removeContract(game)(index);
+      const current = removeContractAt(game)(index);
 
       expect(current).toEqual(expected);
     });
@@ -574,7 +574,7 @@ export default describe("game", () => {
         },
       });
 
-      const current = removeContract(game)(index);
+      const current = removeContractAt(game)(index);
 
       expect(current).toEqual(expected);
     });

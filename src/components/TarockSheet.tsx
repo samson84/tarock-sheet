@@ -7,7 +7,7 @@ import {
   addContract,
   update,
   updateGameContract,
-  removeContract,
+  removeContractAt,
   UpdateGameProps,
   removeAllContract,
   isPartyLike,
@@ -72,7 +72,7 @@ const TarockSheet = () => {
   }, [game, players, gameScoreList]);
 
   const handleContractDelete = (index: number) =>
-    setGame(removeContract(game)(index));
+    setGame(removeContractAt(game)(index));
   const handleResetGame = () => setGame(create());
   const handlePlayerListChange = (playerList: PlayerList) => {
     updatePlayersState(playerList);

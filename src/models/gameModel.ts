@@ -136,7 +136,7 @@ export const addContract = (game: Game) => (contract: Contract): Game => {
   });
 };
 
-export const removeContract = (game: Game) => (index: number): Game => {
+export const removeContractAt = (game: Game) => (index: number): Game => {
   return updateGameWithPlayerTypeScores({
     ...game,
     contracts: game.contracts.filter((_, i) => i !== index),

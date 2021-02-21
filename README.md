@@ -14,7 +14,7 @@ An awesome app to help track a Tarock game scores.
         - [x] createGame: create
         - [x] updateGame: update
         - [x] updateGameWithScores: updateWithPlayerTypeScores
-        - [ ] removeContract: removeContractAt
+        - [x] removeContract: removeContractAt
         - [ ] removeAllContract: removeAllContracts
         - [ ] updateGameContract: updateContractAt
         - [ ] calculateGame: calculatePlayerTypeScore
