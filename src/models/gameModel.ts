@@ -1,9 +1,10 @@
 import * as contractModel from "./contractModel";
-import { getAnotherPlayerType, PLAYER_TYPE, PlayerScore } from "./playerModel";
+import { getAnotherPlayerType, PLAYER_TYPE } from "./playerModel";
+import { Score } from "./scoreModel";
 
 type PlayerTypeScore = {
-  [PLAYER_TYPE.DECLARER]: PlayerScore;
-  [PLAYER_TYPE.OPPONENT]: PlayerScore;
+  [PLAYER_TYPE.DECLARER]: Score;
+  [PLAYER_TYPE.OPPONENT]: Score;
 };
 export interface Game {
   contracts: contractModel.Contract[];
@@ -165,10 +166,7 @@ export const calculatePlayerTypeScores = (game: Game): PlayerTypeScore => {
         return partyScore;
       }
 
-      const addScore = (
-        prevScore: PlayerScore,
-        score: PlayerScore
-      ): PlayerScore => {
+      const addScore = (prevScore: Score, score: Score): Score => {
         if (prevScore === null) {
           return score;
         } else {

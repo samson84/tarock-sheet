@@ -1,19 +1,19 @@
 import * as gameModel from "../models/gameModel";
 import {
   PlayerList,
-  PlayerScore,
   PLAYER_TYPE,
   getPlayerNumberByType,
   PlayerListObject,
   Player,
   updatePlayer,
 } from "../models/playerModel";
+import { Score } from "../models/scoreModel";
 import assignWith from "lodash/fp/assignWith";
 import { isEqual } from "lodash";
 
 const getScore = (players: PlayerList) => (
   game: gameModel.Game
-): [PlayerScore, PlayerScore] => {
+): [Score, Score] => {
   const [numberOfDeclarers, numberOfOpponents] = getPlayerNumberByType(players);
   const opponentsGameScore = game.playerTypeScores[PLAYER_TYPE.OPPONENT];
   const declarersGameScore = game.playerTypeScores[PLAYER_TYPE.DECLARER];

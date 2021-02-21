@@ -1,4 +1,5 @@
 import { createId, Id } from "../lib/util";
+import { Score } from "./scoreModel";
 
 export enum PLAYER_TYPE {
   DECLARER = "DECLARER",
@@ -8,12 +9,10 @@ export interface Player {
   id: Id;
   name: string;
   baseScore: number;
-  sessionScore: PlayerScore;
-  gameScore: PlayerScore;
+  sessionScore: Score;
+  gameScore: Score;
   type: PLAYER_TYPE | null;
 }
-export type PlayerScore = number | null;
-
 export const createPlayer = (): Player => ({
   id: createId(),
   name: "",
