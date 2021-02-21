@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  calculateContract,
+  calculateContractScore,
   Contract,
   UpdateContractProps,
 } from "../models/contractModel";
@@ -195,7 +195,7 @@ const columns: ColumnDefinition[] = [
           contract.taker === PLAYER_TYPE.DECLARER ? "primary" : "secondary"
         }
       >
-        {calculateContract(contract)}
+        {calculateContractScore(contract)}
       </T>
     ),
   },

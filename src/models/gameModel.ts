@@ -160,7 +160,7 @@ export const updateGameContractAt = (game: Game) => (index: number) => (
 export const calculatePlayerTypeScores = (game: Game): PlayerTypeScore => {
   return game.contracts.reduce(
     (partyScore, contract) => {
-      const score = contractModel.calculateContract(contract);
+      const score = contractModel.calculateContractScore(contract);
       if (score === null) {
         return partyScore;
       }

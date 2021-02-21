@@ -2,7 +2,7 @@ import { BID_TYPE, CARD_SHAPE_VARIANT, SMALLEST_VARIANT } from "../lib/bid";
 import { PLAYER_TYPE } from "../lib/player";
 
 import {
-  calculateContract,
+  calculateContractScore,
   create,
   update,
   withIndices,
@@ -270,7 +270,7 @@ export default describe("contract", () => {
       });
       const expected = null;
 
-      const current = calculateContract(contract);
+      const current = calculateContractScore(contract);
       expect(current).toEqual(expected);
     });
     it("shouls return the base score if it is won by the taker", () => {
@@ -285,7 +285,7 @@ export default describe("contract", () => {
       });
       const expected = 20;
 
-      const current = calculateContract(contract);
+      const current = calculateContractScore(contract);
       expect(current).toEqual(expected);
     });
     it("should return the minus score if it is lose by the taker", () => {
@@ -300,7 +300,7 @@ export default describe("contract", () => {
       });
       const expected = -20;
 
-      const current = calculateContract(contract);
+      const current = calculateContractScore(contract);
       expect(current).toEqual(expected);
     });
     it("should return the half base score if silent.", () => {
@@ -313,7 +313,7 @@ export default describe("contract", () => {
       });
       const expected = 5;
 
-      const current = calculateContract(contract);
+      const current = calculateContractScore(contract);
       expect(current).toEqual(expected);
     });
     it("should return the half base score if silent, contra > 1", () => {
@@ -328,7 +328,7 @@ export default describe("contract", () => {
       });
       const expected = 5;
 
-      const current = calculateContract(contract);
+      const current = calculateContractScore(contract);
       expect(current).toEqual(expected);
     });
     it("should return the half base score negative if silent, contra > 1, and loose", () => {
@@ -343,7 +343,7 @@ export default describe("contract", () => {
       });
       const expected = -5;
 
-      const current = calculateContract(contract);
+      const current = calculateContractScore(contract);
       expect(current).toEqual(expected);
     });
   });

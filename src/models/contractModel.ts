@@ -98,7 +98,7 @@ export const update = (updates: UpdateContractProps) => (
 };
 
 export type ContractScore = number | null;
-export const calculateContract = (contract: Contract): ContractScore => {
+export const calculateContractScore = (contract: Contract): ContractScore => {
   const { isWonByTaker, bidBaseScore, contra, isSilent: silent } = contract;
   if (isWonByTaker === null || bidBaseScore === null) {
     return null;

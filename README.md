@@ -26,7 +26,7 @@ An awesome app to help track a Tarock game scores.
         - [x] validateContract: validate
         - [x] createContract: create
         - [x] updateContract: update
-        - [ ] calculateContract: calculateContractScore
+        - [x] calculateContract: calculateContractScore
         - [ ] withIndices: mapWithIndices
         - [ ] ContractScore --> PlayerScore
       - [ ] player: playerModel
