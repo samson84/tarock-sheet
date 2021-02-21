@@ -83,7 +83,7 @@ export const create = (props: CreateGameProps = {}): Game => ({
   },
 });
 
-const updateGameWithScores = (game: Game): Game => {
+const updateGameWithPlayerTypeScores = (game: Game): Game => {
   const scores = calculateGame(game);
 
   return {
@@ -115,7 +115,7 @@ export const update = (updates: UpdateGameProps) => (game: Game): Game => {
       ? game.contracts
       : game.contracts.map(updateBidBaseScore(partyScore));
 
-  return updateGameWithScores({
+  return updateGameWithPlayerTypeScores({
     ...game,
     contracts: [...contracts],
     ...updates,
@@ -130,14 +130,14 @@ export const addContract = (game: Game) => (contract: Contract): Game => {
     ? PARTY_SCORE[game?.partyScoreType]
     : null;
   const updatedContract = createContract({ ...contract, partyScore });
-  return updateGameWithScores({
+  return updateGameWithPlayerTypeScores({
     ...game,
     contracts: [...game.contracts, updatedContract],
   });
 };
 
 export const removeContract = (game: Game) => (index: number): Game => {
-  return updateGameWithScores({
+  return updateGameWithPlayerTypeScores({
     ...game,
     contracts: game.contracts.filter((_, i) => i !== index),
   });
@@ -151,7 +151,7 @@ export const removeAllContract = (game: Game): Game => ({
 export const updateGameContract = (game: Game) => (index: number) => (
   updated: Contract
 ): Game => {
-  return updateGameWithScores({
+  return updateGameWithPlayerTypeScores({
     ...game,
     contracts: game.contracts.map((contract, i) =>
       i === index ? { ...updated } : contract

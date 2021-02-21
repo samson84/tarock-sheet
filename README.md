@@ -13,7 +13,7 @@ An awesome app to help track a Tarock game scores.
         - [x] scores prop to playerTypeScores
         - [x] createGame: create
         - [x] updateGame: update
-        - [ ] updateGameWithScores: updateWithPlayerTypeScores
+        - [x] updateGameWithScores: updateWithPlayerTypeScores
         - [ ] removeContract: removeContractAt
         - [ ] removeAllContract: removeAllContracts
         - [ ] updateGameContract: updateContractAt
