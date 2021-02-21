@@ -52,7 +52,7 @@ export interface CreateContractProps {
   bidVariant?: BidVariant | null;
   isWonByTaker?: boolean | null;
 }
-export const createContract = ({
+export const create = ({
   bidType,
   taker,
   partyScore = null,

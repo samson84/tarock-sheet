@@ -1,9 +1,4 @@
-import {
-  calculateContract,
-  Contract,
-  updateBidBaseScore,
-  createContract,
-} from "./contractModel";
+import * as contractModel from "./contractModel";
 import { getAnotherPlayerType, PLAYER_TYPE, PlayerScore } from "../lib/player";
 
 type PlayerTypeScore = {
@@ -11,7 +6,7 @@ type PlayerTypeScore = {
   [PLAYER_TYPE.OPPONENT]: PlayerScore;
 };
 export interface Game {
-  contracts: Contract[];
+  contracts: contractModel.Contract[];
   partyScoreType: PARTY_SCORE_TYPE | null;
   partyBaseScore: number;
   called_tarock: CalledTarockType | null;
@@ -113,7 +108,7 @@ export const update = (updates: UpdateGameProps) => (game: Game): Game => {
   const contracts =
     partyScore === null
       ? game.contracts
-      : game.contracts.map(updateBidBaseScore(partyScore));
+      : game.contracts.map(contractModel.updateBidBaseScore(partyScore));
 
   return updateGameWithPlayerTypeScores({
     ...game,
@@ -122,14 +117,17 @@ export const update = (updates: UpdateGameProps) => (game: Game): Game => {
   });
 };
 
-export const addContractFlipped = (contract: Contract) => (game: Game): Game =>
-  addContract(game)(contract);
+export const addContractFlipped = (contract: contractModel.Contract) => (
+  game: Game
+): Game => addContract(game)(contract);
 
-export const addContract = (game: Game) => (contract: Contract): Game => {
+export const addContract = (game: Game) => (
+  contract: contractModel.Contract
+): Game => {
   const partyScore = game?.partyScoreType
     ? PARTY_SCORE[game?.partyScoreType]
     : null;
-  const updatedContract = createContract({ ...contract, partyScore });
+  const updatedContract = contractModel.create({ ...contract, partyScore });
   return updateGameWithPlayerTypeScores({
     ...game,
     contracts: [...game.contracts, updatedContract],
@@ -149,7 +147,7 @@ export const removeAllContracts = (game: Game): Game => ({
 });
 
 export const updateGameContractAt = (game: Game) => (index: number) => (
-  updated: Contract
+  updated: contractModel.Contract
 ): Game => {
   return updateGameWithPlayerTypeScores({
     ...game,
@@ -162,7 +160,7 @@ export const updateGameContractAt = (game: Game) => (index: number) => (
 export const calculatePlayerTypeScores = (game: Game): PlayerTypeScore => {
   return game.contracts.reduce(
     (partyScore, contract) => {
-      const score = calculateContract(contract);
+      const score = contractModel.calculateContract(contract);
       if (score === null) {
         return partyScore;
       }

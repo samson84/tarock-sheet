@@ -1,7 +1,7 @@
 import { contractFixture } from "../lib/test_data/fixtures";
 import { PLAYER_TYPE } from "../lib/player";
 import * as gameModel from "./gameModel";
-import { createContract } from "./contractModel";
+import * as contractModel from "./contractModel";
 import { BID_TYPE, SMALLEST_VARIANT } from "../lib/bid";
 import { gameFixture } from "../lib/test_data/fixtures";
 
@@ -335,7 +335,7 @@ export default describe("game", () => {
 
   describe("addContract", () => {
     it("should add a contract", () => {
-      const contract = createContract({
+      const contract = contractModel.create({
         bidType: BID_TYPE.PARTY,
         taker: PLAYER_TYPE.DECLARER,
       });
@@ -359,7 +359,7 @@ export default describe("game", () => {
       expect(current).toEqual(expected);
     });
     it("should add a second contract", () => {
-      const contract = createContract({
+      const contract = contractModel.create({
         bidType: BID_TYPE.FOUR_KING,
         taker: PLAYER_TYPE.OPPONENT,
         partyScore: 2,
@@ -392,7 +392,7 @@ export default describe("game", () => {
       expect(current).toEqual(expected);
     });
     it("should caluclate contracts party score to null, if partyScoreType is not given to the game", () => {
-      const contract = createContract({
+      const contract = contractModel.create({
         bidType: BID_TYPE.PARTY,
         taker: PLAYER_TYPE.DECLARER,
       });
@@ -414,7 +414,7 @@ export default describe("game", () => {
       expect(current).toEqual(expected);
     });
     it("should calculate game score if, contact is won", () => {
-      const contract = createContract({
+      const contract = contractModel.create({
         bidType: BID_TYPE.PARTY,
         taker: PLAYER_TYPE.DECLARER,
         partyScore: 1,

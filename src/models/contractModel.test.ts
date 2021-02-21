@@ -3,7 +3,7 @@ import { PLAYER_TYPE } from "../lib/player";
 
 import {
   calculateContract,
-  createContract,
+  create,
   updateContract,
   withIndices,
   filterByPartyLike,
@@ -30,7 +30,7 @@ export default describe("contract", () => {
         taker: PLAYER_TYPE.DECLARER,
         bidBaseScore: 10,
       });
-      const current = createContract(props);
+      const current = create(props);
       expect(current).toEqual(expected);
     });
     it("should create an opponent contract", () => {
@@ -44,7 +44,7 @@ export default describe("contract", () => {
         taker: PLAYER_TYPE.OPPONENT,
         bidBaseScore: 2,
       });
-      const current = createContract(props);
+      const current = create(props);
       expect(current).toEqual(expected);
     });
     it("should create a contract with party score dependent bid", () => {
@@ -58,7 +58,7 @@ export default describe("contract", () => {
         taker: PLAYER_TYPE.DECLARER,
         bidBaseScore: 12,
       });
-      const current = createContract(props);
+      const current = create(props);
       expect(current).toEqual(expected);
     });
     it("should set contract to silent", () => {
@@ -73,7 +73,7 @@ export default describe("contract", () => {
         taker: PLAYER_TYPE.OPPONENT,
         isSilent: true,
       });
-      const current = createContract(props);
+      const current = create(props);
       expect(current).toEqual(expected);
     });
     it("should throw if the bid can not be silent", () => {
@@ -84,7 +84,7 @@ export default describe("contract", () => {
         partyScore: gameModel.PARTY_SCORE.TOOK_TWO,
       };
       const expected = "PARTY can not be silent.";
-      const current = () => createContract(props);
+      const current = () => create(props);
       expect(current).toThrow(expected);
     });
     it("should set contract's Bid variant", () => {
@@ -100,7 +100,7 @@ export default describe("contract", () => {
         bidVariant: CARD_SHAPE_VARIANT.CLUB,
         bidBaseScore: 15,
       });
-      const current = createContract(props);
+      const current = create(props);
       expect(current).toEqual(expected);
     });
     it("should throw contract's Bid variant is invalid", () => {
@@ -112,7 +112,7 @@ export default describe("contract", () => {
       };
       const expected = "KING_ULTI does not have EAGLE variant.";
 
-      const current = () => createContract(props);
+      const current = () => create(props);
       expect(current).toThrow(expected);
     });
     it("should create a non variant non silent bid's contract", () => {
@@ -125,7 +125,7 @@ export default describe("contract", () => {
         bidType: BID_TYPE.PARTY,
         taker: PLAYER_TYPE.OPPONENT,
       });
-      const current = createContract(props);
+      const current = create(props);
       expect(current).toEqual(expected);
     });
   });
@@ -304,7 +304,7 @@ export default describe("contract", () => {
       expect(current).toEqual(expected);
     });
     it("should return the half base score if silent.", () => {
-      const contract = createContract({
+      const contract = create({
         bidType: BID_TYPE.ULTI, // bse score is 10
         taker: PLAYER_TYPE.DECLARER,
         isSilent: true,
