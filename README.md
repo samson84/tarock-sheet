@@ -17,7 +17,7 @@ An awesome app to help track a Tarock game scores.
         - [x] removeContract: removeContractAt
         - [x] removeAllContract: removeAllContracts
         - [x] updateGameContract: updateContractAt
-        - [ ] calculateGame: calculatePlayerTypeScore
+        - [x] calculateGame: calculatePlayerTypeScore
         - [ ] refactor game imports
       - [ ] contract to contractModel
         - [ ] silent prop: isSilent

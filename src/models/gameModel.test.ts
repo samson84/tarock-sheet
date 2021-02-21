@@ -8,7 +8,7 @@ import {
   update,
   removeContractAt,
   updateGameContractAt,
-  calculateGame,
+  calculatePlayerTypeScores,
 } from "./gameModel";
 import { createContract } from "../lib/contract";
 import { BID_TYPE, SMALLEST_VARIANT } from "../lib/bid";
@@ -661,7 +661,7 @@ export default describe("game", () => {
         [PLAYER_TYPE.OPPONENT]: null,
       };
 
-      const current = calculateGame(game);
+      const current = calculatePlayerTypeScores(game);
       expect(current).toEqual(expected);
     });
 
@@ -691,7 +691,7 @@ export default describe("game", () => {
         [PLAYER_TYPE.DECLARER]: null,
         [PLAYER_TYPE.OPPONENT]: null,
       };
-      const current = calculateGame(game);
+      const current = calculatePlayerTypeScores(game);
       expect(current).toEqual(expected);
     });
     it("should get the score for the opponents and the declarers too.", () => {
@@ -720,7 +720,7 @@ export default describe("game", () => {
         [PLAYER_TYPE.DECLARER]: 8, // centrum - party
         [PLAYER_TYPE.OPPONENT]: -8,
       };
-      const current = calculateGame(game);
+      const current = calculatePlayerTypeScores(game);
       expect(current).toEqual(expected);
     });
     it("should calculate multiple score per player type", () => {
@@ -766,7 +766,7 @@ export default describe("game", () => {
         [PLAYER_TYPE.DECLARER]: 10 + 10 - 2 - 2 * 2, // centrum, ulti, -four king, -contra trull
         [PLAYER_TYPE.OPPONENT]: -14,
       };
-      const current = calculateGame(game);
+      const current = calculatePlayerTypeScores(game);
       expect(current).toEqual(expected);
     });
     it("should calculate the correct score, even if a contract is by a declarer lost.", () => {
@@ -812,7 +812,7 @@ export default describe("game", () => {
         [PLAYER_TYPE.DECLARER]: -10 - 10 - 2 - 2 * 2, // - centrum, - ulti, -four king, -contra trull
         [PLAYER_TYPE.OPPONENT]: 26,
       };
-      const current = calculateGame(game);
+      const current = calculatePlayerTypeScores(game);
       expect(current).toEqual(expected);
     });
     it("should calculate the correct score, even if the first contract / player type still not won / lost.", () => {
@@ -874,7 +874,7 @@ export default describe("game", () => {
         [PLAYER_TYPE.DECLARER]: -10 + 25 - 2 * 2 - 4, // (?) centrum, - ulti, + furry, four king (?), - contra trull, - catch the pagat
         [PLAYER_TYPE.OPPONENT]: -7,
       };
-      const current = calculateGame(game);
+      const current = calculatePlayerTypeScores(game);
       expect(current).toEqual(expected);
     });
 
@@ -937,7 +937,7 @@ export default describe("game", () => {
         [PLAYER_TYPE.DECLARER]: -10 + 25 - 2 - 4, // centrum, (?) ulti, + furry, - four king, (?) contra trull, - catch the pagat
         [PLAYER_TYPE.OPPONENT]: -9,
       };
-      const current = calculateGame(game);
+      const current = calculatePlayerTypeScores(game);
       expect(current).toEqual(expected);
     });
 
@@ -1000,7 +1000,7 @@ export default describe("game", () => {
         [PLAYER_TYPE.DECLARER]: -10 - 10 - 2 - 2 * 2, // - centrum, - ulti, (?) furry, - four king, - contra trull, (?) catch the pagat
         [PLAYER_TYPE.OPPONENT]: 26,
       };
-      const current = calculateGame(game);
+      const current = calculatePlayerTypeScores(game);
       expect(current).toEqual(expected);
     });
   });

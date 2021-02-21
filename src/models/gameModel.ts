@@ -84,7 +84,7 @@ export const create = (props: CreateGameProps = {}): Game => ({
 });
 
 const updateGameWithPlayerTypeScores = (game: Game): Game => {
-  const scores = calculateGame(game);
+  const scores = calculatePlayerTypeScores(game);
 
   return {
     ...game,
@@ -159,7 +159,7 @@ export const updateGameContractAt = (game: Game) => (index: number) => (
   });
 };
 
-export const calculateGame = (game: Game): PlayerTypeScore => {
+export const calculatePlayerTypeScores = (game: Game): PlayerTypeScore => {
   return game.contracts.reduce(
     (partyScore, contract) => {
       const score = calculateContract(contract);
