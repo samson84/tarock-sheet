@@ -1,4 +1,4 @@
-import { PLAYER_TYPE } from "./player";
+import { PLAYER_TYPE } from "../lib/player";
 import {
   BidVariant,
   BID_TYPE,
@@ -6,12 +6,12 @@ import {
   hasVariant,
   getBid,
   getBidScore,
-} from "./bid";
+} from "../lib/bid";
 import flow from "lodash/fp/flow";
 import pick from "lodash/fp/pick";
 import isEqual from "lodash/fp/isEqual";
 import groupBy from "lodash/fp/groupBy";
-import * as gameModel from "../models/gameModel";
+import * as gameModel from "./gameModel";
 
 const CONTRA_NAMES = ["None", "Contra", "Recontra", "Subcontra", "Mortcontra"];
 

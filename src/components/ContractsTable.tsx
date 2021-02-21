@@ -3,7 +3,7 @@ import {
   calculateContract,
   Contract,
   UpdateContractProps,
-} from "../lib/contract";
+} from "../models/contractModel";
 import { upperCaseToWords } from "../lib/util";
 import {
   TableContainer,

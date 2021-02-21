@@ -3,7 +3,7 @@ import {
   Contract,
   updateBidBaseScore,
   createContract,
-} from "../lib/contract";
+} from "./contractModel";
 import { getAnotherPlayerType, PLAYER_TYPE, PlayerScore } from "../lib/player";
 
 type PlayerTypeScore = {

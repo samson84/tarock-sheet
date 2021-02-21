@@ -16,7 +16,7 @@ import {
   canSilent,
 } from "../lib/bid";
 import { upperCaseToWords } from "../lib/util";
-import { Contract } from "../lib/contract";
+import { Contract } from "../models/contractModel";
 import { PLAYER_TYPE } from "../lib/player";
 
 interface BidSelectorProps {

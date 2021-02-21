@@ -2,7 +2,11 @@ import React, { useEffect, useState } from "react";
 import { BID_TYPE, getAllBidsByGorup } from "../lib/bid";
 import ContractSelector from "./ContractSelector";
 import * as gameModel from "../models/gameModel";
-import { Contract, createContract, updateContract } from "../lib/contract";
+import {
+  Contract,
+  createContract,
+  updateContract,
+} from "../models/contractModel";
 import { Button, Grid } from "@material-ui/core";
 import ContractsTable from "./ContractsTable";
 import GameProperties from "./GameProperties";

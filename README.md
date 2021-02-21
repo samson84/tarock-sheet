@@ -19,7 +19,8 @@ An awesome app to help track a Tarock game scores.
         - [x] updateGameContract: updateContractAt
         - [x] calculateGame: calculatePlayerTypeScore
         - [x] refactor game imports
-      - [ ] contract to contractModel
+      - [.] contract to contractModel
+        - [x] rename and move contract to contractModel
         - [ ] silent prop: isSilent
         - [ ] sinByTaker prop: isWonByTaker
         - [ ] validateContract: validate
@@ -66,6 +67,9 @@ An awesome app to help track a Tarock game scores.
         - [ ] sumPlayerScores: calculateSessionScores
         - [ ] PlayerScores: SessionScore
         - [ ] assignScoresToPlayers: mapSessionScoresToPlayers
+      - [ ] move fixtures to models
+        - [ ] rename fixtures
+        - [ ] convert to name space imports
     - [ ] Tarock sheet: move handler's logic to data layer, if possible
     - [ ] contract: check with indices needs
     - [ ] contract better calculation of the bid base score

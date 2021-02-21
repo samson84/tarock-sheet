@@ -1,5 +1,5 @@
-import { BID_TYPE, CARD_SHAPE_VARIANT, SMALLEST_VARIANT } from "./bid";
-import { PLAYER_TYPE } from "./player";
+import { BID_TYPE, CARD_SHAPE_VARIANT, SMALLEST_VARIANT } from "../lib/bid";
+import { PLAYER_TYPE } from "../lib/player";
 
 import {
   calculateContract,
@@ -10,10 +10,10 @@ import {
   ContractWithIndex,
   Contract,
   groupByPlayerType,
-} from "./contract";
-import * as gameModel from "../models/gameModel";
+} from "./contractModel";
+import * as gameModel from "./gameModel";
 
-import { contractFixture } from "./test_data/fixtures";
+import { contractFixture } from "../lib/test_data/fixtures";
 
 export default describe("contract", () => {
   describe("createContract", () => {
