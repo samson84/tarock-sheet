@@ -9,7 +9,7 @@ export interface Player {
   name: string;
   baseScore: number;
   sessionScore: PlayerScore;
-  currentScore: PlayerScore;
+  gameScore: PlayerScore;
   type: PLAYER_TYPE | null;
 }
 export type PlayerScore = number | null;
@@ -19,7 +19,7 @@ export const createPlayer = (): Player => ({
   name: "",
   baseScore: 100,
   sessionScore: null,
-  currentScore: null,
+  gameScore: null,
   type: null,
 });
 

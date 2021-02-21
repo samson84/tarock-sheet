@@ -114,9 +114,8 @@ const PlayerItem = ({ player, onChange }: PlayerItemProps) => {
   const GAME_WINNER_SCORE = 180;
   const color = getPlayerTypeColor(player.type);
   const playing = player.type !== null;
-  const hasCurrentScore = player.currentScore !== null;
-  const currentScoreText =
-    playing && hasCurrentScore ? ` (${player.currentScore})` : "";
+  const hasGameScore = player.gameScore !== null;
+  const gameScoreText = playing && hasGameScore ? ` (${player.gameScore})` : "";
   const score =
     player.sessionScore !== null
       ? player.sessionScore + player.baseScore
@@ -130,7 +129,7 @@ const PlayerItem = ({ player, onChange }: PlayerItemProps) => {
         subheader={
           <span>
             {isWinner && <WinnerIcon fontSize="small" color="action" />}
-            {`${score}${currentScoreText}`}
+            {`${score}${gameScoreText}`}
           </span>
         }
       />

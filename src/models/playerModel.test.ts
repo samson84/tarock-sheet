@@ -24,7 +24,7 @@ export default describe("Player", () => {
         name: "",
         baseScore: 100,
         sessionScore: null,
-        currentScore: null,
+        gameScore: null,
         type: null,
       });
       const current = createPlayer();
@@ -37,14 +37,14 @@ export default describe("Player", () => {
         name: "someName",
         baseScore: 80,
         sessionScore: 70,
-        currentScore: 120,
+        gameScore: 120,
         type: PLAYER_TYPE.OPPONENT,
       });
       const updates: UpdatePlayerProps = {
         name: "Some other name",
         baseScore: 50,
         sessionScore: 60,
-        currentScore: 90,
+        gameScore: 90,
         type: PLAYER_TYPE.DECLARER,
       };
       const expected = playerFixture({
@@ -52,7 +52,7 @@ export default describe("Player", () => {
         name: "Some other name",
         baseScore: 50,
         sessionScore: 60,
-        currentScore: 90,
+        gameScore: 90,
         type: PLAYER_TYPE.DECLARER,
       });
       const current = updatePlayer(updates)(player);
@@ -127,17 +127,17 @@ export default describe("Player", () => {
       });
       const willBeUpdated = playerFixture({
         name: "Tamás",
-        currentScore: 50,
+        gameScore: 50,
       });
       const updated = playerFixture({
         id: willBeUpdated.id,
         name: "Tamás",
-        currentScore: 80,
+        gameScore: 80,
       });
       const playerList: PlayerList = [player, willBeUpdated];
       const expected = [
         playerFixture({ id: player.id, name: "Csaba" }),
-        playerFixture({ id: updated.id, name: "Tamás", currentScore: 80 }),
+        playerFixture({ id: updated.id, name: "Tamás", gameScore: 80 }),
       ];
 
       const current = updatePlayerAt(updated)(playerList);
@@ -150,17 +150,17 @@ export default describe("Player", () => {
       });
       const player2 = playerFixture({
         name: "Tamás",
-        currentScore: 50,
+        gameScore: 50,
       });
       const wontUpdated = playerFixture({
         id: "nonExistent",
         name: "André",
-        currentScore: 80,
+        gameScore: 80,
       });
       const playerList: PlayerList = [player1, player2];
       const expected = [
         playerFixture({ id: player1.id, name: "Csaba" }),
-        playerFixture({ id: player2.id, name: "Tamás", currentScore: 50 }),
+        playerFixture({ id: player2.id, name: "Tamás", gameScore: 50 }),
       ];
 
       const current = updatePlayerAt(wontUpdated)(playerList);

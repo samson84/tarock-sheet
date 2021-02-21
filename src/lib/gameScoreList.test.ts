@@ -24,22 +24,22 @@ export default describe("gameScoreList", () => {
         playerFixture({
           id: "player-1-id",
           name: "Csaba",
-          currentScore: 10,
+          gameScore: 10,
         }),
         playerFixture({
           id: "player-2-id",
           name: "Andre",
-          currentScore: 10,
+          gameScore: 10,
         }),
         playerFixture({
           id: "player-3-id",
           name: "Dani",
-          currentScore: -10,
+          gameScore: -10,
         }),
         playerFixture({
           id: "player-4-id",
           name: "Tamas",
-          currentScore: -10,
+          gameScore: -10,
         }),
       ]);
       const playerListObjects: PlayerListObject[] = [game1];
@@ -57,44 +57,44 @@ export default describe("gameScoreList", () => {
         playerFixture({
           id: "player-1-id",
           name: "Csaba",
-          currentScore: 10,
+          gameScore: 10,
         }),
         playerFixture({
           id: "player-2-id",
           name: "Andre",
-          currentScore: 10,
+          gameScore: 10,
         }),
         playerFixture({
           id: "player-3-id",
           name: "Dani",
-          currentScore: -10,
+          gameScore: -10,
         }),
         playerFixture({
           id: "player-4-id",
           name: "Tamas",
-          currentScore: -10,
+          gameScore: -10,
         }),
       ]);
       const game2: PlayerListObject = createPlayerListObject([
         playerFixture({
           id: "player-1-id",
           name: "Csaba",
-          currentScore: 16,
+          gameScore: 16,
         }),
         playerFixture({
           id: "player-2-id",
           name: "Andre",
-          currentScore: -16,
+          gameScore: -16,
         }),
         playerFixture({
           id: "player-3-id",
           name: "Dani",
-          currentScore: -16,
+          gameScore: -16,
         }),
         playerFixture({
           id: "player-4-id",
           name: "Tamas",
-          currentScore: 16,
+          gameScore: 16,
         }),
       ]);
       const playerListObjects: PlayerListObject[] = [game1, game2];
@@ -114,44 +114,44 @@ export default describe("gameScoreList", () => {
         playerFixture({
           id: "player-1-id",
           name: "Csaba",
-          currentScore: 10,
+          gameScore: 10,
         }),
         playerFixture({
           id: "player-2-id",
           name: "Andre",
-          currentScore: 10,
+          gameScore: 10,
         }),
         playerFixture({
           id: "player-3-id",
           name: "Dani",
-          currentScore: -10,
+          gameScore: -10,
         }),
         playerFixture({
           id: "player-4-id",
           name: "Tamas",
-          currentScore: -10,
+          gameScore: -10,
         }),
       ]);
       const game2: PlayerListObject = createPlayerListObject([
         playerFixture({
           id: "player-1-id",
           name: "Csaba",
-          currentScore: 16,
+          gameScore: 16,
         }),
         playerFixture({
           id: "player-2-id",
           name: "Andre",
-          currentScore: -16,
+          gameScore: -16,
         }),
         playerFixture({
           id: "player-3-id",
           name: "Dani",
-          currentScore: -16,
+          gameScore: -16,
         }),
         playerFixture({
           id: "player-5-id-new",
           name: "Akos",
-          currentScore: 16,
+          gameScore: 16,
         }),
       ]);
       const playerListObjects: PlayerListObject[] = [game1, game2];
@@ -171,44 +171,44 @@ export default describe("gameScoreList", () => {
         playerFixture({
           id: "player-1-id",
           name: "Csaba",
-          currentScore: 16,
+          gameScore: 16,
         }),
         playerFixture({
           id: "player-2-id",
           name: "Andre",
-          currentScore: -16,
+          gameScore: -16,
         }),
         playerFixture({
           id: "player-3-id",
           name: "Dani",
-          currentScore: -16,
+          gameScore: -16,
         }),
         playerFixture({
           id: "player-4-id-only-in-game1",
           name: "Akos",
-          currentScore: 16,
+          gameScore: 16,
         }),
       ]);
       const game2: PlayerListObject = createPlayerListObject([
         playerFixture({
           id: "player-1-id",
           name: "Csaba",
-          currentScore: 10,
+          gameScore: 10,
         }),
         playerFixture({
           id: "player-2-id",
           name: "Andre",
-          currentScore: 10,
+          gameScore: 10,
         }),
         playerFixture({
           id: "player-3-id",
           name: "Dani",
-          currentScore: -10,
+          gameScore: -10,
         }),
         playerFixture({
           id: "player-5-id-new-player",
           name: "Tamas",
-          currentScore: -10,
+          gameScore: -10,
         }),
       ]);
       const playerListObjects: PlayerListObject[] = [game1, game2];
@@ -229,44 +229,44 @@ export default describe("gameScoreList", () => {
         playerFixture({
           id: "player-1-id",
           name: "Csaba",
-          currentScore: 16,
+          gameScore: 16,
         }),
         playerFixture({
           id: "player-2-id",
           name: "Andre",
-          currentScore: -16,
+          gameScore: -16,
         }),
         playerFixture({
           id: "player-3-id",
           name: "Dani",
-          currentScore: -16,
+          gameScore: -16,
         }),
         playerFixture({
           id: "player-4-id-only-in-game1",
           name: "Akos",
-          currentScore: null,
+          gameScore: null,
         }),
       ]);
       const game2: PlayerListObject = createPlayerListObject([
         playerFixture({
           id: "player-1-id",
           name: "Csaba",
-          currentScore: 10,
+          gameScore: 10,
         }),
         playerFixture({
           id: "player-2-id",
           name: "Andre",
-          currentScore: 10,
+          gameScore: 10,
         }),
         playerFixture({
           id: "player-3-id",
           name: "Dani",
-          currentScore: -10,
+          gameScore: -10,
         }),
         playerFixture({
           id: "player-5-id-only-in-game2",
           name: "Tamas",
-          currentScore: -10,
+          gameScore: -10,
         }),
       ]);
       const playerListObjects: PlayerListObject[] = [game1, game2];
@@ -286,44 +286,44 @@ export default describe("gameScoreList", () => {
         playerFixture({
           id: "player-1-id",
           name: "Csaba",
-          currentScore: 10,
+          gameScore: 10,
         }),
         playerFixture({
           id: "player-2-id",
           name: "Andre",
-          currentScore: 10,
+          gameScore: 10,
         }),
         playerFixture({
           id: "player-3-id",
           name: "Dani",
-          currentScore: -10,
+          gameScore: -10,
         }),
         playerFixture({
           id: "player-4-id-only-in-game1",
           name: "Tamas",
-          currentScore: -10,
+          gameScore: -10,
         }),
       ]);
       const game2: PlayerListObject = createPlayerListObject([
         playerFixture({
           id: "player-1-id",
           name: "Csaba",
-          currentScore: 16,
+          gameScore: 16,
         }),
         playerFixture({
           id: "player-2-id",
           name: "Andre",
-          currentScore: -16,
+          gameScore: -16,
         }),
         playerFixture({
           id: "player-3-id",
           name: "Dani",
-          currentScore: -16,
+          gameScore: -16,
         }),
         playerFixture({
           id: "player-5-id-only-in-game2",
           name: "Akos",
-          currentScore: null,
+          gameScore: null,
         }),
       ]);
       const playerListObjects: PlayerListObject[] = [game1, game2];
@@ -342,44 +342,44 @@ export default describe("gameScoreList", () => {
         playerFixture({
           id: "player-1-id",
           name: "Csaba",
-          currentScore: 10,
+          gameScore: 10,
         }),
         playerFixture({
           id: "player-2-id",
           name: "Andre",
-          currentScore: 10,
+          gameScore: 10,
         }),
         playerFixture({
           id: "player-3-id",
           name: "Dani",
-          currentScore: -10,
+          gameScore: -10,
         }),
         playerFixture({
           id: "player-4-id",
           name: "Tamas",
-          currentScore: -10,
+          gameScore: -10,
         }),
       ]);
       const game2: PlayerListObject = createPlayerListObject([
         playerFixture({
           id: "player-1-id",
           name: "Csaba",
-          currentScore: 16,
+          gameScore: 16,
         }),
         playerFixture({
           id: "player-2-id",
           name: "Andre",
-          currentScore: -16,
+          gameScore: -16,
         }),
         playerFixture({
           id: "player-3-id",
           name: "Dani",
-          currentScore: -16,
+          gameScore: -16,
         }),
         playerFixture({
           id: "player-4-id",
           name: "Tamas",
-          currentScore: null,
+          gameScore: null,
         }),
       ]);
       const playerListObjects: PlayerListObject[] = [game1, game2];
@@ -397,44 +397,44 @@ export default describe("gameScoreList", () => {
         playerFixture({
           id: "player-1-id",
           name: "Csaba",
-          currentScore: 10,
+          gameScore: 10,
         }),
         playerFixture({
           id: "player-2-id",
           name: "Andre",
-          currentScore: 10,
+          gameScore: 10,
         }),
         playerFixture({
           id: "player-3-id",
           name: "Dani",
-          currentScore: -10,
+          gameScore: -10,
         }),
         playerFixture({
           id: "player-4-id",
           name: "Tamas",
-          currentScore: null,
+          gameScore: null,
         }),
       ]);
       const game2: PlayerListObject = createPlayerListObject([
         playerFixture({
           id: "player-1-id",
           name: "Csaba",
-          currentScore: 16,
+          gameScore: 16,
         }),
         playerFixture({
           id: "player-2-id",
           name: "Andre",
-          currentScore: -16,
+          gameScore: -16,
         }),
         playerFixture({
           id: "player-3-id",
           name: "Dani",
-          currentScore: -16,
+          gameScore: -16,
         }),
         playerFixture({
           id: "player-4-id",
           name: "Tamas",
-          currentScore: -10,
+          gameScore: -10,
         }),
       ]);
       const playerListObjects: PlayerListObject[] = [game1, game2];
@@ -473,22 +473,22 @@ export default describe("gameScoreList", () => {
       });
       const player1 = playerFixture({
         name: "Tamas",
-        currentScore: null,
+        gameScore: null,
         type: PLAYER_TYPE.DECLARER,
       });
       const player2 = playerFixture({
         name: "Csaba",
-        currentScore: null,
+        gameScore: null,
         type: PLAYER_TYPE.DECLARER,
       });
       const player3 = playerFixture({
         name: "Akos",
-        currentScore: null,
+        gameScore: null,
         type: PLAYER_TYPE.OPPONENT,
       });
       const player4 = playerFixture({
         name: "Attila",
-        currentScore: null,
+        gameScore: null,
         type: PLAYER_TYPE.OPPONENT,
       });
       const players = [player1, player2, player3, player4];
@@ -496,25 +496,25 @@ export default describe("gameScoreList", () => {
         playerFixture({
           id: player1.id,
           name: "Tamas",
-          currentScore: 16,
+          gameScore: 16,
           type: PLAYER_TYPE.DECLARER,
         }),
         playerFixture({
           id: player2.id,
           name: "Csaba",
-          currentScore: 16,
+          gameScore: 16,
           type: PLAYER_TYPE.DECLARER,
         }),
         playerFixture({
           id: player3.id,
           name: "Akos",
-          currentScore: -16,
+          gameScore: -16,
           type: PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player4.id,
           name: "Attila",
-          currentScore: -16,
+          gameScore: -16,
           type: PLAYER_TYPE.OPPONENT,
         }),
       ];
@@ -532,22 +532,22 @@ export default describe("gameScoreList", () => {
       });
       const player1 = playerFixture({
         name: "Tamas",
-        currentScore: null,
+        gameScore: null,
         type: PLAYER_TYPE.DECLARER,
       });
       const player2 = playerFixture({
         name: "Csaba",
-        currentScore: null,
+        gameScore: null,
         type: PLAYER_TYPE.DECLARER,
       });
       const player3 = playerFixture({
         name: "Akos",
-        currentScore: null,
+        gameScore: null,
         type: PLAYER_TYPE.DECLARER,
       });
       const player4 = playerFixture({
         name: "Attila",
-        currentScore: null,
+        gameScore: null,
         type: PLAYER_TYPE.OPPONENT,
       });
       const players = [player1, player2, player3, player4];
@@ -555,25 +555,25 @@ export default describe("gameScoreList", () => {
         playerFixture({
           id: player1.id,
           name: "Tamas",
-          currentScore: 6,
+          gameScore: 6,
           type: PLAYER_TYPE.DECLARER,
         }),
         playerFixture({
           id: player2.id,
           name: "Csaba",
-          currentScore: 6,
+          gameScore: 6,
           type: PLAYER_TYPE.DECLARER,
         }),
         playerFixture({
           id: player3.id,
           name: "Akos",
-          currentScore: 6,
+          gameScore: 6,
           type: PLAYER_TYPE.DECLARER,
         }),
         playerFixture({
           id: player4.id,
           name: "Attila",
-          currentScore: -18,
+          gameScore: -18,
           type: PLAYER_TYPE.OPPONENT,
         }),
       ];
@@ -591,22 +591,22 @@ export default describe("gameScoreList", () => {
       });
       const player1 = playerFixture({
         name: "Tamas",
-        currentScore: null,
+        gameScore: null,
         type: PLAYER_TYPE.OPPONENT,
       });
       const player2 = playerFixture({
         name: "Csaba",
-        currentScore: null,
+        gameScore: null,
         type: PLAYER_TYPE.OPPONENT,
       });
       const player3 = playerFixture({
         name: "Akos",
-        currentScore: null,
+        gameScore: null,
         type: PLAYER_TYPE.OPPONENT,
       });
       const player4 = playerFixture({
         name: "Attila",
-        currentScore: null,
+        gameScore: null,
         type: PLAYER_TYPE.DECLARER,
       });
       const players = [player1, player2, player3, player4];
@@ -614,25 +614,25 @@ export default describe("gameScoreList", () => {
         playerFixture({
           id: player1.id,
           name: "Tamas",
-          currentScore: 6,
+          gameScore: 6,
           type: PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player2.id,
           name: "Csaba",
-          currentScore: 6,
+          gameScore: 6,
           type: PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player3.id,
           name: "Akos",
-          currentScore: 6,
+          gameScore: 6,
           type: PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player4.id,
           name: "Attila",
-          currentScore: -18,
+          gameScore: -18,
           type: PLAYER_TYPE.DECLARER,
         }),
       ];
@@ -650,22 +650,22 @@ export default describe("gameScoreList", () => {
       });
       const player1 = playerFixture({
         name: "Tamas",
-        currentScore: null,
+        gameScore: null,
         type: PLAYER_TYPE.DECLARER,
       });
       const player2 = playerFixture({
         name: "Csaba",
-        currentScore: null,
+        gameScore: null,
         type: PLAYER_TYPE.DECLARER,
       });
       const player3 = playerFixture({
         name: "Akos",
-        currentScore: null,
+        gameScore: null,
         type: PLAYER_TYPE.DECLARER,
       });
       const player4 = playerFixture({
         name: "Attila",
-        currentScore: null,
+        gameScore: null,
         type: PLAYER_TYPE.OPPONENT,
       });
       const players = [player1, player2, player3, player4];
@@ -673,25 +673,25 @@ export default describe("gameScoreList", () => {
         playerFixture({
           id: player1.id,
           name: "Tamas",
-          currentScore: -6,
+          gameScore: -6,
           type: PLAYER_TYPE.DECLARER,
         }),
         playerFixture({
           id: player2.id,
           name: "Csaba",
-          currentScore: -6,
+          gameScore: -6,
           type: PLAYER_TYPE.DECLARER,
         }),
         playerFixture({
           id: player3.id,
           name: "Akos",
-          currentScore: -6,
+          gameScore: -6,
           type: PLAYER_TYPE.DECLARER,
         }),
         playerFixture({
           id: player4.id,
           name: "Attila",
-          currentScore: 18,
+          gameScore: 18,
           type: PLAYER_TYPE.OPPONENT,
         }),
       ];
@@ -709,22 +709,22 @@ export default describe("gameScoreList", () => {
       });
       const player1 = playerFixture({
         name: "Tamas",
-        currentScore: null,
+        gameScore: null,
         type: PLAYER_TYPE.OPPONENT,
       });
       const player2 = playerFixture({
         name: "Csaba",
-        currentScore: null,
+        gameScore: null,
         type: PLAYER_TYPE.OPPONENT,
       });
       const player3 = playerFixture({
         name: "Akos",
-        currentScore: null,
+        gameScore: null,
         type: PLAYER_TYPE.OPPONENT,
       });
       const player4 = playerFixture({
         name: "Attila",
-        currentScore: null,
+        gameScore: null,
         type: PLAYER_TYPE.DECLARER,
       });
       const players = [player1, player2, player3, player4];
@@ -732,25 +732,25 @@ export default describe("gameScoreList", () => {
         playerFixture({
           id: player1.id,
           name: "Tamas",
-          currentScore: -6,
+          gameScore: -6,
           type: PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player2.id,
           name: "Csaba",
-          currentScore: -6,
+          gameScore: -6,
           type: PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player3.id,
           name: "Akos",
-          currentScore: -6,
+          gameScore: -6,
           type: PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player4.id,
           name: "Attila",
-          currentScore: 18,
+          gameScore: 18,
           type: PLAYER_TYPE.DECLARER,
         }),
       ];
@@ -767,17 +767,17 @@ export default describe("gameScoreList", () => {
       });
       const player1 = playerFixture({
         name: "Tamas",
-        currentScore: 10,
+        gameScore: 10,
         type: PLAYER_TYPE.OPPONENT,
       });
       const player2 = playerFixture({
         name: "Csaba",
-        currentScore: 20,
+        gameScore: 20,
         type: PLAYER_TYPE.OPPONENT,
       });
       const player4 = playerFixture({
         name: "Attila",
-        currentScore: 40,
+        gameScore: 40,
         type: PLAYER_TYPE.DECLARER,
       });
       const players = [player1, player2, player4];
@@ -785,19 +785,19 @@ export default describe("gameScoreList", () => {
         playerFixture({
           id: player1.id,
           name: "Tamas",
-          currentScore: null,
+          gameScore: null,
           type: PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player2.id,
           name: "Csaba",
-          currentScore: null,
+          gameScore: null,
           type: PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player4.id,
           name: "Attila",
-          currentScore: null,
+          gameScore: null,
           type: PLAYER_TYPE.DECLARER,
         }),
       ];
@@ -814,22 +814,22 @@ export default describe("gameScoreList", () => {
       });
       const player1 = playerFixture({
         name: "Tamas",
-        currentScore: 10,
+        gameScore: 10,
         type: PLAYER_TYPE.OPPONENT,
       });
       const player2 = playerFixture({
         name: "Csaba",
-        currentScore: 10,
+        gameScore: 10,
         type: PLAYER_TYPE.OPPONENT,
       });
       const player3 = playerFixture({
         name: "Akos",
-        currentScore: 10,
+        gameScore: 10,
         type: PLAYER_TYPE.OPPONENT,
       });
       const player4 = playerFixture({
         name: "Attila",
-        currentScore: 10,
+        gameScore: 10,
         type: PLAYER_TYPE.OPPONENT,
       });
       const players = [player1, player2, player3, player4];
@@ -837,25 +837,25 @@ export default describe("gameScoreList", () => {
         playerFixture({
           id: player1.id,
           name: "Tamas",
-          currentScore: null,
+          gameScore: null,
           type: PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player2.id,
           name: "Csaba",
-          currentScore: null,
+          gameScore: null,
           type: PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player3.id,
           name: "Akos",
-          currentScore: null,
+          gameScore: null,
           type: PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player4.id,
           name: "Attila",
-          currentScore: null,
+          gameScore: null,
           type: PLAYER_TYPE.OPPONENT,
         }),
       ];
@@ -872,22 +872,22 @@ export default describe("gameScoreList", () => {
       });
       const player1 = playerFixture({
         name: "Tamas",
-        currentScore: 10,
+        gameScore: 10,
         type: PLAYER_TYPE.OPPONENT,
       });
       const player2 = playerFixture({
         name: "Csaba",
-        currentScore: 20,
+        gameScore: 20,
         type: PLAYER_TYPE.OPPONENT,
       });
       const player3 = playerFixture({
         name: "Akos",
-        currentScore: 30,
+        gameScore: 30,
         type: PLAYER_TYPE.OPPONENT,
       });
       const player4 = playerFixture({
         name: "Attila",
-        currentScore: 40,
+        gameScore: 40,
         type: PLAYER_TYPE.DECLARER,
       });
       const players = [player1, player2, player3, player4];
@@ -895,25 +895,25 @@ export default describe("gameScoreList", () => {
         playerFixture({
           id: player1.id,
           name: "Tamas",
-          currentScore: null,
+          gameScore: null,
           type: PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player2.id,
           name: "Csaba",
-          currentScore: null,
+          gameScore: null,
           type: PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player3.id,
           name: "Akos",
-          currentScore: null,
+          gameScore: null,
           type: PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player4.id,
           name: "Attila",
-          currentScore: null,
+          gameScore: null,
           type: PLAYER_TYPE.DECLARER,
         }),
       ];
@@ -930,22 +930,22 @@ export default describe("gameScoreList", () => {
       });
       const player1 = playerFixture({
         name: "Tamas",
-        currentScore: 10,
+        gameScore: 10,
         type: PLAYER_TYPE.OPPONENT,
       });
       const player2 = playerFixture({
         name: "Csaba",
-        currentScore: 20,
+        gameScore: 20,
         type: PLAYER_TYPE.OPPONENT,
       });
       const player3 = playerFixture({
         name: "Akos",
-        currentScore: 30,
+        gameScore: 30,
         type: PLAYER_TYPE.OPPONENT,
       });
       const player4 = playerFixture({
         name: "Attila",
-        currentScore: 40,
+        gameScore: 40,
         type: PLAYER_TYPE.DECLARER,
       });
       const players = [player1, player2, player3, player4];
@@ -953,25 +953,25 @@ export default describe("gameScoreList", () => {
         playerFixture({
           id: player1.id,
           name: "Tamas",
-          currentScore: null,
+          gameScore: null,
           type: PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player2.id,
           name: "Csaba",
-          currentScore: null,
+          gameScore: null,
           type: PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player3.id,
           name: "Akos",
-          currentScore: null,
+          gameScore: null,
           type: PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player4.id,
           name: "Attila",
-          currentScore: null,
+          gameScore: null,
           type: PLAYER_TYPE.DECLARER,
         }),
       ];
@@ -988,27 +988,27 @@ export default describe("gameScoreList", () => {
       });
       const player1 = playerFixture({
         name: "Tamas",
-        currentScore: null,
+        gameScore: null,
         type: PLAYER_TYPE.OPPONENT,
       });
       const player2 = playerFixture({
         name: "Csaba",
-        currentScore: null,
+        gameScore: null,
         type: PLAYER_TYPE.OPPONENT,
       });
       const player3 = playerFixture({
         name: "Akos",
-        currentScore: null,
+        gameScore: null,
         type: PLAYER_TYPE.OPPONENT,
       });
       const player4 = playerFixture({
         name: "Attila",
-        currentScore: null,
+        gameScore: null,
         type: PLAYER_TYPE.DECLARER,
       });
       const player5 = playerFixture({
         name: "Laci",
-        currentScore: null,
+        gameScore: null,
         type: null,
       });
       const players = [player1, player2, player3, player4, player5];
@@ -1016,31 +1016,31 @@ export default describe("gameScoreList", () => {
         playerFixture({
           id: player1.id,
           name: "Tamas",
-          currentScore: -6,
+          gameScore: -6,
           type: PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player2.id,
           name: "Csaba",
-          currentScore: -6,
+          gameScore: -6,
           type: PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player3.id,
           name: "Akos",
-          currentScore: -6,
+          gameScore: -6,
           type: PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player4.id,
           name: "Attila",
-          currentScore: 18,
+          gameScore: 18,
           type: PLAYER_TYPE.DECLARER,
         }),
         playerFixture({
           id: player5.id,
           name: "Laci",
-          currentScore: null,
+          gameScore: null,
           type: null,
         }),
       ];

@@ -40,7 +40,7 @@ export const playerFixture = (props: Partial<Player> = {}): Player => ({
   name: "",
   baseScore: 100,
   sessionScore: null,
-  currentScore: null,
+  gameScore: null,
   type: null,
   ...props,
 });

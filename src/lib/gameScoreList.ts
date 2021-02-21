@@ -35,17 +35,19 @@ const getScore = (players: PlayerList) => (
 export const getCurrentScoreForPlayers = (game: gameModel.Game) => (
   players: PlayerList
 ): PlayerList => {
-  return players.map((player) => {
-    const [declarersScore, opponentsScore] = getScore(players)(game);
-    const score = {
-      [PLAYER_TYPE.OPPONENT]: opponentsScore,
-      [PLAYER_TYPE.DECLARER]: declarersScore,
-    };
-    return {
-      ...player,
-      currentScore: player.type === null ? null : score[player.type],
-    };
-  });
+  return players.map(
+    (player: Player): Player => {
+      const [declarersScore, opponentsScore] = getScore(players)(game);
+      const score = {
+        [PLAYER_TYPE.OPPONENT]: opponentsScore,
+        [PLAYER_TYPE.DECLARER]: declarersScore,
+      };
+      return {
+        ...player,
+        gameScore: player.type === null ? null : score[player.type],
+      };
+    }
+  );
 };
 
 export const isReadyForSave = (players: PlayerList) => (
@@ -65,9 +67,9 @@ export const isReadyForSave = (players: PlayerList) => (
 const defined = (value: any): boolean =>
   Boolean(value !== undefined && value !== null);
 
-const scoreSumAssigner = (score: number | undefined, player: Player) => {
-  const left = defined(score) ? score : 0;
-  const right = defined(player.currentScore) ? player.currentScore : 0;
+const scoreSumAssigner = (gameScore: number | undefined, player: Player) => {
+  const left = defined(gameScore) ? gameScore : 0;
+  const right = defined(player.gameScore) ? player.gameScore : 0;
   return (left as number) + (right as number);
 };
 

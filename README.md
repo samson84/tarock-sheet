@@ -33,7 +33,7 @@ An awesome app to help track a Tarock game scores.
       - [.] player: playerModel
         - [x] rename and move
         - [x] score prop: sessionScore
-        - [ ] currentScore: gameScore
+        - [x] currentScore prop: gameScore
         - [ ] PlayerScore: Score
         - [ ] createPlayer: create
         - [ ] getAnotherPlaterType: getOppositePlayerType
