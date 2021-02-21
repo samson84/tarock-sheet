@@ -27,7 +27,7 @@ An awesome app to help track a Tarock game scores.
         - [x] createContract: create
         - [x] updateContract: update
         - [x] calculateContract: calculateContractScore
-        - [ ] withIndices: mapWithIndices
+        - [x] remove unused functions: withIndices, filterByPartyLike, filterByProps
         - [ ] ContractScore --> PlayerScore
       - [ ] player: playerModel
         - [ ] score prop: sessionScore

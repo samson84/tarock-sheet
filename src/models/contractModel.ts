@@ -107,31 +107,3 @@ export const calculateContractScore = (contract: Contract): ContractScore => {
   const sign = isWonByTaker ? 1 : -1;
   return sign * bidBaseScore * multiplier;
 };
-
-export type ContractWithIndex = [Contract, number];
-export const withIndices = (contracts: Contract[]): ContractWithIndex[] =>
-  contracts.map((contract, index) => [contract, index]);
-
-const PARTY_LIKE_BIDS = [BID_TYPE.PARTY, BID_TYPE.DOUBLE_PARTY, BID_TYPE.VOLAT];
-export const filterByPartyLike = (
-  contracts: ContractWithIndex[]
-): ContractWithIndex[] =>
-  contracts.filter(([contract, _]) =>
-    PARTY_LIKE_BIDS.includes(contract.bidType)
-  );
-
-export const filterByProps = (props: Partial<Contract>) => (
-  contracts: ContractWithIndex[]
-): ContractWithIndex[] => {
-  return contracts.filter(([contract, _]) =>
-    flow(pick(Object.keys(props)), isEqual(props))(contract)
-  );
-};
-
-export const groupByPlayerType = (contracts: ContractWithIndex[]) => {
-  const groupped = groupBy(([contract]) => contract.taker)(contracts);
-  return {
-    [PLAYER_TYPE.DECLARER]: groupped[PLAYER_TYPE.DECLARER] || [],
-    [PLAYER_TYPE.OPPONENT]: groupped[PLAYER_TYPE.OPPONENT] || [],
-  };
-};

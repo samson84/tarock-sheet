@@ -5,11 +5,7 @@ import {
   calculateContractScore,
   create,
   update,
-  withIndices,
-  filterByPartyLike,
   ContractWithIndex,
-  Contract,
-  groupByPlayerType,
   UpdateContractProps,
   CreateContractProps,
 } from "./contractModel";
@@ -344,100 +340,6 @@ export default describe("contract", () => {
       const expected = -5;
 
       const current = calculateContractScore(contract);
-      expect(current).toEqual(expected);
-    });
-  });
-  describe("withIndices", () => {
-    it("should map the indexes", () => {
-      const contract1 = contractFixture({ bidType: BID_TYPE.ULTI });
-      const contract2 = contractFixture({ bidType: BID_TYPE.KING_ULTI });
-      const contracts = [contract1, contract2];
-      const expected = [
-        [contract1, 0],
-        [contract2, 1],
-      ];
-
-      const current = withIndices(contracts);
-      expect(current).toEqual(expected);
-    });
-    it("should return an empty array, if empty array given", () => {
-      const contracts: Contract[] = [];
-      const expected: ContractWithIndex[] = [];
-
-      const current = withIndices(contracts);
-      expect(current).toEqual(expected);
-    });
-  });
-  describe("filterByPartyLike", () => {
-    it("should filter party like bids", () => {
-      const contracts: ContractWithIndex[] = [
-        [contractFixture({ bidType: BID_TYPE.ULTI }), 0],
-        [contractFixture({ bidType: BID_TYPE.PARTY }), 1],
-        [contractFixture({ bidType: BID_TYPE.DOUBLE_PARTY }), 2],
-        [contractFixture({ bidType: BID_TYPE.VOLAT }), 3],
-        [contractFixture({ bidType: BID_TYPE.FOUR_KING }), 4],
-        [contractFixture({ bidType: BID_TYPE.TRULL }), 5],
-      ];
-      const expected: ContractWithIndex[] = [
-        [contractFixture({ bidType: BID_TYPE.PARTY }), 1],
-        [contractFixture({ bidType: BID_TYPE.DOUBLE_PARTY }), 2],
-        [contractFixture({ bidType: BID_TYPE.VOLAT }), 3],
-      ];
-      const current = filterByPartyLike(contracts);
-      expect(current).toEqual(expected);
-    });
-  });
-
-  describe("groupByPlayerType", () => {
-    it("shuld return empty arrays when the contract array is empty", () => {
-      const contracts: ContractWithIndex[] = [];
-      const expected = {
-        [PLAYER_TYPE.DECLARER]: [],
-        [PLAYER_TYPE.OPPONENT]: [],
-      };
-
-      const current = groupByPlayerType(contracts);
-      expect(current).toEqual(expected);
-    });
-    it("should group by players", () => {
-      const contracts: ContractWithIndex[] = [
-        [
-          contractFixture({
-            bidType: BID_TYPE.TRULL,
-            taker: PLAYER_TYPE.OPPONENT,
-          }),
-          0,
-        ],
-        [
-          contractFixture({
-            bidType: BID_TYPE.DOUBLE_PARTY,
-            taker: PLAYER_TYPE.DECLARER,
-          }),
-          1,
-        ],
-      ];
-      const expected = {
-        [PLAYER_TYPE.DECLARER]: [
-          [
-            contractFixture({
-              bidType: BID_TYPE.DOUBLE_PARTY,
-              taker: PLAYER_TYPE.DECLARER,
-            }),
-            1,
-          ],
-        ],
-        [PLAYER_TYPE.OPPONENT]: [
-          [
-            contractFixture({
-              bidType: BID_TYPE.TRULL,
-              taker: PLAYER_TYPE.OPPONENT,
-            }),
-            0,
-          ],
-        ],
-      };
-
-      const current = groupByPlayerType(contracts);
       expect(current).toEqual(expected);
     });
   });
