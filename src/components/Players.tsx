@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 import React, { useState } from "react";
 import * as playerModel from "../models/playerModel";
+import * as playerListModel from "../models/playerListModel";
 import { MdDelete as RemoveIcon } from "react-icons/md";
 import { MdEdit as EditIcon } from "react-icons/md";
 import { MdPerson as UserIcon } from "react-icons/md";
@@ -137,7 +138,7 @@ const PlayerItem = ({ player, onChange }: PlayerItemProps) => {
 
 interface PlayersProps {
   players: playerModel.Player[];
-  onPlayerListChange: (playerList: playerModel.PlayerList) => void;
+  onPlayerListChange: (playerList: playerListModel.PlayerList) => void;
   onSaveScores: () => void;
   saveDisabled: boolean;
   onResetPlayers: () => void;
@@ -159,10 +160,10 @@ const Players = (props: PlayersProps) => {
     onPlayerListChange([...players, playerModel.create()]);
   };
   const handleRemove = (player: playerModel.Player) => {
-    onPlayerListChange(playerModel.removePlayer(player)(players));
+    onPlayerListChange(playerListModel.removePlayer(player)(players));
   };
   const handleChange = (updated: playerModel.Player) => {
-    onPlayerListChange(playerModel.updatePlayerAt(updated)(players));
+    onPlayerListChange(playerListModel.updatePlayerAt(updated)(players));
   };
 
   return (

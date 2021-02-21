@@ -4,18 +4,19 @@ import {
   sumPlayerScores,
 } from "./gameScoreList";
 import * as playerModel from "../models/playerModel";
+import * as playerListModel from "../models/playerListModel";
 import { gameFixture, playerFixture } from "./test_data/fixtures";
 
 export default describe("gameScoreList", () => {
   describe("sumPlayerScores", () => {
     it("should return {} if gameScoreList empty", () => {
-      const playerListObjectList: playerModel.PlayerListObject[] = [];
+      const playerListObjectList: playerListModel.PlayerListObject[] = [];
       const expected: PlayerScores = {};
       const current = sumPlayerScores(playerListObjectList);
       expect(current).toEqual(expected);
     });
     it("should return sum of player scores, one item", () => {
-      const game1: playerModel.PlayerListObject = playerModel.createPlayerListObject(
+      const game1: playerListModel.PlayerListObject = playerListModel.createPlayerListObject(
         [
           playerFixture({
             id: "player-1-id",
@@ -39,7 +40,7 @@ export default describe("gameScoreList", () => {
           }),
         ]
       );
-      const playerListObjects: playerModel.PlayerListObject[] = [game1];
+      const playerListObjects: playerListModel.PlayerListObject[] = [game1];
       const expected: PlayerScores = {
         "player-1-id": 10,
         "player-2-id": 10,
@@ -50,7 +51,7 @@ export default describe("gameScoreList", () => {
       expect(current).toEqual(expected);
     });
     it("should return sum of player scores, multiple item, identical players", () => {
-      const game1: playerModel.PlayerListObject = playerModel.createPlayerListObject(
+      const game1: playerListModel.PlayerListObject = playerListModel.createPlayerListObject(
         [
           playerFixture({
             id: "player-1-id",
@@ -74,7 +75,7 @@ export default describe("gameScoreList", () => {
           }),
         ]
       );
-      const game2: playerModel.PlayerListObject = playerModel.createPlayerListObject(
+      const game2: playerListModel.PlayerListObject = playerListModel.createPlayerListObject(
         [
           playerFixture({
             id: "player-1-id",
@@ -98,7 +99,10 @@ export default describe("gameScoreList", () => {
           }),
         ]
       );
-      const playerListObjects: playerModel.PlayerListObject[] = [game1, game2];
+      const playerListObjects: playerListModel.PlayerListObject[] = [
+        game1,
+        game2,
+      ];
       const expected: PlayerScores = {
         "player-1-id": 26,
         "player-2-id": -6,
@@ -111,7 +115,7 @@ export default describe("gameScoreList", () => {
       expect(current).toEqual(expected);
     });
     it("should return sum of player scores, multiple item, second scores player is new", () => {
-      const game1: playerModel.PlayerListObject = playerModel.createPlayerListObject(
+      const game1: playerListModel.PlayerListObject = playerListModel.createPlayerListObject(
         [
           playerFixture({
             id: "player-1-id",
@@ -135,7 +139,7 @@ export default describe("gameScoreList", () => {
           }),
         ]
       );
-      const game2: playerModel.PlayerListObject = playerModel.createPlayerListObject(
+      const game2: playerListModel.PlayerListObject = playerListModel.createPlayerListObject(
         [
           playerFixture({
             id: "player-1-id",
@@ -159,7 +163,10 @@ export default describe("gameScoreList", () => {
           }),
         ]
       );
-      const playerListObjects: playerModel.PlayerListObject[] = [game1, game2];
+      const playerListObjects: playerListModel.PlayerListObject[] = [
+        game1,
+        game2,
+      ];
       const expected: PlayerScores = {
         "player-1-id": 26,
         "player-2-id": -6,
@@ -172,7 +179,7 @@ export default describe("gameScoreList", () => {
       expect(current).toEqual(expected);
     });
     it("should return sum of player scores, multiple item, first scores player is new", () => {
-      const game1: playerModel.PlayerListObject = playerModel.createPlayerListObject(
+      const game1: playerListModel.PlayerListObject = playerListModel.createPlayerListObject(
         [
           playerFixture({
             id: "player-1-id",
@@ -196,7 +203,7 @@ export default describe("gameScoreList", () => {
           }),
         ]
       );
-      const game2: playerModel.PlayerListObject = playerModel.createPlayerListObject(
+      const game2: playerListModel.PlayerListObject = playerListModel.createPlayerListObject(
         [
           playerFixture({
             id: "player-1-id",
@@ -220,7 +227,10 @@ export default describe("gameScoreList", () => {
           }),
         ]
       );
-      const playerListObjects: playerModel.PlayerListObject[] = [game1, game2];
+      const playerListObjects: playerListModel.PlayerListObject[] = [
+        game1,
+        game2,
+      ];
       const expected: PlayerScores = {
         "player-1-id": 26,
         "player-2-id": -6,
@@ -234,7 +244,7 @@ export default describe("gameScoreList", () => {
       expect(current).toEqual(expected);
     });
     it("should return sum of player scores, multiple item, first scores player is null, not exists in second", () => {
-      const game1: playerModel.PlayerListObject = playerModel.createPlayerListObject(
+      const game1: playerListModel.PlayerListObject = playerListModel.createPlayerListObject(
         [
           playerFixture({
             id: "player-1-id",
@@ -258,7 +268,7 @@ export default describe("gameScoreList", () => {
           }),
         ]
       );
-      const game2: playerModel.PlayerListObject = playerModel.createPlayerListObject(
+      const game2: playerListModel.PlayerListObject = playerListModel.createPlayerListObject(
         [
           playerFixture({
             id: "player-1-id",
@@ -282,7 +292,10 @@ export default describe("gameScoreList", () => {
           }),
         ]
       );
-      const playerListObjects: playerModel.PlayerListObject[] = [game1, game2];
+      const playerListObjects: playerListModel.PlayerListObject[] = [
+        game1,
+        game2,
+      ];
       const expected: PlayerScores = {
         "player-1-id": 26,
         "player-2-id": -6,
@@ -295,7 +308,7 @@ export default describe("gameScoreList", () => {
       expect(current).toEqual(expected);
     });
     it("should return sum of player scores, multiple item, second scores player is null, not exists in first", () => {
-      const game1: playerModel.PlayerListObject = playerModel.createPlayerListObject(
+      const game1: playerListModel.PlayerListObject = playerListModel.createPlayerListObject(
         [
           playerFixture({
             id: "player-1-id",
@@ -319,7 +332,7 @@ export default describe("gameScoreList", () => {
           }),
         ]
       );
-      const game2: playerModel.PlayerListObject = playerModel.createPlayerListObject(
+      const game2: playerListModel.PlayerListObject = playerListModel.createPlayerListObject(
         [
           playerFixture({
             id: "player-1-id",
@@ -343,7 +356,10 @@ export default describe("gameScoreList", () => {
           }),
         ]
       );
-      const playerListObjects: playerModel.PlayerListObject[] = [game1, game2];
+      const playerListObjects: playerListModel.PlayerListObject[] = [
+        game1,
+        game2,
+      ];
       const expected: PlayerScores = {
         "player-1-id": 26,
         "player-2-id": -6,
@@ -355,7 +371,7 @@ export default describe("gameScoreList", () => {
       expect(current).toEqual(expected);
     });
     it("should return sum of player scores, multiple item, second scores player is null, exists in first", () => {
-      const game1: playerModel.PlayerListObject = playerModel.createPlayerListObject(
+      const game1: playerListModel.PlayerListObject = playerListModel.createPlayerListObject(
         [
           playerFixture({
             id: "player-1-id",
@@ -379,7 +395,7 @@ export default describe("gameScoreList", () => {
           }),
         ]
       );
-      const game2: playerModel.PlayerListObject = playerModel.createPlayerListObject(
+      const game2: playerListModel.PlayerListObject = playerListModel.createPlayerListObject(
         [
           playerFixture({
             id: "player-1-id",
@@ -403,7 +419,10 @@ export default describe("gameScoreList", () => {
           }),
         ]
       );
-      const playerListObjects: playerModel.PlayerListObject[] = [game1, game2];
+      const playerListObjects: playerListModel.PlayerListObject[] = [
+        game1,
+        game2,
+      ];
       const expected: PlayerScores = {
         "player-1-id": 26,
         "player-2-id": -6,
@@ -414,7 +433,7 @@ export default describe("gameScoreList", () => {
       expect(current).toEqual(expected);
     });
     it("should return sum of player scores, multiple item, first scores player is null, exists in second", () => {
-      const game1: playerModel.PlayerListObject = playerModel.createPlayerListObject(
+      const game1: playerListModel.PlayerListObject = playerListModel.createPlayerListObject(
         [
           playerFixture({
             id: "player-1-id",
@@ -438,7 +457,7 @@ export default describe("gameScoreList", () => {
           }),
         ]
       );
-      const game2: playerModel.PlayerListObject = playerModel.createPlayerListObject(
+      const game2: playerListModel.PlayerListObject = playerListModel.createPlayerListObject(
         [
           playerFixture({
             id: "player-1-id",
@@ -462,7 +481,10 @@ export default describe("gameScoreList", () => {
           }),
         ]
       );
-      const playerListObjects: playerModel.PlayerListObject[] = [game1, game2];
+      const playerListObjects: playerListModel.PlayerListObject[] = [
+        game1,
+        game2,
+      ];
       const expected: PlayerScores = {
         "player-1-id": 26,
         "player-2-id": -6,
@@ -482,8 +504,8 @@ export default describe("gameScoreList", () => {
           [playerModel.PLAYER_TYPE.OPPONENT]: null,
         },
       });
-      const players: playerModel.PlayerList = [];
-      const expected: playerModel.PlayerList = [];
+      const players: playerListModel.PlayerList = [];
+      const expected: playerListModel.PlayerList = [];
 
       const current = getCurrentScoreForPlayers(game)(players);
 

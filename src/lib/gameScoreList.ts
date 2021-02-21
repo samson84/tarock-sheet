@@ -1,16 +1,17 @@
 import * as gameModel from "../models/gameModel";
 import * as playerModel from "../models/playerModel";
+import * as playerListModel from "../models/playerListModel";
 import { Score } from "../models/scoreModel";
 import assignWith from "lodash/fp/assignWith";
 import { isEqual } from "lodash";
 
-const getScore = (players: playerModel.PlayerList) => (
+const getScore = (players: playerListModel.PlayerList) => (
   game: gameModel.Game
 ): [Score, Score] => {
   const [
     numberOfDeclarers,
     numberOfOpponents,
-  ] = playerModel.getPlayerNumberByType(players);
+  ] = playerListModel.getPlayerNumberByType(players);
   const opponentsGameScore =
     game.playerTypeScores[playerModel.PLAYER_TYPE.OPPONENT];
   const declarersGameScore =
@@ -31,8 +32,8 @@ const getScore = (players: playerModel.PlayerList) => (
 };
 
 export const getCurrentScoreForPlayers = (game: gameModel.Game) => (
-  players: playerModel.PlayerList
-): playerModel.PlayerList => {
+  players: playerListModel.PlayerList
+): playerListModel.PlayerList => {
   return players.map(
     (player: playerModel.Player): playerModel.Player => {
       const [declarersScore, opponentsScore] = getScore(players)(game);
@@ -48,10 +49,10 @@ export const getCurrentScoreForPlayers = (game: gameModel.Game) => (
   );
 };
 
-export const isReadyForSave = (players: playerModel.PlayerList) => (
+export const isReadyForSave = (players: playerListModel.PlayerList) => (
   game: gameModel.Game
 ): boolean => {
-  const numbers = playerModel.getPlayerNumberByType(players);
+  const numbers = playerListModel.getPlayerNumberByType(players);
   const playerNumberValid =
     isEqual(numbers, [1, 3]) ||
     isEqual(numbers, [2, 2]) ||
@@ -77,7 +78,7 @@ const scoreSumAssigner = (
 export type PlayerScores = { [key: string]: number };
 
 export const sumPlayerScores = (
-  playerListObjects: playerModel.PlayerListObject[]
+  playerListObjects: playerListModel.PlayerListObject[]
 ): PlayerScores => {
   return playerListObjects.reduce(
     (scores, playerListObject) =>
@@ -86,9 +87,9 @@ export const sumPlayerScores = (
   );
 };
 
-export const assignScoresToPlayers = (players: playerModel.PlayerList) => (
+export const assignScoresToPlayers = (players: playerListModel.PlayerList) => (
   sessionScores: PlayerScores
-): playerModel.PlayerList =>
+): playerListModel.PlayerList =>
   players.map((player) =>
     sessionScores[player.id] === undefined
       ? player
