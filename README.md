@@ -23,7 +23,7 @@ An awesome app to help track a Tarock game scores.
         - [x] rename and move contract to contractModel
         - [x] silent prop: isSilent
         - [x] winByTaker prop: isWonByTaker
-        - [ ] validateContract: validate
+        - [x] validateContract: validate
         - [ ] createContract: create
         - [ ] updateContract: update
         - [ ] calculateContract: calculateContractScore
@@ -80,7 +80,9 @@ An awesome app to help track a Tarock game scores.
     - [ ] rename game props to camelCase, party_score, called_tarock
     - [ ] add license, contribution, proper readme
     - [ ] increase test coverage
-- [ ] Milestone 2, mobile friendly, UX improvements 
+- [ ] Milestone 2, mobile friendly, UX improvements
+  - [ ] refactor
+    - [ ] better type checking for dynamic types in Contracts table
   - [ ] usability
     - [ ] Game Properties: show score near the game score selector radio buttons
     - [ ] BidSelector: show the score near the bids

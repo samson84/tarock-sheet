@@ -26,7 +26,7 @@ export interface Contract {
   isSilent: boolean;
 }
 
-const validateContract = (contract: Contract): void | undefined => {
+const validate = (contract: Contract): void | undefined => {
   const { isSilent, bidType, bidVariant, contra } = contract;
   const bid = getBid(bidType);
   if (isSilent && !canSilent(bid)) {
@@ -72,7 +72,7 @@ export const createContract = ({
         ? flow(getBid, getBidScore(partyScore))(bidType)
         : null,
   };
-  validateContract(contract);
+  validate(contract);
   return contract;
 };
 
@@ -93,7 +93,7 @@ export const updateContract = (updates: UpdateContractProps) => (
   contract: Contract
 ): Contract => {
   const updated = { ...contract, ...updates };
-  validateContract(updated);
+  validate(updated);
   return updated;
 };
 
