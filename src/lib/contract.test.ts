@@ -11,7 +11,7 @@ import {
   Contract,
   groupByPlayerType,
 } from "./contract";
-import { PARTY_SCORE } from "../models/gameModel";
+import * as gameModel from "../models/gameModel";
 
 import { contractFixture } from "./test_data/fixtures";
 
@@ -20,7 +20,7 @@ export default describe("contract", () => {
     it("should create a declarer contract", () => {
       const props = {
         bidType: BID_TYPE.CENTRUM,
-        partyScore: PARTY_SCORE.TOOK_TWO,
+        partyScore: gameModel.PARTY_SCORE.TOOK_TWO,
         taker: PLAYER_TYPE.DECLARER,
       };
       const expected = contractFixture({
@@ -35,7 +35,7 @@ export default describe("contract", () => {
       const props = {
         bidType: BID_TYPE.FOUR_KING,
         taker: PLAYER_TYPE.OPPONENT,
-        partyScore: PARTY_SCORE.TOOK_TWO,
+        partyScore: gameModel.PARTY_SCORE.TOOK_TWO,
       };
       const expected = contractFixture({
         bidType: BID_TYPE.FOUR_KING,
@@ -49,7 +49,7 @@ export default describe("contract", () => {
       const props = {
         bidType: BID_TYPE.VOLAT,
         taker: PLAYER_TYPE.DECLARER,
-        partyScore: PARTY_SCORE.TOOK_TWO,
+        partyScore: gameModel.PARTY_SCORE.TOOK_TWO,
       };
       const expected = contractFixture({
         bidType: BID_TYPE.VOLAT,
@@ -64,7 +64,7 @@ export default describe("contract", () => {
         bidType: BID_TYPE.FOUR_KING,
         taker: PLAYER_TYPE.OPPONENT,
         silent: true,
-        partyScore: PARTY_SCORE.TOOK_TWO,
+        partyScore: gameModel.PARTY_SCORE.TOOK_TWO,
       };
       const expected = contractFixture({
         bidType: BID_TYPE.FOUR_KING,
@@ -79,7 +79,7 @@ export default describe("contract", () => {
         bidType: BID_TYPE.PARTY,
         taker: PLAYER_TYPE.OPPONENT,
         silent: true,
-        partyScore: PARTY_SCORE.TOOK_TWO,
+        partyScore: gameModel.PARTY_SCORE.TOOK_TWO,
       };
       const expected = "PARTY can not be silent.";
       const current = () => createContract(props);
@@ -90,7 +90,7 @@ export default describe("contract", () => {
         bidType: BID_TYPE.KING_ULTI,
         taker: PLAYER_TYPE.OPPONENT,
         bidVariant: CARD_SHAPE_VARIANT.CLUB,
-        partyScore: PARTY_SCORE.TOOK_TWO,
+        partyScore: gameModel.PARTY_SCORE.TOOK_TWO,
       };
       const expected = contractFixture({
         bidType: BID_TYPE.KING_ULTI,
@@ -106,7 +106,7 @@ export default describe("contract", () => {
         bidType: BID_TYPE.KING_ULTI,
         taker: PLAYER_TYPE.OPPONENT,
         bidVariant: SMALLEST_VARIANT.EAGLE,
-        partyScore: PARTY_SCORE.TOOK_TWO,
+        partyScore: gameModel.PARTY_SCORE.TOOK_TWO,
       };
       const expected = "KING_ULTI does not have EAGLE variant.";
 
@@ -117,7 +117,7 @@ export default describe("contract", () => {
       const props = {
         bidType: BID_TYPE.PARTY,
         taker: PLAYER_TYPE.OPPONENT,
-        partyScore: PARTY_SCORE.TOOK_TWO,
+        partyScore: gameModel.PARTY_SCORE.TOOK_TWO,
       };
       const expected = contractFixture({
         bidType: BID_TYPE.PARTY,

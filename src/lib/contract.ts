@@ -11,7 +11,7 @@ import flow from "lodash/fp/flow";
 import pick from "lodash/fp/pick";
 import isEqual from "lodash/fp/isEqual";
 import groupBy from "lodash/fp/groupBy";
-import { PartyScoreValue } from "../models/gameModel";
+import * as gameModel from "../models/gameModel";
 
 const CONTRA_NAMES = ["None", "Contra", "Recontra", "Subcontra", "Mortcontra"];
 
@@ -46,7 +46,7 @@ const validateContract = (contract: Contract): void | undefined => {
 
 export interface CreateContractProps {
   bidType: BID_TYPE;
-  partyScore?: PartyScoreValue | null;
+  partyScore?: gameModel.PartyScoreValue | null;
   taker: PLAYER_TYPE;
   silent?: boolean;
   bidVariant?: BidVariant | null;

@@ -1,4 +1,4 @@
-import { Game } from "../models/gameModel";
+import * as gameModel from "../models/gameModel";
 import {
   PlayerList,
   PlayerScore,
@@ -12,7 +12,7 @@ import assignWith from "lodash/fp/assignWith";
 import { isEqual } from "lodash";
 
 const getScore = (players: PlayerList) => (
-  game: Game
+  game: gameModel.Game
 ): [PlayerScore, PlayerScore] => {
   const [numberOfDeclarers, numberOfOpponents] = getPlayerNumberByType(players);
   const opponentsGameScore = game.playerTypeScores[PLAYER_TYPE.OPPONENT];
@@ -32,7 +32,7 @@ const getScore = (players: PlayerList) => (
   return [null, null];
 };
 
-export const getCurrentScoreForPlayers = (game: Game) => (
+export const getCurrentScoreForPlayers = (game: gameModel.Game) => (
   players: PlayerList
 ): PlayerList => {
   return players.map((player) => {
@@ -49,7 +49,7 @@ export const getCurrentScoreForPlayers = (game: Game) => (
 };
 
 export const isReadyForSave = (players: PlayerList) => (
-  game: Game
+  game: gameModel.Game
 ): boolean => {
   const numbers = getPlayerNumberByType(players);
   const playerNumberValid =

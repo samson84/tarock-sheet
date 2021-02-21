@@ -8,7 +8,7 @@ An awesome app to help track a Tarock game scores.
   - [.] refactor
     - [.] rename the components and methods
       - [x] create a models dir, place the models into this dir
-      - [.] game to gameModel
+      - [x] game to gameModel
         - [x] rename game to gameModel, move it to models folder
         - [x] scores prop to playerTypeScores
         - [x] createGame: create
@@ -18,7 +18,7 @@ An awesome app to help track a Tarock game scores.
         - [x] removeAllContract: removeAllContracts
         - [x] updateGameContract: updateContractAt
         - [x] calculateGame: calculatePlayerTypeScore
-        - [ ] refactor game imports
+        - [x] refactor game imports
       - [ ] contract to contractModel
         - [ ] silent prop: isSilent
         - [ ] sinByTaker prop: isWonByTaker

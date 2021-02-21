@@ -1,15 +1,6 @@
 import { contractFixture } from "../lib/test_data/fixtures";
 import { PLAYER_TYPE } from "../lib/player";
-import {
-  create,
-  addContract,
-  PARTY_SCORE_TYPE,
-  CALLED_TAROCK,
-  update,
-  removeContractAt,
-  updateGameContractAt,
-  calculatePlayerTypeScores,
-} from "./gameModel";
+import * as gameModel from "./gameModel";
 import { createContract } from "../lib/contract";
 import { BID_TYPE, SMALLEST_VARIANT } from "../lib/bid";
 import { gameFixture } from "../lib/test_data/fixtures";
@@ -19,21 +10,21 @@ export default describe("game", () => {
     it("should create a game with default values", () => {
       const expected = gameFixture();
 
-      const current = create();
+      const current = gameModel.create();
 
       expect(current).toEqual(expected);
     });
     it("should create a game with props", () => {
       const props = {
-        partyScoreType: PARTY_SCORE_TYPE.SOLO,
-        called_tarock: CALLED_TAROCK.XVIII,
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.SOLO,
+        called_tarock: gameModel.CALLED_TAROCK.XVIII,
       };
       const expected = gameFixture({
-        partyScoreType: PARTY_SCORE_TYPE.SOLO,
-        called_tarock: CALLED_TAROCK.XVIII,
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.SOLO,
+        called_tarock: gameModel.CALLED_TAROCK.XVIII,
       });
 
-      const current = create(props);
+      const current = gameModel.create(props);
 
       expect(current).toEqual(expected);
     });
@@ -47,24 +38,24 @@ export default describe("game", () => {
         called_tarock: null,
       });
       const updates = {
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO,
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_TWO,
         partyBaseScore: 2,
-        called_tarock: CALLED_TAROCK.XX,
+        called_tarock: gameModel.CALLED_TAROCK.XX,
       };
       const expected = gameFixture({
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO,
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_TWO,
         partyBaseScore: 2,
-        called_tarock: CALLED_TAROCK.XX,
+        called_tarock: gameModel.CALLED_TAROCK.XX,
       });
-      const current = update(updates)(game);
+      const current = gameModel.update(updates)(game);
       expect(current).toEqual(expected);
     });
     it("should recalculate the party score based contracts and a game score, if the partyScoreType changes.", () => {
       const updates = {
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_ONE,
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_ONE,
       };
       const game = gameFixture({
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_THREE,
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_THREE,
         partyBaseScore: 1,
         contracts: [
           contractFixture({
@@ -80,7 +71,7 @@ export default describe("game", () => {
         },
       });
       const expected = gameFixture({
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_ONE, // party score is 3
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_ONE, // party score is 3
         partyBaseScore: 1,
         contracts: [
           contractFixture({
@@ -95,7 +86,7 @@ export default describe("game", () => {
           [PLAYER_TYPE.OPPONENT]: 12,
         },
       });
-      const current = update(updates)(game);
+      const current = gameModel.update(updates)(game);
       expect(current).toEqual(expected);
     });
     it("should recalculate the party score based contracts and the game score, if the partyBaseScore changes.", () => {
@@ -103,7 +94,7 @@ export default describe("game", () => {
         partyBaseScore: 2,
       };
       const game = gameFixture({
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_THREE,
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_THREE,
         partyBaseScore: 1,
         contracts: [
           contractFixture({
@@ -119,7 +110,7 @@ export default describe("game", () => {
         },
       });
       const expected = gameFixture({
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_THREE, // score 1
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_THREE, // score 1
         partyBaseScore: 2, // multiplier
         contracts: [
           contractFixture({
@@ -134,16 +125,16 @@ export default describe("game", () => {
           [PLAYER_TYPE.OPPONENT]: 8,
         },
       });
-      const current = update(updates)(game);
+      const current = gameModel.update(updates)(game);
       expect(current).toEqual(expected);
     });
     it("should recalculate the party score based contracts and the game score, if the partyBaseScore and partyScoreType changes.", () => {
       const updates = {
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO,
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_TWO,
         partyBaseScore: 2,
       };
       const game = gameFixture({
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_THREE,
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_THREE,
         partyBaseScore: 1,
         contracts: [
           contractFixture({
@@ -159,7 +150,7 @@ export default describe("game", () => {
         },
       });
       const expected = gameFixture({
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO, // score 2
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_TWO, // score 2
         partyBaseScore: 2, // multiplier
         contracts: [
           contractFixture({
@@ -174,15 +165,15 @@ export default describe("game", () => {
           [PLAYER_TYPE.OPPONENT]: 16,
         },
       });
-      const current = update(updates)(game);
+      const current = gameModel.update(updates)(game);
       expect(current).toEqual(expected);
     });
     it("should keep the contracts bidBaseScore, when the contract independent from the party, partyScoreType changes", () => {
       const updates = {
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_ONE,
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_ONE,
       };
       const game = gameFixture({
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_THREE,
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_THREE,
         partyBaseScore: 1,
         contracts: [
           contractFixture({
@@ -199,7 +190,7 @@ export default describe("game", () => {
         },
       });
       const expected = gameFixture({
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_ONE, // party score is 3
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_ONE, // party score is 3
         partyBaseScore: 1,
         contracts: [
           contractFixture({
@@ -215,7 +206,7 @@ export default describe("game", () => {
           [PLAYER_TYPE.OPPONENT]: 8,
         },
       });
-      const current = update(updates)(game);
+      const current = gameModel.update(updates)(game);
       expect(current).toEqual(expected);
     });
     it("should keep the contracts bidBaseScore, when the contract independent from the party, partyBaseScore changes", () => {
@@ -223,7 +214,7 @@ export default describe("game", () => {
         partyBaseScore: 2,
       };
       const game = gameFixture({
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_THREE,
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_THREE,
         partyBaseScore: 1,
         contracts: [
           contractFixture({
@@ -240,7 +231,7 @@ export default describe("game", () => {
         },
       });
       const expected = gameFixture({
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_THREE, // party score is 1
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_THREE, // party score is 1
         partyBaseScore: 2,
         contracts: [
           contractFixture({
@@ -256,16 +247,16 @@ export default describe("game", () => {
           [PLAYER_TYPE.OPPONENT]: 8,
         },
       });
-      const current = update(updates)(game);
+      const current = gameModel.update(updates)(game);
       expect(current).toEqual(expected);
     });
     it("should keep the contracts bidBaseScore, when the contract independent from the party, partyBaseScore and partyScoreType changes", () => {
       const updates = {
         partyBaseScore: 2,
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO,
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_TWO,
       };
       const game = gameFixture({
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_THREE,
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_THREE,
         partyBaseScore: 1,
         contracts: [
           contractFixture({
@@ -282,7 +273,7 @@ export default describe("game", () => {
         },
       });
       const expected = gameFixture({
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO, // party score is 2
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_TWO, // party score is 2
         partyBaseScore: 2,
         contracts: [
           contractFixture({
@@ -298,15 +289,15 @@ export default describe("game", () => {
           [PLAYER_TYPE.OPPONENT]: 8,
         },
       });
-      const current = update(updates)(game);
+      const current = gameModel.update(updates)(game);
       expect(current).toEqual(expected);
     });
     it("should calculate the game score, if the partyScoreType changes.", () => {
       const updates = {
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_ONE,
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_ONE,
       };
       const game = gameFixture({
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_THREE,
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_THREE,
         contracts: [
           contractFixture({
             bidType: BID_TYPE.PARTY,
@@ -322,7 +313,7 @@ export default describe("game", () => {
         },
       });
       const expected = gameFixture({
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_ONE, // party score is 3
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_ONE, // party score is 3
         contracts: [
           contractFixture({
             bidType: BID_TYPE.PARTY,
@@ -337,7 +328,7 @@ export default describe("game", () => {
           [PLAYER_TYPE.DECLARER]: -3,
         },
       });
-      const current = update(updates)(game);
+      const current = gameModel.update(updates)(game);
       expect(current).toEqual(expected);
     });
   });
@@ -350,10 +341,10 @@ export default describe("game", () => {
       });
       const game = gameFixture({
         contracts: [],
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO, // score = 2
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_TWO, // score = 2
       });
       const expected = gameFixture({
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO, // score = 2
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_TWO, // score = 2
         contracts: [
           contractFixture({
             bidType: BID_TYPE.PARTY,
@@ -363,7 +354,7 @@ export default describe("game", () => {
         ],
       });
 
-      const current = addContract(game)(contract);
+      const current = gameModel.addContract(game)(contract);
 
       expect(current).toEqual(expected);
     });
@@ -374,7 +365,7 @@ export default describe("game", () => {
         partyScore: 2,
       });
       const game = gameFixture({
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO, // score = 2
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_TWO, // score = 2
         contracts: [
           contractFixture({
             bidType: BID_TYPE.PARTY,
@@ -383,7 +374,7 @@ export default describe("game", () => {
         ],
       });
       const expected = gameFixture({
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO, // score = 2
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_TWO, // score = 2
         contracts: [
           contractFixture({
             bidType: BID_TYPE.PARTY,
@@ -396,7 +387,7 @@ export default describe("game", () => {
         ],
       });
 
-      const current = addContract(game)(contract);
+      const current = gameModel.addContract(game)(contract);
 
       expect(current).toEqual(expected);
     });
@@ -418,7 +409,7 @@ export default describe("game", () => {
         ],
       });
 
-      const current = addContract(game)(contract);
+      const current = gameModel.addContract(game)(contract);
 
       expect(current).toEqual(expected);
     });
@@ -431,14 +422,14 @@ export default describe("game", () => {
       });
       const game = gameFixture({
         contracts: [],
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO, // score = 2
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_TWO, // score = 2
         playerTypeScores: {
           [PLAYER_TYPE.DECLARER]: null,
           [PLAYER_TYPE.OPPONENT]: null,
         },
       });
       const expected = gameFixture({
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO, // score = 2
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_TWO, // score = 2
         contracts: [
           contractFixture({
             bidType: BID_TYPE.PARTY,
@@ -452,7 +443,7 @@ export default describe("game", () => {
           [PLAYER_TYPE.OPPONENT]: -2,
         },
       });
-      const current = addContract(game)(contract);
+      const current = gameModel.addContract(game)(contract);
 
       expect(current).toEqual(expected);
     });
@@ -491,7 +482,7 @@ export default describe("game", () => {
         ],
       });
 
-      const current = removeContractAt(game)(index);
+      const current = gameModel.removeContractAt(game)(index);
 
       expect(current).toEqual(expected);
     });
@@ -530,14 +521,14 @@ export default describe("game", () => {
         ],
       });
 
-      const current = removeContractAt(game)(index);
+      const current = gameModel.removeContractAt(game)(index);
 
       expect(current).toEqual(expected);
     });
     it("should calculate the game score, contract is won", () => {
       const index = 1;
       const game = gameFixture({
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_THREE,
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_THREE,
         contracts: [
           contractFixture({
             bidType: BID_TYPE.FOUR_KING,
@@ -559,7 +550,7 @@ export default describe("game", () => {
         },
       });
       const expected = gameFixture({
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_THREE,
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_THREE,
         contracts: [
           contractFixture({
             bidType: BID_TYPE.FOUR_KING,
@@ -574,7 +565,7 @@ export default describe("game", () => {
         },
       });
 
-      const current = removeContractAt(game)(index);
+      const current = gameModel.removeContractAt(game)(index);
 
       expect(current).toEqual(expected);
     });
@@ -603,7 +594,7 @@ export default describe("game", () => {
         ],
       });
 
-      const current = updateGameContractAt(game)(index)(updated);
+      const current = gameModel.updateGameContractAt(game)(index)(updated);
 
       expect(current).toEqual(expected);
     });
@@ -646,7 +637,7 @@ export default describe("game", () => {
           [PLAYER_TYPE.OPPONENT]: -4,
         },
       });
-      const current = updateGameContractAt(game)(index)(updated);
+      const current = gameModel.updateGameContractAt(game)(index)(updated);
       expect(current).toEqual(expected);
     });
   });
@@ -654,14 +645,14 @@ export default describe("game", () => {
     it("should return null, null if no contracts given", () => {
       const game = gameFixture({
         contracts: [],
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO,
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_TWO,
       });
       const expected = {
         [PLAYER_TYPE.DECLARER]: null,
         [PLAYER_TYPE.OPPONENT]: null,
       };
 
-      const current = calculatePlayerTypeScores(game);
+      const current = gameModel.calculatePlayerTypeScores(game);
       expect(current).toEqual(expected);
     });
 
@@ -685,13 +676,13 @@ export default describe("game", () => {
             winByTaker: null,
           }),
         ],
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO,
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_TWO,
       });
       const expected = {
         [PLAYER_TYPE.DECLARER]: null,
         [PLAYER_TYPE.OPPONENT]: null,
       };
-      const current = calculatePlayerTypeScores(game);
+      const current = gameModel.calculatePlayerTypeScores(game);
       expect(current).toEqual(expected);
     });
     it("should get the score for the opponents and the declarers too.", () => {
@@ -714,13 +705,13 @@ export default describe("game", () => {
             winByTaker: true,
           }),
         ],
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO,
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_TWO,
       });
       const expected = {
         [PLAYER_TYPE.DECLARER]: 8, // centrum - party
         [PLAYER_TYPE.OPPONENT]: -8,
       };
-      const current = calculatePlayerTypeScores(game);
+      const current = gameModel.calculatePlayerTypeScores(game);
       expect(current).toEqual(expected);
     });
     it("should calculate multiple score per player type", () => {
@@ -760,13 +751,13 @@ export default describe("game", () => {
             winByTaker: true,
           }),
         ],
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO,
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_TWO,
       });
       const expected = {
         [PLAYER_TYPE.DECLARER]: 10 + 10 - 2 - 2 * 2, // centrum, ulti, -four king, -contra trull
         [PLAYER_TYPE.OPPONENT]: -14,
       };
-      const current = calculatePlayerTypeScores(game);
+      const current = gameModel.calculatePlayerTypeScores(game);
       expect(current).toEqual(expected);
     });
     it("should calculate the correct score, even if a contract is by a declarer lost.", () => {
@@ -806,13 +797,13 @@ export default describe("game", () => {
             winByTaker: true,
           }),
         ],
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO,
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_TWO,
       });
       const expected = {
         [PLAYER_TYPE.DECLARER]: -10 - 10 - 2 - 2 * 2, // - centrum, - ulti, -four king, -contra trull
         [PLAYER_TYPE.OPPONENT]: 26,
       };
-      const current = calculatePlayerTypeScores(game);
+      const current = gameModel.calculatePlayerTypeScores(game);
       expect(current).toEqual(expected);
     });
     it("should calculate the correct score, even if the first contract / player type still not won / lost.", () => {
@@ -868,13 +859,13 @@ export default describe("game", () => {
             winByTaker: true,
           }),
         ],
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO,
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_TWO,
       });
       const expected = {
         [PLAYER_TYPE.DECLARER]: -10 + 25 - 2 * 2 - 4, // (?) centrum, - ulti, + furry, four king (?), - contra trull, - catch the pagat
         [PLAYER_TYPE.OPPONENT]: -7,
       };
-      const current = calculatePlayerTypeScores(game);
+      const current = gameModel.calculatePlayerTypeScores(game);
       expect(current).toEqual(expected);
     });
 
@@ -931,13 +922,13 @@ export default describe("game", () => {
             winByTaker: true,
           }),
         ],
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO,
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_TWO,
       });
       const expected = {
         [PLAYER_TYPE.DECLARER]: -10 + 25 - 2 - 4, // centrum, (?) ulti, + furry, - four king, (?) contra trull, - catch the pagat
         [PLAYER_TYPE.OPPONENT]: -9,
       };
-      const current = calculatePlayerTypeScores(game);
+      const current = gameModel.calculatePlayerTypeScores(game);
       expect(current).toEqual(expected);
     });
 
@@ -994,13 +985,13 @@ export default describe("game", () => {
             winByTaker: null,
           }),
         ],
-        partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO,
+        partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_TWO,
       });
       const expected = {
         [PLAYER_TYPE.DECLARER]: -10 - 10 - 2 - 2 * 2, // - centrum, - ulti, (?) furry, - four king, - contra trull, (?) catch the pagat
         [PLAYER_TYPE.OPPONENT]: 26,
       };
-      const current = calculatePlayerTypeScores(game);
+      const current = gameModel.calculatePlayerTypeScores(game);
       expect(current).toEqual(expected);
     });
   });
