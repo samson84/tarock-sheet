@@ -5,10 +5,9 @@ An awesome app to help track a Tarock game scores.
 ## Roadmap
 
 - [.] Milesteone 1 - Local storage, correct scores, Player handling,UI improvements
-  - [x] add confirmations to destroy / reset type of actions
-  - [ ] create a better app icon and align the icon in the app bar
-    - [ ] add a better favicon
-    - [ ] add a better logo for manifest
+  - [x] create a better app icon and align the icon in the app bar
+    - [x] add a better favicon
+    - [x] add a better logo for manifest
   - [ ] refactor
     - [ ] Tarock sheet: move handler's logic to data layer, if possible
     - [ ] contract better calculation of the bid base score
@@ -23,6 +22,7 @@ An awesome app to help track a Tarock game scores.
   - [ ] usability
     - [ ] Game Properties: show score near the game score selector radio buttons
     - [ ] BidSelector: show the score near the bids
+  - [ ] Sign which player is the mayor in player list, sign it in scores too.
   - [ ] compact Contract Table
     - [ ] collapse fields
     - [ ] comapct view
@@ -31,8 +31,9 @@ An awesome app to help track a Tarock game scores.
     - [ ] show the declarers and opponents scores around the contract table
     - [ ] ContractsTable: show the the contra names instead of the values
     - [ ] ContractsTable: integrate bid variant into the bid column
+    - [ ] Variant selector: show icons near the variants
+      - [ ] Contracts Table: show variants icons'
   - [ ] responsive design check
-
 - [ ] Milestone 3, store in a permanent storage, share a game
   - [ ] implement error handling and showing to the user
   - [ ] Set and save the mayor state
@@ -59,6 +60,7 @@ An awesome app to help track a Tarock game scores.
   - [ ] multilanguage
 - [x] Done
   - [.] Milestone 1
+    - [x] add confirmations to destroy / reset type of actions
     - [x] do not delete the contracts, if the previous party score type was party or contracts are already added
     - [x] show the contracts and the selector only if, the party is selected
     - [x] Indicate Game winner (Radli) on players
