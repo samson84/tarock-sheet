@@ -6,7 +6,7 @@ import {
   create,
   addContract,
   update,
-  updateGameContract,
+  updateGameContractAt,
   removeContractAt,
   UpdateGameProps,
   removeAllContracts,
@@ -133,7 +133,7 @@ const TarockSheet = () => {
     setGame(
       flow(
         updateContract({ [field]: value }),
-        updateGameContract(game)(index)
+        updateGameContractAt(game)(index)
       )(game.contracts[index])
     );
   };

@@ -7,7 +7,7 @@ import {
   CALLED_TAROCK,
   update,
   removeContractAt,
-  updateGameContract,
+  updateGameContractAt,
   calculateGame,
 } from "./gameModel";
 import { createContract } from "../lib/contract";
@@ -603,7 +603,7 @@ export default describe("game", () => {
         ],
       });
 
-      const current = updateGameContract(game)(index)(updated);
+      const current = updateGameContractAt(game)(index)(updated);
 
       expect(current).toEqual(expected);
     });
@@ -646,7 +646,7 @@ export default describe("game", () => {
           [PLAYER_TYPE.OPPONENT]: -4,
         },
       });
-      const current = updateGameContract(game)(index)(updated);
+      const current = updateGameContractAt(game)(index)(updated);
       expect(current).toEqual(expected);
     });
   });

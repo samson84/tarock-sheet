@@ -148,7 +148,7 @@ export const removeAllContracts = (game: Game): Game => ({
   contracts: [],
 });
 
-export const updateGameContract = (game: Game) => (index: number) => (
+export const updateGameContractAt = (game: Game) => (index: number) => (
   updated: Contract
 ): Game => {
   return updateGameWithPlayerTypeScores({
