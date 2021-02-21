@@ -5,7 +5,7 @@ import {
   getPlayerNumberByType,
   PlayerListObject,
   Player,
-  updatePlayer,
+  update,
 } from "../models/playerModel";
 import { Score } from "../models/scoreModel";
 import assignWith from "lodash/fp/assignWith";
@@ -91,5 +91,5 @@ export const assignScoresToPlayers = (players: PlayerList) => (
   players.map((player) =>
     sessionScores[player.id] === undefined
       ? player
-      : updatePlayer({ sessionScore: sessionScores[player.id] })(player)
+      : update({ sessionScore: sessionScores[player.id] })(player)
   );

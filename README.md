@@ -36,6 +36,7 @@ An awesome app to help track a Tarock game scores.
         - [x] currentScore prop: gameScore
         - [x] PlayerScore: Score
         - [x] createPlayer: create
+        - [x] updatePlayer: update
         - [ ] getAnotherPlaterType: getOppositePlayerType
         - [ ] getPlayerTypeColor: getTypeColor
         - [ ] rotataePlayerTypeWithNull: rotateTypeWithNull

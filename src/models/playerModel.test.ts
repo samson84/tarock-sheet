@@ -10,7 +10,7 @@ import {
   PLAYER_TYPE,
   removePlayer,
   rotatePlayerTypeWithNull,
-  updatePlayer,
+  update,
   updatePlayerAt,
   UpdatePlayerProps,
 } from "./playerModel";
@@ -55,7 +55,7 @@ export default describe("Player", () => {
         gameScore: 90,
         type: PLAYER_TYPE.DECLARER,
       });
-      const current = updatePlayer(updates)(player);
+      const current = update(updates)(player);
 
       expect(current).toEqual(expected);
     });

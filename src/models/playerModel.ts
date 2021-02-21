@@ -23,7 +23,7 @@ export const create = (): Player => ({
 });
 
 export type UpdatePlayerProps = Partial<Omit<Player, "id">>;
-export const updatePlayer = (updates: UpdatePlayerProps) => (
+export const update = (updates: UpdatePlayerProps) => (
   player: Player
 ): Player => ({
   ...player,
@@ -93,10 +93,10 @@ export const getPlayerNumberByType = (
 };
 
 export const clearPlayersType = (players: PlayerList): PlayerList =>
-  players.map((player) => updatePlayer({ type: null })(player));
+  players.map((player) => update({ type: null })(player));
 
 export const resetPlayerScore = (players: PlayerList): PlayerList =>
-  players.map((player) => updatePlayer({ sessionScore: null })(player));
+  players.map((player) => update({ sessionScore: null })(player));
 
 export const filterPlayersInGame = (players: PlayerList): PlayerList =>
   players.filter((player) => player.type !== null);

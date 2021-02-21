@@ -16,7 +16,7 @@ import {
   Player,
   PlayerList,
   rotatePlayerTypeWithNull,
-  updatePlayer,
+  update,
   updatePlayerAt,
   removePlayer,
 } from "../models/playerModel";
@@ -46,7 +46,7 @@ const EditablePlayerItem = (props: EditablePlayerItemProps) => {
   const { player, onRemove, onChange } = props;
   const handleRemove = () => onRemove(player);
   const handleChange = (prop: string) => (value: any) => {
-    onChange(updatePlayer({ [prop]: value })(player));
+    onChange(update({ [prop]: value })(player));
   };
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     handleChange("name")(event.target.value);
@@ -107,9 +107,7 @@ interface PlayerItemProps {
 }
 const PlayerItem = ({ player, onChange }: PlayerItemProps) => {
   const handleChange = () => {
-    onChange(
-      updatePlayer({ type: rotatePlayerTypeWithNull(player.type) })(player)
-    );
+    onChange(update({ type: rotatePlayerTypeWithNull(player.type) })(player));
   };
   const GAME_WINNER_SCORE = 180;
   const color = getPlayerTypeColor(player.type);
