@@ -3,7 +3,7 @@ import { BID_TYPE, getAllBidsByGorup } from "../lib/bid";
 import ContractSelector from "./ContractSelector";
 import {
   Game,
-  createGame,
+  create,
   addContract,
   updateGame,
   updateGameContract,
@@ -45,7 +45,7 @@ const storage = storageInitializer();
 
 const TarockSheet = () => {
   const [game, setGame] = useState<Game>(
-    (storage.read("game") as Game | null) ?? createGame()
+    (storage.read("game") as Game | null) ?? create()
   );
   const [players, setPlayers] = useState<Player[]>(
     (storage.read("players") as Player[] | null) ?? []
@@ -73,7 +73,7 @@ const TarockSheet = () => {
 
   const handleContractDelete = (index: number) =>
     setGame(removeContract(game)(index));
-  const handleResetGame = () => setGame(createGame());
+  const handleResetGame = () => setGame(create());
   const handlePlayerListChange = (playerList: PlayerList) => {
     updatePlayersState(playerList);
   };
@@ -156,10 +156,10 @@ const TarockSheet = () => {
       updatePlayersState
     )(updated);
     setGameScoreList(updated);
-    setGame(createGame());
+    setGame(create());
   };
   const handleResetPlayers = () => {
-    setGame(createGame());
+    setGame(create());
     updateGameScoreListState([]);
     updatePlayersState([]);
   };

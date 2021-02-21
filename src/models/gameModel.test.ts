@@ -1,7 +1,7 @@
 import { contractFixture } from "../lib/test_data/fixtures";
 import { PLAYER_TYPE } from "../lib/player";
 import {
-  createGame,
+  create,
   addContract,
   PARTY_SCORE_TYPE,
   CALLED_TAROCK,
@@ -19,7 +19,7 @@ export default describe("game", () => {
     it("should create a game with default values", () => {
       const expected = gameFixture();
 
-      const current = createGame();
+      const current = create();
 
       expect(current).toEqual(expected);
     });
@@ -33,7 +33,7 @@ export default describe("game", () => {
         called_tarock: CALLED_TAROCK.XVIII,
       });
 
-      const current = createGame(props);
+      const current = create(props);
 
       expect(current).toEqual(expected);
     });

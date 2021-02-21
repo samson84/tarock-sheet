@@ -72,7 +72,7 @@ interface CreateGameProps {
   partyScoreType?: PARTY_SCORE_TYPE;
   called_tarock?: CalledTarockType;
 }
-export const createGame = (props: CreateGameProps = {}): Game => ({
+export const create = (props: CreateGameProps = {}): Game => ({
   contracts: [],
   partyScoreType: props.partyScoreType || null,
   partyBaseScore: 1,
