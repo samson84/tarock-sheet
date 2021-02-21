@@ -9,7 +9,7 @@ import {
   updateGameContract,
   removeContractAt,
   UpdateGameProps,
-  removeAllContract,
+  removeAllContracts,
   isPartyLike,
   addContractFlipped,
   PARTY_SCORE_TYPE,
@@ -112,7 +112,7 @@ const TarockSheet = () => {
               winByTaker: true,
             });
         const updated = flow(
-          removeAllContract,
+          removeAllContracts,
           addContractFlipped(contract),
           update({ [prop]: value })
         )(game);

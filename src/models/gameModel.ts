@@ -143,7 +143,7 @@ export const removeContractAt = (game: Game) => (index: number): Game => {
   });
 };
 
-export const removeAllContract = (game: Game): Game => ({
+export const removeAllContracts = (game: Game): Game => ({
   ...game,
   contracts: [],
 });
