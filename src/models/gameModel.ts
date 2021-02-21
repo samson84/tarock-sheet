@@ -1,5 +1,5 @@
 import * as contractModel from "./contractModel";
-import { getAnotherPlayerType, PLAYER_TYPE, PlayerScore } from "../lib/player";
+import { getAnotherPlayerType, PLAYER_TYPE, PlayerScore } from "./playerModel";
 
 type PlayerTypeScore = {
   [PLAYER_TYPE.DECLARER]: PlayerScore;

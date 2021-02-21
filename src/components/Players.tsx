@@ -19,7 +19,7 @@ import {
   updatePlayer,
   updatePlayerAt,
   removePlayer,
-} from "../lib/player";
+} from "../models/playerModel";
 import { MdDelete as RemoveIcon } from "react-icons/md";
 import { MdEdit as EditIcon } from "react-icons/md";
 import { MdPerson as UserIcon } from "react-icons/md";

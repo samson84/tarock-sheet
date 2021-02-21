@@ -1,5 +1,5 @@
 import { BID_TYPE } from "../bid";
-import { Player, PLAYER_TYPE } from "../player";
+import { Player, PLAYER_TYPE } from "../../models/playerModel";
 import * as contractModel from "../../models/contractModel";
 import * as gameModel from "../../models/gameModel";
 import { createId } from "../util";

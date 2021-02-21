@@ -1,5 +1,5 @@
 import { BID_TYPE, CARD_SHAPE_VARIANT, SMALLEST_VARIANT } from "../lib/bid";
-import { PLAYER_TYPE } from "../lib/player";
+import { PLAYER_TYPE } from "./playerModel";
 
 import * as contractModel from "./contractModel";
 import * as gameModel from "./gameModel";

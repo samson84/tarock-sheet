@@ -1,4 +1,3 @@
-import { clear } from "console";
 import {
   addPlayer,
   clearPlayersType,
@@ -8,14 +7,13 @@ import {
   getAnotherPlayerType,
   getPlayerNumberByType,
   PlayerList,
-  PlayerListObject,
   PLAYER_TYPE,
   removePlayer,
   rotatePlayerTypeWithNull,
   updatePlayer,
   updatePlayerAt,
-} from "./player";
-import { expectPlayer, playerFixture } from "./test_data/fixtures";
+} from "./playerModel";
+import { expectPlayer, playerFixture } from "../lib/test_data/fixtures";
 
 export default describe("Player", () => {
   describe("createPlayer", () => {

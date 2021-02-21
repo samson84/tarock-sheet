@@ -18,7 +18,7 @@ import {
   PlayerListObject,
   PLAYER_TYPE,
   resetPlayerScore,
-} from "../lib/player";
+} from "../models/playerModel";
 import {
   assignScoresToPlayers,
   getCurrentScoreForPlayers,

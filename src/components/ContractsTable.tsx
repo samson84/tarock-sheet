@@ -22,7 +22,7 @@ import {
   getAnotherPlayerType,
   getPlayerTypeColor,
   PLAYER_TYPE,
-} from "../lib/player";
+} from "../models/playerModel";
 import curry from "lodash/fp/curry";
 
 interface VariantSelectorModalProps {

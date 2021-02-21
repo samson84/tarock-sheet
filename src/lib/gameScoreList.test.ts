@@ -8,7 +8,7 @@ import {
   PlayerListObject,
   PLAYER_TYPE,
   PlayerList,
-} from "./player";
+} from "../models/playerModel";
 import { gameFixture, playerFixture } from "./test_data/fixtures";
 
 export default describe("gameScoreList", () => {

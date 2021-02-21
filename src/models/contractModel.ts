@@ -1,4 +1,4 @@
-import { PlayerScore, PLAYER_TYPE } from "../lib/player";
+import { PlayerScore, PLAYER_TYPE } from "./playerModel";
 import {
   BidVariant,
   BID_TYPE,

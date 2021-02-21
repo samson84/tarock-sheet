@@ -17,7 +17,7 @@ import {
 } from "../lib/bid";
 import { upperCaseToWords } from "../lib/util";
 import * as contractModel from "../models/contractModel";
-import { PLAYER_TYPE } from "../lib/player";
+import { PLAYER_TYPE } from "../models/playerModel";
 
 interface BidSelectorProps {
   bidsByGroup: BidsByGroup;

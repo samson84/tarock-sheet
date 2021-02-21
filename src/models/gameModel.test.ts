@@ -1,5 +1,5 @@
 import { contractFixture } from "../lib/test_data/fixtures";
-import { PLAYER_TYPE } from "../lib/player";
+import { PLAYER_TYPE } from "./playerModel";
 import * as gameModel from "./gameModel";
 import * as contractModel from "./contractModel";
 import { BID_TYPE, SMALLEST_VARIANT } from "../lib/bid";

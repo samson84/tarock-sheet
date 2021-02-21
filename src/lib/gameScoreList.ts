@@ -7,7 +7,7 @@ import {
   PlayerListObject,
   Player,
   updatePlayer,
-} from "./player";
+} from "../models/playerModel";
 import assignWith from "lodash/fp/assignWith";
 import { isEqual } from "lodash";
 

@@ -19,7 +19,7 @@ An awesome app to help track a Tarock game scores.
         - [x] updateGameContract: updateContractAt
         - [x] calculateGame: calculatePlayerTypeScore
         - [x] refactor game imports
-      - [.] contract to contractModel
+      - [x] contract to contractModel
         - [x] rename and move contract to contractModel
         - [x] silent prop: isSilent
         - [x] winByTaker prop: isWonByTaker
@@ -30,15 +30,18 @@ An awesome app to help track a Tarock game scores.
         - [x] remove unused functions: withIndices, filterByPartyLike, filterByProps
         - [x] refactor contractModel imports to namespace imports
         - [x] ContractScore --> PlayerScore
-      - [ ] player: playerModel
+      - [.] player: playerModel
+        - [x] rename and move
         - [ ] score prop: sessionScore
         - [ ] currentScore: gameScore
         - [ ] PlayerScore: Score
         - [ ] createPlayer: create
-        - [ ] getAnotherPlaterType: getOppositePlaterType
+        - [ ] getAnotherPlaterType: getOppositePlayerType
         - [ ] getPlayerTypeColor: getTypeColor
         - [ ] rotataePlayerTypeWithNull: rotateTypeWithNull
+        - [ ] refactor to namespace imports
       - [ ] playerListModel
+        - [ ] create and move functions
         - [ ] playerModel.addPlayer: add
         - [ ] playerModel.removePlayer: remove
         - [ ] playerModel.updatePlayerAt: updatePlayer
@@ -47,7 +50,9 @@ An awesome app to help track a Tarock game scores.
         - [ ] resetPlaerScore: clearSessionScore
         - [ ] filterPlayersInGame: filterByInGame
         - [ ] createPlayerListObject: mapToObject
+        - [ ] refactor to namespace imports
       - [ ] bid: bidModel
+        - [ ] rename and move
         - [ ] silent prop: canSilent
         - [ ] winByDefault prop: isWinByDefault
         - [ ] notWinIfSilent prop: isNotWinIfSilent
@@ -62,12 +67,15 @@ An awesome app to help track a Tarock game scores.
         - [ ] getAllBids: getAll
         - [ ] getAllBidsByGroup: getAllByGroup
         - [ ] getBidScore: calculateScore
+        - [ ] refactor to namespace imports
       - [ ] gameScoreList: sessionModel
+        - [ ] rename and move
         - [ ] getScore: calculateScoreByPlayerType
         - [ ] getCurrentScoreForPlayer: mapGameScoreToPlayers
         - [ ] sumPlayerScores: calculateSessionScores
         - [ ] PlayerScores: SessionScore
         - [ ] assignScoresToPlayers: mapSessionScoresToPlayers
+        - [ ] refactor namespace imports
       - [ ] move fixtures to models
         - [ ] rename fixtures
         - [ ] convert to name space imports

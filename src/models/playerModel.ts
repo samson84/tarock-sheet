@@ -1,4 +1,4 @@
-import { createId, Id } from "./util";
+import { createId, Id } from "../lib/util";
 
 export enum PLAYER_TYPE {
   DECLARER = "DECLARER",
