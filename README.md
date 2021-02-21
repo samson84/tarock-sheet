@@ -12,7 +12,7 @@ An awesome app to help track a Tarock game scores.
         - [x] rename game to gameModel, move it to models folder
         - [x] scores prop to playerTypeScores
         - [x] createGame: create
-        - [ ] updateGame: update
+        - [x] updateGame: update
         - [ ] updateGameWithScores: updateWithPlayerTypeScores
         - [ ] removeContract: removeContractAt
         - [ ] removeAllContract: removeAllContracts

@@ -97,7 +97,7 @@ export interface UpdateGameProps {
   called_tarock?: CalledTarockType | null;
   partyBaseScore?: number;
 }
-export const updateGame = (updates: UpdateGameProps) => (game: Game): Game => {
+export const update = (updates: UpdateGameProps) => (game: Game): Game => {
   const partyScoreType =
     updates.partyScoreType === undefined
       ? game.partyScoreType

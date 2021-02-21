@@ -5,7 +5,7 @@ import {
   Game,
   create,
   addContract,
-  updateGame,
+  update,
   updateGameContract,
   removeContract,
   UpdateGameProps,
@@ -114,11 +114,11 @@ const TarockSheet = () => {
         const updated = flow(
           removeAllContract,
           addContractFlipped(contract),
-          updateGame({ [prop]: value })
+          update({ [prop]: value })
         )(game);
         return updated;
       } else {
-        return updateGame({ [prop]: value })(game);
+        return update({ [prop]: value })(game);
       }
     });
   };

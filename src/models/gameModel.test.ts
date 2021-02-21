@@ -5,7 +5,7 @@ import {
   addContract,
   PARTY_SCORE_TYPE,
   CALLED_TAROCK,
-  updateGame,
+  update,
   removeContract,
   updateGameContract,
   calculateGame,
@@ -56,7 +56,7 @@ export default describe("game", () => {
         partyBaseScore: 2,
         called_tarock: CALLED_TAROCK.XX,
       });
-      const current = updateGame(updates)(game);
+      const current = update(updates)(game);
       expect(current).toEqual(expected);
     });
     it("should recalculate the party score based contracts and a game score, if the partyScoreType changes.", () => {
@@ -95,7 +95,7 @@ export default describe("game", () => {
           [PLAYER_TYPE.OPPONENT]: 12,
         },
       });
-      const current = updateGame(updates)(game);
+      const current = update(updates)(game);
       expect(current).toEqual(expected);
     });
     it("should recalculate the party score based contracts and the game score, if the partyBaseScore changes.", () => {
@@ -134,7 +134,7 @@ export default describe("game", () => {
           [PLAYER_TYPE.OPPONENT]: 8,
         },
       });
-      const current = updateGame(updates)(game);
+      const current = update(updates)(game);
       expect(current).toEqual(expected);
     });
     it("should recalculate the party score based contracts and the game score, if the partyBaseScore and partyScoreType changes.", () => {
@@ -174,7 +174,7 @@ export default describe("game", () => {
           [PLAYER_TYPE.OPPONENT]: 16,
         },
       });
-      const current = updateGame(updates)(game);
+      const current = update(updates)(game);
       expect(current).toEqual(expected);
     });
     it("should keep the contracts bidBaseScore, when the contract independent from the party, partyScoreType changes", () => {
@@ -215,7 +215,7 @@ export default describe("game", () => {
           [PLAYER_TYPE.OPPONENT]: 8,
         },
       });
-      const current = updateGame(updates)(game);
+      const current = update(updates)(game);
       expect(current).toEqual(expected);
     });
     it("should keep the contracts bidBaseScore, when the contract independent from the party, partyBaseScore changes", () => {
@@ -256,7 +256,7 @@ export default describe("game", () => {
           [PLAYER_TYPE.OPPONENT]: 8,
         },
       });
-      const current = updateGame(updates)(game);
+      const current = update(updates)(game);
       expect(current).toEqual(expected);
     });
     it("should keep the contracts bidBaseScore, when the contract independent from the party, partyBaseScore and partyScoreType changes", () => {
@@ -298,7 +298,7 @@ export default describe("game", () => {
           [PLAYER_TYPE.OPPONENT]: 8,
         },
       });
-      const current = updateGame(updates)(game);
+      const current = update(updates)(game);
       expect(current).toEqual(expected);
     });
     it("should calculate the game score, if the partyScoreType changes.", () => {
@@ -337,7 +337,7 @@ export default describe("game", () => {
           [PLAYER_TYPE.DECLARER]: -3,
         },
       });
-      const current = updateGame(updates)(game);
+      const current = update(updates)(game);
       expect(current).toEqual(expected);
     });
   });
