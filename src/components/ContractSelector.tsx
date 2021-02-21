@@ -16,12 +16,12 @@ import {
   canSilent,
 } from "../lib/bid";
 import { upperCaseToWords } from "../lib/util";
-import { Contract } from "../models/contractModel";
+import * as contractModel from "../models/contractModel";
 import { PLAYER_TYPE } from "../lib/player";
 
 interface BidSelectorProps {
   bidsByGroup: BidsByGroup;
-  onAddContract: (contract: Partial<Contract>) => void;
+  onAddContract: (contract: Partial<contractModel.Contract>) => void;
 }
 const ContractSelector = ({ bidsByGroup, onAddContract }: BidSelectorProps) => {
   const [silentAndWin, setSilentAndWin] = useState<boolean>(false);

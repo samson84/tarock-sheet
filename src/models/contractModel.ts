@@ -8,9 +8,6 @@ import {
   getBidScore,
 } from "../lib/bid";
 import flow from "lodash/fp/flow";
-import pick from "lodash/fp/pick";
-import isEqual from "lodash/fp/isEqual";
-import groupBy from "lodash/fp/groupBy";
 import * as gameModel from "./gameModel";
 
 const CONTRA_NAMES = ["None", "Contra", "Recontra", "Subcontra", "Mortcontra"];

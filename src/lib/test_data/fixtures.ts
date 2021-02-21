@@ -1,10 +1,12 @@
 import { BID_TYPE } from "../bid";
 import { Player, PLAYER_TYPE } from "../player";
-import { Contract } from "../../models/contractModel";
+import * as contractModel from "../../models/contractModel";
 import * as gameModel from "../../models/gameModel";
 import { createId } from "../util";
 
-export const contractFixture = (props: Partial<Contract> = {}): Contract => {
+export const contractFixture = (
+  props: Partial<contractModel.Contract> = {}
+): contractModel.Contract => {
   return {
     bidType: BID_TYPE.FOUR_KING,
     contra: 1,
