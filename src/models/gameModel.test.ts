@@ -74,7 +74,7 @@ export default describe("game", () => {
             winByTaker: true,
           }),
         ],
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.DECLARER]: -4,
           [PLAYER_TYPE.OPPONENT]: 4,
         },
@@ -90,7 +90,7 @@ export default describe("game", () => {
             winByTaker: true,
           }),
         ],
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.DECLARER]: -12,
           [PLAYER_TYPE.OPPONENT]: 12,
         },
@@ -113,7 +113,7 @@ export default describe("game", () => {
             winByTaker: true,
           }),
         ],
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.DECLARER]: -4,
           [PLAYER_TYPE.OPPONENT]: 4,
         },
@@ -129,7 +129,7 @@ export default describe("game", () => {
             winByTaker: true,
           }),
         ],
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.DECLARER]: -8,
           [PLAYER_TYPE.OPPONENT]: 8,
         },
@@ -153,7 +153,7 @@ export default describe("game", () => {
             winByTaker: true,
           }),
         ],
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.DECLARER]: -4,
           [PLAYER_TYPE.OPPONENT]: 4,
         },
@@ -169,7 +169,7 @@ export default describe("game", () => {
             winByTaker: true,
           }),
         ],
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.DECLARER]: -16,
           [PLAYER_TYPE.OPPONENT]: 16,
         },
@@ -193,7 +193,7 @@ export default describe("game", () => {
             contra: 4,
           }),
         ],
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.DECLARER]: -8,
           [PLAYER_TYPE.OPPONENT]: 8,
         },
@@ -210,7 +210,7 @@ export default describe("game", () => {
             winByTaker: true,
           }),
         ],
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.DECLARER]: -8,
           [PLAYER_TYPE.OPPONENT]: 8,
         },
@@ -234,7 +234,7 @@ export default describe("game", () => {
             contra: 4,
           }),
         ],
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.DECLARER]: -8,
           [PLAYER_TYPE.OPPONENT]: 8,
         },
@@ -251,7 +251,7 @@ export default describe("game", () => {
             winByTaker: true,
           }),
         ],
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.DECLARER]: -8,
           [PLAYER_TYPE.OPPONENT]: 8,
         },
@@ -276,7 +276,7 @@ export default describe("game", () => {
             contra: 4,
           }),
         ],
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.DECLARER]: -8,
           [PLAYER_TYPE.OPPONENT]: 8,
         },
@@ -293,7 +293,7 @@ export default describe("game", () => {
             winByTaker: true,
           }),
         ],
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.DECLARER]: -8,
           [PLAYER_TYPE.OPPONENT]: 8,
         },
@@ -316,7 +316,7 @@ export default describe("game", () => {
             contra: 1,
           }),
         ],
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.OPPONENT]: 1,
           [PLAYER_TYPE.DECLARER]: -1,
         },
@@ -332,7 +332,7 @@ export default describe("game", () => {
             winByTaker: true,
           }),
         ],
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.OPPONENT]: 3,
           [PLAYER_TYPE.DECLARER]: -3,
         },
@@ -432,7 +432,7 @@ export default describe("game", () => {
       const game = gameFixture({
         contracts: [],
         partyScoreType: PARTY_SCORE_TYPE.TOOK_TWO, // score = 2
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.DECLARER]: null,
           [PLAYER_TYPE.OPPONENT]: null,
         },
@@ -447,7 +447,7 @@ export default describe("game", () => {
             bidBaseScore: 2,
           }),
         ],
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.DECLARER]: 2,
           [PLAYER_TYPE.OPPONENT]: -2,
         },
@@ -553,7 +553,7 @@ export default describe("game", () => {
             winByTaker: true,
           }),
         ],
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.DECLARER]: 3,
           [PLAYER_TYPE.OPPONENT]: -3,
         },
@@ -568,7 +568,7 @@ export default describe("game", () => {
             winByTaker: true,
           }),
         ],
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.DECLARER]: 2,
           [PLAYER_TYPE.OPPONENT]: -2,
         },
@@ -626,7 +626,7 @@ export default describe("game", () => {
             winByTaker: true,
           }),
         ],
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.DECLARER]: 2,
           [PLAYER_TYPE.OPPONENT]: -2,
         },
@@ -641,7 +641,7 @@ export default describe("game", () => {
             winByTaker: true,
           }),
         ],
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.DECLARER]: 4,
           [PLAYER_TYPE.OPPONENT]: -4,
         },

@@ -6,7 +6,7 @@ import {
 } from "../lib/contract";
 import { getAnotherPlayerType, PLAYER_TYPE, PlayerScore } from "../lib/player";
 
-type GameScore = {
+type PlayerTypeScore = {
   [PLAYER_TYPE.DECLARER]: PlayerScore;
   [PLAYER_TYPE.OPPONENT]: PlayerScore;
 };
@@ -15,7 +15,7 @@ export interface Game {
   partyScoreType: PARTY_SCORE_TYPE | null;
   partyBaseScore: number;
   called_tarock: CalledTarockType | null;
-  scores: GameScore;
+  playerTypeScores: PlayerTypeScore;
 }
 
 type CalledTarockType =
@@ -77,7 +77,7 @@ export const createGame = (props: CreateGameProps = {}): Game => ({
   partyScoreType: props.partyScoreType || null,
   partyBaseScore: 1,
   called_tarock: props.called_tarock || null,
-  scores: {
+  playerTypeScores: {
     [PLAYER_TYPE.DECLARER]: null,
     [PLAYER_TYPE.OPPONENT]: null,
   },
@@ -88,7 +88,7 @@ const updateGameWithScores = (game: Game): Game => {
 
   return {
     ...game,
-    scores: { ...scores },
+    playerTypeScores: { ...scores },
   };
 };
 
@@ -159,7 +159,7 @@ export const updateGameContract = (game: Game) => (index: number) => (
   });
 };
 
-export const calculateGame = (game: Game): GameScore => {
+export const calculateGame = (game: Game): PlayerTypeScore => {
   return game.contracts.reduce(
     (partyScore, contract) => {
       const score = calculateContract(contract);

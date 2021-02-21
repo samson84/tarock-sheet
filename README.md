@@ -5,12 +5,12 @@ An awesome app to help track a Tarock game scores.
 ## Roadmap
 
 - [.] Milesteone 1 - Local storage, correct scores, Player handling,UI improvements
-  - [ ] refactor
-    - [ ] rename the components and methods
-      - [ ] create a models dir, place the models into this dir
-      - [ ] game to gameModel
+  - [.] refactor
+    - [.] rename the components and methods
+      - [x] create a models dir, place the models into this dir
+      - [.] game to gameModel
         - [x] rename game to gameModel, move it to models folder
-        - [ ] scores prop to playerTypeScores
+        - [x] scores prop to playerTypeScores
         - [ ] createGame: create
         - [ ] updateGame: update
         - [ ] updateGameWithScores: updateWithPlayerTypeScores

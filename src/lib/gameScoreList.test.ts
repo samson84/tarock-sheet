@@ -452,7 +452,7 @@ export default describe("gameScoreList", () => {
   describe("getCurrentScoreForPlayers", () => {
     it("should return empty object if no players given", () => {
       const game = gameFixture({
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.DECLARER]: null,
           [PLAYER_TYPE.OPPONENT]: null,
         },
@@ -466,7 +466,7 @@ export default describe("gameScoreList", () => {
     });
     it("should return the players scores, 2-2", () => {
       const game = gameFixture({
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.DECLARER]: 16,
           [PLAYER_TYPE.OPPONENT]: -16,
         },
@@ -525,7 +525,7 @@ export default describe("gameScoreList", () => {
     });
     it("should return the players scores, 3 declarers win, 1 opponent loose.", () => {
       const game = gameFixture({
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.DECLARER]: 6,
           [PLAYER_TYPE.OPPONENT]: -6,
         },
@@ -584,7 +584,7 @@ export default describe("gameScoreList", () => {
     });
     it("should return the players scores, 3 opponents win, 1 declarer loose", () => {
       const game = gameFixture({
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.DECLARER]: -6,
           [PLAYER_TYPE.OPPONENT]: 6,
         },
@@ -643,7 +643,7 @@ export default describe("gameScoreList", () => {
     });
     it("should return the players scores, 1 opponents win, 3 declarer loose", () => {
       const game = gameFixture({
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.DECLARER]: -6,
           [PLAYER_TYPE.OPPONENT]: 6,
         },
@@ -702,7 +702,7 @@ export default describe("gameScoreList", () => {
     });
     it("should return the players scores, 1 declarers win, 3 opponents loose", () => {
       const game = gameFixture({
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.DECLARER]: 6,
           [PLAYER_TYPE.OPPONENT]: -6,
         },
@@ -760,7 +760,7 @@ export default describe("gameScoreList", () => {
     });
     it("should assign null if no 4 players", () => {
       const game = gameFixture({
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.DECLARER]: 6,
           [PLAYER_TYPE.OPPONENT]: -6,
         },
@@ -807,7 +807,7 @@ export default describe("gameScoreList", () => {
     });
     it("should assign nulls, if not 2-2 or 1-3 the declarer-opponent type players", () => {
       const game = gameFixture({
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.DECLARER]: 6,
           [PLAYER_TYPE.OPPONENT]: -6,
         },
@@ -865,7 +865,7 @@ export default describe("gameScoreList", () => {
     });
     it("should assign null, if the game's declarare score is null", () => {
       const game = gameFixture({
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.DECLARER]: null,
           [PLAYER_TYPE.OPPONENT]: -6,
         },
@@ -923,7 +923,7 @@ export default describe("gameScoreList", () => {
     });
     it("should assign null, if the game's opponent score is null", () => {
       const game = gameFixture({
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.DECLARER]: 6,
           [PLAYER_TYPE.OPPONENT]: null,
         },
@@ -981,7 +981,7 @@ export default describe("gameScoreList", () => {
     });
     it("should assign null to the null type players (not playing in the current game)", () => {
       const game = gameFixture({
-        scores: {
+        playerTypeScores: {
           [PLAYER_TYPE.DECLARER]: 6,
           [PLAYER_TYPE.OPPONENT]: -6,
         },

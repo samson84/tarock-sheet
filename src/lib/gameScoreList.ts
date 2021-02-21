@@ -15,8 +15,8 @@ const getScore = (players: PlayerList) => (
   game: Game
 ): [PlayerScore, PlayerScore] => {
   const [numberOfDeclarers, numberOfOpponents] = getPlayerNumberByType(players);
-  const opponentsGameScore = game.scores[PLAYER_TYPE.OPPONENT];
-  const declarersGameScore = game.scores[PLAYER_TYPE.DECLARER];
+  const opponentsGameScore = game.playerTypeScores[PLAYER_TYPE.OPPONENT];
+  const declarersGameScore = game.playerTypeScores[PLAYER_TYPE.DECLARER];
   if (opponentsGameScore === null || declarersGameScore === null) {
     return [null, null];
   }
@@ -57,8 +57,8 @@ export const isReadyForSave = (players: PlayerList) => (
     isEqual(numbers, [2, 2]) ||
     isEqual(numbers, [3, 1]);
   const gameScoreValid =
-    game.scores[PLAYER_TYPE.DECLARER] !== null &&
-    game.scores[PLAYER_TYPE.OPPONENT] !== null;
+    game.playerTypeScores[PLAYER_TYPE.DECLARER] !== null &&
+    game.playerTypeScores[PLAYER_TYPE.OPPONENT] !== null;
   return playerNumberValid && gameScoreValid;
 };
 

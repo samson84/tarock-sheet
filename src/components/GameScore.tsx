@@ -7,7 +7,7 @@ interface GameScoreProps {
   game: Game;
 }
 const GameScore = ({ game }: GameScoreProps) => {
-  const { scores } = game;
+  const { playerTypeScores } = game;
   return (
     <Grid container direction="column">
       <Grid item container alignItems="center" spacing={1}>
@@ -17,12 +17,12 @@ const GameScore = ({ game }: GameScoreProps) => {
           </T>
         </Grid>
         <Grid item>
-          {scores[PLAYER_TYPE.DECLARER] !== null ? (
+          {playerTypeScores[PLAYER_TYPE.DECLARER] !== null ? (
             <Chip
               color="primary"
               size="small"
               variant="outlined"
-              label={scores[PLAYER_TYPE.DECLARER]}
+              label={playerTypeScores[PLAYER_TYPE.DECLARER]}
             />
           ) : null}
         </Grid>
@@ -34,12 +34,12 @@ const GameScore = ({ game }: GameScoreProps) => {
           </T>
         </Grid>
         <Grid item>
-          {scores[PLAYER_TYPE.OPPONENT] !== null ? (
+          {playerTypeScores[PLAYER_TYPE.OPPONENT] !== null ? (
             <Chip
               color="secondary"
               size="small"
               variant="outlined"
-              label={scores[PLAYER_TYPE.OPPONENT]}
+              label={playerTypeScores[PLAYER_TYPE.OPPONENT]}
             />
           ) : null}
         </Grid>
