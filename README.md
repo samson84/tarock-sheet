@@ -37,7 +37,7 @@ An awesome app to help track a Tarock game scores.
         - [x] PlayerScore: Score
         - [x] createPlayer: create
         - [x] updatePlayer: update
-        - [ ] getAnotherPlaterType: getOppositePlayerType
+        - [x] getAnotherPlaterType: getOppositeType
         - [ ] getPlayerTypeColor: getTypeColor
         - [ ] rotataePlayerTypeWithNull: rotateTypeWithNull
         - [ ] refactor to namespace imports

@@ -30,7 +30,7 @@ export const update = (updates: UpdatePlayerProps) => (
   ...updates,
 });
 
-export const getAnotherPlayerType = (playerType: PLAYER_TYPE): PLAYER_TYPE =>
+export const getOppositeType = (playerType: PLAYER_TYPE): PLAYER_TYPE =>
   playerType === PLAYER_TYPE.DECLARER
     ? PLAYER_TYPE.OPPONENT
     : PLAYER_TYPE.DECLARER;

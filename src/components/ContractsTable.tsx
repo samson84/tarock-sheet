@@ -19,7 +19,7 @@ import VariantSelector from "./VariantSelector";
 import SilentSwitch from "./SilentSwitch";
 import MultiplierSelector from "./MultiplierSelector";
 import {
-  getAnotherPlayerType,
+  getOppositeType,
   getPlayerTypeColor,
   PLAYER_TYPE,
 } from "../models/playerModel";
@@ -99,7 +99,7 @@ const columns: ColumnDefinition[] = [
     field: "taker",
     headerName: "Taker",
     valueGetter: (contract, onAction) => {
-      const newTaker = getAnotherPlayerType(contract.taker);
+      const newTaker = getOppositeType(contract.taker);
       const handleClick = () =>
         onAction && onAction(ACTION_TYPE.CHANGE, newTaker);
       const color = getPlayerTypeColor(contract.taker);

@@ -4,7 +4,7 @@ import {
   create,
   createPlayerListObject,
   filterPlayersInGame,
-  getAnotherPlayerType,
+  getOppositeType,
   getPlayerNumberByType,
   PlayerList,
   PLAYER_TYPE,
@@ -173,7 +173,7 @@ export default describe("Player", () => {
       const playerType = PLAYER_TYPE.OPPONENT;
       const expected = PLAYER_TYPE.DECLARER;
 
-      const current = getAnotherPlayerType(playerType);
+      const current = getOppositeType(playerType);
 
       expect(current).toEqual(expected);
     });
@@ -181,7 +181,7 @@ export default describe("Player", () => {
       const playerType = PLAYER_TYPE.DECLARER;
       const expected = PLAYER_TYPE.OPPONENT;
 
-      const current = getAnotherPlayerType(playerType);
+      const current = getOppositeType(playerType);
 
       expect(current).toEqual(expected);
     });

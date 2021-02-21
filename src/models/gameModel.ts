@@ -1,5 +1,5 @@
 import * as contractModel from "./contractModel";
-import { getAnotherPlayerType, PLAYER_TYPE } from "./playerModel";
+import { getOppositeType, PLAYER_TYPE } from "./playerModel";
 import { Score } from "./scoreModel";
 
 type PlayerTypeScore = {
@@ -175,7 +175,7 @@ export const calculatePlayerTypeScores = (game: Game): PlayerTypeScore => {
       };
 
       const taker = contract.taker;
-      const another = getAnotherPlayerType(taker);
+      const another = getOppositeType(taker);
 
       return {
         ...partyScore,
