@@ -1,7 +1,7 @@
 import React from "react";
 import * as gameModel from "../models/gameModel";
 import { Grid, Chip, Typography as T } from "@material-ui/core";
-import { PLAYER_TYPE } from "../models/playerModel";
+import * as playerModel from "../models/playerModel";
 
 interface GameScoreProps {
   game: gameModel.Game;
@@ -17,12 +17,12 @@ const GameScore = ({ game }: GameScoreProps) => {
           </T>
         </Grid>
         <Grid item>
-          {playerTypeScores[PLAYER_TYPE.DECLARER] !== null ? (
+          {playerTypeScores[playerModel.PLAYER_TYPE.DECLARER] !== null ? (
             <Chip
               color="primary"
               size="small"
               variant="outlined"
-              label={playerTypeScores[PLAYER_TYPE.DECLARER]}
+              label={playerTypeScores[playerModel.PLAYER_TYPE.DECLARER]}
             />
           ) : null}
         </Grid>
@@ -34,12 +34,12 @@ const GameScore = ({ game }: GameScoreProps) => {
           </T>
         </Grid>
         <Grid item>
-          {playerTypeScores[PLAYER_TYPE.OPPONENT] !== null ? (
+          {playerTypeScores[playerModel.PLAYER_TYPE.OPPONENT] !== null ? (
             <Chip
               color="secondary"
               size="small"
               variant="outlined"
-              label={playerTypeScores[PLAYER_TYPE.OPPONENT]}
+              label={playerTypeScores[playerModel.PLAYER_TYPE.OPPONENT]}
             />
           ) : null}
         </Grid>

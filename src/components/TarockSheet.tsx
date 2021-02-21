@@ -9,16 +9,7 @@ import GameProperties from "./GameProperties";
 import flow from "lodash/fp/flow";
 import concat from "lodash/fp/concat";
 import Players from "./Players";
-import {
-  clearPlayersType,
-  createPlayerListObject,
-  filterPlayersInGame,
-  Player,
-  PlayerList,
-  PlayerListObject,
-  PLAYER_TYPE,
-  resetPlayerScore,
-} from "../models/playerModel";
+import * as playerModel from "../models/playerModel";
 import {
   assignScoresToPlayers,
   getCurrentScoreForPlayers,
@@ -35,11 +26,14 @@ const TarockSheet = () => {
   const [game, setGame] = useState<gameModel.Game>(
     (storage.read("game") as gameModel.Game | null) ?? gameModel.create()
   );
-  const [players, setPlayers] = useState<Player[]>(
-    (storage.read("players") as Player[] | null) ?? []
+  const [players, setPlayers] = useState<playerModel.Player[]>(
+    (storage.read("players") as playerModel.Player[] | null) ?? []
   );
-  const [gameScoreList, setGameScoreList] = useState<PlayerListObject[]>(
-    (storage.read("gameScoreList") as PlayerListObject[] | null) ?? []
+  const [gameScoreList, setGameScoreList] = useState<
+    playerModel.PlayerListObject[]
+  >(
+    (storage.read("gameScoreList") as playerModel.PlayerListObject[] | null) ??
+      []
   );
 
   useEffect(() => {
@@ -62,7 +56,7 @@ const TarockSheet = () => {
   const handleContractDelete = (index: number) =>
     setGame(gameModel.removeContractAt(game)(index));
   const handleResetGame = () => setGame(gameModel.create());
-  const handlePlayerListChange = (playerList: PlayerList) => {
+  const handlePlayerListChange = (playerList: playerModel.PlayerList) => {
     updatePlayersState(playerList);
   };
   const handleChangeGameProperties = (
@@ -92,11 +86,11 @@ const TarockSheet = () => {
         const contract = gameModel.isPartyLike(value)
           ? contractModel.create({
               bidType: BID_TYPE.PARTY,
-              taker: PLAYER_TYPE.DECLARER,
+              taker: playerModel.PLAYER_TYPE.DECLARER,
             })
           : contractModel.create({
               bidType: BID_TYPE.KLOPICZKY,
-              taker: PLAYER_TYPE.DECLARER,
+              taker: playerModel.PLAYER_TYPE.DECLARER,
               isWonByTaker: true,
             });
         const updated = flow(
@@ -129,20 +123,22 @@ const TarockSheet = () => {
   };
   const handleSaveScores = () => {
     const updatedGameScoreList = flow(
-      filterPlayersInGame,
-      createPlayerListObject,
+      playerModel.filterPlayersInGame,
+      playerModel.createPlayerListObject,
       concat(gameScoreList)
     )(players);
     updateGameScoreListState(updatedGameScoreList);
   };
-  const updatePlayersState = (updated: PlayerList) => {
+  const updatePlayersState = (updated: playerModel.PlayerList) => {
     flow(getCurrentScoreForPlayers(game), setPlayers)(updated);
   };
-  const updateGameScoreListState = (updated: PlayerListObject[]) => {
+  const updateGameScoreListState = (
+    updated: playerModel.PlayerListObject[]
+  ) => {
     flow(
       sumPlayerScores,
       assignScoresToPlayers(players),
-      clearPlayersType,
+      playerModel.clearPlayersType,
       updatePlayersState
     )(updated);
     setGameScoreList(updated);
@@ -155,7 +151,11 @@ const TarockSheet = () => {
   };
   const handleResetScores = () => {
     updateGameScoreListState([]);
-    flow(resetPlayerScore, clearPlayersType, updatePlayersState)(players);
+    flow(
+      playerModel.resetPlayerScore,
+      playerModel.clearPlayersType,
+      updatePlayersState
+    )(players);
   };
 
   const partyScoreTypeSelected = game.partyScoreType !== null;

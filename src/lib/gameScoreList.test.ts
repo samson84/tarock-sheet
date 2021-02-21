@@ -3,46 +3,43 @@ import {
   PlayerScores,
   sumPlayerScores,
 } from "./gameScoreList";
-import {
-  createPlayerListObject,
-  PlayerListObject,
-  PLAYER_TYPE,
-  PlayerList,
-} from "../models/playerModel";
+import * as playerModel from "../models/playerModel";
 import { gameFixture, playerFixture } from "./test_data/fixtures";
 
 export default describe("gameScoreList", () => {
   describe("sumPlayerScores", () => {
     it("should return {} if gameScoreList empty", () => {
-      const playerListObjectList: PlayerListObject[] = [];
+      const playerListObjectList: playerModel.PlayerListObject[] = [];
       const expected: PlayerScores = {};
       const current = sumPlayerScores(playerListObjectList);
       expect(current).toEqual(expected);
     });
     it("should return sum of player scores, one item", () => {
-      const game1: PlayerListObject = createPlayerListObject([
-        playerFixture({
-          id: "player-1-id",
-          name: "Csaba",
-          gameScore: 10,
-        }),
-        playerFixture({
-          id: "player-2-id",
-          name: "Andre",
-          gameScore: 10,
-        }),
-        playerFixture({
-          id: "player-3-id",
-          name: "Dani",
-          gameScore: -10,
-        }),
-        playerFixture({
-          id: "player-4-id",
-          name: "Tamas",
-          gameScore: -10,
-        }),
-      ]);
-      const playerListObjects: PlayerListObject[] = [game1];
+      const game1: playerModel.PlayerListObject = playerModel.createPlayerListObject(
+        [
+          playerFixture({
+            id: "player-1-id",
+            name: "Csaba",
+            gameScore: 10,
+          }),
+          playerFixture({
+            id: "player-2-id",
+            name: "Andre",
+            gameScore: 10,
+          }),
+          playerFixture({
+            id: "player-3-id",
+            name: "Dani",
+            gameScore: -10,
+          }),
+          playerFixture({
+            id: "player-4-id",
+            name: "Tamas",
+            gameScore: -10,
+          }),
+        ]
+      );
+      const playerListObjects: playerModel.PlayerListObject[] = [game1];
       const expected: PlayerScores = {
         "player-1-id": 10,
         "player-2-id": 10,
@@ -53,51 +50,55 @@ export default describe("gameScoreList", () => {
       expect(current).toEqual(expected);
     });
     it("should return sum of player scores, multiple item, identical players", () => {
-      const game1: PlayerListObject = createPlayerListObject([
-        playerFixture({
-          id: "player-1-id",
-          name: "Csaba",
-          gameScore: 10,
-        }),
-        playerFixture({
-          id: "player-2-id",
-          name: "Andre",
-          gameScore: 10,
-        }),
-        playerFixture({
-          id: "player-3-id",
-          name: "Dani",
-          gameScore: -10,
-        }),
-        playerFixture({
-          id: "player-4-id",
-          name: "Tamas",
-          gameScore: -10,
-        }),
-      ]);
-      const game2: PlayerListObject = createPlayerListObject([
-        playerFixture({
-          id: "player-1-id",
-          name: "Csaba",
-          gameScore: 16,
-        }),
-        playerFixture({
-          id: "player-2-id",
-          name: "Andre",
-          gameScore: -16,
-        }),
-        playerFixture({
-          id: "player-3-id",
-          name: "Dani",
-          gameScore: -16,
-        }),
-        playerFixture({
-          id: "player-4-id",
-          name: "Tamas",
-          gameScore: 16,
-        }),
-      ]);
-      const playerListObjects: PlayerListObject[] = [game1, game2];
+      const game1: playerModel.PlayerListObject = playerModel.createPlayerListObject(
+        [
+          playerFixture({
+            id: "player-1-id",
+            name: "Csaba",
+            gameScore: 10,
+          }),
+          playerFixture({
+            id: "player-2-id",
+            name: "Andre",
+            gameScore: 10,
+          }),
+          playerFixture({
+            id: "player-3-id",
+            name: "Dani",
+            gameScore: -10,
+          }),
+          playerFixture({
+            id: "player-4-id",
+            name: "Tamas",
+            gameScore: -10,
+          }),
+        ]
+      );
+      const game2: playerModel.PlayerListObject = playerModel.createPlayerListObject(
+        [
+          playerFixture({
+            id: "player-1-id",
+            name: "Csaba",
+            gameScore: 16,
+          }),
+          playerFixture({
+            id: "player-2-id",
+            name: "Andre",
+            gameScore: -16,
+          }),
+          playerFixture({
+            id: "player-3-id",
+            name: "Dani",
+            gameScore: -16,
+          }),
+          playerFixture({
+            id: "player-4-id",
+            name: "Tamas",
+            gameScore: 16,
+          }),
+        ]
+      );
+      const playerListObjects: playerModel.PlayerListObject[] = [game1, game2];
       const expected: PlayerScores = {
         "player-1-id": 26,
         "player-2-id": -6,
@@ -110,51 +111,55 @@ export default describe("gameScoreList", () => {
       expect(current).toEqual(expected);
     });
     it("should return sum of player scores, multiple item, second scores player is new", () => {
-      const game1: PlayerListObject = createPlayerListObject([
-        playerFixture({
-          id: "player-1-id",
-          name: "Csaba",
-          gameScore: 10,
-        }),
-        playerFixture({
-          id: "player-2-id",
-          name: "Andre",
-          gameScore: 10,
-        }),
-        playerFixture({
-          id: "player-3-id",
-          name: "Dani",
-          gameScore: -10,
-        }),
-        playerFixture({
-          id: "player-4-id",
-          name: "Tamas",
-          gameScore: -10,
-        }),
-      ]);
-      const game2: PlayerListObject = createPlayerListObject([
-        playerFixture({
-          id: "player-1-id",
-          name: "Csaba",
-          gameScore: 16,
-        }),
-        playerFixture({
-          id: "player-2-id",
-          name: "Andre",
-          gameScore: -16,
-        }),
-        playerFixture({
-          id: "player-3-id",
-          name: "Dani",
-          gameScore: -16,
-        }),
-        playerFixture({
-          id: "player-5-id-new",
-          name: "Akos",
-          gameScore: 16,
-        }),
-      ]);
-      const playerListObjects: PlayerListObject[] = [game1, game2];
+      const game1: playerModel.PlayerListObject = playerModel.createPlayerListObject(
+        [
+          playerFixture({
+            id: "player-1-id",
+            name: "Csaba",
+            gameScore: 10,
+          }),
+          playerFixture({
+            id: "player-2-id",
+            name: "Andre",
+            gameScore: 10,
+          }),
+          playerFixture({
+            id: "player-3-id",
+            name: "Dani",
+            gameScore: -10,
+          }),
+          playerFixture({
+            id: "player-4-id",
+            name: "Tamas",
+            gameScore: -10,
+          }),
+        ]
+      );
+      const game2: playerModel.PlayerListObject = playerModel.createPlayerListObject(
+        [
+          playerFixture({
+            id: "player-1-id",
+            name: "Csaba",
+            gameScore: 16,
+          }),
+          playerFixture({
+            id: "player-2-id",
+            name: "Andre",
+            gameScore: -16,
+          }),
+          playerFixture({
+            id: "player-3-id",
+            name: "Dani",
+            gameScore: -16,
+          }),
+          playerFixture({
+            id: "player-5-id-new",
+            name: "Akos",
+            gameScore: 16,
+          }),
+        ]
+      );
+      const playerListObjects: playerModel.PlayerListObject[] = [game1, game2];
       const expected: PlayerScores = {
         "player-1-id": 26,
         "player-2-id": -6,
@@ -167,51 +172,55 @@ export default describe("gameScoreList", () => {
       expect(current).toEqual(expected);
     });
     it("should return sum of player scores, multiple item, first scores player is new", () => {
-      const game1: PlayerListObject = createPlayerListObject([
-        playerFixture({
-          id: "player-1-id",
-          name: "Csaba",
-          gameScore: 16,
-        }),
-        playerFixture({
-          id: "player-2-id",
-          name: "Andre",
-          gameScore: -16,
-        }),
-        playerFixture({
-          id: "player-3-id",
-          name: "Dani",
-          gameScore: -16,
-        }),
-        playerFixture({
-          id: "player-4-id-only-in-game1",
-          name: "Akos",
-          gameScore: 16,
-        }),
-      ]);
-      const game2: PlayerListObject = createPlayerListObject([
-        playerFixture({
-          id: "player-1-id",
-          name: "Csaba",
-          gameScore: 10,
-        }),
-        playerFixture({
-          id: "player-2-id",
-          name: "Andre",
-          gameScore: 10,
-        }),
-        playerFixture({
-          id: "player-3-id",
-          name: "Dani",
-          gameScore: -10,
-        }),
-        playerFixture({
-          id: "player-5-id-new-player",
-          name: "Tamas",
-          gameScore: -10,
-        }),
-      ]);
-      const playerListObjects: PlayerListObject[] = [game1, game2];
+      const game1: playerModel.PlayerListObject = playerModel.createPlayerListObject(
+        [
+          playerFixture({
+            id: "player-1-id",
+            name: "Csaba",
+            gameScore: 16,
+          }),
+          playerFixture({
+            id: "player-2-id",
+            name: "Andre",
+            gameScore: -16,
+          }),
+          playerFixture({
+            id: "player-3-id",
+            name: "Dani",
+            gameScore: -16,
+          }),
+          playerFixture({
+            id: "player-4-id-only-in-game1",
+            name: "Akos",
+            gameScore: 16,
+          }),
+        ]
+      );
+      const game2: playerModel.PlayerListObject = playerModel.createPlayerListObject(
+        [
+          playerFixture({
+            id: "player-1-id",
+            name: "Csaba",
+            gameScore: 10,
+          }),
+          playerFixture({
+            id: "player-2-id",
+            name: "Andre",
+            gameScore: 10,
+          }),
+          playerFixture({
+            id: "player-3-id",
+            name: "Dani",
+            gameScore: -10,
+          }),
+          playerFixture({
+            id: "player-5-id-new-player",
+            name: "Tamas",
+            gameScore: -10,
+          }),
+        ]
+      );
+      const playerListObjects: playerModel.PlayerListObject[] = [game1, game2];
       const expected: PlayerScores = {
         "player-1-id": 26,
         "player-2-id": -6,
@@ -225,51 +234,55 @@ export default describe("gameScoreList", () => {
       expect(current).toEqual(expected);
     });
     it("should return sum of player scores, multiple item, first scores player is null, not exists in second", () => {
-      const game1: PlayerListObject = createPlayerListObject([
-        playerFixture({
-          id: "player-1-id",
-          name: "Csaba",
-          gameScore: 16,
-        }),
-        playerFixture({
-          id: "player-2-id",
-          name: "Andre",
-          gameScore: -16,
-        }),
-        playerFixture({
-          id: "player-3-id",
-          name: "Dani",
-          gameScore: -16,
-        }),
-        playerFixture({
-          id: "player-4-id-only-in-game1",
-          name: "Akos",
-          gameScore: null,
-        }),
-      ]);
-      const game2: PlayerListObject = createPlayerListObject([
-        playerFixture({
-          id: "player-1-id",
-          name: "Csaba",
-          gameScore: 10,
-        }),
-        playerFixture({
-          id: "player-2-id",
-          name: "Andre",
-          gameScore: 10,
-        }),
-        playerFixture({
-          id: "player-3-id",
-          name: "Dani",
-          gameScore: -10,
-        }),
-        playerFixture({
-          id: "player-5-id-only-in-game2",
-          name: "Tamas",
-          gameScore: -10,
-        }),
-      ]);
-      const playerListObjects: PlayerListObject[] = [game1, game2];
+      const game1: playerModel.PlayerListObject = playerModel.createPlayerListObject(
+        [
+          playerFixture({
+            id: "player-1-id",
+            name: "Csaba",
+            gameScore: 16,
+          }),
+          playerFixture({
+            id: "player-2-id",
+            name: "Andre",
+            gameScore: -16,
+          }),
+          playerFixture({
+            id: "player-3-id",
+            name: "Dani",
+            gameScore: -16,
+          }),
+          playerFixture({
+            id: "player-4-id-only-in-game1",
+            name: "Akos",
+            gameScore: null,
+          }),
+        ]
+      );
+      const game2: playerModel.PlayerListObject = playerModel.createPlayerListObject(
+        [
+          playerFixture({
+            id: "player-1-id",
+            name: "Csaba",
+            gameScore: 10,
+          }),
+          playerFixture({
+            id: "player-2-id",
+            name: "Andre",
+            gameScore: 10,
+          }),
+          playerFixture({
+            id: "player-3-id",
+            name: "Dani",
+            gameScore: -10,
+          }),
+          playerFixture({
+            id: "player-5-id-only-in-game2",
+            name: "Tamas",
+            gameScore: -10,
+          }),
+        ]
+      );
+      const playerListObjects: playerModel.PlayerListObject[] = [game1, game2];
       const expected: PlayerScores = {
         "player-1-id": 26,
         "player-2-id": -6,
@@ -282,51 +295,55 @@ export default describe("gameScoreList", () => {
       expect(current).toEqual(expected);
     });
     it("should return sum of player scores, multiple item, second scores player is null, not exists in first", () => {
-      const game1: PlayerListObject = createPlayerListObject([
-        playerFixture({
-          id: "player-1-id",
-          name: "Csaba",
-          gameScore: 10,
-        }),
-        playerFixture({
-          id: "player-2-id",
-          name: "Andre",
-          gameScore: 10,
-        }),
-        playerFixture({
-          id: "player-3-id",
-          name: "Dani",
-          gameScore: -10,
-        }),
-        playerFixture({
-          id: "player-4-id-only-in-game1",
-          name: "Tamas",
-          gameScore: -10,
-        }),
-      ]);
-      const game2: PlayerListObject = createPlayerListObject([
-        playerFixture({
-          id: "player-1-id",
-          name: "Csaba",
-          gameScore: 16,
-        }),
-        playerFixture({
-          id: "player-2-id",
-          name: "Andre",
-          gameScore: -16,
-        }),
-        playerFixture({
-          id: "player-3-id",
-          name: "Dani",
-          gameScore: -16,
-        }),
-        playerFixture({
-          id: "player-5-id-only-in-game2",
-          name: "Akos",
-          gameScore: null,
-        }),
-      ]);
-      const playerListObjects: PlayerListObject[] = [game1, game2];
+      const game1: playerModel.PlayerListObject = playerModel.createPlayerListObject(
+        [
+          playerFixture({
+            id: "player-1-id",
+            name: "Csaba",
+            gameScore: 10,
+          }),
+          playerFixture({
+            id: "player-2-id",
+            name: "Andre",
+            gameScore: 10,
+          }),
+          playerFixture({
+            id: "player-3-id",
+            name: "Dani",
+            gameScore: -10,
+          }),
+          playerFixture({
+            id: "player-4-id-only-in-game1",
+            name: "Tamas",
+            gameScore: -10,
+          }),
+        ]
+      );
+      const game2: playerModel.PlayerListObject = playerModel.createPlayerListObject(
+        [
+          playerFixture({
+            id: "player-1-id",
+            name: "Csaba",
+            gameScore: 16,
+          }),
+          playerFixture({
+            id: "player-2-id",
+            name: "Andre",
+            gameScore: -16,
+          }),
+          playerFixture({
+            id: "player-3-id",
+            name: "Dani",
+            gameScore: -16,
+          }),
+          playerFixture({
+            id: "player-5-id-only-in-game2",
+            name: "Akos",
+            gameScore: null,
+          }),
+        ]
+      );
+      const playerListObjects: playerModel.PlayerListObject[] = [game1, game2];
       const expected: PlayerScores = {
         "player-1-id": 26,
         "player-2-id": -6,
@@ -338,51 +355,55 @@ export default describe("gameScoreList", () => {
       expect(current).toEqual(expected);
     });
     it("should return sum of player scores, multiple item, second scores player is null, exists in first", () => {
-      const game1: PlayerListObject = createPlayerListObject([
-        playerFixture({
-          id: "player-1-id",
-          name: "Csaba",
-          gameScore: 10,
-        }),
-        playerFixture({
-          id: "player-2-id",
-          name: "Andre",
-          gameScore: 10,
-        }),
-        playerFixture({
-          id: "player-3-id",
-          name: "Dani",
-          gameScore: -10,
-        }),
-        playerFixture({
-          id: "player-4-id",
-          name: "Tamas",
-          gameScore: -10,
-        }),
-      ]);
-      const game2: PlayerListObject = createPlayerListObject([
-        playerFixture({
-          id: "player-1-id",
-          name: "Csaba",
-          gameScore: 16,
-        }),
-        playerFixture({
-          id: "player-2-id",
-          name: "Andre",
-          gameScore: -16,
-        }),
-        playerFixture({
-          id: "player-3-id",
-          name: "Dani",
-          gameScore: -16,
-        }),
-        playerFixture({
-          id: "player-4-id",
-          name: "Tamas",
-          gameScore: null,
-        }),
-      ]);
-      const playerListObjects: PlayerListObject[] = [game1, game2];
+      const game1: playerModel.PlayerListObject = playerModel.createPlayerListObject(
+        [
+          playerFixture({
+            id: "player-1-id",
+            name: "Csaba",
+            gameScore: 10,
+          }),
+          playerFixture({
+            id: "player-2-id",
+            name: "Andre",
+            gameScore: 10,
+          }),
+          playerFixture({
+            id: "player-3-id",
+            name: "Dani",
+            gameScore: -10,
+          }),
+          playerFixture({
+            id: "player-4-id",
+            name: "Tamas",
+            gameScore: -10,
+          }),
+        ]
+      );
+      const game2: playerModel.PlayerListObject = playerModel.createPlayerListObject(
+        [
+          playerFixture({
+            id: "player-1-id",
+            name: "Csaba",
+            gameScore: 16,
+          }),
+          playerFixture({
+            id: "player-2-id",
+            name: "Andre",
+            gameScore: -16,
+          }),
+          playerFixture({
+            id: "player-3-id",
+            name: "Dani",
+            gameScore: -16,
+          }),
+          playerFixture({
+            id: "player-4-id",
+            name: "Tamas",
+            gameScore: null,
+          }),
+        ]
+      );
+      const playerListObjects: playerModel.PlayerListObject[] = [game1, game2];
       const expected: PlayerScores = {
         "player-1-id": 26,
         "player-2-id": -6,
@@ -393,51 +414,55 @@ export default describe("gameScoreList", () => {
       expect(current).toEqual(expected);
     });
     it("should return sum of player scores, multiple item, first scores player is null, exists in second", () => {
-      const game1: PlayerListObject = createPlayerListObject([
-        playerFixture({
-          id: "player-1-id",
-          name: "Csaba",
-          gameScore: 10,
-        }),
-        playerFixture({
-          id: "player-2-id",
-          name: "Andre",
-          gameScore: 10,
-        }),
-        playerFixture({
-          id: "player-3-id",
-          name: "Dani",
-          gameScore: -10,
-        }),
-        playerFixture({
-          id: "player-4-id",
-          name: "Tamas",
-          gameScore: null,
-        }),
-      ]);
-      const game2: PlayerListObject = createPlayerListObject([
-        playerFixture({
-          id: "player-1-id",
-          name: "Csaba",
-          gameScore: 16,
-        }),
-        playerFixture({
-          id: "player-2-id",
-          name: "Andre",
-          gameScore: -16,
-        }),
-        playerFixture({
-          id: "player-3-id",
-          name: "Dani",
-          gameScore: -16,
-        }),
-        playerFixture({
-          id: "player-4-id",
-          name: "Tamas",
-          gameScore: -10,
-        }),
-      ]);
-      const playerListObjects: PlayerListObject[] = [game1, game2];
+      const game1: playerModel.PlayerListObject = playerModel.createPlayerListObject(
+        [
+          playerFixture({
+            id: "player-1-id",
+            name: "Csaba",
+            gameScore: 10,
+          }),
+          playerFixture({
+            id: "player-2-id",
+            name: "Andre",
+            gameScore: 10,
+          }),
+          playerFixture({
+            id: "player-3-id",
+            name: "Dani",
+            gameScore: -10,
+          }),
+          playerFixture({
+            id: "player-4-id",
+            name: "Tamas",
+            gameScore: null,
+          }),
+        ]
+      );
+      const game2: playerModel.PlayerListObject = playerModel.createPlayerListObject(
+        [
+          playerFixture({
+            id: "player-1-id",
+            name: "Csaba",
+            gameScore: 16,
+          }),
+          playerFixture({
+            id: "player-2-id",
+            name: "Andre",
+            gameScore: -16,
+          }),
+          playerFixture({
+            id: "player-3-id",
+            name: "Dani",
+            gameScore: -16,
+          }),
+          playerFixture({
+            id: "player-4-id",
+            name: "Tamas",
+            gameScore: -10,
+          }),
+        ]
+      );
+      const playerListObjects: playerModel.PlayerListObject[] = [game1, game2];
       const expected: PlayerScores = {
         "player-1-id": 26,
         "player-2-id": -6,
@@ -453,12 +478,12 @@ export default describe("gameScoreList", () => {
     it("should return empty object if no players given", () => {
       const game = gameFixture({
         playerTypeScores: {
-          [PLAYER_TYPE.DECLARER]: null,
-          [PLAYER_TYPE.OPPONENT]: null,
+          [playerModel.PLAYER_TYPE.DECLARER]: null,
+          [playerModel.PLAYER_TYPE.OPPONENT]: null,
         },
       });
-      const players: PlayerList = [];
-      const expected: PlayerList = [];
+      const players: playerModel.PlayerList = [];
+      const expected: playerModel.PlayerList = [];
 
       const current = getCurrentScoreForPlayers(game)(players);
 
@@ -467,29 +492,29 @@ export default describe("gameScoreList", () => {
     it("should return the players scores, 2-2", () => {
       const game = gameFixture({
         playerTypeScores: {
-          [PLAYER_TYPE.DECLARER]: 16,
-          [PLAYER_TYPE.OPPONENT]: -16,
+          [playerModel.PLAYER_TYPE.DECLARER]: 16,
+          [playerModel.PLAYER_TYPE.OPPONENT]: -16,
         },
       });
       const player1 = playerFixture({
         name: "Tamas",
         gameScore: null,
-        type: PLAYER_TYPE.DECLARER,
+        type: playerModel.PLAYER_TYPE.DECLARER,
       });
       const player2 = playerFixture({
         name: "Csaba",
         gameScore: null,
-        type: PLAYER_TYPE.DECLARER,
+        type: playerModel.PLAYER_TYPE.DECLARER,
       });
       const player3 = playerFixture({
         name: "Akos",
         gameScore: null,
-        type: PLAYER_TYPE.OPPONENT,
+        type: playerModel.PLAYER_TYPE.OPPONENT,
       });
       const player4 = playerFixture({
         name: "Attila",
         gameScore: null,
-        type: PLAYER_TYPE.OPPONENT,
+        type: playerModel.PLAYER_TYPE.OPPONENT,
       });
       const players = [player1, player2, player3, player4];
       const expected = [
@@ -497,25 +522,25 @@ export default describe("gameScoreList", () => {
           id: player1.id,
           name: "Tamas",
           gameScore: 16,
-          type: PLAYER_TYPE.DECLARER,
+          type: playerModel.PLAYER_TYPE.DECLARER,
         }),
         playerFixture({
           id: player2.id,
           name: "Csaba",
           gameScore: 16,
-          type: PLAYER_TYPE.DECLARER,
+          type: playerModel.PLAYER_TYPE.DECLARER,
         }),
         playerFixture({
           id: player3.id,
           name: "Akos",
           gameScore: -16,
-          type: PLAYER_TYPE.OPPONENT,
+          type: playerModel.PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player4.id,
           name: "Attila",
           gameScore: -16,
-          type: PLAYER_TYPE.OPPONENT,
+          type: playerModel.PLAYER_TYPE.OPPONENT,
         }),
       ];
 
@@ -526,29 +551,29 @@ export default describe("gameScoreList", () => {
     it("should return the players scores, 3 declarers win, 1 opponent loose.", () => {
       const game = gameFixture({
         playerTypeScores: {
-          [PLAYER_TYPE.DECLARER]: 6,
-          [PLAYER_TYPE.OPPONENT]: -6,
+          [playerModel.PLAYER_TYPE.DECLARER]: 6,
+          [playerModel.PLAYER_TYPE.OPPONENT]: -6,
         },
       });
       const player1 = playerFixture({
         name: "Tamas",
         gameScore: null,
-        type: PLAYER_TYPE.DECLARER,
+        type: playerModel.PLAYER_TYPE.DECLARER,
       });
       const player2 = playerFixture({
         name: "Csaba",
         gameScore: null,
-        type: PLAYER_TYPE.DECLARER,
+        type: playerModel.PLAYER_TYPE.DECLARER,
       });
       const player3 = playerFixture({
         name: "Akos",
         gameScore: null,
-        type: PLAYER_TYPE.DECLARER,
+        type: playerModel.PLAYER_TYPE.DECLARER,
       });
       const player4 = playerFixture({
         name: "Attila",
         gameScore: null,
-        type: PLAYER_TYPE.OPPONENT,
+        type: playerModel.PLAYER_TYPE.OPPONENT,
       });
       const players = [player1, player2, player3, player4];
       const expected = [
@@ -556,25 +581,25 @@ export default describe("gameScoreList", () => {
           id: player1.id,
           name: "Tamas",
           gameScore: 6,
-          type: PLAYER_TYPE.DECLARER,
+          type: playerModel.PLAYER_TYPE.DECLARER,
         }),
         playerFixture({
           id: player2.id,
           name: "Csaba",
           gameScore: 6,
-          type: PLAYER_TYPE.DECLARER,
+          type: playerModel.PLAYER_TYPE.DECLARER,
         }),
         playerFixture({
           id: player3.id,
           name: "Akos",
           gameScore: 6,
-          type: PLAYER_TYPE.DECLARER,
+          type: playerModel.PLAYER_TYPE.DECLARER,
         }),
         playerFixture({
           id: player4.id,
           name: "Attila",
           gameScore: -18,
-          type: PLAYER_TYPE.OPPONENT,
+          type: playerModel.PLAYER_TYPE.OPPONENT,
         }),
       ];
 
@@ -585,29 +610,29 @@ export default describe("gameScoreList", () => {
     it("should return the players scores, 3 opponents win, 1 declarer loose", () => {
       const game = gameFixture({
         playerTypeScores: {
-          [PLAYER_TYPE.DECLARER]: -6,
-          [PLAYER_TYPE.OPPONENT]: 6,
+          [playerModel.PLAYER_TYPE.DECLARER]: -6,
+          [playerModel.PLAYER_TYPE.OPPONENT]: 6,
         },
       });
       const player1 = playerFixture({
         name: "Tamas",
         gameScore: null,
-        type: PLAYER_TYPE.OPPONENT,
+        type: playerModel.PLAYER_TYPE.OPPONENT,
       });
       const player2 = playerFixture({
         name: "Csaba",
         gameScore: null,
-        type: PLAYER_TYPE.OPPONENT,
+        type: playerModel.PLAYER_TYPE.OPPONENT,
       });
       const player3 = playerFixture({
         name: "Akos",
         gameScore: null,
-        type: PLAYER_TYPE.OPPONENT,
+        type: playerModel.PLAYER_TYPE.OPPONENT,
       });
       const player4 = playerFixture({
         name: "Attila",
         gameScore: null,
-        type: PLAYER_TYPE.DECLARER,
+        type: playerModel.PLAYER_TYPE.DECLARER,
       });
       const players = [player1, player2, player3, player4];
       const expected = [
@@ -615,25 +640,25 @@ export default describe("gameScoreList", () => {
           id: player1.id,
           name: "Tamas",
           gameScore: 6,
-          type: PLAYER_TYPE.OPPONENT,
+          type: playerModel.PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player2.id,
           name: "Csaba",
           gameScore: 6,
-          type: PLAYER_TYPE.OPPONENT,
+          type: playerModel.PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player3.id,
           name: "Akos",
           gameScore: 6,
-          type: PLAYER_TYPE.OPPONENT,
+          type: playerModel.PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player4.id,
           name: "Attila",
           gameScore: -18,
-          type: PLAYER_TYPE.DECLARER,
+          type: playerModel.PLAYER_TYPE.DECLARER,
         }),
       ];
 
@@ -644,29 +669,29 @@ export default describe("gameScoreList", () => {
     it("should return the players scores, 1 opponents win, 3 declarer loose", () => {
       const game = gameFixture({
         playerTypeScores: {
-          [PLAYER_TYPE.DECLARER]: -6,
-          [PLAYER_TYPE.OPPONENT]: 6,
+          [playerModel.PLAYER_TYPE.DECLARER]: -6,
+          [playerModel.PLAYER_TYPE.OPPONENT]: 6,
         },
       });
       const player1 = playerFixture({
         name: "Tamas",
         gameScore: null,
-        type: PLAYER_TYPE.DECLARER,
+        type: playerModel.PLAYER_TYPE.DECLARER,
       });
       const player2 = playerFixture({
         name: "Csaba",
         gameScore: null,
-        type: PLAYER_TYPE.DECLARER,
+        type: playerModel.PLAYER_TYPE.DECLARER,
       });
       const player3 = playerFixture({
         name: "Akos",
         gameScore: null,
-        type: PLAYER_TYPE.DECLARER,
+        type: playerModel.PLAYER_TYPE.DECLARER,
       });
       const player4 = playerFixture({
         name: "Attila",
         gameScore: null,
-        type: PLAYER_TYPE.OPPONENT,
+        type: playerModel.PLAYER_TYPE.OPPONENT,
       });
       const players = [player1, player2, player3, player4];
       const expected = [
@@ -674,25 +699,25 @@ export default describe("gameScoreList", () => {
           id: player1.id,
           name: "Tamas",
           gameScore: -6,
-          type: PLAYER_TYPE.DECLARER,
+          type: playerModel.PLAYER_TYPE.DECLARER,
         }),
         playerFixture({
           id: player2.id,
           name: "Csaba",
           gameScore: -6,
-          type: PLAYER_TYPE.DECLARER,
+          type: playerModel.PLAYER_TYPE.DECLARER,
         }),
         playerFixture({
           id: player3.id,
           name: "Akos",
           gameScore: -6,
-          type: PLAYER_TYPE.DECLARER,
+          type: playerModel.PLAYER_TYPE.DECLARER,
         }),
         playerFixture({
           id: player4.id,
           name: "Attila",
           gameScore: 18,
-          type: PLAYER_TYPE.OPPONENT,
+          type: playerModel.PLAYER_TYPE.OPPONENT,
         }),
       ];
 
@@ -703,29 +728,29 @@ export default describe("gameScoreList", () => {
     it("should return the players scores, 1 declarers win, 3 opponents loose", () => {
       const game = gameFixture({
         playerTypeScores: {
-          [PLAYER_TYPE.DECLARER]: 6,
-          [PLAYER_TYPE.OPPONENT]: -6,
+          [playerModel.PLAYER_TYPE.DECLARER]: 6,
+          [playerModel.PLAYER_TYPE.OPPONENT]: -6,
         },
       });
       const player1 = playerFixture({
         name: "Tamas",
         gameScore: null,
-        type: PLAYER_TYPE.OPPONENT,
+        type: playerModel.PLAYER_TYPE.OPPONENT,
       });
       const player2 = playerFixture({
         name: "Csaba",
         gameScore: null,
-        type: PLAYER_TYPE.OPPONENT,
+        type: playerModel.PLAYER_TYPE.OPPONENT,
       });
       const player3 = playerFixture({
         name: "Akos",
         gameScore: null,
-        type: PLAYER_TYPE.OPPONENT,
+        type: playerModel.PLAYER_TYPE.OPPONENT,
       });
       const player4 = playerFixture({
         name: "Attila",
         gameScore: null,
-        type: PLAYER_TYPE.DECLARER,
+        type: playerModel.PLAYER_TYPE.DECLARER,
       });
       const players = [player1, player2, player3, player4];
       const expected = [
@@ -733,25 +758,25 @@ export default describe("gameScoreList", () => {
           id: player1.id,
           name: "Tamas",
           gameScore: -6,
-          type: PLAYER_TYPE.OPPONENT,
+          type: playerModel.PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player2.id,
           name: "Csaba",
           gameScore: -6,
-          type: PLAYER_TYPE.OPPONENT,
+          type: playerModel.PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player3.id,
           name: "Akos",
           gameScore: -6,
-          type: PLAYER_TYPE.OPPONENT,
+          type: playerModel.PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player4.id,
           name: "Attila",
           gameScore: 18,
-          type: PLAYER_TYPE.DECLARER,
+          type: playerModel.PLAYER_TYPE.DECLARER,
         }),
       ];
       const current = getCurrentScoreForPlayers(game)(players);
@@ -761,24 +786,24 @@ export default describe("gameScoreList", () => {
     it("should assign null if no 4 players", () => {
       const game = gameFixture({
         playerTypeScores: {
-          [PLAYER_TYPE.DECLARER]: 6,
-          [PLAYER_TYPE.OPPONENT]: -6,
+          [playerModel.PLAYER_TYPE.DECLARER]: 6,
+          [playerModel.PLAYER_TYPE.OPPONENT]: -6,
         },
       });
       const player1 = playerFixture({
         name: "Tamas",
         gameScore: 10,
-        type: PLAYER_TYPE.OPPONENT,
+        type: playerModel.PLAYER_TYPE.OPPONENT,
       });
       const player2 = playerFixture({
         name: "Csaba",
         gameScore: 20,
-        type: PLAYER_TYPE.OPPONENT,
+        type: playerModel.PLAYER_TYPE.OPPONENT,
       });
       const player4 = playerFixture({
         name: "Attila",
         gameScore: 40,
-        type: PLAYER_TYPE.DECLARER,
+        type: playerModel.PLAYER_TYPE.DECLARER,
       });
       const players = [player1, player2, player4];
       const expected = [
@@ -786,19 +811,19 @@ export default describe("gameScoreList", () => {
           id: player1.id,
           name: "Tamas",
           gameScore: null,
-          type: PLAYER_TYPE.OPPONENT,
+          type: playerModel.PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player2.id,
           name: "Csaba",
           gameScore: null,
-          type: PLAYER_TYPE.OPPONENT,
+          type: playerModel.PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player4.id,
           name: "Attila",
           gameScore: null,
-          type: PLAYER_TYPE.DECLARER,
+          type: playerModel.PLAYER_TYPE.DECLARER,
         }),
       ];
       const current = getCurrentScoreForPlayers(game)(players);
@@ -808,29 +833,29 @@ export default describe("gameScoreList", () => {
     it("should assign nulls, if not 2-2 or 1-3 the declarer-opponent type players", () => {
       const game = gameFixture({
         playerTypeScores: {
-          [PLAYER_TYPE.DECLARER]: 6,
-          [PLAYER_TYPE.OPPONENT]: -6,
+          [playerModel.PLAYER_TYPE.DECLARER]: 6,
+          [playerModel.PLAYER_TYPE.OPPONENT]: -6,
         },
       });
       const player1 = playerFixture({
         name: "Tamas",
         gameScore: 10,
-        type: PLAYER_TYPE.OPPONENT,
+        type: playerModel.PLAYER_TYPE.OPPONENT,
       });
       const player2 = playerFixture({
         name: "Csaba",
         gameScore: 10,
-        type: PLAYER_TYPE.OPPONENT,
+        type: playerModel.PLAYER_TYPE.OPPONENT,
       });
       const player3 = playerFixture({
         name: "Akos",
         gameScore: 10,
-        type: PLAYER_TYPE.OPPONENT,
+        type: playerModel.PLAYER_TYPE.OPPONENT,
       });
       const player4 = playerFixture({
         name: "Attila",
         gameScore: 10,
-        type: PLAYER_TYPE.OPPONENT,
+        type: playerModel.PLAYER_TYPE.OPPONENT,
       });
       const players = [player1, player2, player3, player4];
       const expected = [
@@ -838,25 +863,25 @@ export default describe("gameScoreList", () => {
           id: player1.id,
           name: "Tamas",
           gameScore: null,
-          type: PLAYER_TYPE.OPPONENT,
+          type: playerModel.PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player2.id,
           name: "Csaba",
           gameScore: null,
-          type: PLAYER_TYPE.OPPONENT,
+          type: playerModel.PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player3.id,
           name: "Akos",
           gameScore: null,
-          type: PLAYER_TYPE.OPPONENT,
+          type: playerModel.PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player4.id,
           name: "Attila",
           gameScore: null,
-          type: PLAYER_TYPE.OPPONENT,
+          type: playerModel.PLAYER_TYPE.OPPONENT,
         }),
       ];
       const current = getCurrentScoreForPlayers(game)(players);
@@ -866,29 +891,29 @@ export default describe("gameScoreList", () => {
     it("should assign null, if the game's declarare score is null", () => {
       const game = gameFixture({
         playerTypeScores: {
-          [PLAYER_TYPE.DECLARER]: null,
-          [PLAYER_TYPE.OPPONENT]: -6,
+          [playerModel.PLAYER_TYPE.DECLARER]: null,
+          [playerModel.PLAYER_TYPE.OPPONENT]: -6,
         },
       });
       const player1 = playerFixture({
         name: "Tamas",
         gameScore: 10,
-        type: PLAYER_TYPE.OPPONENT,
+        type: playerModel.PLAYER_TYPE.OPPONENT,
       });
       const player2 = playerFixture({
         name: "Csaba",
         gameScore: 20,
-        type: PLAYER_TYPE.OPPONENT,
+        type: playerModel.PLAYER_TYPE.OPPONENT,
       });
       const player3 = playerFixture({
         name: "Akos",
         gameScore: 30,
-        type: PLAYER_TYPE.OPPONENT,
+        type: playerModel.PLAYER_TYPE.OPPONENT,
       });
       const player4 = playerFixture({
         name: "Attila",
         gameScore: 40,
-        type: PLAYER_TYPE.DECLARER,
+        type: playerModel.PLAYER_TYPE.DECLARER,
       });
       const players = [player1, player2, player3, player4];
       const expected = [
@@ -896,25 +921,25 @@ export default describe("gameScoreList", () => {
           id: player1.id,
           name: "Tamas",
           gameScore: null,
-          type: PLAYER_TYPE.OPPONENT,
+          type: playerModel.PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player2.id,
           name: "Csaba",
           gameScore: null,
-          type: PLAYER_TYPE.OPPONENT,
+          type: playerModel.PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player3.id,
           name: "Akos",
           gameScore: null,
-          type: PLAYER_TYPE.OPPONENT,
+          type: playerModel.PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player4.id,
           name: "Attila",
           gameScore: null,
-          type: PLAYER_TYPE.DECLARER,
+          type: playerModel.PLAYER_TYPE.DECLARER,
         }),
       ];
       const current = getCurrentScoreForPlayers(game)(players);
@@ -924,29 +949,29 @@ export default describe("gameScoreList", () => {
     it("should assign null, if the game's opponent score is null", () => {
       const game = gameFixture({
         playerTypeScores: {
-          [PLAYER_TYPE.DECLARER]: 6,
-          [PLAYER_TYPE.OPPONENT]: null,
+          [playerModel.PLAYER_TYPE.DECLARER]: 6,
+          [playerModel.PLAYER_TYPE.OPPONENT]: null,
         },
       });
       const player1 = playerFixture({
         name: "Tamas",
         gameScore: 10,
-        type: PLAYER_TYPE.OPPONENT,
+        type: playerModel.PLAYER_TYPE.OPPONENT,
       });
       const player2 = playerFixture({
         name: "Csaba",
         gameScore: 20,
-        type: PLAYER_TYPE.OPPONENT,
+        type: playerModel.PLAYER_TYPE.OPPONENT,
       });
       const player3 = playerFixture({
         name: "Akos",
         gameScore: 30,
-        type: PLAYER_TYPE.OPPONENT,
+        type: playerModel.PLAYER_TYPE.OPPONENT,
       });
       const player4 = playerFixture({
         name: "Attila",
         gameScore: 40,
-        type: PLAYER_TYPE.DECLARER,
+        type: playerModel.PLAYER_TYPE.DECLARER,
       });
       const players = [player1, player2, player3, player4];
       const expected = [
@@ -954,25 +979,25 @@ export default describe("gameScoreList", () => {
           id: player1.id,
           name: "Tamas",
           gameScore: null,
-          type: PLAYER_TYPE.OPPONENT,
+          type: playerModel.PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player2.id,
           name: "Csaba",
           gameScore: null,
-          type: PLAYER_TYPE.OPPONENT,
+          type: playerModel.PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player3.id,
           name: "Akos",
           gameScore: null,
-          type: PLAYER_TYPE.OPPONENT,
+          type: playerModel.PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player4.id,
           name: "Attila",
           gameScore: null,
-          type: PLAYER_TYPE.DECLARER,
+          type: playerModel.PLAYER_TYPE.DECLARER,
         }),
       ];
       const current = getCurrentScoreForPlayers(game)(players);
@@ -982,29 +1007,29 @@ export default describe("gameScoreList", () => {
     it("should assign null to the null type players (not playing in the current game)", () => {
       const game = gameFixture({
         playerTypeScores: {
-          [PLAYER_TYPE.DECLARER]: 6,
-          [PLAYER_TYPE.OPPONENT]: -6,
+          [playerModel.PLAYER_TYPE.DECLARER]: 6,
+          [playerModel.PLAYER_TYPE.OPPONENT]: -6,
         },
       });
       const player1 = playerFixture({
         name: "Tamas",
         gameScore: null,
-        type: PLAYER_TYPE.OPPONENT,
+        type: playerModel.PLAYER_TYPE.OPPONENT,
       });
       const player2 = playerFixture({
         name: "Csaba",
         gameScore: null,
-        type: PLAYER_TYPE.OPPONENT,
+        type: playerModel.PLAYER_TYPE.OPPONENT,
       });
       const player3 = playerFixture({
         name: "Akos",
         gameScore: null,
-        type: PLAYER_TYPE.OPPONENT,
+        type: playerModel.PLAYER_TYPE.OPPONENT,
       });
       const player4 = playerFixture({
         name: "Attila",
         gameScore: null,
-        type: PLAYER_TYPE.DECLARER,
+        type: playerModel.PLAYER_TYPE.DECLARER,
       });
       const player5 = playerFixture({
         name: "Laci",
@@ -1017,25 +1042,25 @@ export default describe("gameScoreList", () => {
           id: player1.id,
           name: "Tamas",
           gameScore: -6,
-          type: PLAYER_TYPE.OPPONENT,
+          type: playerModel.PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player2.id,
           name: "Csaba",
           gameScore: -6,
-          type: PLAYER_TYPE.OPPONENT,
+          type: playerModel.PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player3.id,
           name: "Akos",
           gameScore: -6,
-          type: PLAYER_TYPE.OPPONENT,
+          type: playerModel.PLAYER_TYPE.OPPONENT,
         }),
         playerFixture({
           id: player4.id,
           name: "Attila",
           gameScore: 18,
-          type: PLAYER_TYPE.DECLARER,
+          type: playerModel.PLAYER_TYPE.DECLARER,
         }),
         playerFixture({
           id: player5.id,

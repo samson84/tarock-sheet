@@ -10,16 +10,7 @@ import {
   IconButton,
 } from "@material-ui/core";
 import React, { useState } from "react";
-import {
-  create,
-  getTypeColor,
-  Player,
-  PlayerList,
-  rotateTypeWithNull,
-  update,
-  updatePlayerAt,
-  removePlayer,
-} from "../models/playerModel";
+import * as playerModel from "../models/playerModel";
 import { MdDelete as RemoveIcon } from "react-icons/md";
 import { MdEdit as EditIcon } from "react-icons/md";
 import { MdPerson as UserIcon } from "react-icons/md";
@@ -29,7 +20,7 @@ import WinnerIcon from "@material-ui/icons/EmojiEvents";
 import Confrim from "./Confirm";
 
 interface PlayerAvatarProps {
-  player: Player;
+  player: playerModel.Player;
 }
 const PlayerAvatar = ({ player }: PlayerAvatarProps) => (
   <Avatar>
@@ -38,15 +29,15 @@ const PlayerAvatar = ({ player }: PlayerAvatarProps) => (
 );
 
 interface EditablePlayerItemProps {
-  player: Player;
-  onRemove: (player: Player) => void;
-  onChange: (updated: Player) => void;
+  player: playerModel.Player;
+  onRemove: (player: playerModel.Player) => void;
+  onChange: (updated: playerModel.Player) => void;
 }
 const EditablePlayerItem = (props: EditablePlayerItemProps) => {
   const { player, onRemove, onChange } = props;
   const handleRemove = () => onRemove(player);
   const handleChange = (prop: string) => (value: any) => {
-    onChange(update({ [prop]: value })(player));
+    onChange(playerModel.update({ [prop]: value })(player));
   };
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     handleChange("name")(event.target.value);
@@ -102,15 +93,19 @@ const EditablePlayerItem = (props: EditablePlayerItemProps) => {
 };
 
 interface PlayerItemProps {
-  player: Player;
-  onChange: (updated: Player) => void;
+  player: playerModel.Player;
+  onChange: (updated: playerModel.Player) => void;
 }
 const PlayerItem = ({ player, onChange }: PlayerItemProps) => {
   const handleChange = () => {
-    onChange(update({ type: rotateTypeWithNull(player.type) })(player));
+    onChange(
+      playerModel.update({ type: playerModel.rotateTypeWithNull(player.type) })(
+        player
+      )
+    );
   };
   const GAME_WINNER_SCORE = 180;
-  const color = getTypeColor(player.type);
+  const color = playerModel.getTypeColor(player.type);
   const playing = player.type !== null;
   const hasGameScore = player.gameScore !== null;
   const gameScoreText = playing && hasGameScore ? ` (${player.gameScore})` : "";
@@ -141,8 +136,8 @@ const PlayerItem = ({ player, onChange }: PlayerItemProps) => {
 };
 
 interface PlayersProps {
-  players: Player[];
-  onPlayerListChange: (playerList: PlayerList) => void;
+  players: playerModel.Player[];
+  onPlayerListChange: (playerList: playerModel.PlayerList) => void;
   onSaveScores: () => void;
   saveDisabled: boolean;
   onResetPlayers: () => void;
@@ -161,13 +156,13 @@ const Players = (props: PlayersProps) => {
 
   const handleToogleEdit = () => setEdit((prev) => !prev);
   const handleAdd = () => {
-    onPlayerListChange([...players, create()]);
+    onPlayerListChange([...players, playerModel.create()]);
   };
-  const handleRemove = (player: Player) => {
-    onPlayerListChange(removePlayer(player)(players));
+  const handleRemove = (player: playerModel.Player) => {
+    onPlayerListChange(playerModel.removePlayer(player)(players));
   };
-  const handleChange = (updated: Player) => {
-    onPlayerListChange(updatePlayerAt(updated)(players));
+  const handleChange = (updated: playerModel.Player) => {
+    onPlayerListChange(playerModel.updatePlayerAt(updated)(players));
   };
 
   return (

@@ -40,7 +40,7 @@ An awesome app to help track a Tarock game scores.
         - [x] getAnotherPlaterType: getOppositeType
         - [x] getPlayerTypeColor: getTypeColor
         - [x] rotatePlayerTypeWithNull: rotateTypeWithNull
-        - [ ] refactor to namespace imports
+        - [x] refactor to namespace imports
       - [ ] playerListModel
         - [ ] create and move functions
         - [ ] playerModel.addPlayer: add

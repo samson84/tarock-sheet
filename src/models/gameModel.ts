@@ -1,10 +1,10 @@
 import * as contractModel from "./contractModel";
-import { getOppositeType, PLAYER_TYPE } from "./playerModel";
+import * as playerModel from "./playerModel";
 import { Score } from "./scoreModel";
 
 type PlayerTypeScore = {
-  [PLAYER_TYPE.DECLARER]: Score;
-  [PLAYER_TYPE.OPPONENT]: Score;
+  [playerModel.PLAYER_TYPE.DECLARER]: Score;
+  [playerModel.PLAYER_TYPE.OPPONENT]: Score;
 };
 export interface Game {
   contracts: contractModel.Contract[];
@@ -74,8 +74,8 @@ export const create = (props: CreateGameProps = {}): Game => ({
   partyBaseScore: 1,
   called_tarock: props.called_tarock || null,
   playerTypeScores: {
-    [PLAYER_TYPE.DECLARER]: null,
-    [PLAYER_TYPE.OPPONENT]: null,
+    [playerModel.PLAYER_TYPE.DECLARER]: null,
+    [playerModel.PLAYER_TYPE.OPPONENT]: null,
   },
 });
 
@@ -175,7 +175,7 @@ export const calculatePlayerTypeScores = (game: Game): PlayerTypeScore => {
       };
 
       const taker = contract.taker;
-      const another = getOppositeType(taker);
+      const another = playerModel.getOppositeType(taker);
 
       return {
         ...partyScore,
@@ -187,8 +187,8 @@ export const calculatePlayerTypeScores = (game: Game): PlayerTypeScore => {
       };
     },
     {
-      [PLAYER_TYPE.DECLARER]: null,
-      [PLAYER_TYPE.OPPONENT]: null,
+      [playerModel.PLAYER_TYPE.DECLARER]: null,
+      [playerModel.PLAYER_TYPE.OPPONENT]: null,
     }
   );
 };

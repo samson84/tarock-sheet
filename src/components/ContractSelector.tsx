@@ -17,7 +17,7 @@ import {
 } from "../lib/bid";
 import { upperCaseToWords } from "../lib/util";
 import * as contractModel from "../models/contractModel";
-import { PLAYER_TYPE } from "../models/playerModel";
+import * as playerModel from "../models/playerModel";
 
 interface BidSelectorProps {
   bidsByGroup: BidsByGroup;
@@ -34,7 +34,7 @@ const ContractSelector = ({ bidsByGroup, onAddContract }: BidSelectorProps) => {
     const shouldWinWithSilent = silentAndWin && !bid.notWinIfSilent;
     onAddContract({
       bidType: bidType,
-      taker: PLAYER_TYPE.DECLARER,
+      taker: playerModel.PLAYER_TYPE.DECLARER,
       isSilent: silentAndWin && canSilent(bid),
       bidVariant: null,
       isWonByTaker: bid.winByDefault || shouldWinWithSilent || null,

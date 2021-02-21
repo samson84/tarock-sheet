@@ -1,4 +1,4 @@
-import { PLAYER_TYPE } from "./playerModel";
+import * as playerModel from "./playerModel";
 import { Score } from "./scoreModel";
 import {
   BidVariant,
@@ -20,7 +20,7 @@ export interface Contract {
   bidVariant: BidVariant | null;
   contra: ContraMultiplier;
   isWonByTaker: boolean | null;
-  taker: PLAYER_TYPE;
+  taker: playerModel.PLAYER_TYPE;
   isSilent: boolean;
 }
 
@@ -45,7 +45,7 @@ const validate = (contract: Contract): void | undefined => {
 export interface CreateContractProps {
   bidType: BID_TYPE;
   partyScore?: gameModel.PartyScoreValue | null;
-  taker: PLAYER_TYPE;
+  taker: playerModel.PLAYER_TYPE;
   isSilent?: boolean;
   bidVariant?: BidVariant | null;
   isWonByTaker?: boolean | null;

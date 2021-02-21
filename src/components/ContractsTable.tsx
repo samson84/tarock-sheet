@@ -18,11 +18,7 @@ import { BidVariant, getBid } from "../lib/bid";
 import VariantSelector from "./VariantSelector";
 import SilentSwitch from "./SilentSwitch";
 import MultiplierSelector from "./MultiplierSelector";
-import {
-  getOppositeType,
-  getTypeColor,
-  PLAYER_TYPE,
-} from "../models/playerModel";
+import * as playerModel from "../models/playerModel";
 import curry from "lodash/fp/curry";
 
 interface VariantSelectorModalProps {
@@ -99,10 +95,10 @@ const columns: ColumnDefinition[] = [
     field: "taker",
     headerName: "Taker",
     valueGetter: (contract, onAction) => {
-      const newTaker = getOppositeType(contract.taker);
+      const newTaker = playerModel.getOppositeType(contract.taker);
       const handleClick = () =>
         onAction && onAction(ACTION_TYPE.CHANGE, newTaker);
-      const color = getTypeColor(contract.taker);
+      const color = playerModel.getTypeColor(contract.taker);
       return (
         <Button
           color={color}
@@ -177,7 +173,9 @@ const columns: ColumnDefinition[] = [
           checked={isWonByTaker === true}
           indeterminate={isWonByTaker === null}
           onClick={handleClick}
-          color={taker === PLAYER_TYPE.DECLARER ? "primary" : "secondary"}
+          color={
+            taker === playerModel.PLAYER_TYPE.DECLARER ? "primary" : "secondary"
+          }
         />
       );
     },
@@ -189,7 +187,9 @@ const columns: ColumnDefinition[] = [
       <T
         variant="button"
         color={
-          contract.taker === PLAYER_TYPE.DECLARER ? "primary" : "secondary"
+          contract.taker === playerModel.PLAYER_TYPE.DECLARER
+            ? "primary"
+            : "secondary"
         }
       >
         {contractModel.calculateContractScore(contract)}

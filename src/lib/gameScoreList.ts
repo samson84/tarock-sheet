@@ -1,22 +1,20 @@
 import * as gameModel from "../models/gameModel";
-import {
-  PlayerList,
-  PLAYER_TYPE,
-  getPlayerNumberByType,
-  PlayerListObject,
-  Player,
-  update,
-} from "../models/playerModel";
+import * as playerModel from "../models/playerModel";
 import { Score } from "../models/scoreModel";
 import assignWith from "lodash/fp/assignWith";
 import { isEqual } from "lodash";
 
-const getScore = (players: PlayerList) => (
+const getScore = (players: playerModel.PlayerList) => (
   game: gameModel.Game
 ): [Score, Score] => {
-  const [numberOfDeclarers, numberOfOpponents] = getPlayerNumberByType(players);
-  const opponentsGameScore = game.playerTypeScores[PLAYER_TYPE.OPPONENT];
-  const declarersGameScore = game.playerTypeScores[PLAYER_TYPE.DECLARER];
+  const [
+    numberOfDeclarers,
+    numberOfOpponents,
+  ] = playerModel.getPlayerNumberByType(players);
+  const opponentsGameScore =
+    game.playerTypeScores[playerModel.PLAYER_TYPE.OPPONENT];
+  const declarersGameScore =
+    game.playerTypeScores[playerModel.PLAYER_TYPE.DECLARER];
   if (opponentsGameScore === null || declarersGameScore === null) {
     return [null, null];
   }
@@ -33,14 +31,14 @@ const getScore = (players: PlayerList) => (
 };
 
 export const getCurrentScoreForPlayers = (game: gameModel.Game) => (
-  players: PlayerList
-): PlayerList => {
+  players: playerModel.PlayerList
+): playerModel.PlayerList => {
   return players.map(
-    (player: Player): Player => {
+    (player: playerModel.Player): playerModel.Player => {
       const [declarersScore, opponentsScore] = getScore(players)(game);
       const score = {
-        [PLAYER_TYPE.OPPONENT]: opponentsScore,
-        [PLAYER_TYPE.DECLARER]: declarersScore,
+        [playerModel.PLAYER_TYPE.OPPONENT]: opponentsScore,
+        [playerModel.PLAYER_TYPE.DECLARER]: declarersScore,
       };
       return {
         ...player,
@@ -50,24 +48,27 @@ export const getCurrentScoreForPlayers = (game: gameModel.Game) => (
   );
 };
 
-export const isReadyForSave = (players: PlayerList) => (
+export const isReadyForSave = (players: playerModel.PlayerList) => (
   game: gameModel.Game
 ): boolean => {
-  const numbers = getPlayerNumberByType(players);
+  const numbers = playerModel.getPlayerNumberByType(players);
   const playerNumberValid =
     isEqual(numbers, [1, 3]) ||
     isEqual(numbers, [2, 2]) ||
     isEqual(numbers, [3, 1]);
   const gameScoreValid =
-    game.playerTypeScores[PLAYER_TYPE.DECLARER] !== null &&
-    game.playerTypeScores[PLAYER_TYPE.OPPONENT] !== null;
+    game.playerTypeScores[playerModel.PLAYER_TYPE.DECLARER] !== null &&
+    game.playerTypeScores[playerModel.PLAYER_TYPE.OPPONENT] !== null;
   return playerNumberValid && gameScoreValid;
 };
 
 const defined = (value: any): boolean =>
   Boolean(value !== undefined && value !== null);
 
-const scoreSumAssigner = (gameScore: number | undefined, player: Player) => {
+const scoreSumAssigner = (
+  gameScore: number | undefined,
+  player: playerModel.Player
+) => {
   const left = defined(gameScore) ? gameScore : 0;
   const right = defined(player.gameScore) ? player.gameScore : 0;
   return (left as number) + (right as number);
@@ -76,7 +77,7 @@ const scoreSumAssigner = (gameScore: number | undefined, player: Player) => {
 export type PlayerScores = { [key: string]: number };
 
 export const sumPlayerScores = (
-  playerListObjects: PlayerListObject[]
+  playerListObjects: playerModel.PlayerListObject[]
 ): PlayerScores => {
   return playerListObjects.reduce(
     (scores, playerListObject) =>
@@ -85,11 +86,11 @@ export const sumPlayerScores = (
   );
 };
 
-export const assignScoresToPlayers = (players: PlayerList) => (
+export const assignScoresToPlayers = (players: playerModel.PlayerList) => (
   sessionScores: PlayerScores
-): PlayerList =>
+): playerModel.PlayerList =>
   players.map((player) =>
     sessionScores[player.id] === undefined
       ? player
-      : update({ sessionScore: sessionScores[player.id] })(player)
+      : playerModel.update({ sessionScore: sessionScores[player.id] })(player)
   );
