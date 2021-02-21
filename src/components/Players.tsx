@@ -118,7 +118,9 @@ const PlayerItem = ({ player, onChange }: PlayerItemProps) => {
   const currentScoreText =
     playing && hasCurrentScore ? ` (${player.currentScore})` : "";
   const score =
-    player.score !== null ? player.score + player.baseScore : player.baseScore;
+    player.sessionScore !== null
+      ? player.sessionScore + player.baseScore
+      : player.baseScore;
   const isWinner = score > GAME_WINNER_SCORE;
   return (
     <Card>

@@ -84,10 +84,10 @@ export const sumPlayerScores = (
 };
 
 export const assignScoresToPlayers = (players: PlayerList) => (
-  scores: PlayerScores
+  sessionScores: PlayerScores
 ): PlayerList =>
   players.map((player) =>
-    scores[player.id] === undefined
+    sessionScores[player.id] === undefined
       ? player
-      : updatePlayer({ score: scores[player.id] })(player)
+      : updatePlayer({ sessionScore: sessionScores[player.id] })(player)
   );

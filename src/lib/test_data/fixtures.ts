@@ -39,7 +39,7 @@ export const playerFixture = (props: Partial<Player> = {}): Player => ({
   id: props.id || createId(),
   name: "",
   baseScore: 100,
-  score: null,
+  sessionScore: null,
   currentScore: null,
   type: null,
   ...props,

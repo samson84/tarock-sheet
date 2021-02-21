@@ -12,6 +12,7 @@ import {
   rotatePlayerTypeWithNull,
   updatePlayer,
   updatePlayerAt,
+  UpdatePlayerProps,
 } from "./playerModel";
 import { expectPlayer, playerFixture } from "../lib/test_data/fixtures";
 
@@ -22,7 +23,7 @@ export default describe("Player", () => {
         id: "notCheckedId",
         name: "",
         baseScore: 100,
-        score: null,
+        sessionScore: null,
         currentScore: null,
         type: null,
       });
@@ -35,14 +36,14 @@ export default describe("Player", () => {
       const player = playerFixture({
         name: "someName",
         baseScore: 80,
-        score: 70,
+        sessionScore: 70,
         currentScore: 120,
         type: PLAYER_TYPE.OPPONENT,
       });
-      const updates = {
+      const updates: UpdatePlayerProps = {
         name: "Some other name",
         baseScore: 50,
-        score: 60,
+        sessionScore: 60,
         currentScore: 90,
         type: PLAYER_TYPE.DECLARER,
       };
@@ -50,7 +51,7 @@ export default describe("Player", () => {
         id: player.id,
         name: "Some other name",
         baseScore: 50,
-        score: 60,
+        sessionScore: 60,
         currentScore: 90,
         type: PLAYER_TYPE.DECLARER,
       });

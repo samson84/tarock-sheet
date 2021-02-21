@@ -8,7 +8,7 @@ export interface Player {
   id: Id;
   name: string;
   baseScore: number;
-  score: PlayerScore;
+  sessionScore: PlayerScore;
   currentScore: PlayerScore;
   type: PLAYER_TYPE | null;
 }
@@ -18,7 +18,7 @@ export const createPlayer = (): Player => ({
   id: createId(),
   name: "",
   baseScore: 100,
-  score: null,
+  sessionScore: null,
   currentScore: null,
   type: null,
 });
@@ -97,7 +97,7 @@ export const clearPlayersType = (players: PlayerList): PlayerList =>
   players.map((player) => updatePlayer({ type: null })(player));
 
 export const resetPlayerScore = (players: PlayerList): PlayerList =>
-  players.map((player) => updatePlayer({ score: null })(player));
+  players.map((player) => updatePlayer({ sessionScore: null })(player));
 
 export const filterPlayersInGame = (players: PlayerList): PlayerList =>
   players.filter((player) => player.type !== null);

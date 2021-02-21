@@ -32,7 +32,7 @@ An awesome app to help track a Tarock game scores.
         - [x] ContractScore --> PlayerScore
       - [.] player: playerModel
         - [x] rename and move
-        - [ ] score prop: sessionScore
+        - [x] score prop: sessionScore
         - [ ] currentScore: gameScore
         - [ ] PlayerScore: Score
         - [ ] createPlayer: create
