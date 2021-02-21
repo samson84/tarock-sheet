@@ -1,4 +1,4 @@
-import { PLAYER_TYPE } from "../lib/player";
+import { PlayerScore, PLAYER_TYPE } from "../lib/player";
 import {
   BidVariant,
   BID_TYPE,
@@ -94,8 +94,7 @@ export const update = (updates: UpdateContractProps) => (
   return updated;
 };
 
-export type ContractScore = number | null;
-export const calculateContractScore = (contract: Contract): ContractScore => {
+export const calculateContractScore = (contract: Contract): PlayerScore => {
   const { isWonByTaker, bidBaseScore, contra, isSilent: silent } = contract;
   if (isWonByTaker === null || bidBaseScore === null) {
     return null;

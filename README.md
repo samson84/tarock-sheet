@@ -29,7 +29,7 @@ An awesome app to help track a Tarock game scores.
         - [x] calculateContract: calculateContractScore
         - [x] remove unused functions: withIndices, filterByPartyLike, filterByProps
         - [x] refactor contractModel imports to namespace imports
-        - [ ] ContractScore --> PlayerScore
+        - [x] ContractScore --> PlayerScore
       - [ ] player: playerModel
         - [ ] score prop: sessionScore
         - [ ] currentScore: gameScore
