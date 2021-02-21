@@ -21,7 +21,7 @@ export interface Contract {
   bidBaseScore: number | null;
   bidVariant: BidVariant | null;
   contra: ContraMultiplier;
-  winByTaker: boolean | null;
+  isWonByTaker: boolean | null;
   taker: PLAYER_TYPE;
   isSilent: boolean;
 }
@@ -50,7 +50,7 @@ export interface CreateContractProps {
   taker: PLAYER_TYPE;
   isSilent?: boolean;
   bidVariant?: BidVariant | null;
-  winByTaker?: boolean | null;
+  isWonByTaker?: boolean | null;
 }
 export const createContract = ({
   bidType,
@@ -58,14 +58,14 @@ export const createContract = ({
   partyScore = null,
   isSilent = false,
   bidVariant = null,
-  winByTaker = null,
+  isWonByTaker = null,
 }: CreateContractProps): Contract => {
   const contract = {
     bidType,
     bidVariant,
     contra: 1,
     isSilent,
-    winByTaker,
+    isWonByTaker,
     taker,
     bidBaseScore:
       partyScore !== null
@@ -84,7 +84,10 @@ export const updateBidBaseScore = (partyScore: number) => (
 });
 
 export type UpdateContractProps = Partial<
-  Pick<Contract, "taker" | "winByTaker" | "isSilent" | "bidVariant" | "contra">
+  Pick<
+    Contract,
+    "taker" | "isWonByTaker" | "isSilent" | "bidVariant" | "contra"
+  >
 >;
 export const updateContract = (updates: UpdateContractProps) => (
   contract: Contract
@@ -96,12 +99,12 @@ export const updateContract = (updates: UpdateContractProps) => (
 
 export type ContractScore = number | null;
 export const calculateContract = (contract: Contract): ContractScore => {
-  const { winByTaker, bidBaseScore, contra, isSilent: silent } = contract;
-  if (winByTaker === null || bidBaseScore === null) {
+  const { isWonByTaker, bidBaseScore, contra, isSilent: silent } = contract;
+  if (isWonByTaker === null || bidBaseScore === null) {
     return null;
   }
   const multiplier = silent ? 0.5 : contra;
-  const sign = winByTaker ? 1 : -1;
+  const sign = isWonByTaker ? 1 : -1;
   return sign * bidBaseScore * multiplier;
 };
 

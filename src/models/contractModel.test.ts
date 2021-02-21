@@ -145,13 +145,13 @@ export default describe("contract", () => {
     });
     it("should update the winner", () => {
       const contract = contractFixture({
-        winByTaker: null,
+        isWonByTaker: null,
       });
       const updates: UpdateContractProps = {
-        winByTaker: true,
+        isWonByTaker: true,
       };
       const expected = contractFixture({
-        winByTaker: true,
+        isWonByTaker: true,
       });
       const current = updateContract(updates)(contract);
       expect(current).toEqual(expected);
@@ -215,7 +215,7 @@ export default describe("contract", () => {
       });
       const updates: UpdateContractProps = {
         bidVariant: SMALLEST_VARIANT.PAGAT,
-        winByTaker: false,
+        isWonByTaker: false,
       };
       const expected = "PARTY does not have PAGAT variant";
       const current = () => updateContract(updates)(contract);
@@ -264,7 +264,7 @@ export default describe("contract", () => {
         bidBaseScore: 10,
         bidVariant: SMALLEST_VARIANT.PAGAT,
         contra: 1,
-        winByTaker: null,
+        isWonByTaker: null,
         taker: PLAYER_TYPE.DECLARER,
         isSilent: false,
       });
@@ -279,7 +279,7 @@ export default describe("contract", () => {
         bidBaseScore: 10,
         bidVariant: SMALLEST_VARIANT.PAGAT,
         contra: 2,
-        winByTaker: true,
+        isWonByTaker: true,
         taker: PLAYER_TYPE.DECLARER,
         isSilent: false,
       });
@@ -294,7 +294,7 @@ export default describe("contract", () => {
         bidBaseScore: 10,
         bidVariant: SMALLEST_VARIANT.PAGAT,
         contra: 2,
-        winByTaker: false,
+        isWonByTaker: false,
         taker: PLAYER_TYPE.DECLARER,
         isSilent: false,
       });
@@ -308,7 +308,7 @@ export default describe("contract", () => {
         bidType: BID_TYPE.ULTI, // bse score is 10
         taker: PLAYER_TYPE.DECLARER,
         isSilent: true,
-        winByTaker: true,
+        isWonByTaker: true,
         partyScore: 1,
       });
       const expected = 5;
@@ -322,7 +322,7 @@ export default describe("contract", () => {
         bidBaseScore: 10,
         bidVariant: SMALLEST_VARIANT.PAGAT,
         contra: 16,
-        winByTaker: true,
+        isWonByTaker: true,
         taker: PLAYER_TYPE.DECLARER,
         isSilent: true,
       });
@@ -337,7 +337,7 @@ export default describe("contract", () => {
         bidBaseScore: 10,
         bidVariant: SMALLEST_VARIANT.PAGAT,
         contra: 16,
-        winByTaker: false,
+        isWonByTaker: false,
         taker: PLAYER_TYPE.DECLARER,
         isSilent: true,
       });

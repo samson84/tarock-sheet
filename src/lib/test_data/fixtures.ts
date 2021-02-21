@@ -9,7 +9,7 @@ export const contractFixture = (props: Partial<Contract> = {}): Contract => {
     bidType: BID_TYPE.FOUR_KING,
     contra: 1,
     isSilent: false,
-    winByTaker: null,
+    isWonByTaker: null,
     taker: PLAYER_TYPE.DECLARER,
     bidVariant: null,
     bidBaseScore: 2,

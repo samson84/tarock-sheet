@@ -22,7 +22,7 @@ An awesome app to help track a Tarock game scores.
       - [.] contract to contractModel
         - [x] rename and move contract to contractModel
         - [x] silent prop: isSilent
-        - [ ] sinByTaker prop: isWonByTaker
+        - [x] winByTaker prop: isWonByTaker
         - [ ] validateContract: validate
         - [ ] createContract: create
         - [ ] updateContract: update

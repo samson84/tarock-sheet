@@ -157,28 +157,28 @@ const columns: ColumnDefinition[] = [
     },
   },
   {
-    field: "winByTaker",
+    field: "isWonByTaker",
     headerName: "Win by the Taker?",
     valueGetter: (contract, onAction) => {
-      const { winByTaker, taker } = contract;
+      const { isWonByTaker, taker } = contract;
       const handleClick = () => {
         const nextValue =
-          winByTaker === null ? true : winByTaker === true ? false : null;
+          isWonByTaker === null ? true : isWonByTaker === true ? false : null;
         onAction && onAction(ACTION_TYPE.CHANGE, nextValue);
       };
 
       const title =
-        winByTaker === true
+        isWonByTaker === true
           ? "Won by the Taker!"
-          : winByTaker === false
+          : isWonByTaker === false
           ? "Lose by the Taker!"
           : "Still unknown / Not count in final score...";
 
       return (
         <Checkbox
           title={title}
-          checked={winByTaker === true}
-          indeterminate={winByTaker === null}
+          checked={isWonByTaker === true}
+          indeterminate={isWonByTaker === null}
           onClick={handleClick}
           color={taker === PLAYER_TYPE.DECLARER ? "primary" : "secondary"}
         />
