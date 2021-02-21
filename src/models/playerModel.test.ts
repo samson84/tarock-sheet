@@ -9,7 +9,7 @@ import {
   PlayerList,
   PLAYER_TYPE,
   removePlayer,
-  rotatePlayerTypeWithNull,
+  rotateTypeWithNull,
   update,
   updatePlayerAt,
   UpdatePlayerProps,
@@ -191,7 +191,7 @@ export default describe("Player", () => {
       const playerType = PLAYER_TYPE.DECLARER;
       const expected = PLAYER_TYPE.OPPONENT;
 
-      const current = rotatePlayerTypeWithNull(playerType);
+      const current = rotateTypeWithNull(playerType);
 
       expect(current).toEqual(expected);
     });
@@ -199,7 +199,7 @@ export default describe("Player", () => {
       const playerType = PLAYER_TYPE.OPPONENT;
       const expected = null;
 
-      const current = rotatePlayerTypeWithNull(playerType);
+      const current = rotateTypeWithNull(playerType);
 
       expect(current).toEqual(expected);
     });
@@ -207,7 +207,7 @@ export default describe("Player", () => {
       const playerType = null;
       const expected = PLAYER_TYPE.DECLARER;
 
-      const current = rotatePlayerTypeWithNull(playerType);
+      const current = rotateTypeWithNull(playerType);
 
       expect(current).toEqual(expected);
     });

@@ -61,7 +61,7 @@ export const getTypeColor = (playerType: PLAYER_TYPE | null): TypeColor => {
   return mapper.get(playerType) || "default";
 };
 
-export const rotatePlayerTypeWithNull = (
+export const rotateTypeWithNull = (
   playerType: PLAYER_TYPE | null
 ): PLAYER_TYPE | null => {
   const mapper = new Map([

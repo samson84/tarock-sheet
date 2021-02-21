@@ -15,7 +15,7 @@ import {
   getTypeColor,
   Player,
   PlayerList,
-  rotatePlayerTypeWithNull,
+  rotateTypeWithNull,
   update,
   updatePlayerAt,
   removePlayer,
@@ -107,7 +107,7 @@ interface PlayerItemProps {
 }
 const PlayerItem = ({ player, onChange }: PlayerItemProps) => {
   const handleChange = () => {
-    onChange(update({ type: rotatePlayerTypeWithNull(player.type) })(player));
+    onChange(update({ type: rotateTypeWithNull(player.type) })(player));
   };
   const GAME_WINNER_SCORE = 180;
   const color = getTypeColor(player.type);
