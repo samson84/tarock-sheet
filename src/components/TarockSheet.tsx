@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BID_TYPE, getAllBidsByGorup } from "../lib/bid";
 import ContractSelector from "./ContractSelector";
 import * as gameModel from "../models/gameModel";
-import { Contract, create, updateContract } from "../models/contractModel";
+import { Contract, create, update } from "../models/contractModel";
 import { Button, Grid } from "@material-ui/core";
 import ContractsTable from "./ContractsTable";
 import GameProperties from "./GameProperties";
@@ -120,7 +120,7 @@ const TarockSheet = () => {
   ) => {
     setGame(
       flow(
-        updateContract({ [field]: value }),
+        update({ [field]: value }),
         gameModel.updateGameContractAt(game)(index)
       )(game.contracts[index])
     );

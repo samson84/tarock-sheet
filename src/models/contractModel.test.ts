@@ -4,7 +4,7 @@ import { PLAYER_TYPE } from "../lib/player";
 import {
   calculateContract,
   create,
-  updateContract,
+  update,
   withIndices,
   filterByPartyLike,
   ContractWithIndex,
@@ -140,7 +140,7 @@ export default describe("contract", () => {
       const expected = contractFixture({
         taker: PLAYER_TYPE.DECLARER,
       });
-      const current = updateContract(updates)(contract);
+      const current = update(updates)(contract);
       expect(current).toEqual(expected);
     });
     it("should update the winner", () => {
@@ -153,7 +153,7 @@ export default describe("contract", () => {
       const expected = contractFixture({
         isWonByTaker: true,
       });
-      const current = updateContract(updates)(contract);
+      const current = update(updates)(contract);
       expect(current).toEqual(expected);
     });
     it("should update silent prop", () => {
@@ -166,7 +166,7 @@ export default describe("contract", () => {
       const expected = contractFixture({
         isSilent: true,
       });
-      const current = updateContract(updates)(contract);
+      const current = update(updates)(contract);
       expect(current).toEqual(expected);
     });
     it("should throw if the bid can not be silent", () => {
@@ -178,7 +178,7 @@ export default describe("contract", () => {
         isSilent: true,
       };
       const expected = "PARTY can not be silent";
-      const current = () => updateContract(updates)(contract);
+      const current = () => update(updates)(contract);
       expect(current).toThrow(expected);
     });
     it("should update the bidVariant prop", () => {
@@ -193,7 +193,7 @@ export default describe("contract", () => {
         bidType: BID_TYPE.KING_ULTI,
         bidVariant: CARD_SHAPE_VARIANT.CLUB,
       });
-      const current = updateContract(updates)(contract);
+      const current = update(updates)(contract);
       expect(current).toEqual(expected);
     });
     it("should throw if the bid has invalid bidVariant", () => {
@@ -205,7 +205,7 @@ export default describe("contract", () => {
         bidVariant: SMALLEST_VARIANT.EAGLE,
       };
       const expected = "KING_ULTI does not have EAGLE variant";
-      const current = () => updateContract(updates)(contract);
+      const current = () => update(updates)(contract);
       expect(current).toThrow(expected);
     });
     it("should throw if the bid does not have variant", () => {
@@ -218,7 +218,7 @@ export default describe("contract", () => {
         isWonByTaker: false,
       };
       const expected = "PARTY does not have PAGAT variant";
-      const current = () => updateContract(updates)(contract);
+      const current = () => update(updates)(contract);
       expect(current).toThrow(expected);
     });
     it("should update the contra", () => {
@@ -231,7 +231,7 @@ export default describe("contract", () => {
       const expected = contractFixture({
         contra: 4,
       });
-      const current = updateContract(updates)(contract);
+      const current = update(updates)(contract);
       expect(current).toEqual(expected);
     });
     it("sould throw if the contra is not the power of two", () => {
@@ -242,7 +242,7 @@ export default describe("contract", () => {
         contra: 5,
       };
       const expected = "Contra must be power of two, but 5 given.";
-      const current = () => updateContract(updates)(contract);
+      const current = () => update(updates)(contract);
       expect(current).toThrow(expected);
     });
     it("sould throw if the contra is less than one.", () => {
@@ -253,7 +253,7 @@ export default describe("contract", () => {
         contra: 0.5,
       };
       const expected = "Contra must be greater than 1, but 0.5 given.";
-      const current = () => updateContract(updates)(contract);
+      const current = () => update(updates)(contract);
       expect(current).toThrow(expected);
     });
   });

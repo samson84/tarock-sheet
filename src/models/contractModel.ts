@@ -89,7 +89,7 @@ export type UpdateContractProps = Partial<
     "taker" | "isWonByTaker" | "isSilent" | "bidVariant" | "contra"
   >
 >;
-export const updateContract = (updates: UpdateContractProps) => (
+export const update = (updates: UpdateContractProps) => (
   contract: Contract
 ): Contract => {
   const updated = { ...contract, ...updates };
