@@ -32,7 +32,7 @@ export const countByType = (players: PlayerList): [number, number] => {
   return [declarersNumber, opponentsNumber];
 };
 
-export const clearPlayersType = (players: PlayerList): PlayerList =>
+export const clearType = (players: PlayerList): PlayerList =>
   players.map((player) => playerModel.update({ type: null })(player));
 
 export const resetPlayerScore = (players: PlayerList): PlayerList =>

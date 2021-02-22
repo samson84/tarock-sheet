@@ -47,7 +47,7 @@ An awesome app to help track a Tarock game scores.
         - [x] playerModel.removePlayer: remove
         - [x] playerModel.updatePlayerAt: update
         - [x] getPlayerNumberByType: countByType
-        - [ ] clearPlayersType: clearType
+        - [x] clearPlayersType: clearType
         - [ ] resetPlaerScore: clearSessionScore
         - [ ] filterPlayersInGame: filterByInGame
         - [ ] createPlayerListObject: mapToObject
@@ -92,6 +92,7 @@ An awesome app to help track a Tarock game scores.
     - [ ] rename game props to camelCase, party_score, called_tarock
     - [ ] add license, contribution, proper readme
     - [ ] increase test coverage
+    - [ ] also clear the base scores too when resetting the scores
 - [ ] Milestone 2, mobile friendly, UX improvements
   - [ ] refactor
     - [ ] better type checking for dynamic types in Contracts table

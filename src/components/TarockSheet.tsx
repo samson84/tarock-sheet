@@ -140,7 +140,7 @@ const TarockSheet = () => {
     flow(
       sumPlayerScores,
       assignScoresToPlayers(players),
-      playerListModel.clearPlayersType,
+      playerListModel.clearType,
       updatePlayersState
     )(updated);
     setGameScoreList(updated);
@@ -155,7 +155,7 @@ const TarockSheet = () => {
     updateGameScoreListState([]);
     flow(
       playerListModel.resetPlayerScore,
-      playerListModel.clearPlayersType,
+      playerListModel.clearType,
       updatePlayersState
     )(players);
   };

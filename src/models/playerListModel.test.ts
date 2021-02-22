@@ -156,7 +156,7 @@ export default describe("playerListModel", () => {
       const playerList: playerListModel.PlayerList = [];
       const expected: playerListModel.PlayerList = [];
 
-      const current = playerListModel.clearPlayersType(playerList);
+      const current = playerListModel.clearType(playerList);
 
       expect(current).toEqual(expected);
     });
@@ -177,7 +177,7 @@ export default describe("playerListModel", () => {
         playerFixture({ id: notPlaying.id, name: "non playing", type: null }),
       ];
 
-      const current = playerListModel.clearPlayersType(playerList);
+      const current = playerListModel.clearType(playerList);
 
       expect(current).toEqual(expected);
     });
