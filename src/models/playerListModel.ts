@@ -35,7 +35,7 @@ export const countByType = (players: PlayerList): [number, number] => {
 export const clearType = (players: PlayerList): PlayerList =>
   players.map((player) => playerModel.update({ type: null })(player));
 
-export const resetPlayerScore = (players: PlayerList): PlayerList =>
+export const clearSessionScore = (players: PlayerList): PlayerList =>
   players.map((player) => playerModel.update({ sessionScore: null })(player));
 
 export const filterPlayersInGame = (players: PlayerList): PlayerList =>

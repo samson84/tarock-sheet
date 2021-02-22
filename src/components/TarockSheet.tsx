@@ -154,7 +154,7 @@ const TarockSheet = () => {
   const handleResetScores = () => {
     updateGameScoreListState([]);
     flow(
-      playerListModel.resetPlayerScore,
+      playerListModel.clearSessionScore,
       playerListModel.clearType,
       updatePlayersState
     )(players);

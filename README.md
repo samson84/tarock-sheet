@@ -48,7 +48,7 @@ An awesome app to help track a Tarock game scores.
         - [x] playerModel.updatePlayerAt: update
         - [x] getPlayerNumberByType: countByType
         - [x] clearPlayersType: clearType
-        - [ ] resetPlaerScore: clearSessionScore
+        - [x] resetPlayerScore: clearSessionScore
         - [ ] filterPlayersInGame: filterByInGame
         - [ ] createPlayerListObject: mapToObject
         - [ ] refactor to namespace imports
