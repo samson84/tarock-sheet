@@ -11,8 +11,8 @@ export const remove = (playerList: PlayerList) => (
   player: playerModel.Player
 ): PlayerList => playerList.filter(({ id }) => id !== player.id);
 
-export const updatePlayerAt = (updated: playerModel.Player) => (
-  playerList: PlayerList
+export const update = (playerList: PlayerList) => (
+  updated: playerModel.Player
 ): PlayerList =>
   playerList.map((player) => (player.id === updated.id ? updated : player));
 

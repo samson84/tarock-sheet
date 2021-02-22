@@ -45,7 +45,7 @@ An awesome app to help track a Tarock game scores.
         - [x] create and move functions
         - [x] playerModel.addPlayer: add
         - [x] playerModel.removePlayer: remove
-        - [ ] playerModel.updatePlayerAt: updatePlayer
+        - [x] playerModel.updatePlayerAt: update
         - [ ] getPlayerNumberByType: countByType
         - [ ] clearPlayersType: clearType
         - [ ] resetPlaerScore: clearSessionScore

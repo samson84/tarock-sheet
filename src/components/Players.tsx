@@ -168,7 +168,7 @@ const Players = (props: PlayersProps) => {
     flow(playerListModel.remove(players), onPlayerListChange)(player);
   };
   const handleChange = (updated: playerModel.Player) => {
-    onPlayerListChange(playerListModel.updatePlayerAt(updated)(players));
+    flow(playerListModel.update(players), onPlayerListChange)(updated);
   };
 
   return (

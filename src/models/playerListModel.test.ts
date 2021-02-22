@@ -83,7 +83,7 @@ export default describe("playerListModel", () => {
         playerFixture({ id: updated.id, name: "Tamás", gameScore: 80 }),
       ];
 
-      const current = playerListModel.updatePlayerAt(updated)(playerList);
+      const current = playerListModel.update(playerList)(updated);
 
       expect(current).toEqual(expected);
     });
@@ -106,7 +106,7 @@ export default describe("playerListModel", () => {
         playerFixture({ id: player2.id, name: "Tamás", gameScore: 50 }),
       ];
 
-      const current = playerListModel.updatePlayerAt(wontUpdated)(playerList);
+      const current = playerListModel.update(playerList)(wontUpdated);
 
       expect(current).toEqual(expected);
     });
