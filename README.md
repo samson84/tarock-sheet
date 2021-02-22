@@ -30,7 +30,7 @@ An awesome app to help track a Tarock game scores.
         - [x] remove unused functions: withIndices, filterByPartyLike, filterByProps
         - [x] refactor contractModel imports to namespace imports
         - [x] ContractScore --> PlayerScore
-      - [] player: playerModel
+      - [x] player: playerModel
         - [x] rename and move
         - [x] score prop: sessionScore
         - [x] currentScore prop: gameScore
@@ -41,7 +41,7 @@ An awesome app to help track a Tarock game scores.
         - [x] getPlayerTypeColor: getTypeColor
         - [x] rotatePlayerTypeWithNull: rotateTypeWithNull
         - [x] refactor to namespace imports
-      - [.] playerListModel
+      - [x] playerListModel
         - [x] create and move functions
         - [x] playerModel.addPlayer: add
         - [x] playerModel.removePlayer: remove
@@ -51,7 +51,7 @@ An awesome app to help track a Tarock game scores.
         - [x] resetPlayerScore: clearSessionScore
         - [x] filterPlayersInGame: filterByInGame
         - [x] createPlayerListObject: mapToObjectById
-        - [ ] refactor to namespace imports
+        - [x] refactor to namespace imports
       - [ ] bid: bidModel
         - [ ] rename and move
         - [ ] silent prop: canSilent

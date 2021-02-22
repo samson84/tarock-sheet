@@ -1,5 +1,4 @@
 import { createId, Id } from "../lib/util";
-import { PlayerList } from "./playerListModel";
 import { Score } from "./scoreModel";
 
 export enum PLAYER_TYPE {
