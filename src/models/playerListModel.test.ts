@@ -187,7 +187,7 @@ export default describe("playerListModel", () => {
       const playerList: playerListModel.PlayerList = [];
       const expected: playerListModel.PlayerList = [];
 
-      const current = playerListModel.filterPlayersInGame(playerList);
+      const current = playerListModel.filterByInGame(playerList);
 
       expect(current).toEqual(expected);
     });
@@ -215,7 +215,7 @@ export default describe("playerListModel", () => {
         }),
       ];
 
-      const current = playerListModel.filterPlayersInGame(playerList);
+      const current = playerListModel.filterByInGame(playerList);
 
       expect(current).toEqual(expected);
     });

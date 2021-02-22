@@ -125,7 +125,7 @@ const TarockSheet = () => {
   };
   const handleSaveScores = () => {
     const updatedGameScoreList = flow(
-      playerListModel.filterPlayersInGame,
+      playerListModel.filterByInGame,
       playerListModel.createPlayerListObject,
       concat(gameScoreList)
     )(players);
