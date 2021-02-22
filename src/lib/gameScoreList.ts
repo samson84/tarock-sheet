@@ -8,10 +8,9 @@ import { isEqual } from "lodash";
 const getScore = (players: playerListModel.PlayerList) => (
   game: gameModel.Game
 ): [Score, Score] => {
-  const [
-    numberOfDeclarers,
-    numberOfOpponents,
-  ] = playerListModel.getPlayerNumberByType(players);
+  const [numberOfDeclarers, numberOfOpponents] = playerListModel.countByType(
+    players
+  );
   const opponentsGameScore =
     game.playerTypeScores[playerModel.PLAYER_TYPE.OPPONENT];
   const declarersGameScore =
@@ -52,7 +51,7 @@ export const getCurrentScoreForPlayers = (game: gameModel.Game) => (
 export const isReadyForSave = (players: playerListModel.PlayerList) => (
   game: gameModel.Game
 ): boolean => {
-  const numbers = playerListModel.getPlayerNumberByType(players);
+  const numbers = playerListModel.countByType(players);
   const playerNumberValid =
     isEqual(numbers, [1, 3]) ||
     isEqual(numbers, [2, 2]) ||

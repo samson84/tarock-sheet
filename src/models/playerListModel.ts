@@ -16,9 +16,7 @@ export const update = (playerList: PlayerList) => (
 ): PlayerList =>
   playerList.map((player) => (player.id === updated.id ? updated : player));
 
-export const getPlayerNumberByType = (
-  players: PlayerList
-): [number, number] => {
+export const countByType = (players: PlayerList): [number, number] => {
   const [declarersNumber, opponentsNumber] = players.reduce(
     ([declarersNumber, opponentsNumber], player) => {
       if (player.type === playerModel.PLAYER_TYPE.OPPONENT) {

@@ -116,7 +116,7 @@ export default describe("playerListModel", () => {
       const playerList: playerListModel.PlayerList = [];
       const expected = [0, 0];
 
-      const current = playerListModel.getPlayerNumberByType(playerList);
+      const current = playerListModel.countByType(playerList);
 
       expect(current).toEqual(expected);
     });
@@ -146,7 +146,7 @@ export default describe("playerListModel", () => {
       ];
       const expected = [3, 2]; // declarer numbers, opponents number
 
-      const current = playerListModel.getPlayerNumberByType(playerList);
+      const current = playerListModel.countByType(playerList);
 
       expect(current).toEqual(expected);
     });
