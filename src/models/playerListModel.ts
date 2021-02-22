@@ -1,17 +1,17 @@
-import { Player, PLAYER_TYPE, update } from "./playerModel";
+import * as playerModel from "./playerModel";
 
-export type PlayerList = Player[];
-export const addPlayer = (player: Player) => (
-  playerList: PlayerList
+export type PlayerList = playerModel.Player[];
+export const add = (playerList: PlayerList) => (
+  player: playerModel.Player
 ): PlayerList => {
   return [...playerList, player];
 };
 
-export const removePlayer = (player: Player) => (
-  playerList: PlayerList
+export const remove = (playerList: PlayerList) => (
+  player: playerModel.Player
 ): PlayerList => playerList.filter(({ id }) => id !== player.id);
 
-export const updatePlayerAt = (updated: Player) => (
+export const updatePlayerAt = (updated: playerModel.Player) => (
   playerList: PlayerList
 ): PlayerList =>
   playerList.map((player) => (player.id === updated.id ? updated : player));
@@ -21,9 +21,9 @@ export const getPlayerNumberByType = (
 ): [number, number] => {
   const [declarersNumber, opponentsNumber] = players.reduce(
     ([declarersNumber, opponentsNumber], player) => {
-      if (player.type === PLAYER_TYPE.OPPONENT) {
+      if (player.type === playerModel.PLAYER_TYPE.OPPONENT) {
         return [declarersNumber, opponentsNumber + 1];
-      } else if (player.type === PLAYER_TYPE.DECLARER) {
+      } else if (player.type === playerModel.PLAYER_TYPE.DECLARER) {
         return [declarersNumber + 1, opponentsNumber];
       } else {
         return [declarersNumber, opponentsNumber];
@@ -35,15 +35,15 @@ export const getPlayerNumberByType = (
 };
 
 export const clearPlayersType = (players: PlayerList): PlayerList =>
-  players.map((player) => update({ type: null })(player));
+  players.map((player) => playerModel.update({ type: null })(player));
 
 export const resetPlayerScore = (players: PlayerList): PlayerList =>
-  players.map((player) => update({ sessionScore: null })(player));
+  players.map((player) => playerModel.update({ sessionScore: null })(player));
 
 export const filterPlayersInGame = (players: PlayerList): PlayerList =>
   players.filter((player) => player.type !== null);
 
-export type PlayerListObject = { [key: string]: Player };
+export type PlayerListObject = { [key: string]: playerModel.Player };
 export const createPlayerListObject = (
   playerList: PlayerList
 ): PlayerListObject => {

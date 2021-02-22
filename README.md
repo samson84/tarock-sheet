@@ -43,8 +43,8 @@ An awesome app to help track a Tarock game scores.
         - [x] refactor to namespace imports
       - [.] playerListModel
         - [x] create and move functions
-        - [ ] playerModel.addPlayer: add
-        - [ ] playerModel.removePlayer: remove
+        - [x] playerModel.addPlayer: add
+        - [x] playerModel.removePlayer: remove
         - [ ] playerModel.updatePlayerAt: updatePlayer
         - [ ] getPlayerNumberByType: countByType
         - [ ] clearPlayersType: clearType

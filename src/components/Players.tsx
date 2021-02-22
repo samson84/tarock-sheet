@@ -19,6 +19,7 @@ import { MdPersonAdd as AddUserIcon } from "react-icons/md";
 import { MdDone as FinishEditingIcon } from "react-icons/md";
 import WinnerIcon from "@material-ui/icons/EmojiEvents";
 import Confrim from "./Confirm";
+import flow from "lodash/fp/flow";
 
 interface PlayerAvatarProps {
   player: playerModel.Player;
@@ -157,10 +158,14 @@ const Players = (props: PlayersProps) => {
 
   const handleToogleEdit = () => setEdit((prev) => !prev);
   const handleAdd = () => {
-    onPlayerListChange([...players, playerModel.create()]);
+    flow(
+      playerModel.create,
+      playerListModel.add(players),
+      onPlayerListChange
+    )();
   };
   const handleRemove = (player: playerModel.Player) => {
-    onPlayerListChange(playerListModel.removePlayer(player)(players));
+    flow(playerListModel.remove(players), onPlayerListChange)(player);
   };
   const handleChange = (updated: playerModel.Player) => {
     onPlayerListChange(playerListModel.updatePlayerAt(updated)(players));

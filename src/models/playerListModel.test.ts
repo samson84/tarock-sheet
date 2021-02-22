@@ -3,7 +3,7 @@ import * as playerModel from "./playerModel";
 import { playerFixture } from "../lib/test_data/fixtures";
 
 export default describe("playerListModel", () => {
-  describe("addPlayer", () => {
+  describe("add", () => {
     it("should add a player to the empty player list", () => {
       const playerList: playerListModel.PlayerList = [];
       const player = playerFixture({
@@ -11,7 +11,7 @@ export default describe("playerListModel", () => {
       });
       const expected = [playerFixture({ id: player.id, name: "Csaba" })];
 
-      const current = playerListModel.addPlayer(player)(playerList);
+      const current = playerListModel.add(playerList)(player);
 
       expect(current).toEqual(expected);
     });
@@ -28,12 +28,12 @@ export default describe("playerListModel", () => {
         playerFixture({ id: player2.id, name: "Tamás" }),
       ];
 
-      const current = playerListModel.addPlayer(player2)(playerList);
+      const current = playerListModel.add(playerList)(player2);
 
       expect(current).toEqual(expected);
     });
   });
-  describe("removePlayer", () => {
+  describe("remove", () => {
     it("remove the player", () => {
       const player = playerFixture({
         name: "Csaba",
@@ -44,7 +44,7 @@ export default describe("playerListModel", () => {
       const playerList: playerListModel.PlayerList = [player, removedPlayer];
       const expected = [playerFixture({ id: player.id, name: "Csaba" })];
 
-      const current = playerListModel.removePlayer(removedPlayer)(playerList);
+      const current = playerListModel.remove(playerList)(removedPlayer);
 
       expect(current).toEqual(expected);
     });
@@ -58,9 +58,7 @@ export default describe("playerListModel", () => {
       const playerList: playerListModel.PlayerList = [player];
       const expected = [playerFixture({ id: player.id, name: "Csaba" })];
 
-      const current = playerListModel.removePlayer(wontRemovedPlayer)(
-        playerList
-      );
+      const current = playerListModel.remove(playerList)(wontRemovedPlayer);
 
       expect(current).toEqual(expected);
     });
