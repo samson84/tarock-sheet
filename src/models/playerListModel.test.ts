@@ -225,7 +225,7 @@ export default describe("playerListModel", () => {
       const playerList: playerListModel.PlayerList = [];
       const expected = {};
 
-      const current = playerListModel.createPlayerListObject(playerList);
+      const current = playerListModel.mapToObjectById(playerList);
 
       expect(current).toEqual(expected);
     });
@@ -238,7 +238,7 @@ export default describe("playerListModel", () => {
         [player2.id]: playerFixture({ id: player2.id, name: "Attila" }),
       };
 
-      const current = playerListModel.createPlayerListObject(playerList);
+      const current = playerListModel.mapToObjectById(playerList);
 
       expect(current).toEqual(expected);
     });

@@ -42,9 +42,7 @@ export const filterByInGame = (players: PlayerList): PlayerList =>
   players.filter((player) => player.type !== null);
 
 export type PlayerListObject = { [key: string]: playerModel.Player };
-export const createPlayerListObject = (
-  playerList: PlayerList
-): PlayerListObject => {
+export const mapToObjectById = (playerList: PlayerList): PlayerListObject => {
   return playerList.reduce((playerListObject, player) => {
     playerListObject[player.id as string] = player;
     return playerListObject;

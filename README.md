@@ -50,7 +50,7 @@ An awesome app to help track a Tarock game scores.
         - [x] clearPlayersType: clearType
         - [x] resetPlayerScore: clearSessionScore
         - [x] filterPlayersInGame: filterByInGame
-        - [ ] createPlayerListObject: mapToObject
+        - [x] createPlayerListObject: mapToObjectById
         - [ ] refactor to namespace imports
       - [ ] bid: bidModel
         - [ ] rename and move

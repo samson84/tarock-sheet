@@ -16,7 +16,7 @@ export default describe("gameScoreList", () => {
       expect(current).toEqual(expected);
     });
     it("should return sum of player scores, one item", () => {
-      const game1: playerListModel.PlayerListObject = playerListModel.createPlayerListObject(
+      const game1: playerListModel.PlayerListObject = playerListModel.mapToObjectById(
         [
           playerFixture({
             id: "player-1-id",
@@ -51,7 +51,7 @@ export default describe("gameScoreList", () => {
       expect(current).toEqual(expected);
     });
     it("should return sum of player scores, multiple item, identical players", () => {
-      const game1: playerListModel.PlayerListObject = playerListModel.createPlayerListObject(
+      const game1: playerListModel.PlayerListObject = playerListModel.mapToObjectById(
         [
           playerFixture({
             id: "player-1-id",
@@ -75,7 +75,7 @@ export default describe("gameScoreList", () => {
           }),
         ]
       );
-      const game2: playerListModel.PlayerListObject = playerListModel.createPlayerListObject(
+      const game2: playerListModel.PlayerListObject = playerListModel.mapToObjectById(
         [
           playerFixture({
             id: "player-1-id",
@@ -115,7 +115,7 @@ export default describe("gameScoreList", () => {
       expect(current).toEqual(expected);
     });
     it("should return sum of player scores, multiple item, second scores player is new", () => {
-      const game1: playerListModel.PlayerListObject = playerListModel.createPlayerListObject(
+      const game1: playerListModel.PlayerListObject = playerListModel.mapToObjectById(
         [
           playerFixture({
             id: "player-1-id",
@@ -139,7 +139,7 @@ export default describe("gameScoreList", () => {
           }),
         ]
       );
-      const game2: playerListModel.PlayerListObject = playerListModel.createPlayerListObject(
+      const game2: playerListModel.PlayerListObject = playerListModel.mapToObjectById(
         [
           playerFixture({
             id: "player-1-id",
@@ -179,7 +179,7 @@ export default describe("gameScoreList", () => {
       expect(current).toEqual(expected);
     });
     it("should return sum of player scores, multiple item, first scores player is new", () => {
-      const game1: playerListModel.PlayerListObject = playerListModel.createPlayerListObject(
+      const game1: playerListModel.PlayerListObject = playerListModel.mapToObjectById(
         [
           playerFixture({
             id: "player-1-id",
@@ -203,7 +203,7 @@ export default describe("gameScoreList", () => {
           }),
         ]
       );
-      const game2: playerListModel.PlayerListObject = playerListModel.createPlayerListObject(
+      const game2: playerListModel.PlayerListObject = playerListModel.mapToObjectById(
         [
           playerFixture({
             id: "player-1-id",
@@ -244,7 +244,7 @@ export default describe("gameScoreList", () => {
       expect(current).toEqual(expected);
     });
     it("should return sum of player scores, multiple item, first scores player is null, not exists in second", () => {
-      const game1: playerListModel.PlayerListObject = playerListModel.createPlayerListObject(
+      const game1: playerListModel.PlayerListObject = playerListModel.mapToObjectById(
         [
           playerFixture({
             id: "player-1-id",
@@ -268,7 +268,7 @@ export default describe("gameScoreList", () => {
           }),
         ]
       );
-      const game2: playerListModel.PlayerListObject = playerListModel.createPlayerListObject(
+      const game2: playerListModel.PlayerListObject = playerListModel.mapToObjectById(
         [
           playerFixture({
             id: "player-1-id",
@@ -308,7 +308,7 @@ export default describe("gameScoreList", () => {
       expect(current).toEqual(expected);
     });
     it("should return sum of player scores, multiple item, second scores player is null, not exists in first", () => {
-      const game1: playerListModel.PlayerListObject = playerListModel.createPlayerListObject(
+      const game1: playerListModel.PlayerListObject = playerListModel.mapToObjectById(
         [
           playerFixture({
             id: "player-1-id",
@@ -332,7 +332,7 @@ export default describe("gameScoreList", () => {
           }),
         ]
       );
-      const game2: playerListModel.PlayerListObject = playerListModel.createPlayerListObject(
+      const game2: playerListModel.PlayerListObject = playerListModel.mapToObjectById(
         [
           playerFixture({
             id: "player-1-id",
@@ -371,7 +371,7 @@ export default describe("gameScoreList", () => {
       expect(current).toEqual(expected);
     });
     it("should return sum of player scores, multiple item, second scores player is null, exists in first", () => {
-      const game1: playerListModel.PlayerListObject = playerListModel.createPlayerListObject(
+      const game1: playerListModel.PlayerListObject = playerListModel.mapToObjectById(
         [
           playerFixture({
             id: "player-1-id",
@@ -395,7 +395,7 @@ export default describe("gameScoreList", () => {
           }),
         ]
       );
-      const game2: playerListModel.PlayerListObject = playerListModel.createPlayerListObject(
+      const game2: playerListModel.PlayerListObject = playerListModel.mapToObjectById(
         [
           playerFixture({
             id: "player-1-id",
@@ -433,7 +433,7 @@ export default describe("gameScoreList", () => {
       expect(current).toEqual(expected);
     });
     it("should return sum of player scores, multiple item, first scores player is null, exists in second", () => {
-      const game1: playerListModel.PlayerListObject = playerListModel.createPlayerListObject(
+      const game1: playerListModel.PlayerListObject = playerListModel.mapToObjectById(
         [
           playerFixture({
             id: "player-1-id",
@@ -457,7 +457,7 @@ export default describe("gameScoreList", () => {
           }),
         ]
       );
-      const game2: playerListModel.PlayerListObject = playerListModel.createPlayerListObject(
+      const game2: playerListModel.PlayerListObject = playerListModel.mapToObjectById(
         [
           playerFixture({
             id: "player-1-id",
