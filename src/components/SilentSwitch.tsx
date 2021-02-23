@@ -1,9 +1,9 @@
 import React from "react";
 import { Switch, FormControlLabel, FormGroup } from "@material-ui/core";
-import { BID_TYPE, canSilent, getBid } from "../lib/bid";
+import * as Bid from "../models/Bid";
 
 interface SilentSwitchProps {
-  bidType: BID_TYPE;
+  bidType: Bid.TYPE;
   onChange: (value: boolean) => void;
   value?: boolean;
   label?: boolean;
@@ -14,8 +14,8 @@ const SilentSwitch = ({
   value,
   label,
 }: SilentSwitchProps) => {
-  const bid = getBid(bidType);
-  if (!canSilent(bid)) {
+  const bid = Bid.getByType(bidType);
+  if (!Bid.canSilent(bid)) {
     return null;
   }
   return (

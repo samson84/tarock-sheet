@@ -14,7 +14,7 @@ import {
   Typography as T,
 } from "@material-ui/core";
 import { MdDelete as RemoveIcon } from "react-icons/md";
-import { BidVariant, getBid } from "../lib/bid";
+import * as Bid from "../models/Bid";
 import VariantSelector from "./VariantSelector";
 import SilentSwitch from "./SilentSwitch";
 import MultiplierSelector from "./MultiplierSelector";
@@ -23,14 +23,14 @@ import curry from "lodash/fp/curry";
 
 interface VariantSelectorModalProps {
   contract: contractModel.Contract;
-  onChange: (variant: BidVariant) => void;
+  onChange: (variant: Bid.Variant) => void;
 }
 const VariantSelectorModal = (props: VariantSelectorModalProps) => {
   const { contract, onChange } = props;
-  const handleChange = (variant: BidVariant) => {
+  const handleChange = (variant: Bid.Variant) => {
     onChange(variant);
   };
-  const bid = getBid(contract.bidType);
+  const bid = Bid.getByType(contract.bidType);
 
   if (!bid.variants) {
     return null;
@@ -83,7 +83,7 @@ const columns: ColumnDefinition[] = [
     field: "bidVariant",
     headerName: "Variant",
     valueGetter: (contract, onAction) => {
-      const handleChange = (variant: BidVariant) =>
+      const handleChange = (variant: Bid.Variant) =>
         onAction && onAction(ACTION_TYPE.CHANGE, variant);
 
       return (
@@ -137,7 +137,7 @@ const columns: ColumnDefinition[] = [
       const handleChange = (contra: number) =>
         onAction && onAction(ACTION_TYPE.CHANGE, contra);
 
-      if (getBid(contract.bidType).denyContra) {
+      if (Bid.getByType(contract.bidType).isDenyContra) {
         return null;
       }
       return (

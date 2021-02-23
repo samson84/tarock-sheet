@@ -8,14 +8,14 @@ import {
   DialogContent,
   DialogActions,
 } from "@material-ui/core";
-import { BidVariant } from "../lib/bid";
+import * as Bid from "../models/Bid";
 import { upperCaseToWords } from "../lib/util";
 
 interface VariantSelectorProps {
   render: (handleOpen: () => void) => ReactNode;
-  variants: BidVariant[];
-  selected: BidVariant | null;
-  onChange: (variant: BidVariant) => void;
+  variants: Bid.Variant[];
+  selected: Bid.Variant | null;
+  onChange: (variant: Bid.Variant) => void;
   onClose?: () => void;
 }
 const VariantSelector = (props: VariantSelectorProps) => {
@@ -28,7 +28,7 @@ const VariantSelector = (props: VariantSelectorProps) => {
     onClose && onClose();
   };
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    onChange(event.target.value as BidVariant);
+    onChange(event.target.value as Bid.Variant);
     handleClose();
   };
 
@@ -38,7 +38,7 @@ const VariantSelector = (props: VariantSelectorProps) => {
       <Dialog open={open} onClose={handleClose}>
         <DialogContent>
           <RadioGroup name="variants" onChange={handleChange} value={selected}>
-            {variants.map((variant: BidVariant) => (
+            {variants.map((variant: Bid.Variant) => (
               <FormControlLabel
                 control={<Radio color="default" value={variant} />}
                 label={upperCaseToWords(variant)}

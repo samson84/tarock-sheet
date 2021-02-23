@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BID_TYPE, getAllBidsByGorup } from "../lib/bid";
+import * as Bid from "../models/Bid";
 import ContractSelector from "./ContractSelector";
 import * as gameModel from "../models/gameModel";
 import * as contractModel from "../models/contractModel";
@@ -20,7 +20,7 @@ import {
 import { storage as storageInitializer } from "../services/localStorage";
 import Confirm from "./Confirm";
 
-const allBidsByGroup = getAllBidsByGorup();
+const allBidsByGroup = Bid.getAllByGroup();
 const storage = storageInitializer();
 
 const TarockSheet = () => {
@@ -87,11 +87,11 @@ const TarockSheet = () => {
       if (shouldRemoveContracts) {
         const contract = gameModel.isPartyLike(value)
           ? contractModel.create({
-              bidType: BID_TYPE.PARTY,
+              bidType: Bid.TYPE.PARTY,
               taker: playerModel.PLAYER_TYPE.DECLARER,
             })
           : contractModel.create({
-              bidType: BID_TYPE.KLOPICZKY,
+              bidType: Bid.TYPE.KLOPICZKY,
               taker: playerModel.PLAYER_TYPE.DECLARER,
               isWonByTaker: true,
             });

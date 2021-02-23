@@ -2,7 +2,7 @@ import { contractFixture } from "../lib/test_data/fixtures";
 import * as playerModel from "./playerModel";
 import * as gameModel from "./gameModel";
 import * as contractModel from "./contractModel";
-import { BID_TYPE, SMALLEST_VARIANT } from "../lib/bid";
+import * as Bid from "./Bid";
 import { gameFixture } from "../lib/test_data/fixtures";
 
 export default describe("game", () => {
@@ -59,7 +59,7 @@ export default describe("game", () => {
         partyBaseScore: 1,
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.DOUBLE_PARTY,
+            bidType: Bid.TYPE.DOUBLE_PARTY,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
             bidBaseScore: 4,
             isWonByTaker: true,
@@ -75,7 +75,7 @@ export default describe("game", () => {
         partyBaseScore: 1,
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.DOUBLE_PARTY,
+            bidType: Bid.TYPE.DOUBLE_PARTY,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
             bidBaseScore: 12, // double party 4 times the party score
             isWonByTaker: true,
@@ -98,7 +98,7 @@ export default describe("game", () => {
         partyBaseScore: 1,
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.DOUBLE_PARTY,
+            bidType: Bid.TYPE.DOUBLE_PARTY,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
             bidBaseScore: 4,
             isWonByTaker: true,
@@ -114,7 +114,7 @@ export default describe("game", () => {
         partyBaseScore: 2, // multiplier
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.DOUBLE_PARTY,
+            bidType: Bid.TYPE.DOUBLE_PARTY,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
             bidBaseScore: 8, // double party 4 times the party score
             isWonByTaker: true,
@@ -138,7 +138,7 @@ export default describe("game", () => {
         partyBaseScore: 1,
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.DOUBLE_PARTY,
+            bidType: Bid.TYPE.DOUBLE_PARTY,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
             bidBaseScore: 4,
             isWonByTaker: true,
@@ -154,7 +154,7 @@ export default describe("game", () => {
         partyBaseScore: 2, // multiplier
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.DOUBLE_PARTY,
+            bidType: Bid.TYPE.DOUBLE_PARTY,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
             bidBaseScore: 16, // double party 4 times the party score
             isWonByTaker: true,
@@ -177,7 +177,7 @@ export default describe("game", () => {
         partyBaseScore: 1,
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.TRULL,
+            bidType: Bid.TYPE.TRULL,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
             bidBaseScore: 2,
             isWonByTaker: true,
@@ -194,7 +194,7 @@ export default describe("game", () => {
         partyBaseScore: 1,
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.TRULL,
+            bidType: Bid.TYPE.TRULL,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
             bidBaseScore: 2, // trull PARTY_SCORE is independent
             contra: 4,
@@ -218,7 +218,7 @@ export default describe("game", () => {
         partyBaseScore: 1,
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.TRULL,
+            bidType: Bid.TYPE.TRULL,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
             bidBaseScore: 2,
             isWonByTaker: true,
@@ -235,7 +235,7 @@ export default describe("game", () => {
         partyBaseScore: 2,
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.TRULL,
+            bidType: Bid.TYPE.TRULL,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
             bidBaseScore: 2, // trull PARTY_SCORE is independent
             contra: 4,
@@ -260,7 +260,7 @@ export default describe("game", () => {
         partyBaseScore: 1,
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.TRULL,
+            bidType: Bid.TYPE.TRULL,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
             bidBaseScore: 2,
             isWonByTaker: true,
@@ -277,7 +277,7 @@ export default describe("game", () => {
         partyBaseScore: 2,
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.TRULL,
+            bidType: Bid.TYPE.TRULL,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
             bidBaseScore: 2, // trull PARTY_SCORE is independent
             contra: 4,
@@ -300,7 +300,7 @@ export default describe("game", () => {
         partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_THREE,
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.PARTY,
+            bidType: Bid.TYPE.PARTY,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
             bidBaseScore: 1,
             isWonByTaker: true,
@@ -316,7 +316,7 @@ export default describe("game", () => {
         partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_ONE, // party score is 3
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.PARTY,
+            bidType: Bid.TYPE.PARTY,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
             bidBaseScore: 3,
             contra: 1,
@@ -336,7 +336,7 @@ export default describe("game", () => {
   describe("addContract", () => {
     it("should add a contract", () => {
       const contract = contractModel.create({
-        bidType: BID_TYPE.PARTY,
+        bidType: Bid.TYPE.PARTY,
         taker: playerModel.PLAYER_TYPE.DECLARER,
       });
       const game = gameFixture({
@@ -347,7 +347,7 @@ export default describe("game", () => {
         partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_TWO, // score = 2
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.PARTY,
+            bidType: Bid.TYPE.PARTY,
             taker: playerModel.PLAYER_TYPE.DECLARER,
             bidBaseScore: 2, // party's bid base score is the partyscore
           }),
@@ -360,7 +360,7 @@ export default describe("game", () => {
     });
     it("should add a second contract", () => {
       const contract = contractModel.create({
-        bidType: BID_TYPE.FOUR_KING,
+        bidType: Bid.TYPE.FOUR_KING,
         taker: playerModel.PLAYER_TYPE.OPPONENT,
         partyScore: 2,
       });
@@ -368,7 +368,7 @@ export default describe("game", () => {
         partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_TWO, // score = 2
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.PARTY,
+            bidType: Bid.TYPE.PARTY,
             taker: playerModel.PLAYER_TYPE.DECLARER,
           }),
         ],
@@ -377,11 +377,11 @@ export default describe("game", () => {
         partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_TWO, // score = 2
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.PARTY,
+            bidType: Bid.TYPE.PARTY,
             taker: playerModel.PLAYER_TYPE.DECLARER,
           }),
           contractFixture({
-            bidType: BID_TYPE.FOUR_KING,
+            bidType: Bid.TYPE.FOUR_KING,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
           }),
         ],
@@ -393,7 +393,7 @@ export default describe("game", () => {
     });
     it("should caluclate contracts party score to null, if partyScoreType is not given to the game", () => {
       const contract = contractModel.create({
-        bidType: BID_TYPE.PARTY,
+        bidType: Bid.TYPE.PARTY,
         taker: playerModel.PLAYER_TYPE.DECLARER,
       });
       const game = gameFixture({
@@ -402,7 +402,7 @@ export default describe("game", () => {
       const expected = gameFixture({
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.PARTY,
+            bidType: Bid.TYPE.PARTY,
             taker: playerModel.PLAYER_TYPE.DECLARER,
             bidBaseScore: null,
           }),
@@ -415,7 +415,7 @@ export default describe("game", () => {
     });
     it("should calculate game score if, contact is won", () => {
       const contract = contractModel.create({
-        bidType: BID_TYPE.PARTY,
+        bidType: Bid.TYPE.PARTY,
         taker: playerModel.PLAYER_TYPE.DECLARER,
         partyScore: 1,
         isWonByTaker: true,
@@ -432,7 +432,7 @@ export default describe("game", () => {
         partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_TWO, // score = 2
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.PARTY,
+            bidType: Bid.TYPE.PARTY,
             taker: playerModel.PLAYER_TYPE.DECLARER,
             isWonByTaker: true,
             bidBaseScore: 2,
@@ -455,16 +455,16 @@ export default describe("game", () => {
       const game = gameFixture({
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.PARTY,
+            bidType: Bid.TYPE.PARTY,
             taker: playerModel.PLAYER_TYPE.DECLARER,
           }),
           // This contract will be removed below
           contractFixture({
-            bidType: BID_TYPE.FOUR_KING,
+            bidType: Bid.TYPE.FOUR_KING,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
           }),
           contractFixture({
-            bidType: BID_TYPE.ULTI,
+            bidType: Bid.TYPE.ULTI,
             taker: playerModel.PLAYER_TYPE.DECLARER,
           }),
         ],
@@ -472,11 +472,11 @@ export default describe("game", () => {
       const expected = gameFixture({
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.PARTY,
+            bidType: Bid.TYPE.PARTY,
             taker: playerModel.PLAYER_TYPE.DECLARER,
           }),
           contractFixture({
-            bidType: BID_TYPE.ULTI,
+            bidType: Bid.TYPE.ULTI,
             taker: playerModel.PLAYER_TYPE.DECLARER,
           }),
         ],
@@ -491,15 +491,15 @@ export default describe("game", () => {
       const game = gameFixture({
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.PARTY,
+            bidType: Bid.TYPE.PARTY,
             taker: playerModel.PLAYER_TYPE.DECLARER,
           }),
           contractFixture({
-            bidType: BID_TYPE.FOUR_KING,
+            bidType: Bid.TYPE.FOUR_KING,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
           }),
           contractFixture({
-            bidType: BID_TYPE.ULTI,
+            bidType: Bid.TYPE.ULTI,
             taker: playerModel.PLAYER_TYPE.DECLARER,
           }),
         ],
@@ -507,15 +507,15 @@ export default describe("game", () => {
       const expected = gameFixture({
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.PARTY,
+            bidType: Bid.TYPE.PARTY,
             taker: playerModel.PLAYER_TYPE.DECLARER,
           }),
           contractFixture({
-            bidType: BID_TYPE.FOUR_KING,
+            bidType: Bid.TYPE.FOUR_KING,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
           }),
           contractFixture({
-            bidType: BID_TYPE.ULTI,
+            bidType: Bid.TYPE.ULTI,
             taker: playerModel.PLAYER_TYPE.DECLARER,
           }),
         ],
@@ -531,14 +531,14 @@ export default describe("game", () => {
         partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_THREE,
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.FOUR_KING,
+            bidType: Bid.TYPE.FOUR_KING,
             taker: playerModel.PLAYER_TYPE.DECLARER,
             bidBaseScore: 2,
             isWonByTaker: true,
           }),
           // This contract will be removed below
           contractFixture({
-            bidType: BID_TYPE.PARTY,
+            bidType: Bid.TYPE.PARTY,
             taker: playerModel.PLAYER_TYPE.DECLARER,
             bidBaseScore: 1,
             isWonByTaker: true,
@@ -553,7 +553,7 @@ export default describe("game", () => {
         partyScoreType: gameModel.PARTY_SCORE_TYPE.TOOK_THREE,
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.FOUR_KING,
+            bidType: Bid.TYPE.FOUR_KING,
             bidBaseScore: 2,
             taker: playerModel.PLAYER_TYPE.DECLARER,
             isWonByTaker: true,
@@ -573,14 +573,14 @@ export default describe("game", () => {
   describe("updateGameContract", () => {
     it("should update the game contract", () => {
       const updated = contractFixture({
-        bidType: BID_TYPE.FOUR_KING,
+        bidType: Bid.TYPE.FOUR_KING,
         isSilent: true,
       });
       const index = 0;
       const game = gameFixture({
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.FOUR_KING,
+            bidType: Bid.TYPE.FOUR_KING,
             isSilent: false,
           }),
         ],
@@ -588,7 +588,7 @@ export default describe("game", () => {
       const expected = gameFixture({
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.FOUR_KING,
+            bidType: Bid.TYPE.FOUR_KING,
             isSilent: true,
           }),
         ],
@@ -600,7 +600,7 @@ export default describe("game", () => {
     });
     it("should re calculate if the updated contract is won and valid", () => {
       const updated = contractFixture({
-        bidType: BID_TYPE.FOUR_KING,
+        bidType: Bid.TYPE.FOUR_KING,
         bidBaseScore: 2,
         contra: 2,
         taker: playerModel.PLAYER_TYPE.DECLARER,
@@ -610,7 +610,7 @@ export default describe("game", () => {
       const game = gameFixture({
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.FOUR_KING,
+            bidType: Bid.TYPE.FOUR_KING,
             bidBaseScore: 2,
             contra: 1,
             taker: playerModel.PLAYER_TYPE.DECLARER,
@@ -625,7 +625,7 @@ export default describe("game", () => {
       const expected = gameFixture({
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.FOUR_KING,
+            bidType: Bid.TYPE.FOUR_KING,
             bidBaseScore: 2,
             contra: 2,
             taker: playerModel.PLAYER_TYPE.DECLARER,
@@ -660,7 +660,7 @@ export default describe("game", () => {
       const game = gameFixture({
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.TRULL,
+            bidType: Bid.TYPE.TRULL,
             taker: playerModel.PLAYER_TYPE.DECLARER,
             bidBaseScore: 2,
             contra: 1,
@@ -668,7 +668,7 @@ export default describe("game", () => {
             isWonByTaker: null,
           }),
           contractFixture({
-            bidType: BID_TYPE.FOUR_KING,
+            bidType: Bid.TYPE.FOUR_KING,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
             bidBaseScore: 2,
             contra: 1,
@@ -689,7 +689,7 @@ export default describe("game", () => {
       const game = gameFixture({
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.CENTRUM,
+            bidType: Bid.TYPE.CENTRUM,
             taker: playerModel.PLAYER_TYPE.DECLARER,
             bidBaseScore: 10,
             contra: 1,
@@ -697,7 +697,7 @@ export default describe("game", () => {
             isWonByTaker: true,
           }),
           contractFixture({
-            bidType: BID_TYPE.FOUR_KING,
+            bidType: Bid.TYPE.FOUR_KING,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
             bidBaseScore: 2,
             contra: 1,
@@ -718,7 +718,7 @@ export default describe("game", () => {
       const game = gameFixture({
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.CENTRUM,
+            bidType: Bid.TYPE.CENTRUM,
             taker: playerModel.PLAYER_TYPE.DECLARER,
             bidBaseScore: 10,
             contra: 1,
@@ -726,8 +726,8 @@ export default describe("game", () => {
             isWonByTaker: true,
           }),
           contractFixture({
-            bidType: BID_TYPE.ULTI,
-            bidVariant: SMALLEST_VARIANT.PAGAT,
+            bidType: Bid.TYPE.ULTI,
+            bidVariant: Bid.SMALLEST_VARIANT.PAGAT,
             taker: playerModel.PLAYER_TYPE.DECLARER,
             bidBaseScore: 10,
             contra: 1,
@@ -735,7 +735,7 @@ export default describe("game", () => {
             isWonByTaker: true,
           }),
           contractFixture({
-            bidType: BID_TYPE.FOUR_KING,
+            bidType: Bid.TYPE.FOUR_KING,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
             bidBaseScore: 2,
             contra: 1,
@@ -743,7 +743,7 @@ export default describe("game", () => {
             isWonByTaker: true,
           }),
           contractFixture({
-            bidType: BID_TYPE.TRULL,
+            bidType: Bid.TYPE.TRULL,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
             bidBaseScore: 2,
             contra: 2,
@@ -764,7 +764,7 @@ export default describe("game", () => {
       const game = gameFixture({
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.CENTRUM,
+            bidType: Bid.TYPE.CENTRUM,
             taker: playerModel.PLAYER_TYPE.DECLARER,
             bidBaseScore: 10,
             contra: 1,
@@ -772,8 +772,8 @@ export default describe("game", () => {
             isWonByTaker: false,
           }),
           contractFixture({
-            bidType: BID_TYPE.ULTI,
-            bidVariant: SMALLEST_VARIANT.PAGAT,
+            bidType: Bid.TYPE.ULTI,
+            bidVariant: Bid.SMALLEST_VARIANT.PAGAT,
             taker: playerModel.PLAYER_TYPE.DECLARER,
             bidBaseScore: 10,
             contra: 1,
@@ -781,7 +781,7 @@ export default describe("game", () => {
             isWonByTaker: false,
           }),
           contractFixture({
-            bidType: BID_TYPE.FOUR_KING,
+            bidType: Bid.TYPE.FOUR_KING,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
             bidBaseScore: 2,
             contra: 1,
@@ -789,7 +789,7 @@ export default describe("game", () => {
             isWonByTaker: true,
           }),
           contractFixture({
-            bidType: BID_TYPE.TRULL,
+            bidType: Bid.TYPE.TRULL,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
             bidBaseScore: 2,
             contra: 2,
@@ -810,7 +810,7 @@ export default describe("game", () => {
       const game = gameFixture({
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.CENTRUM,
+            bidType: Bid.TYPE.CENTRUM,
             taker: playerModel.PLAYER_TYPE.DECLARER,
             bidBaseScore: 10,
             contra: 1,
@@ -818,8 +818,8 @@ export default describe("game", () => {
             isWonByTaker: null,
           }),
           contractFixture({
-            bidType: BID_TYPE.ULTI,
-            bidVariant: SMALLEST_VARIANT.PAGAT,
+            bidType: Bid.TYPE.ULTI,
+            bidVariant: Bid.SMALLEST_VARIANT.PAGAT,
             taker: playerModel.PLAYER_TYPE.DECLARER,
             bidBaseScore: 10,
             contra: 1,
@@ -827,7 +827,7 @@ export default describe("game", () => {
             isWonByTaker: false,
           }),
           contractFixture({
-            bidType: BID_TYPE.FURRY,
+            bidType: Bid.TYPE.FURRY,
             taker: playerModel.PLAYER_TYPE.DECLARER,
             bidBaseScore: 25,
             contra: 1,
@@ -835,7 +835,7 @@ export default describe("game", () => {
             isWonByTaker: true,
           }),
           contractFixture({
-            bidType: BID_TYPE.FOUR_KING,
+            bidType: Bid.TYPE.FOUR_KING,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
             bidBaseScore: 2,
             contra: 1,
@@ -843,7 +843,7 @@ export default describe("game", () => {
             isWonByTaker: null,
           }),
           contractFixture({
-            bidType: BID_TYPE.TRULL,
+            bidType: Bid.TYPE.TRULL,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
             bidBaseScore: 2,
             contra: 2,
@@ -851,7 +851,7 @@ export default describe("game", () => {
             isWonByTaker: true,
           }),
           contractFixture({
-            bidType: BID_TYPE.CATCH_THE_PAGAT,
+            bidType: Bid.TYPE.CATCH_THE_PAGAT,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
             bidBaseScore: 4,
             contra: 1,
@@ -873,7 +873,7 @@ export default describe("game", () => {
       const game = gameFixture({
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.CENTRUM,
+            bidType: Bid.TYPE.CENTRUM,
             taker: playerModel.PLAYER_TYPE.DECLARER,
             bidBaseScore: 10,
             contra: 1,
@@ -881,8 +881,8 @@ export default describe("game", () => {
             isWonByTaker: false,
           }),
           contractFixture({
-            bidType: BID_TYPE.ULTI,
-            bidVariant: SMALLEST_VARIANT.PAGAT,
+            bidType: Bid.TYPE.ULTI,
+            bidVariant: Bid.SMALLEST_VARIANT.PAGAT,
             taker: playerModel.PLAYER_TYPE.DECLARER,
             bidBaseScore: 10,
             contra: 1,
@@ -890,7 +890,7 @@ export default describe("game", () => {
             isWonByTaker: null,
           }),
           contractFixture({
-            bidType: BID_TYPE.FURRY,
+            bidType: Bid.TYPE.FURRY,
             taker: playerModel.PLAYER_TYPE.DECLARER,
             bidBaseScore: 25,
             contra: 1,
@@ -898,7 +898,7 @@ export default describe("game", () => {
             isWonByTaker: true,
           }),
           contractFixture({
-            bidType: BID_TYPE.FOUR_KING,
+            bidType: Bid.TYPE.FOUR_KING,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
             bidBaseScore: 2,
             contra: 1,
@@ -906,7 +906,7 @@ export default describe("game", () => {
             isWonByTaker: true,
           }),
           contractFixture({
-            bidType: BID_TYPE.TRULL,
+            bidType: Bid.TYPE.TRULL,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
             bidBaseScore: 2,
             contra: 2,
@@ -914,7 +914,7 @@ export default describe("game", () => {
             isWonByTaker: null,
           }),
           contractFixture({
-            bidType: BID_TYPE.CATCH_THE_PAGAT,
+            bidType: Bid.TYPE.CATCH_THE_PAGAT,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
             bidBaseScore: 4,
             contra: 1,
@@ -936,7 +936,7 @@ export default describe("game", () => {
       const game = gameFixture({
         contracts: [
           contractFixture({
-            bidType: BID_TYPE.CENTRUM,
+            bidType: Bid.TYPE.CENTRUM,
             taker: playerModel.PLAYER_TYPE.DECLARER,
             bidBaseScore: 10,
             contra: 1,
@@ -944,8 +944,8 @@ export default describe("game", () => {
             isWonByTaker: false,
           }),
           contractFixture({
-            bidType: BID_TYPE.ULTI,
-            bidVariant: SMALLEST_VARIANT.PAGAT,
+            bidType: Bid.TYPE.ULTI,
+            bidVariant: Bid.SMALLEST_VARIANT.PAGAT,
             taker: playerModel.PLAYER_TYPE.DECLARER,
             bidBaseScore: 10,
             contra: 1,
@@ -953,7 +953,7 @@ export default describe("game", () => {
             isWonByTaker: false,
           }),
           contractFixture({
-            bidType: BID_TYPE.FURRY,
+            bidType: Bid.TYPE.FURRY,
             taker: playerModel.PLAYER_TYPE.DECLARER,
             bidBaseScore: 25,
             contra: 1,
@@ -961,7 +961,7 @@ export default describe("game", () => {
             isWonByTaker: null,
           }),
           contractFixture({
-            bidType: BID_TYPE.FOUR_KING,
+            bidType: Bid.TYPE.FOUR_KING,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
             bidBaseScore: 2,
             contra: 1,
@@ -969,7 +969,7 @@ export default describe("game", () => {
             isWonByTaker: true,
           }),
           contractFixture({
-            bidType: BID_TYPE.TRULL,
+            bidType: Bid.TYPE.TRULL,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
             bidBaseScore: 2,
             contra: 2,
@@ -977,7 +977,7 @@ export default describe("game", () => {
             isWonByTaker: true,
           }),
           contractFixture({
-            bidType: BID_TYPE.CATCH_THE_PAGAT,
+            bidType: Bid.TYPE.CATCH_THE_PAGAT,
             taker: playerModel.PLAYER_TYPE.OPPONENT,
             bidBaseScore: 4,
             contra: 1,

@@ -7,20 +7,13 @@ import {
   Switch,
   FormControlLabel,
 } from "@material-ui/core";
-import {
-  BidsByGroup,
-  BidGroupType,
-  bidGroupNamesByWeight,
-  BID_TYPE,
-  getBid,
-  canSilent,
-} from "../lib/bid";
+import * as Bid from "../models/Bid";
 import { upperCaseToWords } from "../lib/util";
 import * as contractModel from "../models/contractModel";
 import * as playerModel from "../models/playerModel";
 
 interface BidSelectorProps {
-  bidsByGroup: BidsByGroup;
+  bidsByGroup: Bid.ByGroup;
   onAddContract: (contract: Partial<contractModel.Contract>) => void;
 }
 const ContractSelector = ({ bidsByGroup, onAddContract }: BidSelectorProps) => {
@@ -29,32 +22,32 @@ const ContractSelector = ({ bidsByGroup, onAddContract }: BidSelectorProps) => {
   const handleSwitch = () => {
     setSilentAndWin((prev: boolean) => !prev);
   };
-  const handleClick = (bidType: BID_TYPE) => {
-    const bid = getBid(bidType);
-    const shouldWinWithSilent = silentAndWin && !bid.notWinIfSilent;
+  const handleClick = (bidType: Bid.TYPE) => {
+    const bid = Bid.getByType(bidType);
+    const shouldWinWithSilent = silentAndWin && !bid.isNotWinIfSilent;
     onAddContract({
       bidType: bidType,
       taker: playerModel.PLAYER_TYPE.DECLARER,
-      isSilent: silentAndWin && canSilent(bid),
+      isSilent: silentAndWin && Bid.canSilent(bid),
       bidVariant: null,
-      isWonByTaker: bid.winByDefault || shouldWinWithSilent || null,
+      isWonByTaker: bid.isWinByDefault || shouldWinWithSilent || null,
     });
   };
   return (
     <Grid container spacing={1} alignItems="flex-end">
-      {bidGroupNamesByWeight().map((group) => (
+      {Bid.getGroupsOrderedByWeight().map((group) => (
         <Grid item key={group} spacing={1}>
           <T variant="caption" display="block" color="textSecondary">
             {upperCaseToWords(group)}
           </T>
-          {bidsByGroup[group as BidGroupType].map((bid) => (
+          {bidsByGroup[group as Bid.GroupType].map((bid) => (
             <Box key={bid.type} component="span" mr={0.5}>
               <Button
                 variant="outlined"
                 color="default"
                 onClick={() => handleClick(bid.type)}
                 size="small"
-                disabled={silentAndWin && !canSilent(bid)}
+                disabled={silentAndWin && !Bid.canSilent(bid)}
               >
                 {upperCaseToWords(bid.type)}
               </Button>

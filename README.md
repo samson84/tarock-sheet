@@ -52,23 +52,24 @@ An awesome app to help track a Tarock game scores.
         - [x] filterPlayersInGame: filterByInGame
         - [x] createPlayerListObject: mapToObjectById
         - [x] refactor to namespace imports
-      - [ ] bid: bidModel
-        - [ ] rename and move
-        - [ ] silent prop: canSilent
-        - [ ] winByDefault prop: isWinByDefault
-        - [ ] notWinIfSilent prop: isNotWinIfSilent
-        - [ ] denyContra prop: isDenyContra
-        - [ ] score prop: bidBaseScore
-        - [ ] BID_TYPE: TYPE
-        - [ ] BidData: Data
-        - [ ] BidGroupType: Group
-        - [ ] bidGroupNamesByWeight: getGroupsOrderedByWeight
-        - [ ] BidVariant: Variant
-        - [ ] getBid: getByType
-        - [ ] getAllBids: getAll
-        - [ ] getAllBidsByGroup: getAllByGroup
-        - [ ] getBidScore: calculateScore
-        - [ ] refactor to namespace imports
+      - [x] bid: bidModel
+        - [x] rename and move
+        - [x] silent prop: canSilent
+        - [x] winByDefault prop: isWinByDefault
+        - [x] notWinIfSilent prop: isNotWinIfSilent
+        - [x] denyContra prop: isDenyContra
+        - [x] score prop: bidBaseScore
+        - [x] BID_TYPE: TYPE
+        - [x] BidData: Data
+        - [x] BidGroupType: Group
+        - [x] bidGroupNamesByWeight: getGroupsOrderedByWeight
+        - [x] BidVariant: Variant
+        - [x] getBid: getByType
+        - [x] getAllBids: getAll
+        - [x] getAllBidsByGroup: getAllByGroup
+        - [x] getBidScore: calculateScore
+        - [x] refactor to namespace imports
+        - [x] rename CARD_SHAPE to CARD_SUIT
       - [ ] gameScoreList: sessionModel
         - [ ] rename and move
         - [ ] getScore: calculateScoreByPlayerType
@@ -79,11 +80,11 @@ An awesome app to help track a Tarock game scores.
         - [ ] refactor namespace imports
       - [ ] move fixtures to models
         - [ ] rename fixtures
-        - [ ] convert to name space imports
+        - [ ] convert to namespace imports
       - [ ] rename types
-      - [ ] rename tests
+        - [ ] rename somethingModel to Model, rename the main interface to Props
+      - [ ] rename test descriptions
     - [ ] Tarock sheet: move handler's logic to data layer, if possible
-    - [ ] contract: check with indices needs
     - [ ] contract better calculation of the bid base score
     - [ ] game, contract: simplify create and update methods with same parameter set
     - [ ] refactor can silent, do not leak bids details to contract layer
@@ -93,13 +94,32 @@ An awesome app to help track a Tarock game scores.
     - [ ] add license, contribution, proper readme
     - [ ] increase test coverage
     - [ ] also clear the base scores too when resetting the scores
-- [ ] Milestone 2, mobile friendly, UX improvements
+    - [ ] correct missing key prop in Players.tsx
+- [ ] Milestone 2, store in a permanent storage, share a game
+  - [ ] add validators and defaults to models
+  - [ ] implement error handling and showing to the user
+  - [ ] Set and save the mayor state
+  - [ ] Save the DateTime to the Game
+  - [ ] save the details of the previous games
+    [ ] add random colors to player avatars
+  - [ ] do some authentication / login / firebase
+  - [ ] save the game to a DB e.g. Firebase
+  - [ ] deploy the app to heroku / netlify / vercel / Firebase
+  - [ ] share the game with others
+  - [ ] Sign which player is the mayor in player list, sign it in scores too.
+- [ ] Milestone 3, mobile friendly, UX improvements
+  - [ ] add UI tests
+  - [ ] refactor
+    - [ ] TarockSheet extract a Game component from the tarock sheet
+    - [ ] split contractSelector to smaller components
+    - [ ] split ContractsTable to smaller components
   - [ ] refactor
     - [ ] better type checking for dynamic types in Contracts table
   - [ ] usability
+    - [ ] Add default players if empty
     - [ ] Game Properties: show score near the game score selector radio buttons
     - [ ] BidSelector: show the score near the bids
-  - [ ] Sign which player is the mayor in player list, sign it in scores too.
+
   - [ ] compact Contract Table
     - [ ] collapse fields
     - [ ] compact view
@@ -111,22 +131,7 @@ An awesome app to help track a Tarock game scores.
     - [ ] Variant selector: show icons near the variants
       - [ ] Contracts Table: show variants icons'
   - [ ] responsive design check
-- [ ] Milestone 3, store in a permanent storage, share a game
-  - [ ] add validators and defaults to models
-  - [ ] implement error handling and showing to the user
-  - [ ] Set and save the mayor state
-  - [ ] Save the DateTime to the Game
-  - [ ] save the details of the previous games
-    [ ] add random colors to player avatars
-  - [ ] do some authentication / login / firebase
-  - [ ] save the game to a DB e.g. Firebase
-  - [ ] deploy the app to heroku / netlify / vercel / Firebase
-  - [ ] share the game with others
-  - [ ] add UI tests
-  - [ ] refactor
-    - [ ] TarockSheet extract a Game component from the tarock sheet
-    - [ ] split contractSelector to smaller components
-    - [ ] split ContractsTable to smaller components
+
 - [ ] Milestone 4, better game saving and history
   - [ ] show each game scroes as a table (collapsable)
   - [ ] save multiple nights

@@ -1,13 +1,6 @@
 import * as playerModel from "./playerModel";
 import { Score } from "./scoreModel";
-import {
-  BidVariant,
-  BID_TYPE,
-  canSilent,
-  hasVariant,
-  getBid,
-  getBidScore,
-} from "../lib/bid";
+import * as Bid from "./Bid";
 import flow from "lodash/fp/flow";
 import * as gameModel from "./gameModel";
 
@@ -15,9 +8,9 @@ const CONTRA_NAMES = ["None", "Contra", "Recontra", "Subcontra", "Mortcontra"];
 
 type ContraMultiplier = number;
 export interface Contract {
-  bidType: BID_TYPE;
+  bidType: Bid.TYPE;
   bidBaseScore: number | null;
-  bidVariant: BidVariant | null;
+  bidVariant: Bid.Variant | null;
   contra: ContraMultiplier;
   isWonByTaker: boolean | null;
   taker: playerModel.PLAYER_TYPE;
@@ -26,11 +19,11 @@ export interface Contract {
 
 const validate = (contract: Contract): void | undefined => {
   const { isSilent, bidType, bidVariant, contra } = contract;
-  const bid = getBid(bidType);
-  if (isSilent && !canSilent(bid)) {
+  const bid = Bid.getByType(bidType);
+  if (isSilent && !Bid.canSilent(bid)) {
     throw new Error(`${bid.type} can not be silent.`);
   }
-  if (bidVariant && !hasVariant(bidVariant)(bid)) {
+  if (bidVariant && !Bid.hasVariant(bidVariant)(bid)) {
     throw new Error(`${bid.type} does not have ${bidVariant} variant.`);
   }
   const isPowerOfTwo = Math.log2(contra) % 1 === 0;
@@ -43,11 +36,11 @@ const validate = (contract: Contract): void | undefined => {
 };
 
 export interface CreateContractProps {
-  bidType: BID_TYPE;
+  bidType: Bid.TYPE;
   partyScore?: gameModel.PartyScoreValue | null;
   taker: playerModel.PLAYER_TYPE;
   isSilent?: boolean;
-  bidVariant?: BidVariant | null;
+  bidVariant?: Bid.Variant | null;
   isWonByTaker?: boolean | null;
 }
 export const create = ({
@@ -67,7 +60,7 @@ export const create = ({
     taker,
     bidBaseScore:
       partyScore !== null
-        ? flow(getBid, getBidScore(partyScore))(bidType)
+        ? flow(Bid.getByType, Bid.calculateScore(partyScore))(bidType)
         : null,
   };
   validate(contract);
@@ -78,7 +71,10 @@ export const updateBidBaseScore = (partyScore: number) => (
   contract: Contract
 ): Contract => ({
   ...contract,
-  bidBaseScore: flow(getBid, getBidScore(partyScore))(contract.bidType),
+  bidBaseScore: flow(
+    Bid.getByType,
+    Bid.calculateScore(partyScore)
+  )(contract.bidType),
 });
 
 export type UpdateContractProps = Partial<
