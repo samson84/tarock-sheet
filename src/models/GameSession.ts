@@ -1,11 +1,11 @@
-import * as gameModel from "../models/gameModel";
-import * as playerModel from "../models/playerModel";
-import * as playerListModel from "../models/playerListModel";
-import { Score } from "../models/scoreModel";
+import * as gameModel from "./gameModel";
+import * as playerModel from "./playerModel";
+import * as playerListModel from "./playerListModel";
+import { Score } from "./scoreModel";
 import assignWith from "lodash/fp/assignWith";
 import { isEqual } from "lodash";
 
-const getScore = (players: playerListModel.PlayerList) => (
+const calculateScoreByPlayerType = (players: playerListModel.PlayerList) => (
   game: gameModel.Game
 ): [Score, Score] => {
   const [numberOfDeclarers, numberOfOpponents] = playerListModel.countByType(
@@ -30,12 +30,14 @@ const getScore = (players: playerListModel.PlayerList) => (
   return [null, null];
 };
 
-export const getCurrentScoreForPlayers = (game: gameModel.Game) => (
+export const mapGameScoreToPlayers = (game: gameModel.Game) => (
   players: playerListModel.PlayerList
 ): playerListModel.PlayerList => {
   return players.map(
     (player: playerModel.Player): playerModel.Player => {
-      const [declarersScore, opponentsScore] = getScore(players)(game);
+      const [declarersScore, opponentsScore] = calculateScoreByPlayerType(
+        players
+      )(game);
       const score = {
         [playerModel.PLAYER_TYPE.OPPONENT]: opponentsScore,
         [playerModel.PLAYER_TYPE.DECLARER]: declarersScore,
@@ -74,21 +76,21 @@ const scoreSumAssigner = (
   return (left as number) + (right as number);
 };
 
-export type PlayerScores = { [key: string]: number };
+export type GameSessionScore = { [key: string]: number };
 
-export const sumPlayerScores = (
+export const calculateGameSessionScores = (
   playerListObjects: playerListModel.PlayerListObject[]
-): PlayerScores => {
+): GameSessionScore => {
   return playerListObjects.reduce(
     (scores, playerListObject) =>
       assignWith(scoreSumAssigner)(scores, playerListObject),
-    {} as PlayerScores
+    {} as GameSessionScore
   );
 };
 
-export const assignScoresToPlayers = (players: playerListModel.PlayerList) => (
-  sessionScores: PlayerScores
-): playerListModel.PlayerList =>
+export const mapGameSessionScoresToPlayers = (
+  players: playerListModel.PlayerList
+) => (sessionScores: GameSessionScore): playerListModel.PlayerList =>
   players.map((player) =>
     sessionScores[player.id] === undefined
       ? player

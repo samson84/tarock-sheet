@@ -11,12 +11,7 @@ import concat from "lodash/fp/concat";
 import Players from "./Players";
 import * as playerModel from "../models/playerModel";
 import * as playerListModel from "../models/playerListModel";
-import {
-  assignScoresToPlayers,
-  getCurrentScoreForPlayers,
-  isReadyForSave,
-  sumPlayerScores,
-} from "../lib/gameScoreList";
+import * as GameSession from "../models/GameSession";
 import { storage as storageInitializer } from "../services/localStorage";
 import Confirm from "./Confirm";
 
@@ -39,7 +34,7 @@ const TarockSheet = () => {
   );
 
   useEffect(() => {
-    setPlayers(getCurrentScoreForPlayers(game));
+    setPlayers(GameSession.mapGameScoreToPlayers(game));
   }, [game]);
 
   useEffect(() => {
@@ -132,14 +127,14 @@ const TarockSheet = () => {
     updateGameScoreListState(updatedGameScoreList);
   };
   const updatePlayersState = (updated: playerListModel.PlayerList) => {
-    flow(getCurrentScoreForPlayers(game), setPlayers)(updated);
+    flow(GameSession.mapGameScoreToPlayers(game), setPlayers)(updated);
   };
   const updateGameScoreListState = (
     updated: playerListModel.PlayerListObject[]
   ) => {
     flow(
-      sumPlayerScores,
-      assignScoresToPlayers(players),
+      GameSession.calculateGameSessionScores,
+      GameSession.mapGameSessionScoresToPlayers(players),
       playerListModel.clearType,
       updatePlayersState
     )(updated);
@@ -169,7 +164,7 @@ const TarockSheet = () => {
           players={players}
           onPlayerListChange={handlePlayerListChange}
           onSaveScores={handleSaveScores}
-          saveDisabled={!isReadyForSave(players)(game)}
+          saveDisabled={!GameSession.isReadyForSave(players)(game)}
           onResetPlayers={handleResetPlayers}
           onResetScores={handleResetScores}
         />

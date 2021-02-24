@@ -1,18 +1,16 @@
-import {
-  getCurrentScoreForPlayers,
-  PlayerScores,
-  sumPlayerScores,
-} from "./gameScoreList";
-import * as playerModel from "../models/playerModel";
-import * as playerListModel from "../models/playerListModel";
-import { gameFixture, playerFixture } from "./test_data/fixtures";
+import * as GameSession from "./GameSession";
+import * as playerModel from "./playerModel";
+import * as playerListModel from "./playerListModel";
+import { gameFixture, playerFixture } from "../lib/test_data/fixtures";
 
 export default describe("gameScoreList", () => {
   describe("sumPlayerScores", () => {
     it("should return {} if gameScoreList empty", () => {
       const playerListObjectList: playerListModel.PlayerListObject[] = [];
-      const expected: PlayerScores = {};
-      const current = sumPlayerScores(playerListObjectList);
+      const expected: GameSession.GameSessionScore = {};
+      const current = GameSession.calculateGameSessionScores(
+        playerListObjectList
+      );
       expect(current).toEqual(expected);
     });
     it("should return sum of player scores, one item", () => {
@@ -41,13 +39,13 @@ export default describe("gameScoreList", () => {
         ]
       );
       const playerListObjects: playerListModel.PlayerListObject[] = [game1];
-      const expected: PlayerScores = {
+      const expected: GameSession.GameSessionScore = {
         "player-1-id": 10,
         "player-2-id": 10,
         "player-3-id": -10,
         "player-4-id": -10,
       };
-      const current = sumPlayerScores(playerListObjects);
+      const current = GameSession.calculateGameSessionScores(playerListObjects);
       expect(current).toEqual(expected);
     });
     it("should return sum of player scores, multiple item, identical players", () => {
@@ -103,14 +101,14 @@ export default describe("gameScoreList", () => {
         game1,
         game2,
       ];
-      const expected: PlayerScores = {
+      const expected: GameSession.GameSessionScore = {
         "player-1-id": 26,
         "player-2-id": -6,
         "player-3-id": -26,
         "player-4-id": 6,
       };
 
-      const current = sumPlayerScores(playerListObjects);
+      const current = GameSession.calculateGameSessionScores(playerListObjects);
 
       expect(current).toEqual(expected);
     });
@@ -167,7 +165,7 @@ export default describe("gameScoreList", () => {
         game1,
         game2,
       ];
-      const expected: PlayerScores = {
+      const expected: GameSession.GameSessionScore = {
         "player-1-id": 26,
         "player-2-id": -6,
         "player-3-id": -26,
@@ -175,7 +173,7 @@ export default describe("gameScoreList", () => {
         "player-5-id-new": 16,
       };
 
-      const current = sumPlayerScores(playerListObjects);
+      const current = GameSession.calculateGameSessionScores(playerListObjects);
       expect(current).toEqual(expected);
     });
     it("should return sum of player scores, multiple item, first scores player is new", () => {
@@ -231,7 +229,7 @@ export default describe("gameScoreList", () => {
         game1,
         game2,
       ];
-      const expected: PlayerScores = {
+      const expected: GameSession.GameSessionScore = {
         "player-1-id": 26,
         "player-2-id": -6,
         "player-3-id": -26,
@@ -239,7 +237,7 @@ export default describe("gameScoreList", () => {
         "player-5-id-new-player": -10,
       };
 
-      const current = sumPlayerScores(playerListObjects);
+      const current = GameSession.calculateGameSessionScores(playerListObjects);
 
       expect(current).toEqual(expected);
     });
@@ -296,7 +294,7 @@ export default describe("gameScoreList", () => {
         game1,
         game2,
       ];
-      const expected: PlayerScores = {
+      const expected: GameSession.GameSessionScore = {
         "player-1-id": 26,
         "player-2-id": -6,
         "player-3-id": -26,
@@ -304,7 +302,7 @@ export default describe("gameScoreList", () => {
         "player-5-id-only-in-game2": -10,
       };
 
-      const current = sumPlayerScores(playerListObjects);
+      const current = GameSession.calculateGameSessionScores(playerListObjects);
       expect(current).toEqual(expected);
     });
     it("should return sum of player scores, multiple item, second scores player is null, not exists in first", () => {
@@ -360,14 +358,14 @@ export default describe("gameScoreList", () => {
         game1,
         game2,
       ];
-      const expected: PlayerScores = {
+      const expected: GameSession.GameSessionScore = {
         "player-1-id": 26,
         "player-2-id": -6,
         "player-3-id": -26,
         "player-4-id-only-in-game1": -10,
         "player-5-id-only-in-game2": 0,
       };
-      const current = sumPlayerScores(playerListObjects);
+      const current = GameSession.calculateGameSessionScores(playerListObjects);
       expect(current).toEqual(expected);
     });
     it("should return sum of player scores, multiple item, second scores player is null, exists in first", () => {
@@ -423,13 +421,13 @@ export default describe("gameScoreList", () => {
         game1,
         game2,
       ];
-      const expected: PlayerScores = {
+      const expected: GameSession.GameSessionScore = {
         "player-1-id": 26,
         "player-2-id": -6,
         "player-3-id": -26,
         "player-4-id": -10,
       };
-      const current = sumPlayerScores(playerListObjects);
+      const current = GameSession.calculateGameSessionScores(playerListObjects);
       expect(current).toEqual(expected);
     });
     it("should return sum of player scores, multiple item, first scores player is null, exists in second", () => {
@@ -485,14 +483,14 @@ export default describe("gameScoreList", () => {
         game1,
         game2,
       ];
-      const expected: PlayerScores = {
+      const expected: GameSession.GameSessionScore = {
         "player-1-id": 26,
         "player-2-id": -6,
         "player-3-id": -26,
         "player-4-id": -10,
       };
 
-      const current = sumPlayerScores(playerListObjects);
+      const current = GameSession.calculateGameSessionScores(playerListObjects);
       expect(current).toEqual(expected);
     });
   });
@@ -507,7 +505,7 @@ export default describe("gameScoreList", () => {
       const players: playerListModel.PlayerList = [];
       const expected: playerListModel.PlayerList = [];
 
-      const current = getCurrentScoreForPlayers(game)(players);
+      const current = GameSession.mapGameScoreToPlayers(game)(players);
 
       expect(current).toEqual(expected);
     });
@@ -566,7 +564,7 @@ export default describe("gameScoreList", () => {
         }),
       ];
 
-      const current = getCurrentScoreForPlayers(game)(players);
+      const current = GameSession.mapGameScoreToPlayers(game)(players);
 
       expect(current).toEqual(expected);
     });
@@ -625,7 +623,7 @@ export default describe("gameScoreList", () => {
         }),
       ];
 
-      const current = getCurrentScoreForPlayers(game)(players);
+      const current = GameSession.mapGameScoreToPlayers(game)(players);
 
       expect(current).toEqual(expected);
     });
@@ -684,7 +682,7 @@ export default describe("gameScoreList", () => {
         }),
       ];
 
-      const current = getCurrentScoreForPlayers(game)(players);
+      const current = GameSession.mapGameScoreToPlayers(game)(players);
 
       expect(current).toEqual(expected);
     });
@@ -743,7 +741,7 @@ export default describe("gameScoreList", () => {
         }),
       ];
 
-      const current = getCurrentScoreForPlayers(game)(players);
+      const current = GameSession.mapGameScoreToPlayers(game)(players);
 
       expect(current).toEqual(expected);
     });
@@ -801,7 +799,7 @@ export default describe("gameScoreList", () => {
           type: playerModel.PLAYER_TYPE.DECLARER,
         }),
       ];
-      const current = getCurrentScoreForPlayers(game)(players);
+      const current = GameSession.mapGameScoreToPlayers(game)(players);
 
       expect(current).toEqual(expected);
     });
@@ -848,7 +846,7 @@ export default describe("gameScoreList", () => {
           type: playerModel.PLAYER_TYPE.DECLARER,
         }),
       ];
-      const current = getCurrentScoreForPlayers(game)(players);
+      const current = GameSession.mapGameScoreToPlayers(game)(players);
 
       expect(current).toEqual(expected);
     });
@@ -906,7 +904,7 @@ export default describe("gameScoreList", () => {
           type: playerModel.PLAYER_TYPE.OPPONENT,
         }),
       ];
-      const current = getCurrentScoreForPlayers(game)(players);
+      const current = GameSession.mapGameScoreToPlayers(game)(players);
 
       expect(current).toEqual(expected);
     });
@@ -964,7 +962,7 @@ export default describe("gameScoreList", () => {
           type: playerModel.PLAYER_TYPE.DECLARER,
         }),
       ];
-      const current = getCurrentScoreForPlayers(game)(players);
+      const current = GameSession.mapGameScoreToPlayers(game)(players);
 
       expect(current).toEqual(expected);
     });
@@ -1022,7 +1020,7 @@ export default describe("gameScoreList", () => {
           type: playerModel.PLAYER_TYPE.DECLARER,
         }),
       ];
-      const current = getCurrentScoreForPlayers(game)(players);
+      const current = GameSession.mapGameScoreToPlayers(game)(players);
 
       expect(current).toEqual(expected);
     });
@@ -1091,7 +1089,7 @@ export default describe("gameScoreList", () => {
           type: null,
         }),
       ];
-      const current = getCurrentScoreForPlayers(game)(players);
+      const current = GameSession.mapGameScoreToPlayers(game)(players);
 
       expect(current).toEqual(expected);
     });

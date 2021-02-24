@@ -70,17 +70,19 @@ An awesome app to help track a Tarock game scores.
         - [x] getBidScore: calculateScore
         - [x] refactor to namespace imports
         - [x] rename CARD_SHAPE to CARD_SUIT
-      - [ ] gameScoreList: sessionModel
-        - [ ] rename and move
-        - [ ] getScore: calculateScoreByPlayerType
-        - [ ] getCurrentScoreForPlayer: mapGameScoreToPlayers
-        - [ ] sumPlayerScores: calculateSessionScores
-        - [ ] PlayerScores: SessionScore
-        - [ ] assignScoresToPlayers: mapSessionScoresToPlayers
-        - [ ] refactor namespace imports
+      - [x] gameScoreList: GameSession
+        - [x] rename and move
+        - [x] getScore: calculateScoreByPlayerType
+        - [x] getCurrentScoreForPlayer: mapGameScoreToPlayers
+        - [x] sumPlayerScores: calculateGameSessionScores
+        - [x] PlayerScores: GameSessionScore
+        - [x] assignScoresToPlayers: mapGameSessionScoresToPlayers
+        - [x] refactor namespace imports
       - [ ] move fixtures to models
         - [ ] rename fixtures
         - [ ] convert to namespace imports
+      - [ ] rename game props to camelCase, party_score, called_tarock
+      - [ ] Contract.bidBaseScore to contractBaseScore
       - [ ] rename types
         - [ ] rename somethingModel to Model, rename the main interface to Props
       - [ ] rename test descriptions
@@ -90,7 +92,6 @@ An awesome app to help track a Tarock game scores.
     - [ ] refactor can silent, do not leak bids details to contract layer
       - [ ] Add canSilent method to contract too.
       - [ ] refactor ContractsTable to use the new can silent contracts.      
-    - [ ] rename game props to camelCase, party_score, called_tarock
     - [ ] add license, contribution, proper readme
     - [ ] increase test coverage
     - [ ] also clear the base scores too when resetting the scores
