@@ -1,14 +1,14 @@
 import * as Game from "./Game";
 import * as playerModel from "./playerModel";
-import * as playerListModel from "./playerListModel";
+import * as PlayerList from "./PlayerList";
 import * as scoreModel from "./Score";
 import assignWith from "lodash/fp/assignWith";
 import { isEqual } from "lodash";
 
-const calculateScoreByPlayerType = (players: playerListModel.PlayerList) => (
+const calculateScoreByPlayerType = (players: PlayerList.Props) => (
   game: Game.Props
 ): [scoreModel.Props, scoreModel.Props] => {
-  const [numberOfDeclarers, numberOfOpponents] = playerListModel.countByType(
+  const [numberOfDeclarers, numberOfOpponents] = PlayerList.countByType(
     players
   );
   const opponentsGameScore =
@@ -31,8 +31,8 @@ const calculateScoreByPlayerType = (players: playerListModel.PlayerList) => (
 };
 
 export const mapGameScoreToPlayers = (game: Game.Props) => (
-  players: playerListModel.PlayerList
-): playerListModel.PlayerList => {
+  players: PlayerList.Props
+): PlayerList.Props => {
   return players.map(
     (player: playerModel.Player): playerModel.Player => {
       const [declarersScore, opponentsScore] = calculateScoreByPlayerType(
@@ -50,10 +50,10 @@ export const mapGameScoreToPlayers = (game: Game.Props) => (
   );
 };
 
-export const isReadyForSave = (players: playerListModel.PlayerList) => (
+export const isReadyForSave = (players: PlayerList.Props) => (
   game: Game.Props
 ): boolean => {
-  const numbers = playerListModel.countByType(players);
+  const numbers = PlayerList.countByType(players);
   const playerNumberValid =
     isEqual(numbers, [1, 3]) ||
     isEqual(numbers, [2, 2]) ||
@@ -79,7 +79,7 @@ const scoreSumAssigner = (
 export type GameSessionScore = { [key: string]: number };
 
 export const calculateGameSessionScores = (
-  playerListObjects: playerListModel.PlayerListObject[]
+  playerListObjects: PlayerList.PlayerMap[]
 ): GameSessionScore => {
   return playerListObjects.reduce(
     (scores, playerListObject) =>
@@ -88,9 +88,9 @@ export const calculateGameSessionScores = (
   );
 };
 
-export const mapGameSessionScoresToPlayers = (
-  players: playerListModel.PlayerList
-) => (sessionScores: GameSessionScore): playerListModel.PlayerList =>
+export const mapGameSessionScoresToPlayers = (players: PlayerList.Props) => (
+  sessionScores: GameSessionScore
+): PlayerList.Props =>
   players.map((player) =>
     sessionScores[player.id] === undefined
       ? player

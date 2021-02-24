@@ -10,7 +10,7 @@ import flow from "lodash/fp/flow";
 import concat from "lodash/fp/concat";
 import Players from "./Players";
 import * as playerModel from "../models/playerModel";
-import * as playerListModel from "../models/playerListModel";
+import * as PlayerList from "../models/PlayerList";
 import * as GameSession from "../models/GameSession";
 import { storage as storageInitializer } from "../services/localStorage";
 import Confirm from "./Confirm";
@@ -25,12 +25,8 @@ const TarockSheet = () => {
   const [players, setPlayers] = useState<playerModel.Player[]>(
     (storage.read("players") as playerModel.Player[] | null) ?? []
   );
-  const [gameScoreList, setGameScoreList] = useState<
-    playerListModel.PlayerListObject[]
-  >(
-    (storage.read("gameScoreList") as
-      | playerListModel.PlayerListObject[]
-      | null) ?? []
+  const [gameScoreList, setGameScoreList] = useState<PlayerList.PlayerMap[]>(
+    (storage.read("gameScoreList") as PlayerList.PlayerMap[] | null) ?? []
   );
 
   useEffect(() => {
@@ -53,7 +49,7 @@ const TarockSheet = () => {
   const handleContractDelete = (index: number) =>
     setGame(Game.removeContractAt(game)(index));
   const handleResetGame = () => setGame(Game.create());
-  const handlePlayerListChange = (playerList: playerListModel.PlayerList) => {
+  const handlePlayerListChange = (playerList: PlayerList.Props) => {
     updatePlayersState(playerList);
   };
   const handleChangeGameProperties = (
@@ -118,22 +114,20 @@ const TarockSheet = () => {
   };
   const handleSaveScores = () => {
     const updatedGameScoreList = flow(
-      playerListModel.filterByInGame,
-      playerListModel.mapToObjectById,
+      PlayerList.filterByInGame,
+      PlayerList.mapToObjectById,
       concat(gameScoreList)
     )(players);
     updateGameScoreListState(updatedGameScoreList);
   };
-  const updatePlayersState = (updated: playerListModel.PlayerList) => {
+  const updatePlayersState = (updated: PlayerList.Props) => {
     flow(GameSession.mapGameScoreToPlayers(game), setPlayers)(updated);
   };
-  const updateGameScoreListState = (
-    updated: playerListModel.PlayerListObject[]
-  ) => {
+  const updateGameScoreListState = (updated: PlayerList.PlayerMap[]) => {
     flow(
       GameSession.calculateGameSessionScores,
       GameSession.mapGameSessionScoresToPlayers(players),
-      playerListModel.clearType,
+      PlayerList.clearType,
       updatePlayersState
     )(updated);
     setGameScoreList(updated);
@@ -147,8 +141,8 @@ const TarockSheet = () => {
   const handleResetScores = () => {
     updateGameScoreListState([]);
     flow(
-      playerListModel.clearSessionScore,
-      playerListModel.clearType,
+      PlayerList.clearSessionScore,
+      PlayerList.clearType,
       updatePlayersState
     )(players);
   };

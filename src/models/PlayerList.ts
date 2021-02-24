@@ -1,22 +1,22 @@
 import * as playerModel from "./playerModel";
 
-export type PlayerList = playerModel.Player[];
-export const add = (playerList: PlayerList) => (
+export type Props = playerModel.Player[];
+export const add = (playerList: Props) => (
   player: playerModel.Player
-): PlayerList => {
+): Props => {
   return [...playerList, player];
 };
 
-export const remove = (playerList: PlayerList) => (
+export const remove = (playerList: Props) => (
   player: playerModel.Player
-): PlayerList => playerList.filter(({ id }) => id !== player.id);
+): Props => playerList.filter(({ id }) => id !== player.id);
 
-export const update = (playerList: PlayerList) => (
+export const update = (playerList: Props) => (
   updated: playerModel.Player
-): PlayerList =>
+): Props =>
   playerList.map((player) => (player.id === updated.id ? updated : player));
 
-export const countByType = (players: PlayerList): [number, number] => {
+export const countByType = (players: Props): [number, number] => {
   const [declarersNumber, opponentsNumber] = players.reduce(
     ([declarersNumber, opponentsNumber], player) => {
       if (player.type === playerModel.PLAYER_TYPE.OPPONENT) {
@@ -32,19 +32,19 @@ export const countByType = (players: PlayerList): [number, number] => {
   return [declarersNumber, opponentsNumber];
 };
 
-export const clearType = (players: PlayerList): PlayerList =>
+export const clearType = (players: Props): Props =>
   players.map((player) => playerModel.update({ type: null })(player));
 
-export const clearSessionScore = (players: PlayerList): PlayerList =>
+export const clearSessionScore = (players: Props): Props =>
   players.map((player) => playerModel.update({ sessionScore: null })(player));
 
-export const filterByInGame = (players: PlayerList): PlayerList =>
+export const filterByInGame = (players: Props): Props =>
   players.filter((player) => player.type !== null);
 
-export type PlayerListObject = { [key: string]: playerModel.Player };
-export const mapToObjectById = (playerList: PlayerList): PlayerListObject => {
+export type PlayerMap = { [key: string]: playerModel.Player };
+export const mapToObjectById = (playerList: Props): PlayerMap => {
   return playerList.reduce((playerListObject, player) => {
     playerListObject[player.id as string] = player;
     return playerListObject;
-  }, {} as PlayerListObject);
+  }, {} as PlayerMap);
 };

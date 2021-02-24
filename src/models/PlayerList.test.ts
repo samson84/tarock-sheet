@@ -1,17 +1,17 @@
-import * as playerListModel from "./playerListModel";
+import * as PlayerList from "./PlayerList";
 import * as playerModel from "./playerModel";
 import { PlayerFixture } from "./test_data/fixtures";
 
 export default describe("playerListModel", () => {
   describe("add", () => {
     it("should add a player to the empty player list", () => {
-      const playerList: playerListModel.PlayerList = [];
+      const playerList: PlayerList.Props = [];
       const player = PlayerFixture({
         name: "Csaba",
       });
       const expected = [PlayerFixture({ id: player.id, name: "Csaba" })];
 
-      const current = playerListModel.add(playerList)(player);
+      const current = PlayerList.add(playerList)(player);
 
       expect(current).toEqual(expected);
     });
@@ -22,13 +22,13 @@ export default describe("playerListModel", () => {
       const player2 = PlayerFixture({
         name: "Tamás",
       });
-      const playerList: playerListModel.PlayerList = [player1];
+      const playerList: PlayerList.Props = [player1];
       const expected = [
         PlayerFixture({ id: player1.id, name: "Csaba" }),
         PlayerFixture({ id: player2.id, name: "Tamás" }),
       ];
 
-      const current = playerListModel.add(playerList)(player2);
+      const current = PlayerList.add(playerList)(player2);
 
       expect(current).toEqual(expected);
     });
@@ -41,10 +41,10 @@ export default describe("playerListModel", () => {
       const removedPlayer = PlayerFixture({
         name: "Tamás",
       });
-      const playerList: playerListModel.PlayerList = [player, removedPlayer];
+      const playerList: PlayerList.Props = [player, removedPlayer];
       const expected = [PlayerFixture({ id: player.id, name: "Csaba" })];
 
-      const current = playerListModel.remove(playerList)(removedPlayer);
+      const current = PlayerList.remove(playerList)(removedPlayer);
 
       expect(current).toEqual(expected);
     });
@@ -55,10 +55,10 @@ export default describe("playerListModel", () => {
       const wontRemovedPlayer = PlayerFixture({
         name: "Tamás",
       });
-      const playerList: playerListModel.PlayerList = [player];
+      const playerList: PlayerList.Props = [player];
       const expected = [PlayerFixture({ id: player.id, name: "Csaba" })];
 
-      const current = playerListModel.remove(playerList)(wontRemovedPlayer);
+      const current = PlayerList.remove(playerList)(wontRemovedPlayer);
 
       expect(current).toEqual(expected);
     });
@@ -77,13 +77,13 @@ export default describe("playerListModel", () => {
         name: "Tamás",
         gameScore: 80,
       });
-      const playerList: playerListModel.PlayerList = [player, willBeUpdated];
+      const playerList: PlayerList.Props = [player, willBeUpdated];
       const expected = [
         PlayerFixture({ id: player.id, name: "Csaba" }),
         PlayerFixture({ id: updated.id, name: "Tamás", gameScore: 80 }),
       ];
 
-      const current = playerListModel.update(playerList)(updated);
+      const current = PlayerList.update(playerList)(updated);
 
       expect(current).toEqual(expected);
     });
@@ -100,28 +100,28 @@ export default describe("playerListModel", () => {
         name: "André",
         gameScore: 80,
       });
-      const playerList: playerListModel.PlayerList = [player1, player2];
+      const playerList: PlayerList.Props = [player1, player2];
       const expected = [
         PlayerFixture({ id: player1.id, name: "Csaba" }),
         PlayerFixture({ id: player2.id, name: "Tamás", gameScore: 50 }),
       ];
 
-      const current = playerListModel.update(playerList)(wontUpdated);
+      const current = PlayerList.update(playerList)(wontUpdated);
 
       expect(current).toEqual(expected);
     });
   });
   describe("getPlayerTypeByNumber", () => {
     it("should return 0, 0 if empty player list is given", () => {
-      const playerList: playerListModel.PlayerList = [];
+      const playerList: PlayerList.Props = [];
       const expected = [0, 0];
 
-      const current = playerListModel.countByType(playerList);
+      const current = PlayerList.countByType(playerList);
 
       expect(current).toEqual(expected);
     });
     it("should return the correct number of declarers and opponents", () => {
-      const playerList: playerListModel.PlayerList = [
+      const playerList: PlayerList.Props = [
         PlayerFixture({
           name: "opponent 1",
           type: playerModel.PLAYER_TYPE.OPPONENT,
@@ -146,17 +146,17 @@ export default describe("playerListModel", () => {
       ];
       const expected = [3, 2]; // declarer numbers, opponents number
 
-      const current = playerListModel.countByType(playerList);
+      const current = PlayerList.countByType(playerList);
 
       expect(current).toEqual(expected);
     });
   });
   describe("clearPlayersType", () => {
     it("should return the empty list, if the empty player list given", () => {
-      const playerList: playerListModel.PlayerList = [];
-      const expected: playerListModel.PlayerList = [];
+      const playerList: PlayerList.Props = [];
+      const expected: PlayerList.Props = [];
 
-      const current = playerListModel.clearType(playerList);
+      const current = PlayerList.clearType(playerList);
 
       expect(current).toEqual(expected);
     });
@@ -177,17 +177,17 @@ export default describe("playerListModel", () => {
         PlayerFixture({ id: notPlaying.id, name: "non playing", type: null }),
       ];
 
-      const current = playerListModel.clearType(playerList);
+      const current = PlayerList.clearType(playerList);
 
       expect(current).toEqual(expected);
     });
   });
   describe("filterPlayersInGame", () => {
     it("should return empty list if the player list is empty", () => {
-      const playerList: playerListModel.PlayerList = [];
-      const expected: playerListModel.PlayerList = [];
+      const playerList: PlayerList.Props = [];
+      const expected: PlayerList.Props = [];
 
-      const current = playerListModel.filterByInGame(playerList);
+      const current = PlayerList.filterByInGame(playerList);
 
       expect(current).toEqual(expected);
     });
@@ -215,17 +215,17 @@ export default describe("playerListModel", () => {
         }),
       ];
 
-      const current = playerListModel.filterByInGame(playerList);
+      const current = PlayerList.filterByInGame(playerList);
 
       expect(current).toEqual(expected);
     });
   });
   describe("createPlayerListObject", () => {
     it("should return an empty opject, if empty list given", () => {
-      const playerList: playerListModel.PlayerList = [];
+      const playerList: PlayerList.Props = [];
       const expected = {};
 
-      const current = playerListModel.mapToObjectById(playerList);
+      const current = PlayerList.mapToObjectById(playerList);
 
       expect(current).toEqual(expected);
     });
@@ -238,7 +238,7 @@ export default describe("playerListModel", () => {
         [player2.id]: PlayerFixture({ id: player2.id, name: "Attila" }),
       };
 
-      const current = playerListModel.mapToObjectById(playerList);
+      const current = PlayerList.mapToObjectById(playerList);
 
       expect(current).toEqual(expected);
     });
