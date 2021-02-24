@@ -1,5 +1,5 @@
 import React from "react";
-import * as Contract from "../models/contractModel";
+import * as Contract from "../models/Contract";
 import { upperCaseToWords } from "../lib/util";
 import {
   TableContainer,

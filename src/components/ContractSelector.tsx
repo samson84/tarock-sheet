@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import * as Bid from "../models/Bid";
 import { upperCaseToWords } from "../lib/util";
-import * as Contract from "../models/contractModel";
+import * as Contract from "../models/Contract";
 import * as playerModel from "../models/playerModel";
 
 interface BidSelectorProps {

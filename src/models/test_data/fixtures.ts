@@ -1,6 +1,6 @@
 import * as Bid from "../Bid";
 import * as playerModel from "../playerModel";
-import * as Contract from "../contractModel";
+import * as Contract from "../Contract";
 import * as gameModel from "../gameModel";
 import { createId } from "../../lib/util";
 

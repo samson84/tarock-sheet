@@ -1,7 +1,7 @@
 import { ContractFixture } from "./test_data/fixtures";
 import * as playerModel from "./playerModel";
 import * as gameModel from "./gameModel";
-import * as Contract from "./contractModel";
+import * as Contract from "./Contract";
 import * as Bid from "./Bid";
 import { GameFixture } from "./test_data/fixtures";
 

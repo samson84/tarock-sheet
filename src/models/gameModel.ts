@@ -1,4 +1,4 @@
-import * as Contract from "./contractModel";
+import * as Contract from "./Contract";
 import * as playerModel from "./playerModel";
 import * as scoreModel from "./Score";
 
