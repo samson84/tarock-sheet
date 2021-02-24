@@ -1,6 +1,5 @@
 import * as Bid from "./Bid";
 import * as Player from "./Player";
-
 import * as Contract from "./Contract";
 import * as Game from "./Game";
 
@@ -17,7 +16,7 @@ export default describe("contract", () => {
       const expected = ContractFixture({
         bidType: Bid.TYPE.CENTRUM,
         taker: Player.TYPE.DECLARER,
-        bidBaseScore: 10,
+        contractBaseScore: 10,
       });
       const current = Contract.create(props);
       expect(current).toEqual(expected);
@@ -31,7 +30,7 @@ export default describe("contract", () => {
       const expected = ContractFixture({
         bidType: Bid.TYPE.FOUR_KING,
         taker: Player.TYPE.OPPONENT,
-        bidBaseScore: 2,
+        contractBaseScore: 2,
       });
       const current = Contract.create(props);
       expect(current).toEqual(expected);
@@ -45,7 +44,7 @@ export default describe("contract", () => {
       const expected = ContractFixture({
         bidType: Bid.TYPE.VOLAT,
         taker: Player.TYPE.DECLARER,
-        bidBaseScore: 12,
+        contractBaseScore: 12,
       });
       const current = Contract.create(props);
       expect(current).toEqual(expected);
@@ -87,7 +86,7 @@ export default describe("contract", () => {
         bidType: Bid.TYPE.KING_ULTI,
         taker: Player.TYPE.OPPONENT,
         bidVariant: Bid.CARD_SUIT_VARIANT.CLUB,
-        bidBaseScore: 15,
+        contractBaseScore: 15,
       });
       const current = Contract.create(props);
       expect(current).toEqual(expected);
@@ -250,7 +249,7 @@ export default describe("contract", () => {
     it("should return null if no winner", () => {
       const contract = ContractFixture({
         bidType: Bid.TYPE.ULTI,
-        bidBaseScore: 10,
+        contractBaseScore: 10,
         bidVariant: Bid.SMALLEST_VARIANT.PAGAT,
         contra: 1,
         isWonByTaker: null,
@@ -265,7 +264,7 @@ export default describe("contract", () => {
     it("shouls return the base score if it is won by the taker", () => {
       const contract = ContractFixture({
         bidType: Bid.TYPE.ULTI,
-        bidBaseScore: 10,
+        contractBaseScore: 10,
         bidVariant: Bid.SMALLEST_VARIANT.PAGAT,
         contra: 2,
         isWonByTaker: true,
@@ -280,7 +279,7 @@ export default describe("contract", () => {
     it("should return the minus score if it is lose by the taker", () => {
       const contract = ContractFixture({
         bidType: Bid.TYPE.ULTI,
-        bidBaseScore: 10,
+        contractBaseScore: 10,
         bidVariant: Bid.SMALLEST_VARIANT.PAGAT,
         contra: 2,
         isWonByTaker: false,
@@ -308,7 +307,7 @@ export default describe("contract", () => {
     it("should return the half base score if silent, contra > 1", () => {
       const contract = ContractFixture({
         bidType: Bid.TYPE.ULTI,
-        bidBaseScore: 10,
+        contractBaseScore: 10,
         bidVariant: Bid.SMALLEST_VARIANT.PAGAT,
         contra: 16,
         isWonByTaker: true,
@@ -323,7 +322,7 @@ export default describe("contract", () => {
     it("should return the half base score negative if silent, contra > 1, and loose", () => {
       const contract = ContractFixture({
         bidType: Bid.TYPE.ULTI,
-        bidBaseScore: 10,
+        contractBaseScore: 10,
         bidVariant: Bid.SMALLEST_VARIANT.PAGAT,
         contra: 16,
         isWonByTaker: false,

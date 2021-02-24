@@ -14,7 +14,7 @@ export const ContractFixture = (
     isWonByTaker: null,
     taker: Player.TYPE.DECLARER,
     bidVariant: null,
-    bidBaseScore: 2,
+    contractBaseScore: 2,
     ...props,
   };
 };

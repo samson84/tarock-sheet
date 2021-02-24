@@ -9,7 +9,7 @@ const CONTRA_NAMES = ["None", "Contra", "Recontra", "Subcontra", "Mortcontra"];
 type Multiplier = number;
 export interface Props {
   bidType: Bid.TYPE;
-  bidBaseScore: number | null;
+  contractBaseScore: number | null;
   bidVariant: Bid.Variant | null;
   contra: Multiplier;
   isWonByTaker: boolean | null;
@@ -58,7 +58,7 @@ export const create = ({
     isSilent,
     isWonByTaker,
     taker,
-    bidBaseScore:
+    contractBaseScore:
       partyScore !== null
         ? flow(Bid.getByType, Bid.calculateScore(partyScore))(bidType)
         : null,
@@ -67,11 +67,11 @@ export const create = ({
   return contract;
 };
 
-export const updateBidBaseScore = (partyScore: number) => (
+export const updateContractBaseScore = (partyScore: number) => (
   contract: Props
 ): Props => ({
   ...contract,
-  bidBaseScore: flow(
+  contractBaseScore: flow(
     Bid.getByType,
     Bid.calculateScore(partyScore)
   )(contract.bidType),
@@ -87,11 +87,16 @@ export const update = (updates: UpdateProps) => (contract: Props): Props => {
 };
 
 export const calculateContractScore = (contract: Props): Score.Props => {
-  const { isWonByTaker, bidBaseScore, contra, isSilent: silent } = contract;
-  if (isWonByTaker === null || bidBaseScore === null) {
+  const {
+    isWonByTaker,
+    contractBaseScore,
+    contra,
+    isSilent: silent,
+  } = contract;
+  if (isWonByTaker === null || contractBaseScore === null) {
     return null;
   }
   const multiplier = silent ? 0.5 : contra;
   const sign = isWonByTaker ? 1 : -1;
-  return sign * bidBaseScore * multiplier;
+  return sign * contractBaseScore * multiplier;
 };

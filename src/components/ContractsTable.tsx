@@ -127,7 +127,7 @@ const columns: ColumnDefinition[] = [
     },
   },
   {
-    field: "bidBaseScore",
+    field: "contractBaseScore",
     headerName: "Base Score",
   },
   {
