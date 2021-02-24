@@ -84,11 +84,12 @@ An awesome app to help track a Tarock game scores.
       - [ ] rename game props to camelCase, party_score, called_tarock
       - [ ] Contract.bidBaseScore to contractBaseScore
       - [ ] rename types and remaining models for shorter names
-        - [ ] Contract
+        - [x] Contract
         - [ ] Game
         - [ ] PlayerList
         - [ ] Player
-        - [x] Score
+        - [ ] Score
+          - [ ] rename scoreModel in imports
       - [ ] rename test descriptions
     - [ ] Tarock sheet: move handler's logic to data layer, if possible
     - [ ] contract better calculation of the bid base score

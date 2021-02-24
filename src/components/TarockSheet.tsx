@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import * as Bid from "../models/Bid";
 import ContractSelector from "./ContractSelector";
 import * as gameModel from "../models/gameModel";
-import * as contractModel from "../models/contractModel";
+import * as Contract from "../models/contractModel";
 import { Button, Grid } from "@material-ui/core";
 import ContractsTable from "./ContractsTable";
 import GameProperties from "./GameProperties";
@@ -81,11 +81,11 @@ const TarockSheet = () => {
           partyLikeAndEmptyContracts);
       if (shouldRemoveContracts) {
         const contract = gameModel.isPartyLike(value)
-          ? contractModel.create({
+          ? Contract.create({
               bidType: Bid.TYPE.PARTY,
               taker: playerModel.PLAYER_TYPE.DECLARER,
             })
-          : contractModel.create({
+          : Contract.create({
               bidType: Bid.TYPE.KLOPICZKY,
               taker: playerModel.PLAYER_TYPE.DECLARER,
               isWonByTaker: true,
@@ -101,19 +101,19 @@ const TarockSheet = () => {
       }
     });
   };
-  const handleAddContract = (contract: contractModel.Contract) => {
+  const handleAddContract = (contract: Contract.Props) => {
     return setGame(
-      flow(contractModel.create, gameModel.addContract(game))(contract)
+      flow(Contract.create, gameModel.addContract(game))(contract)
     );
   };
   const handleChangeContract = (
     index: number,
-    field: keyof contractModel.Contract,
+    field: keyof Contract.Props,
     value: any
   ) => {
     setGame(
       flow(
-        contractModel.update({ [field]: value }),
+        Contract.update({ [field]: value }),
         gameModel.updateGameContractAt(game)(index)
       )(game.contracts[index])
     );
@@ -202,7 +202,7 @@ const TarockSheet = () => {
       <Grid item>
         {partyScoreTypeSelected && (
           <ContractsTable
-            contracts={game?.contracts as contractModel.Contract[]}
+            contracts={game?.contracts as Contract.Props[]}
             onChange={handleChangeContract}
             onDelete={handleContractDelete}
           />

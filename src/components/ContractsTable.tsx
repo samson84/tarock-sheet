@@ -1,5 +1,5 @@
 import React from "react";
-import * as contractModel from "../models/contractModel";
+import * as Contract from "../models/contractModel";
 import { upperCaseToWords } from "../lib/util";
 import {
   TableContainer,
@@ -22,7 +22,7 @@ import * as playerModel from "../models/playerModel";
 import curry from "lodash/fp/curry";
 
 interface VariantSelectorModalProps {
-  contract: contractModel.Contract;
+  contract: Contract.Props;
   onChange: (variant: Bid.Variant) => void;
 }
 const VariantSelectorModal = (props: VariantSelectorModalProps) => {
@@ -62,13 +62,13 @@ enum ACTION_TYPE {
   CHANGE = "CHANGE",
 }
 
-type ContractField = keyof contractModel.UpdateContractProps;
+type ContractField = keyof Contract.UpdateProps;
 type Field = ContractField | string;
 interface ColumnDefinition {
   field: Field;
   headerName: string;
   valueGetter?: (
-    contract: contractModel.Contract,
+    contract: Contract.Props,
     onAction?: (actionType: ACTION_TYPE, value?: any) => void
   ) => React.ReactNode;
 }
@@ -76,7 +76,7 @@ const columns: ColumnDefinition[] = [
   {
     field: "bidType",
     headerName: "Bid",
-    valueGetter: (contract: contractModel.Contract) =>
+    valueGetter: (contract: Contract.Props) =>
       upperCaseToWords(contract.bidType),
   },
   {
@@ -192,7 +192,7 @@ const columns: ColumnDefinition[] = [
             : "secondary"
         }
       >
-        {contractModel.calculateContractScore(contract)}
+        {Contract.calculateContractScore(contract)}
       </T>
     ),
   },
@@ -212,18 +212,14 @@ const columns: ColumnDefinition[] = [
 
 const isContractField = (
   field: Field,
-  contract: contractModel.Contract
+  contract: Contract.Props
 ): field is ContractField => {
   return field in contract;
 };
 
 interface ContractsTableProps {
-  contracts: contractModel.Contract[];
-  onChange: (
-    index: number,
-    field: keyof contractModel.Contract,
-    value: any
-  ) => void;
+  contracts: Contract.Props[];
+  onChange: (index: number, field: keyof Contract.Props, value: any) => void;
   onDelete: (index: number) => void;
 }
 const ContractsTable = (props: ContractsTableProps) => {

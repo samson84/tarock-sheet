@@ -1,12 +1,12 @@
 import * as Bid from "../Bid";
 import * as playerModel from "../playerModel";
-import * as contractModel from "../contractModel";
+import * as Contract from "../contractModel";
 import * as gameModel from "../gameModel";
 import { createId } from "../../lib/util";
 
 export const ContractFixture = (
-  props: Partial<contractModel.Contract> = {}
-): contractModel.Contract => {
+  props: Partial<Contract.Props> = {}
+): Contract.Props => {
   return {
     bidType: Bid.TYPE.FOUR_KING,
     contra: 1,

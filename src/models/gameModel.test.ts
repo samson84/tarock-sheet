@@ -1,7 +1,7 @@
 import { ContractFixture } from "./test_data/fixtures";
 import * as playerModel from "./playerModel";
 import * as gameModel from "./gameModel";
-import * as contractModel from "./contractModel";
+import * as Contract from "./contractModel";
 import * as Bid from "./Bid";
 import { GameFixture } from "./test_data/fixtures";
 
@@ -335,7 +335,7 @@ export default describe("game", () => {
 
   describe("addContract", () => {
     it("should add a contract", () => {
-      const contract = contractModel.create({
+      const contract = Contract.create({
         bidType: Bid.TYPE.PARTY,
         taker: playerModel.PLAYER_TYPE.DECLARER,
       });
@@ -359,7 +359,7 @@ export default describe("game", () => {
       expect(current).toEqual(expected);
     });
     it("should add a second contract", () => {
-      const contract = contractModel.create({
+      const contract = Contract.create({
         bidType: Bid.TYPE.FOUR_KING,
         taker: playerModel.PLAYER_TYPE.OPPONENT,
         partyScore: 2,
@@ -392,7 +392,7 @@ export default describe("game", () => {
       expect(current).toEqual(expected);
     });
     it("should caluclate contracts party score to null, if partyScoreType is not given to the game", () => {
-      const contract = contractModel.create({
+      const contract = Contract.create({
         bidType: Bid.TYPE.PARTY,
         taker: playerModel.PLAYER_TYPE.DECLARER,
       });
@@ -414,7 +414,7 @@ export default describe("game", () => {
       expect(current).toEqual(expected);
     });
     it("should calculate game score if, contact is won", () => {
-      const contract = contractModel.create({
+      const contract = Contract.create({
         bidType: Bid.TYPE.PARTY,
         taker: playerModel.PLAYER_TYPE.DECLARER,
         partyScore: 1,

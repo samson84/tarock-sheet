@@ -6,18 +6,18 @@ import * as gameModel from "./gameModel";
 
 const CONTRA_NAMES = ["None", "Contra", "Recontra", "Subcontra", "Mortcontra"];
 
-type ContraMultiplier = number;
-export interface Contract {
+type Multiplier = number;
+export interface Props {
   bidType: Bid.TYPE;
   bidBaseScore: number | null;
   bidVariant: Bid.Variant | null;
-  contra: ContraMultiplier;
+  contra: Multiplier;
   isWonByTaker: boolean | null;
   taker: playerModel.PLAYER_TYPE;
   isSilent: boolean;
 }
 
-const validate = (contract: Contract): void | undefined => {
+const validate = (contract: Props): void | undefined => {
   const { isSilent, bidType, bidVariant, contra } = contract;
   const bid = Bid.getByType(bidType);
   if (isSilent && !Bid.canSilent(bid)) {
@@ -35,7 +35,7 @@ const validate = (contract: Contract): void | undefined => {
   }
 };
 
-export interface CreateContractProps {
+export interface CreateProps {
   bidType: Bid.TYPE;
   partyScore?: gameModel.PartyScoreValue | null;
   taker: playerModel.PLAYER_TYPE;
@@ -50,7 +50,7 @@ export const create = ({
   isSilent = false,
   bidVariant = null,
   isWonByTaker = null,
-}: CreateContractProps): Contract => {
+}: CreateProps): Props => {
   const contract = {
     bidType,
     bidVariant,
@@ -68,8 +68,8 @@ export const create = ({
 };
 
 export const updateBidBaseScore = (partyScore: number) => (
-  contract: Contract
-): Contract => ({
+  contract: Props
+): Props => ({
   ...contract,
   bidBaseScore: flow(
     Bid.getByType,
@@ -77,23 +77,16 @@ export const updateBidBaseScore = (partyScore: number) => (
   )(contract.bidType),
 });
 
-export type UpdateContractProps = Partial<
-  Pick<
-    Contract,
-    "taker" | "isWonByTaker" | "isSilent" | "bidVariant" | "contra"
-  >
+export type UpdateProps = Partial<
+  Pick<Props, "taker" | "isWonByTaker" | "isSilent" | "bidVariant" | "contra">
 >;
-export const update = (updates: UpdateContractProps) => (
-  contract: Contract
-): Contract => {
+export const update = (updates: UpdateProps) => (contract: Props): Props => {
   const updated = { ...contract, ...updates };
   validate(updated);
   return updated;
 };
 
-export const calculateContractScore = (
-  contract: Contract
-): scoreModel.Props => {
+export const calculateContractScore = (contract: Props): scoreModel.Props => {
   const { isWonByTaker, bidBaseScore, contra, isSilent: silent } = contract;
   if (isWonByTaker === null || bidBaseScore === null) {
     return null;
