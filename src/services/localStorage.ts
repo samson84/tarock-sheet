@@ -1,6 +1,6 @@
 import { ApplicationError } from "../lib/error";
 
-export const PREFIX = "tarockSheetState";
+export const PREFIX = "tarockSheetState_v2";
 
 export class NotSupportedStorageError extends ApplicationError {
   constructor(message?: string) {

@@ -30,9 +30,9 @@ const GameProperties = (props: GamePropertiesProps) => {
         <FormControl component="fieldset">
           <InputLabel id="called-tarock-selector">Called</InputLabel>
           <Select
-            value={game.called_tarock || "_None_"}
+            value={game.calledTarock || "_None_"}
             onChange={(event: ChangeEvent<{ value: string }>) => {
-              onChange("called_tarock", event.target.value);
+              onChange("calledTarock", event.target.value);
             }}
             labelId="called-tarock-selector"
           >

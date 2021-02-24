@@ -23,7 +23,7 @@ export const GameFixture = (props: Partial<Game.Props> = {}): Game.Props => ({
   contracts: [],
   partyScoreType: null,
   partyBaseScore: 1,
-  called_tarock: null,
+  calledTarock: null,
   ...props,
   playerTypeScores: props.playerTypeScores
     ? { ...props.playerTypeScores }

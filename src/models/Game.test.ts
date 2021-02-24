@@ -21,7 +21,7 @@ export default describe("game", () => {
       };
       const expected = GameFixture({
         partyScoreType: Game.PARTY_SCORE_TYPE.SOLO,
-        called_tarock: Game.CALLED_TAROCK.XVIII,
+        calledTarock: Game.CALLED_TAROCK.XVIII,
       });
 
       const current = Game.create(props);
@@ -35,17 +35,17 @@ export default describe("game", () => {
       const game = GameFixture({
         partyScoreType: null,
         partyBaseScore: 1,
-        called_tarock: null,
+        calledTarock: null,
       });
-      const updates = {
+      const updates: Game.UpdateProps = {
         partyScoreType: Game.PARTY_SCORE_TYPE.TOOK_TWO,
         partyBaseScore: 2,
-        called_tarock: Game.CALLED_TAROCK.XX,
+        calledTarock: Game.CALLED_TAROCK.XX,
       };
       const expected = GameFixture({
         partyScoreType: Game.PARTY_SCORE_TYPE.TOOK_TWO,
         partyBaseScore: 2,
-        called_tarock: Game.CALLED_TAROCK.XX,
+        calledTarock: Game.CALLED_TAROCK.XX,
       });
       const current = Game.update(updates)(game);
       expect(current).toEqual(expected);

@@ -81,7 +81,7 @@ An awesome app to help track a Tarock game scores.
       - [ ] move fixtures to models
         - [x] move
         - [x] rename fixtures
-      - [ ] rename game props to camelCase, party_score, called_tarock
+      - [x] rename game props to camelCase, party_score, called_tarock
       - [ ] Contract.bidBaseScore to contractBaseScore
       - [ ] rename types and remaining models for shorter names
         - [x] Contract

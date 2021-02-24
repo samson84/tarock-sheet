@@ -10,7 +10,7 @@ export interface Props {
   contracts: Contract.Props[];
   partyScoreType: PARTY_SCORE_TYPE | null;
   partyBaseScore: number;
-  called_tarock: CalledTarockType | null;
+  calledTarock: CalledTarockType | null;
   playerTypeScores: PlayerTypeScore;
 }
 
@@ -72,7 +72,7 @@ export const create = (props: CreateProps = {}): Props => ({
   contracts: [],
   partyScoreType: props.partyScoreType || null,
   partyBaseScore: 1,
-  called_tarock: props.called_tarock || null,
+  calledTarock: props.called_tarock || null,
   playerTypeScores: {
     [Player.TYPE.DECLARER]: null,
     [Player.TYPE.OPPONENT]: null,
@@ -90,7 +90,7 @@ const updateGameWithPlayerTypeScores = (game: Props): Props => {
 
 export interface UpdateProps {
   partyScoreType?: PARTY_SCORE_TYPE;
-  called_tarock?: CalledTarockType | null;
+  calledTarock?: CalledTarockType | null;
   partyBaseScore?: number;
 }
 export const update = (updates: UpdateProps) => (game: Props): Props => {
