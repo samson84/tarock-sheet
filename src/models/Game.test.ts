@@ -15,9 +15,9 @@ export default describe("game", () => {
       expect(current).toEqual(expected);
     });
     it("should create a game with props", () => {
-      const props = {
+      const props: Game.CreateProps = {
         partyScoreType: Game.PARTY_SCORE_TYPE.SOLO,
-        called_tarock: Game.CALLED_TAROCK.XVIII,
+        calledTarock: Game.CALLED_TAROCK.XVIII,
       };
       const expected = GameFixture({
         partyScoreType: Game.PARTY_SCORE_TYPE.SOLO,

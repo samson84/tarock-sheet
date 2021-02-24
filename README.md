@@ -6,7 +6,7 @@ An awesome app to help track a Tarock game scores.
 
 - [.] Milesteone 1 - Local storage, correct scores, Player handling,UI improvements
   - [.] refactor
-    - [.] rename the components and methods
+    - [x] rename the components and methods, create a consistent Model interface.
       - [x] create a models dir, place the models into this dir
       - [x] game to gameModel
         - [x] rename game to gameModel, move it to models folder

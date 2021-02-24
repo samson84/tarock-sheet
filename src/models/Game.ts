@@ -64,7 +64,7 @@ export const PARTY_SCORE: { [K in PARTY_SCORE_TYPE]: PartyScoreValue } = {
   [PARTY_SCORE_TYPE.KLOPICZKY]: 0,
 };
 
-interface CreateProps {
+export interface CreateProps {
   partyScoreType?: PARTY_SCORE_TYPE;
   calledTarock?: CalledTarockType;
 }
