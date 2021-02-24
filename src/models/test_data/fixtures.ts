@@ -1,5 +1,5 @@
 import * as Bid from "../Bid";
-import * as playerModel from "../playerModel";
+import * as Player from "../Player";
 import * as Contract from "../Contract";
 import * as Game from "../Game";
 import { createId } from "../../lib/util";
@@ -12,7 +12,7 @@ export const ContractFixture = (
     contra: 1,
     isSilent: false,
     isWonByTaker: null,
-    taker: playerModel.PLAYER_TYPE.DECLARER,
+    taker: Player.TYPE.DECLARER,
     bidVariant: null,
     bidBaseScore: 2,
     ...props,
@@ -28,14 +28,14 @@ export const GameFixture = (props: Partial<Game.Props> = {}): Game.Props => ({
   playerTypeScores: props.playerTypeScores
     ? { ...props.playerTypeScores }
     : {
-        [playerModel.PLAYER_TYPE.DECLARER]: null,
-        [playerModel.PLAYER_TYPE.OPPONENT]: null,
+        [Player.TYPE.DECLARER]: null,
+        [Player.TYPE.OPPONENT]: null,
       },
 });
 
 export const PlayerFixture = (
-  props: Partial<playerModel.Player> = {}
-): playerModel.Player => ({
+  props: Partial<Player.Props> = {}
+): Player.Props => ({
   id: props.id || createId(),
   name: "",
   baseScore: 100,
@@ -48,8 +48,8 @@ export const PlayerFixture = (
 const MATCH_UUID_V4 = /[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}/;
 
 export const expectPlayer = (
-  current: playerModel.Player,
-  expected: playerModel.Player
+  current: Player.Props,
+  expected: Player.Props
 ): void => {
   // 6c519e5f-0c23-4c92-befe-b01941f0044d
   const { id, ...currentRest } = current;

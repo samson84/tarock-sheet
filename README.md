@@ -87,7 +87,7 @@ An awesome app to help track a Tarock game scores.
         - [x] Contract
         - [x] Game
         - [x] PlayerList
-        - [ ] Player
+        - [x] Player
         - [ ] Score
           - [ ] rename scoreModel in imports
       - [ ] rename test descriptions

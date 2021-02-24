@@ -1,5 +1,5 @@
 import * as GameSession from "./GameSession";
-import * as playerModel from "./playerModel";
+import * as Player from "./Player";
 import * as PlayerList from "./PlayerList";
 import { GameFixture, PlayerFixture } from "./test_data/fixtures";
 
@@ -447,8 +447,8 @@ export default describe("gameScoreList", () => {
     it("should return empty object if no players given", () => {
       const game = GameFixture({
         playerTypeScores: {
-          [playerModel.PLAYER_TYPE.DECLARER]: null,
-          [playerModel.PLAYER_TYPE.OPPONENT]: null,
+          [Player.TYPE.DECLARER]: null,
+          [Player.TYPE.OPPONENT]: null,
         },
       });
       const players: PlayerList.Props = [];
@@ -461,29 +461,29 @@ export default describe("gameScoreList", () => {
     it("should return the players scores, 2-2", () => {
       const game = GameFixture({
         playerTypeScores: {
-          [playerModel.PLAYER_TYPE.DECLARER]: 16,
-          [playerModel.PLAYER_TYPE.OPPONENT]: -16,
+          [Player.TYPE.DECLARER]: 16,
+          [Player.TYPE.OPPONENT]: -16,
         },
       });
       const player1 = PlayerFixture({
         name: "Tamas",
         gameScore: null,
-        type: playerModel.PLAYER_TYPE.DECLARER,
+        type: Player.TYPE.DECLARER,
       });
       const player2 = PlayerFixture({
         name: "Csaba",
         gameScore: null,
-        type: playerModel.PLAYER_TYPE.DECLARER,
+        type: Player.TYPE.DECLARER,
       });
       const player3 = PlayerFixture({
         name: "Akos",
         gameScore: null,
-        type: playerModel.PLAYER_TYPE.OPPONENT,
+        type: Player.TYPE.OPPONENT,
       });
       const player4 = PlayerFixture({
         name: "Attila",
         gameScore: null,
-        type: playerModel.PLAYER_TYPE.OPPONENT,
+        type: Player.TYPE.OPPONENT,
       });
       const players = [player1, player2, player3, player4];
       const expected = [
@@ -491,25 +491,25 @@ export default describe("gameScoreList", () => {
           id: player1.id,
           name: "Tamas",
           gameScore: 16,
-          type: playerModel.PLAYER_TYPE.DECLARER,
+          type: Player.TYPE.DECLARER,
         }),
         PlayerFixture({
           id: player2.id,
           name: "Csaba",
           gameScore: 16,
-          type: playerModel.PLAYER_TYPE.DECLARER,
+          type: Player.TYPE.DECLARER,
         }),
         PlayerFixture({
           id: player3.id,
           name: "Akos",
           gameScore: -16,
-          type: playerModel.PLAYER_TYPE.OPPONENT,
+          type: Player.TYPE.OPPONENT,
         }),
         PlayerFixture({
           id: player4.id,
           name: "Attila",
           gameScore: -16,
-          type: playerModel.PLAYER_TYPE.OPPONENT,
+          type: Player.TYPE.OPPONENT,
         }),
       ];
 
@@ -520,29 +520,29 @@ export default describe("gameScoreList", () => {
     it("should return the players scores, 3 declarers win, 1 opponent loose.", () => {
       const game = GameFixture({
         playerTypeScores: {
-          [playerModel.PLAYER_TYPE.DECLARER]: 6,
-          [playerModel.PLAYER_TYPE.OPPONENT]: -6,
+          [Player.TYPE.DECLARER]: 6,
+          [Player.TYPE.OPPONENT]: -6,
         },
       });
       const player1 = PlayerFixture({
         name: "Tamas",
         gameScore: null,
-        type: playerModel.PLAYER_TYPE.DECLARER,
+        type: Player.TYPE.DECLARER,
       });
       const player2 = PlayerFixture({
         name: "Csaba",
         gameScore: null,
-        type: playerModel.PLAYER_TYPE.DECLARER,
+        type: Player.TYPE.DECLARER,
       });
       const player3 = PlayerFixture({
         name: "Akos",
         gameScore: null,
-        type: playerModel.PLAYER_TYPE.DECLARER,
+        type: Player.TYPE.DECLARER,
       });
       const player4 = PlayerFixture({
         name: "Attila",
         gameScore: null,
-        type: playerModel.PLAYER_TYPE.OPPONENT,
+        type: Player.TYPE.OPPONENT,
       });
       const players = [player1, player2, player3, player4];
       const expected = [
@@ -550,25 +550,25 @@ export default describe("gameScoreList", () => {
           id: player1.id,
           name: "Tamas",
           gameScore: 6,
-          type: playerModel.PLAYER_TYPE.DECLARER,
+          type: Player.TYPE.DECLARER,
         }),
         PlayerFixture({
           id: player2.id,
           name: "Csaba",
           gameScore: 6,
-          type: playerModel.PLAYER_TYPE.DECLARER,
+          type: Player.TYPE.DECLARER,
         }),
         PlayerFixture({
           id: player3.id,
           name: "Akos",
           gameScore: 6,
-          type: playerModel.PLAYER_TYPE.DECLARER,
+          type: Player.TYPE.DECLARER,
         }),
         PlayerFixture({
           id: player4.id,
           name: "Attila",
           gameScore: -18,
-          type: playerModel.PLAYER_TYPE.OPPONENT,
+          type: Player.TYPE.OPPONENT,
         }),
       ];
 
@@ -579,29 +579,29 @@ export default describe("gameScoreList", () => {
     it("should return the players scores, 3 opponents win, 1 declarer loose", () => {
       const game = GameFixture({
         playerTypeScores: {
-          [playerModel.PLAYER_TYPE.DECLARER]: -6,
-          [playerModel.PLAYER_TYPE.OPPONENT]: 6,
+          [Player.TYPE.DECLARER]: -6,
+          [Player.TYPE.OPPONENT]: 6,
         },
       });
       const player1 = PlayerFixture({
         name: "Tamas",
         gameScore: null,
-        type: playerModel.PLAYER_TYPE.OPPONENT,
+        type: Player.TYPE.OPPONENT,
       });
       const player2 = PlayerFixture({
         name: "Csaba",
         gameScore: null,
-        type: playerModel.PLAYER_TYPE.OPPONENT,
+        type: Player.TYPE.OPPONENT,
       });
       const player3 = PlayerFixture({
         name: "Akos",
         gameScore: null,
-        type: playerModel.PLAYER_TYPE.OPPONENT,
+        type: Player.TYPE.OPPONENT,
       });
       const player4 = PlayerFixture({
         name: "Attila",
         gameScore: null,
-        type: playerModel.PLAYER_TYPE.DECLARER,
+        type: Player.TYPE.DECLARER,
       });
       const players = [player1, player2, player3, player4];
       const expected = [
@@ -609,25 +609,25 @@ export default describe("gameScoreList", () => {
           id: player1.id,
           name: "Tamas",
           gameScore: 6,
-          type: playerModel.PLAYER_TYPE.OPPONENT,
+          type: Player.TYPE.OPPONENT,
         }),
         PlayerFixture({
           id: player2.id,
           name: "Csaba",
           gameScore: 6,
-          type: playerModel.PLAYER_TYPE.OPPONENT,
+          type: Player.TYPE.OPPONENT,
         }),
         PlayerFixture({
           id: player3.id,
           name: "Akos",
           gameScore: 6,
-          type: playerModel.PLAYER_TYPE.OPPONENT,
+          type: Player.TYPE.OPPONENT,
         }),
         PlayerFixture({
           id: player4.id,
           name: "Attila",
           gameScore: -18,
-          type: playerModel.PLAYER_TYPE.DECLARER,
+          type: Player.TYPE.DECLARER,
         }),
       ];
 
@@ -638,29 +638,29 @@ export default describe("gameScoreList", () => {
     it("should return the players scores, 1 opponents win, 3 declarer loose", () => {
       const game = GameFixture({
         playerTypeScores: {
-          [playerModel.PLAYER_TYPE.DECLARER]: -6,
-          [playerModel.PLAYER_TYPE.OPPONENT]: 6,
+          [Player.TYPE.DECLARER]: -6,
+          [Player.TYPE.OPPONENT]: 6,
         },
       });
       const player1 = PlayerFixture({
         name: "Tamas",
         gameScore: null,
-        type: playerModel.PLAYER_TYPE.DECLARER,
+        type: Player.TYPE.DECLARER,
       });
       const player2 = PlayerFixture({
         name: "Csaba",
         gameScore: null,
-        type: playerModel.PLAYER_TYPE.DECLARER,
+        type: Player.TYPE.DECLARER,
       });
       const player3 = PlayerFixture({
         name: "Akos",
         gameScore: null,
-        type: playerModel.PLAYER_TYPE.DECLARER,
+        type: Player.TYPE.DECLARER,
       });
       const player4 = PlayerFixture({
         name: "Attila",
         gameScore: null,
-        type: playerModel.PLAYER_TYPE.OPPONENT,
+        type: Player.TYPE.OPPONENT,
       });
       const players = [player1, player2, player3, player4];
       const expected = [
@@ -668,25 +668,25 @@ export default describe("gameScoreList", () => {
           id: player1.id,
           name: "Tamas",
           gameScore: -6,
-          type: playerModel.PLAYER_TYPE.DECLARER,
+          type: Player.TYPE.DECLARER,
         }),
         PlayerFixture({
           id: player2.id,
           name: "Csaba",
           gameScore: -6,
-          type: playerModel.PLAYER_TYPE.DECLARER,
+          type: Player.TYPE.DECLARER,
         }),
         PlayerFixture({
           id: player3.id,
           name: "Akos",
           gameScore: -6,
-          type: playerModel.PLAYER_TYPE.DECLARER,
+          type: Player.TYPE.DECLARER,
         }),
         PlayerFixture({
           id: player4.id,
           name: "Attila",
           gameScore: 18,
-          type: playerModel.PLAYER_TYPE.OPPONENT,
+          type: Player.TYPE.OPPONENT,
         }),
       ];
 
@@ -697,29 +697,29 @@ export default describe("gameScoreList", () => {
     it("should return the players scores, 1 declarers win, 3 opponents loose", () => {
       const game = GameFixture({
         playerTypeScores: {
-          [playerModel.PLAYER_TYPE.DECLARER]: 6,
-          [playerModel.PLAYER_TYPE.OPPONENT]: -6,
+          [Player.TYPE.DECLARER]: 6,
+          [Player.TYPE.OPPONENT]: -6,
         },
       });
       const player1 = PlayerFixture({
         name: "Tamas",
         gameScore: null,
-        type: playerModel.PLAYER_TYPE.OPPONENT,
+        type: Player.TYPE.OPPONENT,
       });
       const player2 = PlayerFixture({
         name: "Csaba",
         gameScore: null,
-        type: playerModel.PLAYER_TYPE.OPPONENT,
+        type: Player.TYPE.OPPONENT,
       });
       const player3 = PlayerFixture({
         name: "Akos",
         gameScore: null,
-        type: playerModel.PLAYER_TYPE.OPPONENT,
+        type: Player.TYPE.OPPONENT,
       });
       const player4 = PlayerFixture({
         name: "Attila",
         gameScore: null,
-        type: playerModel.PLAYER_TYPE.DECLARER,
+        type: Player.TYPE.DECLARER,
       });
       const players = [player1, player2, player3, player4];
       const expected = [
@@ -727,25 +727,25 @@ export default describe("gameScoreList", () => {
           id: player1.id,
           name: "Tamas",
           gameScore: -6,
-          type: playerModel.PLAYER_TYPE.OPPONENT,
+          type: Player.TYPE.OPPONENT,
         }),
         PlayerFixture({
           id: player2.id,
           name: "Csaba",
           gameScore: -6,
-          type: playerModel.PLAYER_TYPE.OPPONENT,
+          type: Player.TYPE.OPPONENT,
         }),
         PlayerFixture({
           id: player3.id,
           name: "Akos",
           gameScore: -6,
-          type: playerModel.PLAYER_TYPE.OPPONENT,
+          type: Player.TYPE.OPPONENT,
         }),
         PlayerFixture({
           id: player4.id,
           name: "Attila",
           gameScore: 18,
-          type: playerModel.PLAYER_TYPE.DECLARER,
+          type: Player.TYPE.DECLARER,
         }),
       ];
       const current = GameSession.mapGameScoreToPlayers(game)(players);
@@ -755,24 +755,24 @@ export default describe("gameScoreList", () => {
     it("should assign null if no 4 players", () => {
       const game = GameFixture({
         playerTypeScores: {
-          [playerModel.PLAYER_TYPE.DECLARER]: 6,
-          [playerModel.PLAYER_TYPE.OPPONENT]: -6,
+          [Player.TYPE.DECLARER]: 6,
+          [Player.TYPE.OPPONENT]: -6,
         },
       });
       const player1 = PlayerFixture({
         name: "Tamas",
         gameScore: 10,
-        type: playerModel.PLAYER_TYPE.OPPONENT,
+        type: Player.TYPE.OPPONENT,
       });
       const player2 = PlayerFixture({
         name: "Csaba",
         gameScore: 20,
-        type: playerModel.PLAYER_TYPE.OPPONENT,
+        type: Player.TYPE.OPPONENT,
       });
       const player4 = PlayerFixture({
         name: "Attila",
         gameScore: 40,
-        type: playerModel.PLAYER_TYPE.DECLARER,
+        type: Player.TYPE.DECLARER,
       });
       const players = [player1, player2, player4];
       const expected = [
@@ -780,19 +780,19 @@ export default describe("gameScoreList", () => {
           id: player1.id,
           name: "Tamas",
           gameScore: null,
-          type: playerModel.PLAYER_TYPE.OPPONENT,
+          type: Player.TYPE.OPPONENT,
         }),
         PlayerFixture({
           id: player2.id,
           name: "Csaba",
           gameScore: null,
-          type: playerModel.PLAYER_TYPE.OPPONENT,
+          type: Player.TYPE.OPPONENT,
         }),
         PlayerFixture({
           id: player4.id,
           name: "Attila",
           gameScore: null,
-          type: playerModel.PLAYER_TYPE.DECLARER,
+          type: Player.TYPE.DECLARER,
         }),
       ];
       const current = GameSession.mapGameScoreToPlayers(game)(players);
@@ -802,29 +802,29 @@ export default describe("gameScoreList", () => {
     it("should assign nulls, if not 2-2 or 1-3 the declarer-opponent type players", () => {
       const game = GameFixture({
         playerTypeScores: {
-          [playerModel.PLAYER_TYPE.DECLARER]: 6,
-          [playerModel.PLAYER_TYPE.OPPONENT]: -6,
+          [Player.TYPE.DECLARER]: 6,
+          [Player.TYPE.OPPONENT]: -6,
         },
       });
       const player1 = PlayerFixture({
         name: "Tamas",
         gameScore: 10,
-        type: playerModel.PLAYER_TYPE.OPPONENT,
+        type: Player.TYPE.OPPONENT,
       });
       const player2 = PlayerFixture({
         name: "Csaba",
         gameScore: 10,
-        type: playerModel.PLAYER_TYPE.OPPONENT,
+        type: Player.TYPE.OPPONENT,
       });
       const player3 = PlayerFixture({
         name: "Akos",
         gameScore: 10,
-        type: playerModel.PLAYER_TYPE.OPPONENT,
+        type: Player.TYPE.OPPONENT,
       });
       const player4 = PlayerFixture({
         name: "Attila",
         gameScore: 10,
-        type: playerModel.PLAYER_TYPE.OPPONENT,
+        type: Player.TYPE.OPPONENT,
       });
       const players = [player1, player2, player3, player4];
       const expected = [
@@ -832,25 +832,25 @@ export default describe("gameScoreList", () => {
           id: player1.id,
           name: "Tamas",
           gameScore: null,
-          type: playerModel.PLAYER_TYPE.OPPONENT,
+          type: Player.TYPE.OPPONENT,
         }),
         PlayerFixture({
           id: player2.id,
           name: "Csaba",
           gameScore: null,
-          type: playerModel.PLAYER_TYPE.OPPONENT,
+          type: Player.TYPE.OPPONENT,
         }),
         PlayerFixture({
           id: player3.id,
           name: "Akos",
           gameScore: null,
-          type: playerModel.PLAYER_TYPE.OPPONENT,
+          type: Player.TYPE.OPPONENT,
         }),
         PlayerFixture({
           id: player4.id,
           name: "Attila",
           gameScore: null,
-          type: playerModel.PLAYER_TYPE.OPPONENT,
+          type: Player.TYPE.OPPONENT,
         }),
       ];
       const current = GameSession.mapGameScoreToPlayers(game)(players);
@@ -860,29 +860,29 @@ export default describe("gameScoreList", () => {
     it("should assign null, if the game's declarare score is null", () => {
       const game = GameFixture({
         playerTypeScores: {
-          [playerModel.PLAYER_TYPE.DECLARER]: null,
-          [playerModel.PLAYER_TYPE.OPPONENT]: -6,
+          [Player.TYPE.DECLARER]: null,
+          [Player.TYPE.OPPONENT]: -6,
         },
       });
       const player1 = PlayerFixture({
         name: "Tamas",
         gameScore: 10,
-        type: playerModel.PLAYER_TYPE.OPPONENT,
+        type: Player.TYPE.OPPONENT,
       });
       const player2 = PlayerFixture({
         name: "Csaba",
         gameScore: 20,
-        type: playerModel.PLAYER_TYPE.OPPONENT,
+        type: Player.TYPE.OPPONENT,
       });
       const player3 = PlayerFixture({
         name: "Akos",
         gameScore: 30,
-        type: playerModel.PLAYER_TYPE.OPPONENT,
+        type: Player.TYPE.OPPONENT,
       });
       const player4 = PlayerFixture({
         name: "Attila",
         gameScore: 40,
-        type: playerModel.PLAYER_TYPE.DECLARER,
+        type: Player.TYPE.DECLARER,
       });
       const players = [player1, player2, player3, player4];
       const expected = [
@@ -890,25 +890,25 @@ export default describe("gameScoreList", () => {
           id: player1.id,
           name: "Tamas",
           gameScore: null,
-          type: playerModel.PLAYER_TYPE.OPPONENT,
+          type: Player.TYPE.OPPONENT,
         }),
         PlayerFixture({
           id: player2.id,
           name: "Csaba",
           gameScore: null,
-          type: playerModel.PLAYER_TYPE.OPPONENT,
+          type: Player.TYPE.OPPONENT,
         }),
         PlayerFixture({
           id: player3.id,
           name: "Akos",
           gameScore: null,
-          type: playerModel.PLAYER_TYPE.OPPONENT,
+          type: Player.TYPE.OPPONENT,
         }),
         PlayerFixture({
           id: player4.id,
           name: "Attila",
           gameScore: null,
-          type: playerModel.PLAYER_TYPE.DECLARER,
+          type: Player.TYPE.DECLARER,
         }),
       ];
       const current = GameSession.mapGameScoreToPlayers(game)(players);
@@ -918,29 +918,29 @@ export default describe("gameScoreList", () => {
     it("should assign null, if the game's opponent score is null", () => {
       const game = GameFixture({
         playerTypeScores: {
-          [playerModel.PLAYER_TYPE.DECLARER]: 6,
-          [playerModel.PLAYER_TYPE.OPPONENT]: null,
+          [Player.TYPE.DECLARER]: 6,
+          [Player.TYPE.OPPONENT]: null,
         },
       });
       const player1 = PlayerFixture({
         name: "Tamas",
         gameScore: 10,
-        type: playerModel.PLAYER_TYPE.OPPONENT,
+        type: Player.TYPE.OPPONENT,
       });
       const player2 = PlayerFixture({
         name: "Csaba",
         gameScore: 20,
-        type: playerModel.PLAYER_TYPE.OPPONENT,
+        type: Player.TYPE.OPPONENT,
       });
       const player3 = PlayerFixture({
         name: "Akos",
         gameScore: 30,
-        type: playerModel.PLAYER_TYPE.OPPONENT,
+        type: Player.TYPE.OPPONENT,
       });
       const player4 = PlayerFixture({
         name: "Attila",
         gameScore: 40,
-        type: playerModel.PLAYER_TYPE.DECLARER,
+        type: Player.TYPE.DECLARER,
       });
       const players = [player1, player2, player3, player4];
       const expected = [
@@ -948,25 +948,25 @@ export default describe("gameScoreList", () => {
           id: player1.id,
           name: "Tamas",
           gameScore: null,
-          type: playerModel.PLAYER_TYPE.OPPONENT,
+          type: Player.TYPE.OPPONENT,
         }),
         PlayerFixture({
           id: player2.id,
           name: "Csaba",
           gameScore: null,
-          type: playerModel.PLAYER_TYPE.OPPONENT,
+          type: Player.TYPE.OPPONENT,
         }),
         PlayerFixture({
           id: player3.id,
           name: "Akos",
           gameScore: null,
-          type: playerModel.PLAYER_TYPE.OPPONENT,
+          type: Player.TYPE.OPPONENT,
         }),
         PlayerFixture({
           id: player4.id,
           name: "Attila",
           gameScore: null,
-          type: playerModel.PLAYER_TYPE.DECLARER,
+          type: Player.TYPE.DECLARER,
         }),
       ];
       const current = GameSession.mapGameScoreToPlayers(game)(players);
@@ -976,29 +976,29 @@ export default describe("gameScoreList", () => {
     it("should assign null to the null type players (not playing in the current game)", () => {
       const game = GameFixture({
         playerTypeScores: {
-          [playerModel.PLAYER_TYPE.DECLARER]: 6,
-          [playerModel.PLAYER_TYPE.OPPONENT]: -6,
+          [Player.TYPE.DECLARER]: 6,
+          [Player.TYPE.OPPONENT]: -6,
         },
       });
       const player1 = PlayerFixture({
         name: "Tamas",
         gameScore: null,
-        type: playerModel.PLAYER_TYPE.OPPONENT,
+        type: Player.TYPE.OPPONENT,
       });
       const player2 = PlayerFixture({
         name: "Csaba",
         gameScore: null,
-        type: playerModel.PLAYER_TYPE.OPPONENT,
+        type: Player.TYPE.OPPONENT,
       });
       const player3 = PlayerFixture({
         name: "Akos",
         gameScore: null,
-        type: playerModel.PLAYER_TYPE.OPPONENT,
+        type: Player.TYPE.OPPONENT,
       });
       const player4 = PlayerFixture({
         name: "Attila",
         gameScore: null,
-        type: playerModel.PLAYER_TYPE.DECLARER,
+        type: Player.TYPE.DECLARER,
       });
       const player5 = PlayerFixture({
         name: "Laci",
@@ -1011,25 +1011,25 @@ export default describe("gameScoreList", () => {
           id: player1.id,
           name: "Tamas",
           gameScore: -6,
-          type: playerModel.PLAYER_TYPE.OPPONENT,
+          type: Player.TYPE.OPPONENT,
         }),
         PlayerFixture({
           id: player2.id,
           name: "Csaba",
           gameScore: -6,
-          type: playerModel.PLAYER_TYPE.OPPONENT,
+          type: Player.TYPE.OPPONENT,
         }),
         PlayerFixture({
           id: player3.id,
           name: "Akos",
           gameScore: -6,
-          type: playerModel.PLAYER_TYPE.OPPONENT,
+          type: Player.TYPE.OPPONENT,
         }),
         PlayerFixture({
           id: player4.id,
           name: "Attila",
           gameScore: 18,
-          type: playerModel.PLAYER_TYPE.DECLARER,
+          type: Player.TYPE.DECLARER,
         }),
         PlayerFixture({
           id: player5.id,

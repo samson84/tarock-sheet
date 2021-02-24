@@ -1,5 +1,5 @@
 import * as Bid from "./Bid";
-import * as playerModel from "./playerModel";
+import * as Player from "./Player";
 
 import * as Contract from "./Contract";
 import * as Game from "./Game";
@@ -12,11 +12,11 @@ export default describe("contract", () => {
       const props: Contract.CreateProps = {
         bidType: Bid.TYPE.CENTRUM,
         partyScore: Game.PARTY_SCORE.TOOK_TWO,
-        taker: playerModel.PLAYER_TYPE.DECLARER,
+        taker: Player.TYPE.DECLARER,
       };
       const expected = ContractFixture({
         bidType: Bid.TYPE.CENTRUM,
-        taker: playerModel.PLAYER_TYPE.DECLARER,
+        taker: Player.TYPE.DECLARER,
         bidBaseScore: 10,
       });
       const current = Contract.create(props);
@@ -25,12 +25,12 @@ export default describe("contract", () => {
     it("should create an opponent contract", () => {
       const props: Contract.CreateProps = {
         bidType: Bid.TYPE.FOUR_KING,
-        taker: playerModel.PLAYER_TYPE.OPPONENT,
+        taker: Player.TYPE.OPPONENT,
         partyScore: Game.PARTY_SCORE.TOOK_TWO,
       };
       const expected = ContractFixture({
         bidType: Bid.TYPE.FOUR_KING,
-        taker: playerModel.PLAYER_TYPE.OPPONENT,
+        taker: Player.TYPE.OPPONENT,
         bidBaseScore: 2,
       });
       const current = Contract.create(props);
@@ -39,12 +39,12 @@ export default describe("contract", () => {
     it("should create a contract with party score dependent bid", () => {
       const props: Contract.CreateProps = {
         bidType: Bid.TYPE.VOLAT,
-        taker: playerModel.PLAYER_TYPE.DECLARER,
+        taker: Player.TYPE.DECLARER,
         partyScore: Game.PARTY_SCORE.TOOK_TWO,
       };
       const expected = ContractFixture({
         bidType: Bid.TYPE.VOLAT,
-        taker: playerModel.PLAYER_TYPE.DECLARER,
+        taker: Player.TYPE.DECLARER,
         bidBaseScore: 12,
       });
       const current = Contract.create(props);
@@ -53,13 +53,13 @@ export default describe("contract", () => {
     it("should set contract to silent", () => {
       const props: Contract.CreateProps = {
         bidType: Bid.TYPE.FOUR_KING,
-        taker: playerModel.PLAYER_TYPE.OPPONENT,
+        taker: Player.TYPE.OPPONENT,
         isSilent: true,
         partyScore: Game.PARTY_SCORE.TOOK_TWO,
       };
       const expected = ContractFixture({
         bidType: Bid.TYPE.FOUR_KING,
-        taker: playerModel.PLAYER_TYPE.OPPONENT,
+        taker: Player.TYPE.OPPONENT,
         isSilent: true,
       });
       const current = Contract.create(props);
@@ -68,7 +68,7 @@ export default describe("contract", () => {
     it("should throw if the bid can not be silent", () => {
       const props: Contract.CreateProps = {
         bidType: Bid.TYPE.PARTY,
-        taker: playerModel.PLAYER_TYPE.OPPONENT,
+        taker: Player.TYPE.OPPONENT,
         isSilent: true,
         partyScore: Game.PARTY_SCORE.TOOK_TWO,
       };
@@ -79,13 +79,13 @@ export default describe("contract", () => {
     it("should set contract's Bid variant", () => {
       const props: Contract.CreateProps = {
         bidType: Bid.TYPE.KING_ULTI,
-        taker: playerModel.PLAYER_TYPE.OPPONENT,
+        taker: Player.TYPE.OPPONENT,
         bidVariant: Bid.CARD_SUIT_VARIANT.CLUB,
         partyScore: Game.PARTY_SCORE.TOOK_TWO,
       };
       const expected = ContractFixture({
         bidType: Bid.TYPE.KING_ULTI,
-        taker: playerModel.PLAYER_TYPE.OPPONENT,
+        taker: Player.TYPE.OPPONENT,
         bidVariant: Bid.CARD_SUIT_VARIANT.CLUB,
         bidBaseScore: 15,
       });
@@ -95,7 +95,7 @@ export default describe("contract", () => {
     it("should throw contract's Bid variant is invalid", () => {
       const props: Contract.CreateProps = {
         bidType: Bid.TYPE.KING_ULTI,
-        taker: playerModel.PLAYER_TYPE.OPPONENT,
+        taker: Player.TYPE.OPPONENT,
         bidVariant: Bid.SMALLEST_VARIANT.EAGLE,
         partyScore: Game.PARTY_SCORE.TOOK_TWO,
       };
@@ -107,12 +107,12 @@ export default describe("contract", () => {
     it("should create a non variant non silent bid's contract", () => {
       const props: Contract.CreateProps = {
         bidType: Bid.TYPE.PARTY,
-        taker: playerModel.PLAYER_TYPE.OPPONENT,
+        taker: Player.TYPE.OPPONENT,
         partyScore: Game.PARTY_SCORE.TOOK_TWO,
       };
       const expected = ContractFixture({
         bidType: Bid.TYPE.PARTY,
-        taker: playerModel.PLAYER_TYPE.OPPONENT,
+        taker: Player.TYPE.OPPONENT,
       });
       const current = Contract.create(props);
       expect(current).toEqual(expected);
@@ -121,13 +121,13 @@ export default describe("contract", () => {
   describe("updateContract", () => {
     it("should update the taker", () => {
       const contract = ContractFixture({
-        taker: playerModel.PLAYER_TYPE.OPPONENT,
+        taker: Player.TYPE.OPPONENT,
       });
       const updates: Contract.UpdateProps = {
-        taker: playerModel.PLAYER_TYPE.DECLARER,
+        taker: Player.TYPE.DECLARER,
       };
       const expected = ContractFixture({
-        taker: playerModel.PLAYER_TYPE.DECLARER,
+        taker: Player.TYPE.DECLARER,
       });
       const current = Contract.update(updates)(contract);
       expect(current).toEqual(expected);
@@ -254,7 +254,7 @@ export default describe("contract", () => {
         bidVariant: Bid.SMALLEST_VARIANT.PAGAT,
         contra: 1,
         isWonByTaker: null,
-        taker: playerModel.PLAYER_TYPE.DECLARER,
+        taker: Player.TYPE.DECLARER,
         isSilent: false,
       });
       const expected = null;
@@ -269,7 +269,7 @@ export default describe("contract", () => {
         bidVariant: Bid.SMALLEST_VARIANT.PAGAT,
         contra: 2,
         isWonByTaker: true,
-        taker: playerModel.PLAYER_TYPE.DECLARER,
+        taker: Player.TYPE.DECLARER,
         isSilent: false,
       });
       const expected = 20;
@@ -284,7 +284,7 @@ export default describe("contract", () => {
         bidVariant: Bid.SMALLEST_VARIANT.PAGAT,
         contra: 2,
         isWonByTaker: false,
-        taker: playerModel.PLAYER_TYPE.DECLARER,
+        taker: Player.TYPE.DECLARER,
         isSilent: false,
       });
       const expected = -20;
@@ -295,7 +295,7 @@ export default describe("contract", () => {
     it("should return the half base score if silent.", () => {
       const contract = Contract.create({
         bidType: Bid.TYPE.ULTI, // bse score is 10
-        taker: playerModel.PLAYER_TYPE.DECLARER,
+        taker: Player.TYPE.DECLARER,
         isSilent: true,
         isWonByTaker: true,
         partyScore: 1,
@@ -312,7 +312,7 @@ export default describe("contract", () => {
         bidVariant: Bid.SMALLEST_VARIANT.PAGAT,
         contra: 16,
         isWonByTaker: true,
-        taker: playerModel.PLAYER_TYPE.DECLARER,
+        taker: Player.TYPE.DECLARER,
         isSilent: true,
       });
       const expected = 5;
@@ -327,7 +327,7 @@ export default describe("contract", () => {
         bidVariant: Bid.SMALLEST_VARIANT.PAGAT,
         contra: 16,
         isWonByTaker: false,
-        taker: playerModel.PLAYER_TYPE.DECLARER,
+        taker: Player.TYPE.DECLARER,
         isSilent: true,
       });
       const expected = -5;

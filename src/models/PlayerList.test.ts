@@ -1,5 +1,5 @@
 import * as PlayerList from "./PlayerList";
-import * as playerModel from "./playerModel";
+import * as Player from "./Player";
 import { PlayerFixture } from "./test_data/fixtures";
 
 export default describe("playerListModel", () => {
@@ -124,23 +124,23 @@ export default describe("playerListModel", () => {
       const playerList: PlayerList.Props = [
         PlayerFixture({
           name: "opponent 1",
-          type: playerModel.PLAYER_TYPE.OPPONENT,
+          type: Player.TYPE.OPPONENT,
         }),
         PlayerFixture({
           name: "opponent 2",
-          type: playerModel.PLAYER_TYPE.OPPONENT,
+          type: Player.TYPE.OPPONENT,
         }),
         PlayerFixture({
           name: "declarer 1",
-          type: playerModel.PLAYER_TYPE.DECLARER,
+          type: Player.TYPE.DECLARER,
         }),
         PlayerFixture({
           name: "declarer 2",
-          type: playerModel.PLAYER_TYPE.DECLARER,
+          type: Player.TYPE.DECLARER,
         }),
         PlayerFixture({
           name: "declarer 3",
-          type: playerModel.PLAYER_TYPE.DECLARER,
+          type: Player.TYPE.DECLARER,
         }),
         PlayerFixture({ name: "non playing", type: null }),
       ];
@@ -163,11 +163,11 @@ export default describe("playerListModel", () => {
     it("should set the player's type property to null", () => {
       const opponent = PlayerFixture({
         name: "opponent",
-        type: playerModel.PLAYER_TYPE.OPPONENT,
+        type: Player.TYPE.OPPONENT,
       });
       const declarer = PlayerFixture({
         name: "declarer",
-        type: playerModel.PLAYER_TYPE.DECLARER,
+        type: Player.TYPE.DECLARER,
       });
       const notPlaying = PlayerFixture({ name: "non playing", type: null });
       const playerList = [opponent, declarer, notPlaying];
@@ -194,11 +194,11 @@ export default describe("playerListModel", () => {
     it("should return the opponent and declarer players, but not null type players", () => {
       const opponent = PlayerFixture({
         name: "opponent",
-        type: playerModel.PLAYER_TYPE.OPPONENT,
+        type: Player.TYPE.OPPONENT,
       });
       const declarer = PlayerFixture({
         name: "declarer",
-        type: playerModel.PLAYER_TYPE.DECLARER,
+        type: Player.TYPE.DECLARER,
       });
       const notPlaying = PlayerFixture({ name: "non playing", type: null });
       const playerList = [opponent, declarer, notPlaying];
@@ -206,12 +206,12 @@ export default describe("playerListModel", () => {
         PlayerFixture({
           id: opponent.id,
           name: "opponent",
-          type: playerModel.PLAYER_TYPE.OPPONENT,
+          type: Player.TYPE.OPPONENT,
         }),
         PlayerFixture({
           id: declarer.id,
           name: "declarer",
-          type: playerModel.PLAYER_TYPE.DECLARER,
+          type: Player.TYPE.DECLARER,
         }),
       ];
 

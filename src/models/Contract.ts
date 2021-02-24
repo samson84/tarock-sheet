@@ -1,4 +1,4 @@
-import * as playerModel from "./playerModel";
+import * as Player from "./Player";
 import * as scoreModel from "./Score";
 import * as Bid from "./Bid";
 import flow from "lodash/fp/flow";
@@ -13,7 +13,7 @@ export interface Props {
   bidVariant: Bid.Variant | null;
   contra: Multiplier;
   isWonByTaker: boolean | null;
-  taker: playerModel.PLAYER_TYPE;
+  taker: Player.TYPE;
   isSilent: boolean;
 }
 
@@ -38,7 +38,7 @@ const validate = (contract: Props): void | undefined => {
 export interface CreateProps {
   bidType: Bid.TYPE;
   partyScore?: Game.PartyScoreValue | null;
-  taker: playerModel.PLAYER_TYPE;
+  taker: Player.TYPE;
   isSilent?: boolean;
   bidVariant?: Bid.Variant | null;
   isWonByTaker?: boolean | null;

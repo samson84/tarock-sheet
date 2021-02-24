@@ -9,7 +9,7 @@ import GameProperties from "./GameProperties";
 import flow from "lodash/fp/flow";
 import concat from "lodash/fp/concat";
 import Players from "./Players";
-import * as playerModel from "../models/playerModel";
+import * as Player from "../models/Player";
 import * as PlayerList from "../models/PlayerList";
 import * as GameSession from "../models/GameSession";
 import { storage as storageInitializer } from "../services/localStorage";
@@ -22,8 +22,8 @@ const TarockSheet = () => {
   const [game, setGame] = useState<Game.Props>(
     (storage.read("game") as Game.Props | null) ?? Game.create()
   );
-  const [players, setPlayers] = useState<playerModel.Player[]>(
-    (storage.read("players") as playerModel.Player[] | null) ?? []
+  const [players, setPlayers] = useState<Player.Props[]>(
+    (storage.read("players") as Player.Props[] | null) ?? []
   );
   const [gameScoreList, setGameScoreList] = useState<PlayerList.PlayerMap[]>(
     (storage.read("gameScoreList") as PlayerList.PlayerMap[] | null) ?? []
@@ -79,11 +79,11 @@ const TarockSheet = () => {
         const contract = Game.isPartyLike(value)
           ? Contract.create({
               bidType: Bid.TYPE.PARTY,
-              taker: playerModel.PLAYER_TYPE.DECLARER,
+              taker: Player.TYPE.DECLARER,
             })
           : Contract.create({
               bidType: Bid.TYPE.KLOPICZKY,
-              taker: playerModel.PLAYER_TYPE.DECLARER,
+              taker: Player.TYPE.DECLARER,
               isWonByTaker: true,
             });
         const updated = flow(

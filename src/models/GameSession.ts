@@ -1,5 +1,5 @@
 import * as Game from "./Game";
-import * as playerModel from "./playerModel";
+import * as Player from "./Player";
 import * as PlayerList from "./PlayerList";
 import * as scoreModel from "./Score";
 import assignWith from "lodash/fp/assignWith";
@@ -11,10 +11,8 @@ const calculateScoreByPlayerType = (players: PlayerList.Props) => (
   const [numberOfDeclarers, numberOfOpponents] = PlayerList.countByType(
     players
   );
-  const opponentsGameScore =
-    game.playerTypeScores[playerModel.PLAYER_TYPE.OPPONENT];
-  const declarersGameScore =
-    game.playerTypeScores[playerModel.PLAYER_TYPE.DECLARER];
+  const opponentsGameScore = game.playerTypeScores[Player.TYPE.OPPONENT];
+  const declarersGameScore = game.playerTypeScores[Player.TYPE.DECLARER];
   if (opponentsGameScore === null || declarersGameScore === null) {
     return [null, null];
   }
@@ -34,13 +32,13 @@ export const mapGameScoreToPlayers = (game: Game.Props) => (
   players: PlayerList.Props
 ): PlayerList.Props => {
   return players.map(
-    (player: playerModel.Player): playerModel.Player => {
+    (player: Player.Props): Player.Props => {
       const [declarersScore, opponentsScore] = calculateScoreByPlayerType(
         players
       )(game);
       const score = {
-        [playerModel.PLAYER_TYPE.OPPONENT]: opponentsScore,
-        [playerModel.PLAYER_TYPE.DECLARER]: declarersScore,
+        [Player.TYPE.OPPONENT]: opponentsScore,
+        [Player.TYPE.DECLARER]: declarersScore,
       };
       return {
         ...player,
@@ -59,8 +57,8 @@ export const isReadyForSave = (players: PlayerList.Props) => (
     isEqual(numbers, [2, 2]) ||
     isEqual(numbers, [3, 1]);
   const gameScoreValid =
-    game.playerTypeScores[playerModel.PLAYER_TYPE.DECLARER] !== null &&
-    game.playerTypeScores[playerModel.PLAYER_TYPE.OPPONENT] !== null;
+    game.playerTypeScores[Player.TYPE.DECLARER] !== null &&
+    game.playerTypeScores[Player.TYPE.OPPONENT] !== null;
   return playerNumberValid && gameScoreValid;
 };
 
@@ -69,7 +67,7 @@ const defined = (value: any): boolean =>
 
 const scoreSumAssigner = (
   gameScore: number | undefined,
-  player: playerModel.Player
+  player: Player.Props
 ) => {
   const left = defined(gameScore) ? gameScore : 0;
   const right = defined(player.gameScore) ? player.gameScore : 0;
@@ -94,5 +92,5 @@ export const mapGameSessionScoresToPlayers = (players: PlayerList.Props) => (
   players.map((player) =>
     sessionScores[player.id] === undefined
       ? player
-      : playerModel.update({ sessionScore: sessionScores[player.id] })(player)
+      : Player.update({ sessionScore: sessionScores[player.id] })(player)
   );
