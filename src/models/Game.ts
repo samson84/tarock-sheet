@@ -6,7 +6,7 @@ type PlayerTypeScore = {
   [playerModel.PLAYER_TYPE.DECLARER]: scoreModel.Props;
   [playerModel.PLAYER_TYPE.OPPONENT]: scoreModel.Props;
 };
-export interface Game {
+export interface Props {
   contracts: Contract.Props[];
   partyScoreType: PARTY_SCORE_TYPE | null;
   partyBaseScore: number;
@@ -64,11 +64,11 @@ export const PARTY_SCORE: { [K in PARTY_SCORE_TYPE]: PartyScoreValue } = {
   [PARTY_SCORE_TYPE.KLOPICZKY]: 0,
 };
 
-interface CreateGameProps {
+interface CreateProps {
   partyScoreType?: PARTY_SCORE_TYPE;
   called_tarock?: CalledTarockType;
 }
-export const create = (props: CreateGameProps = {}): Game => ({
+export const create = (props: CreateProps = {}): Props => ({
   contracts: [],
   partyScoreType: props.partyScoreType || null,
   partyBaseScore: 1,
@@ -79,7 +79,7 @@ export const create = (props: CreateGameProps = {}): Game => ({
   },
 });
 
-const updateGameWithPlayerTypeScores = (game: Game): Game => {
+const updateGameWithPlayerTypeScores = (game: Props): Props => {
   const scores = calculatePlayerTypeScores(game);
 
   return {
@@ -88,12 +88,12 @@ const updateGameWithPlayerTypeScores = (game: Game): Game => {
   };
 };
 
-export interface UpdateGameProps {
+export interface UpdateProps {
   partyScoreType?: PARTY_SCORE_TYPE;
   called_tarock?: CalledTarockType | null;
   partyBaseScore?: number;
 }
-export const update = (updates: UpdateGameProps) => (game: Game): Game => {
+export const update = (updates: UpdateProps) => (game: Props): Props => {
   const partyScoreType =
     updates.partyScoreType === undefined
       ? game.partyScoreType
@@ -119,10 +119,12 @@ export const update = (updates: UpdateGameProps) => (game: Game): Game => {
 };
 
 export const addContractFlipped = (contract: Contract.Props) => (
-  game: Game
-): Game => addContract(game)(contract);
+  game: Props
+): Props => addContract(game)(contract);
 
-export const addContract = (game: Game) => (contract: Contract.Props): Game => {
+export const addContract = (game: Props) => (
+  contract: Contract.Props
+): Props => {
   const partyScore = game?.partyScoreType
     ? PARTY_SCORE[game?.partyScoreType]
     : null;
@@ -133,21 +135,21 @@ export const addContract = (game: Game) => (contract: Contract.Props): Game => {
   });
 };
 
-export const removeContractAt = (game: Game) => (index: number): Game => {
+export const removeContractAt = (game: Props) => (index: number): Props => {
   return updateGameWithPlayerTypeScores({
     ...game,
     contracts: game.contracts.filter((_, i) => i !== index),
   });
 };
 
-export const removeAllContracts = (game: Game): Game => ({
+export const removeAllContracts = (game: Props): Props => ({
   ...game,
   contracts: [],
 });
 
-export const updateGameContractAt = (game: Game) => (index: number) => (
+export const updateGameContractAt = (game: Props) => (index: number) => (
   updated: Contract.Props
-): Game => {
+): Props => {
   return updateGameWithPlayerTypeScores({
     ...game,
     contracts: game.contracts.map((contract, i) =>
@@ -156,7 +158,7 @@ export const updateGameContractAt = (game: Game) => (index: number) => (
   });
 };
 
-export const calculatePlayerTypeScores = (game: Game): PlayerTypeScore => {
+export const calculatePlayerTypeScores = (game: Props): PlayerTypeScore => {
   return game.contracts.reduce(
     (partyScore, contract) => {
       const score = Contract.calculateContractScore(contract);

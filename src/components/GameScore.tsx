@@ -1,10 +1,10 @@
 import React from "react";
-import * as gameModel from "../models/gameModel";
+import * as Game from "../models/Game";
 import { Grid, Chip, Typography as T } from "@material-ui/core";
 import * as playerModel from "../models/playerModel";
 
 interface GameScoreProps {
-  game: gameModel.Game;
+  game: Game.Props;
 }
 const GameScore = ({ game }: GameScoreProps) => {
   const { playerTypeScores } = game;

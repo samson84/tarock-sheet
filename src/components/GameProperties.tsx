@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from "react";
-import * as gameModel from "../models/gameModel";
+import * as Game from "../models/Game";
 import {
   Grid,
   FormControl,
@@ -15,12 +15,12 @@ import {
 import { upperCaseToWords } from "../lib/util";
 import MultiplierSelector from "./MultiplierSelector";
 
-const calledTarockOptions = ["_None_", ...Object.keys(gameModel.CALLED_TAROCK)];
-const partyScoreOptions = Object.keys(gameModel.PARTY_SCORE);
+const calledTarockOptions = ["_None_", ...Object.keys(Game.CALLED_TAROCK)];
+const partyScoreOptions = Object.keys(Game.PARTY_SCORE);
 
 interface GamePropertiesProps {
-  game: gameModel.Game;
-  onChange: (property: keyof gameModel.UpdateGameProps, value: any) => void;
+  game: Game.Props;
+  onChange: (property: keyof Game.UpdateProps, value: any) => void;
 }
 const GameProperties = (props: GamePropertiesProps) => {
   const { game, onChange } = props;
@@ -53,11 +53,11 @@ const GameProperties = (props: GamePropertiesProps) => {
             onChange={(event: ChangeEvent<HTMLInputElement>) => {
               onChange(
                 "partyScoreType",
-                event.target.value as gameModel.PARTY_SCORE_TYPE
+                event.target.value as Game.PARTY_SCORE_TYPE
               );
             }}
           >
-            {partyScoreOptions.map((option: gameModel.PARTY_SCORE_TYPE) => (
+            {partyScoreOptions.map((option: Game.PARTY_SCORE_TYPE) => (
               <FormControlLabel
                 key={option}
                 value={option}

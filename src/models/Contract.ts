@@ -2,7 +2,7 @@ import * as playerModel from "./playerModel";
 import * as scoreModel from "./Score";
 import * as Bid from "./Bid";
 import flow from "lodash/fp/flow";
-import * as gameModel from "./gameModel";
+import * as Game from "./Game";
 
 const CONTRA_NAMES = ["None", "Contra", "Recontra", "Subcontra", "Mortcontra"];
 
@@ -37,7 +37,7 @@ const validate = (contract: Props): void | undefined => {
 
 export interface CreateProps {
   bidType: Bid.TYPE;
-  partyScore?: gameModel.PartyScoreValue | null;
+  partyScore?: Game.PartyScoreValue | null;
   taker: playerModel.PLAYER_TYPE;
   isSilent?: boolean;
   bidVariant?: Bid.Variant | null;

@@ -85,7 +85,7 @@ An awesome app to help track a Tarock game scores.
       - [ ] Contract.bidBaseScore to contractBaseScore
       - [ ] rename types and remaining models for shorter names
         - [x] Contract
-        - [ ] Game
+        - [x] Game
         - [ ] PlayerList
         - [ ] Player
         - [ ] Score

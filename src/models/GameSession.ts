@@ -1,4 +1,4 @@
-import * as gameModel from "./gameModel";
+import * as Game from "./Game";
 import * as playerModel from "./playerModel";
 import * as playerListModel from "./playerListModel";
 import * as scoreModel from "./Score";
@@ -6,7 +6,7 @@ import assignWith from "lodash/fp/assignWith";
 import { isEqual } from "lodash";
 
 const calculateScoreByPlayerType = (players: playerListModel.PlayerList) => (
-  game: gameModel.Game
+  game: Game.Props
 ): [scoreModel.Props, scoreModel.Props] => {
   const [numberOfDeclarers, numberOfOpponents] = playerListModel.countByType(
     players
@@ -30,7 +30,7 @@ const calculateScoreByPlayerType = (players: playerListModel.PlayerList) => (
   return [null, null];
 };
 
-export const mapGameScoreToPlayers = (game: gameModel.Game) => (
+export const mapGameScoreToPlayers = (game: Game.Props) => (
   players: playerListModel.PlayerList
 ): playerListModel.PlayerList => {
   return players.map(
@@ -51,7 +51,7 @@ export const mapGameScoreToPlayers = (game: gameModel.Game) => (
 };
 
 export const isReadyForSave = (players: playerListModel.PlayerList) => (
-  game: gameModel.Game
+  game: Game.Props
 ): boolean => {
   const numbers = playerListModel.countByType(players);
   const playerNumberValid =

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import * as Bid from "../models/Bid";
 import ContractSelector from "./ContractSelector";
-import * as gameModel from "../models/gameModel";
+import * as Game from "../models/Game";
 import * as Contract from "../models/Contract";
 import { Button, Grid } from "@material-ui/core";
 import ContractsTable from "./ContractsTable";
@@ -19,8 +19,8 @@ const allBidsByGroup = Bid.getAllByGroup();
 const storage = storageInitializer();
 
 const TarockSheet = () => {
-  const [game, setGame] = useState<gameModel.Game>(
-    (storage.read("game") as gameModel.Game | null) ?? gameModel.create()
+  const [game, setGame] = useState<Game.Props>(
+    (storage.read("game") as Game.Props | null) ?? Game.create()
   );
   const [players, setPlayers] = useState<playerModel.Player[]>(
     (storage.read("players") as playerModel.Player[] | null) ?? []
@@ -51,28 +51,28 @@ const TarockSheet = () => {
   }, [game, players, gameScoreList]);
 
   const handleContractDelete = (index: number) =>
-    setGame(gameModel.removeContractAt(game)(index));
-  const handleResetGame = () => setGame(gameModel.create());
+    setGame(Game.removeContractAt(game)(index));
+  const handleResetGame = () => setGame(Game.create());
   const handlePlayerListChange = (playerList: playerListModel.PlayerList) => {
     updatePlayersState(playerList);
   };
   const handleChangeGameProperties = (
-    prop: keyof gameModel.UpdateGameProps,
+    prop: keyof Game.UpdateProps,
     value: any
   ) => {
     setGame((prevGame) => {
       const partyScoreTypeChanged = prop === "partyScoreType";
       const fromKlopiczkyToPartyLikeChanged =
-        prevGame.partyScoreType === gameModel.PARTY_SCORE_TYPE.KLOPICZKY &&
-        gameModel.isPartyLike(value);
+        prevGame.partyScoreType === Game.PARTY_SCORE_TYPE.KLOPICZKY &&
+        Game.isPartyLike(value);
       const fromPartyLikeToKlopiczkyChanged =
-        gameModel.isPartyLike(prevGame.partyScoreType) &&
-        value === gameModel.PARTY_SCORE_TYPE.KLOPICZKY;
+        Game.isPartyLike(prevGame.partyScoreType) &&
+        value === Game.PARTY_SCORE_TYPE.KLOPICZKY;
       const fromNullToKlopiczkyChanged =
         prevGame.partyScoreType === null &&
-        value === gameModel.PARTY_SCORE_TYPE.KLOPICZKY;
+        value === Game.PARTY_SCORE_TYPE.KLOPICZKY;
       const partyLikeAndEmptyContracts =
-        gameModel.isPartyLike(value) && prevGame.contracts.length === 0;
+        Game.isPartyLike(value) && prevGame.contracts.length === 0;
       const shouldRemoveContracts =
         partyScoreTypeChanged &&
         (fromKlopiczkyToPartyLikeChanged ||
@@ -80,7 +80,7 @@ const TarockSheet = () => {
           fromNullToKlopiczkyChanged ||
           partyLikeAndEmptyContracts);
       if (shouldRemoveContracts) {
-        const contract = gameModel.isPartyLike(value)
+        const contract = Game.isPartyLike(value)
           ? Contract.create({
               bidType: Bid.TYPE.PARTY,
               taker: playerModel.PLAYER_TYPE.DECLARER,
@@ -91,20 +91,18 @@ const TarockSheet = () => {
               isWonByTaker: true,
             });
         const updated = flow(
-          gameModel.removeAllContracts,
-          gameModel.addContractFlipped(contract),
-          gameModel.update({ [prop]: value })
+          Game.removeAllContracts,
+          Game.addContractFlipped(contract),
+          Game.update({ [prop]: value })
         )(game);
         return updated;
       } else {
-        return gameModel.update({ [prop]: value })(game);
+        return Game.update({ [prop]: value })(game);
       }
     });
   };
   const handleAddContract = (contract: Contract.Props) => {
-    return setGame(
-      flow(Contract.create, gameModel.addContract(game))(contract)
-    );
+    return setGame(flow(Contract.create, Game.addContract(game))(contract));
   };
   const handleChangeContract = (
     index: number,
@@ -114,7 +112,7 @@ const TarockSheet = () => {
     setGame(
       flow(
         Contract.update({ [field]: value }),
-        gameModel.updateGameContractAt(game)(index)
+        Game.updateGameContractAt(game)(index)
       )(game.contracts[index])
     );
   };
@@ -139,10 +137,10 @@ const TarockSheet = () => {
       updatePlayersState
     )(updated);
     setGameScoreList(updated);
-    setGame(gameModel.create());
+    setGame(Game.create());
   };
   const handleResetPlayers = () => {
-    setGame(gameModel.create());
+    setGame(Game.create());
     updateGameScoreListState([]);
     updatePlayersState([]);
   };
