@@ -78,13 +78,17 @@ An awesome app to help track a Tarock game scores.
         - [x] PlayerScores: GameSessionScore
         - [x] assignScoresToPlayers: mapGameSessionScoresToPlayers
         - [x] refactor namespace imports
-      - [x] move fixtures to models
+      - [ ] move fixtures to models
         - [x] move
         - [x] rename fixtures
       - [ ] rename game props to camelCase, party_score, called_tarock
       - [ ] Contract.bidBaseScore to contractBaseScore
-      - [ ] rename types
-        - [ ] rename somethingModel to Model, rename the main interface to Props
+      - [ ] rename types and remaining models for shorter names
+        - [ ] Contract
+        - [ ] Game
+        - [ ] PlayerList
+        - [ ] Player
+        - [x] Score
       - [ ] rename test descriptions
     - [ ] Tarock sheet: move handler's logic to data layer, if possible
     - [ ] contract better calculation of the bid base score

@@ -1,5 +1,5 @@
 import * as playerModel from "./playerModel";
-import { Score } from "./scoreModel";
+import * as scoreModel from "./Score";
 import * as Bid from "./Bid";
 import flow from "lodash/fp/flow";
 import * as gameModel from "./gameModel";
@@ -91,7 +91,9 @@ export const update = (updates: UpdateContractProps) => (
   return updated;
 };
 
-export const calculateContractScore = (contract: Contract): Score => {
+export const calculateContractScore = (
+  contract: Contract
+): scoreModel.Props => {
   const { isWonByTaker, bidBaseScore, contra, isSilent: silent } = contract;
   if (isWonByTaker === null || bidBaseScore === null) {
     return null;
