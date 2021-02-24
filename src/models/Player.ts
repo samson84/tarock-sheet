@@ -1,5 +1,5 @@
 import { createId, Id } from "../lib/util";
-import * as scoreModel from "./Score";
+import * as Score from "./Score";
 
 export enum TYPE {
   DECLARER = "DECLARER",
@@ -9,8 +9,8 @@ export interface Props {
   id: Id;
   name: string;
   baseScore: number;
-  sessionScore: scoreModel.Props;
-  gameScore: scoreModel.Props;
+  sessionScore: Score.Props;
+  gameScore: Score.Props;
   type: TYPE | null;
 }
 export const create = (): Props => ({

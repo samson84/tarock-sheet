@@ -1,13 +1,13 @@
 import * as Game from "./Game";
 import * as Player from "./Player";
 import * as PlayerList from "./PlayerList";
-import * as scoreModel from "./Score";
+import * as Score from "./Score";
 import assignWith from "lodash/fp/assignWith";
 import { isEqual } from "lodash";
 
 const calculateScoreByPlayerType = (players: PlayerList.Props) => (
   game: Game.Props
-): [scoreModel.Props, scoreModel.Props] => {
+): [Score.Props, Score.Props] => {
   const [numberOfDeclarers, numberOfOpponents] = PlayerList.countByType(
     players
   );

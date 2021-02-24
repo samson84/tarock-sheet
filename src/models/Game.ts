@@ -1,10 +1,10 @@
 import * as Contract from "./Contract";
 import * as Player from "./Player";
-import * as scoreModel from "./Score";
+import * as Score from "./Score";
 
 type PlayerTypeScore = {
-  [Player.TYPE.DECLARER]: scoreModel.Props;
-  [Player.TYPE.OPPONENT]: scoreModel.Props;
+  [Player.TYPE.DECLARER]: Score.Props;
+  [Player.TYPE.OPPONENT]: Score.Props;
 };
 export interface Props {
   contracts: Contract.Props[];
@@ -167,9 +167,9 @@ export const calculatePlayerTypeScores = (game: Props): PlayerTypeScore => {
       }
 
       const addScore = (
-        prevScore: scoreModel.Props,
-        score: scoreModel.Props
-      ): scoreModel.Props => {
+        prevScore: Score.Props,
+        score: Score.Props
+      ): Score.Props => {
         if (prevScore === null) {
           return score;
         } else {

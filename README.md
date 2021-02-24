@@ -88,8 +88,8 @@ An awesome app to help track a Tarock game scores.
         - [x] Game
         - [x] PlayerList
         - [x] Player
-        - [ ] Score
-          - [ ] rename scoreModel in imports
+        - [x] Score
+          - [x] rename scoreModel in imports
       - [ ] rename test descriptions
     - [ ] Tarock sheet: move handler's logic to data layer, if possible
     - [ ] contract better calculation of the bid base score
