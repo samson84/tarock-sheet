@@ -205,7 +205,7 @@ const Players = (props: PlayersProps) => {
         <Grid item>
           <Confrim
             title="Do you want to reset the Scores?"
-            text="It will reset the scores to the players' base score, but keeps all the players."
+            text={`It will reset the scores and base scores to the default ${Player.DEFAULT_BASE_SCORE}, but keeps all the players.`}
             target={(handleClick) => (
               <Button variant="outlined" onClick={handleClick}>
                 Reset Scores

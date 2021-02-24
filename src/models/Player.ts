@@ -13,10 +13,13 @@ export interface Props {
   gameScore: Score.Props;
   type: TYPE | null;
 }
+
+export const DEFAULT_BASE_SCORE = 100;
+
 export const create = (): Props => ({
   id: createId(),
   name: "",
-  baseScore: 100,
+  baseScore: DEFAULT_BASE_SCORE,
   sessionScore: null,
   gameScore: null,
   type: null,

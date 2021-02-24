@@ -1,6 +1,7 @@
 import * as Player from "./Player";
 
 export type Props = Player.Props[];
+
 export const add = (playerList: Props) => (player: Player.Props): Props => {
   return [...playerList, player];
 };
@@ -30,8 +31,12 @@ export const countByType = (players: Props): [number, number] => {
 export const clearType = (players: Props): Props =>
   players.map((player) => Player.update({ type: null })(player));
 
-export const clearSessionScore = (players: Props): Props =>
-  players.map((player) => Player.update({ sessionScore: null })(player));
+export const setDefaultScores = (players: Props): Props =>
+  players.map((player) =>
+    Player.update({ sessionScore: null, baseScore: Player.DEFAULT_BASE_SCORE })(
+      player
+    )
+  );
 
 export const filterByInGame = (players: Props): Props =>
   players.filter((player) => player.type !== null);
