@@ -4,7 +4,7 @@ import * as playerModel from "./playerModel";
 import * as contractModel from "./contractModel";
 import * as gameModel from "./gameModel";
 
-import { contractFixture } from "../lib/test_data/fixtures";
+import { ContractFixture } from "./test_data/fixtures";
 
 export default describe("contract", () => {
   describe("createContract", () => {
@@ -14,7 +14,7 @@ export default describe("contract", () => {
         partyScore: gameModel.PARTY_SCORE.TOOK_TWO,
         taker: playerModel.PLAYER_TYPE.DECLARER,
       };
-      const expected = contractFixture({
+      const expected = ContractFixture({
         bidType: Bid.TYPE.CENTRUM,
         taker: playerModel.PLAYER_TYPE.DECLARER,
         bidBaseScore: 10,
@@ -28,7 +28,7 @@ export default describe("contract", () => {
         taker: playerModel.PLAYER_TYPE.OPPONENT,
         partyScore: gameModel.PARTY_SCORE.TOOK_TWO,
       };
-      const expected = contractFixture({
+      const expected = ContractFixture({
         bidType: Bid.TYPE.FOUR_KING,
         taker: playerModel.PLAYER_TYPE.OPPONENT,
         bidBaseScore: 2,
@@ -42,7 +42,7 @@ export default describe("contract", () => {
         taker: playerModel.PLAYER_TYPE.DECLARER,
         partyScore: gameModel.PARTY_SCORE.TOOK_TWO,
       };
-      const expected = contractFixture({
+      const expected = ContractFixture({
         bidType: Bid.TYPE.VOLAT,
         taker: playerModel.PLAYER_TYPE.DECLARER,
         bidBaseScore: 12,
@@ -57,7 +57,7 @@ export default describe("contract", () => {
         isSilent: true,
         partyScore: gameModel.PARTY_SCORE.TOOK_TWO,
       };
-      const expected = contractFixture({
+      const expected = ContractFixture({
         bidType: Bid.TYPE.FOUR_KING,
         taker: playerModel.PLAYER_TYPE.OPPONENT,
         isSilent: true,
@@ -83,7 +83,7 @@ export default describe("contract", () => {
         bidVariant: Bid.CARD_SUIT_VARIANT.CLUB,
         partyScore: gameModel.PARTY_SCORE.TOOK_TWO,
       };
-      const expected = contractFixture({
+      const expected = ContractFixture({
         bidType: Bid.TYPE.KING_ULTI,
         taker: playerModel.PLAYER_TYPE.OPPONENT,
         bidVariant: Bid.CARD_SUIT_VARIANT.CLUB,
@@ -110,7 +110,7 @@ export default describe("contract", () => {
         taker: playerModel.PLAYER_TYPE.OPPONENT,
         partyScore: gameModel.PARTY_SCORE.TOOK_TWO,
       };
-      const expected = contractFixture({
+      const expected = ContractFixture({
         bidType: Bid.TYPE.PARTY,
         taker: playerModel.PLAYER_TYPE.OPPONENT,
       });
@@ -120,46 +120,46 @@ export default describe("contract", () => {
   });
   describe("updateContract", () => {
     it("should update the taker", () => {
-      const contract = contractFixture({
+      const contract = ContractFixture({
         taker: playerModel.PLAYER_TYPE.OPPONENT,
       });
       const updates: contractModel.UpdateContractProps = {
         taker: playerModel.PLAYER_TYPE.DECLARER,
       };
-      const expected = contractFixture({
+      const expected = ContractFixture({
         taker: playerModel.PLAYER_TYPE.DECLARER,
       });
       const current = contractModel.update(updates)(contract);
       expect(current).toEqual(expected);
     });
     it("should update the winner", () => {
-      const contract = contractFixture({
+      const contract = ContractFixture({
         isWonByTaker: null,
       });
       const updates: contractModel.UpdateContractProps = {
         isWonByTaker: true,
       };
-      const expected = contractFixture({
+      const expected = ContractFixture({
         isWonByTaker: true,
       });
       const current = contractModel.update(updates)(contract);
       expect(current).toEqual(expected);
     });
     it("should update silent prop", () => {
-      const contract = contractFixture({
+      const contract = ContractFixture({
         isSilent: false,
       });
       const updates: contractModel.UpdateContractProps = {
         isSilent: true,
       };
-      const expected = contractFixture({
+      const expected = ContractFixture({
         isSilent: true,
       });
       const current = contractModel.update(updates)(contract);
       expect(current).toEqual(expected);
     });
     it("should throw if the bid can not be silent", () => {
-      const contract = contractFixture({
+      const contract = ContractFixture({
         bidType: Bid.TYPE.PARTY,
         isSilent: false,
       });
@@ -171,14 +171,14 @@ export default describe("contract", () => {
       expect(current).toThrow(expected);
     });
     it("should update the bidVariant prop", () => {
-      const contract = contractFixture({
+      const contract = ContractFixture({
         bidType: Bid.TYPE.KING_ULTI,
         bidVariant: null,
       });
       const updates: contractModel.UpdateContractProps = {
         bidVariant: Bid.CARD_SUIT_VARIANT.CLUB,
       };
-      const expected = contractFixture({
+      const expected = ContractFixture({
         bidType: Bid.TYPE.KING_ULTI,
         bidVariant: Bid.CARD_SUIT_VARIANT.CLUB,
       });
@@ -186,7 +186,7 @@ export default describe("contract", () => {
       expect(current).toEqual(expected);
     });
     it("should throw if the bid has invalid bidVariant", () => {
-      const contract = contractFixture({
+      const contract = ContractFixture({
         bidType: Bid.TYPE.KING_ULTI,
         bidVariant: Bid.CARD_SUIT_VARIANT.DIAMOND,
       });
@@ -198,7 +198,7 @@ export default describe("contract", () => {
       expect(current).toThrow(expected);
     });
     it("should throw if the bid does not have variant", () => {
-      const contract = contractFixture({
+      const contract = ContractFixture({
         bidType: Bid.TYPE.PARTY,
         bidVariant: null,
       });
@@ -211,20 +211,20 @@ export default describe("contract", () => {
       expect(current).toThrow(expected);
     });
     it("should update the contra", () => {
-      const contract = contractFixture({
+      const contract = ContractFixture({
         contra: 2,
       });
       const updates: contractModel.UpdateContractProps = {
         contra: 4,
       };
-      const expected = contractFixture({
+      const expected = ContractFixture({
         contra: 4,
       });
       const current = contractModel.update(updates)(contract);
       expect(current).toEqual(expected);
     });
     it("sould throw if the contra is not the power of two", () => {
-      const contract = contractFixture({
+      const contract = ContractFixture({
         contra: 2,
       });
       const updates: contractModel.UpdateContractProps = {
@@ -235,7 +235,7 @@ export default describe("contract", () => {
       expect(current).toThrow(expected);
     });
     it("sould throw if the contra is less than one.", () => {
-      const contract = contractFixture({
+      const contract = ContractFixture({
         contra: 2,
       });
       const updates: contractModel.UpdateContractProps = {
@@ -248,7 +248,7 @@ export default describe("contract", () => {
   });
   describe("calculateContract", () => {
     it("should return null if no winner", () => {
-      const contract = contractFixture({
+      const contract = ContractFixture({
         bidType: Bid.TYPE.ULTI,
         bidBaseScore: 10,
         bidVariant: Bid.SMALLEST_VARIANT.PAGAT,
@@ -263,7 +263,7 @@ export default describe("contract", () => {
       expect(current).toEqual(expected);
     });
     it("shouls return the base score if it is won by the taker", () => {
-      const contract = contractFixture({
+      const contract = ContractFixture({
         bidType: Bid.TYPE.ULTI,
         bidBaseScore: 10,
         bidVariant: Bid.SMALLEST_VARIANT.PAGAT,
@@ -278,7 +278,7 @@ export default describe("contract", () => {
       expect(current).toEqual(expected);
     });
     it("should return the minus score if it is lose by the taker", () => {
-      const contract = contractFixture({
+      const contract = ContractFixture({
         bidType: Bid.TYPE.ULTI,
         bidBaseScore: 10,
         bidVariant: Bid.SMALLEST_VARIANT.PAGAT,
@@ -306,7 +306,7 @@ export default describe("contract", () => {
       expect(current).toEqual(expected);
     });
     it("should return the half base score if silent, contra > 1", () => {
-      const contract = contractFixture({
+      const contract = ContractFixture({
         bidType: Bid.TYPE.ULTI,
         bidBaseScore: 10,
         bidVariant: Bid.SMALLEST_VARIANT.PAGAT,
@@ -321,7 +321,7 @@ export default describe("contract", () => {
       expect(current).toEqual(expected);
     });
     it("should return the half base score negative if silent, contra > 1, and loose", () => {
-      const contract = contractFixture({
+      const contract = ContractFixture({
         bidType: Bid.TYPE.ULTI,
         bidBaseScore: 10,
         bidVariant: Bid.SMALLEST_VARIANT.PAGAT,

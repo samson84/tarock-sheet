@@ -1,10 +1,10 @@
-import * as Bid from "../../models/Bid";
-import * as playerModel from "../../models/playerModel";
-import * as contractModel from "../../models/contractModel";
-import * as gameModel from "../../models/gameModel";
-import { createId } from "../util";
+import * as Bid from "../Bid";
+import * as playerModel from "../playerModel";
+import * as contractModel from "../contractModel";
+import * as gameModel from "../gameModel";
+import { createId } from "../../lib/util";
 
-export const contractFixture = (
+export const ContractFixture = (
   props: Partial<contractModel.Contract> = {}
 ): contractModel.Contract => {
   return {
@@ -19,7 +19,7 @@ export const contractFixture = (
   };
 };
 
-export const gameFixture = (
+export const GameFixture = (
   props: Partial<gameModel.Game> = {}
 ): gameModel.Game => ({
   contracts: [],
@@ -35,7 +35,7 @@ export const gameFixture = (
       },
 });
 
-export const playerFixture = (
+export const PlayerFixture = (
   props: Partial<playerModel.Player> = {}
 ): playerModel.Player => ({
   id: props.id || createId(),

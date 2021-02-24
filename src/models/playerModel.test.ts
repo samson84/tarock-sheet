@@ -1,10 +1,10 @@
 import * as playerModel from "./playerModel";
-import { expectPlayer, playerFixture } from "../lib/test_data/fixtures";
+import { expectPlayer, PlayerFixture } from "./test_data/fixtures";
 
 export default describe("Player", () => {
   describe("createPlayer", () => {
     it("should create a player", () => {
-      const expected = playerFixture({
+      const expected = PlayerFixture({
         id: "notCheckedId",
         name: "",
         baseScore: 100,
@@ -18,7 +18,7 @@ export default describe("Player", () => {
   });
   describe("updatePlayer", () => {
     it("should update the player", () => {
-      const player = playerFixture({
+      const player = PlayerFixture({
         name: "someName",
         baseScore: 80,
         sessionScore: 70,
@@ -32,7 +32,7 @@ export default describe("Player", () => {
         gameScore: 90,
         type: playerModel.PLAYER_TYPE.DECLARER,
       };
-      const expected = playerFixture({
+      const expected = PlayerFixture({
         id: player.id,
         name: "Some other name",
         baseScore: 50,
