@@ -216,20 +216,15 @@ const Players = (props: PlayersProps) => {
         </Grid>
       </Grid>
       {players.map((player) => (
-        <Grid item xs={edit ? 3 : false}>
+        <Grid key={player.id} item xs={edit ? 3 : false}>
           {edit ? (
             <EditablePlayerItem
-              key={player.id}
               onChange={handleChange}
               onRemove={handleRemove}
               player={player}
             />
           ) : (
-            <PlayerItem
-              key={player.id}
-              player={player}
-              onChange={handleChange}
-            />
+            <PlayerItem player={player} onChange={handleChange} />
           )}
         </Grid>
       ))}

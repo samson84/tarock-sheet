@@ -15,7 +15,7 @@ An awesome app to help track a Tarock game scores.
     - [ ] add license, contribution, proper readme
     - [ ] increase test coverage
     - [x] also clear the base scores too when resetting the scores
-    - [ ] correct missing key prop in Players.tsx, and other warnings in console
+    - [x] correct missing key prop in Players.tsx, and other warnings in console
 - [ ] Milestone 2, store in a permanent storage, share a game
   - [ ] add validators and defaults to models
   - [ ] implement error handling and showing to the user

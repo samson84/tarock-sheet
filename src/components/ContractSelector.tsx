@@ -36,7 +36,7 @@ const ContractSelector = ({ bidsByGroup, onAddContract }: BidSelectorProps) => {
   return (
     <Grid container spacing={1} alignItems="flex-end">
       {Bid.getGroupsOrderedByWeight().map((group) => (
-        <Grid item key={group} spacing={1}>
+        <Grid item key={group}>
           <T variant="caption" display="block" color="textSecondary">
             {upperCaseToWords(group)}
           </T>
